@@ -1,0 +1,62 @@
+{
+  "name": "dulladmin",
+  "version": "0.0.1",
+  "description": "DullAdmin is a specification for building admin panel.",
+  "keywords": [
+    "typescript",
+    "dulladmin"
+  ],
+  "author": "John Doe <johndoe@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dulladmin/dulladmin"
+  },
+  "bugs": {
+    "url": "https://github.com/dulladmin/dulladmin/issues"
+  },
+  "main": "dist/index.umd.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "bin": {
+    "dulladmin": "bin/dulladmin"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.umd.js",
+    "dist/types/**/*",
+    "dist/cli.js",
+    "bin/dulladmin"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
+    "prebuild": "yarn clean",
+    "build": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
+    "dev": "rollup -wc",
+    "prerelease": "yarn build && git --no-pager diff && echo && npm pack --dry-run",
+    "release": "npm publish",
+    "clean": "rimraf ./dist"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.79.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.4"
+  }
+}
