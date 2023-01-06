@@ -1,5 +1,5 @@
 {
-  "env": {},
+  "env": { "mocha": true },
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "extends": ["standard", "standard-with-typescript"],
