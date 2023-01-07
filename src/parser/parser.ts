@@ -1,4 +1,17 @@
-import * as yaml from 'js-yaml'
+import {
+  YamlResourceType,
+  YamlViewsType,
+  YamlViewType,
+  YamlBlockType,
+  YamlBlockFormType,
+  YamlBlockDescriptionsType,
+  YamlBlockTableType,
+  YamlModelAttributeType,
+  load,
+  assertNotNull,
+  assertIsArray,
+  assertIsBlockRelationshipType
+} from './loader'
 import {
   Resource,
   ViewType,
@@ -7,44 +20,35 @@ import {
   TableBlock,
   DescriptionsBlock,
   FormBlock,
-  Block
+  Block,
+  ModelAttribute,
+  Model
 } from './structs'
 
-interface YamlBlockType {
-  relationship?: string
-  name?: string
-  table?: any
-  descriptions?: any
-  form?: any
-}
-interface YamlViewType {
-  blocks?: YamlBlockType[]
-}
-interface YamlViewsType {
-  index?: YamlViewType
-  show?: YamlViewType
-  new?: YamlViewType
-  edit?: YamlViewType
-}
-interface YamlResourceType {
-  name?: string
-  views?: YamlViewsType
-}
-interface ParseContext {
+class ParseContext {
   resource: Resource
   view?: View
+
+  constructor(resource: Resource) {
+    this.resource = resource
+  }
+
+  get blockXPath(): string {
+    return `views.${this.view!.type}.blocks[${this.view!.blocks.length}]`
+  }
 }
 
 function parse(str: string): Resource {
-  const doc = yaml.load(str) as YamlResourceType
+  return parseResource(load(str))
+}
 
-  if (doc.name == null) throw new Error('Field `name` is required')
-  if (doc.views == null) throw new Error('Field `views` is required')
+function parseResource(doc: YamlResourceType): Resource {
+  assertNotNull(doc.name, 'name')
+  assertNotNull(doc.views, 'views')
 
-  const resource = new Resource(doc.name)
-  const ctx: ParseContext = { resource }
-  resource.views = parseViews(doc.views, ctx)
-
+  const resource = new Resource(doc.name!)
+  const ctx = new ParseContext(resource)
+  resource.views = parseViews(doc.views!, ctx)
   return resource
 }
 
@@ -61,13 +65,9 @@ function parseViewIndex(doc: YamlViewType, ctx: ParseContext): View {
   const view = new View(ViewType.Index)
   ctx.view = view
 
-  if (doc.blocks == null) {
-    throw new Error('Field `views.index.blocks` is required')
-  }
-  if (!Array.isArray(doc.blocks)) {
-    throw new Error('Field `views.index.blocks` must be an array')
-  }
-  doc.blocks.map((block) => parseBlock(block, ctx))
+  assertNotNull(doc.blocks, 'views.index.blocks')
+  assertIsArray(doc.blocks, 'views.index.blocks')
+  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
 
   ctx.view = undefined
   return view
@@ -77,13 +77,9 @@ function parseViewShow(doc: YamlViewType, ctx: ParseContext): View {
   const view = new View(ViewType.Show)
   ctx.view = view
 
-  if (doc.blocks == null) {
-    throw new Error('Field `views.show.blocks` is required')
-  }
-  if (!Array.isArray(doc.blocks)) {
-    throw new Error('Field `views.show.blocks` must be an array')
-  }
-  doc.blocks.map((block) => parseBlock(block, ctx))
+  assertNotNull(doc.blocks, 'views.show.blocks')
+  assertIsArray(doc.blocks, 'views.show.blocks')
+  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
 
   ctx.view = undefined
   return view
@@ -93,13 +89,9 @@ function parseViewNew(doc: YamlViewType, ctx: ParseContext): View {
   const view = new View(ViewType.New)
   ctx.view = view
 
-  if (doc.blocks == null) {
-    throw new Error('Field `views.new.blocks` is required')
-  }
-  if (!Array.isArray(doc.blocks)) {
-    throw new Error('Field `views.new.blocks` must be an array')
-  }
-  doc.blocks.map((block) => parseBlock(block, ctx))
+  assertNotNull(doc.blocks, 'views.new.blocks')
+  assertIsArray(doc.blocks, 'views.new.blocks')
+  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
 
   ctx.view = undefined
   return view
@@ -109,13 +101,9 @@ function parseViewEdit(doc: YamlViewType, ctx: ParseContext): View {
   const view = new View(ViewType.Edit)
   ctx.view = view
 
-  if (doc.blocks == null) {
-    throw new Error('Field `views.edit.blocks` is required')
-  }
-  if (!Array.isArray(doc.blocks)) {
-    throw new Error('Field `views.edit.blocks` must be an array')
-  }
-  doc.blocks.map((block) => parseBlock(block, ctx))
+  assertNotNull(doc.blocks, 'views.edit.blocks')
+  assertIsArray(doc.blocks, 'views.edit.blocks')
+  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
 
   ctx.view = undefined
   return view
@@ -123,26 +111,65 @@ function parseViewEdit(doc: YamlViewType, ctx: ParseContext): View {
 
 function parseBlock(doc: YamlBlockType, ctx: ParseContext): Block {
   let relType = doc.relationship as BlockRelationshipType
-  if (relType != null) {
-    if (!Object.values(BlockRelationshipType).includes(relType)) {
-      const fieldStr = `views.${ctx.resource.name}.blocks[].relationship`
-      throw new Error(
-        `Field \`${fieldStr}\` must be one of ["self", "has_one", "has_many"]}`
-      )
-    }
-  } else {
+  if (relType == null) {
     relType = BlockRelationshipType.Self
+  } else {
+    assertIsBlockRelationshipType(relType, ctx.blockXPath + '.relationship')
   }
 
+  if (doc.table != null) return parseTableBlock(doc, ctx)
+  if (doc.descriptions != null) return parseDescriptionsBlock(doc, ctx)
+  if (doc.form != null) return parseFormBlock(doc, ctx)
+  throw new Error('Block must be one of ["table", "descriptions", "form"]')
+}
+
+function parseTableBlock(doc: YamlBlockType, ctx: ParseContext): TableBlock {
+  const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
-  let block!: Block
-  if (doc.table != null) block = new TableBlock(relType, relName)
-  if (doc.descriptions != null) block = new DescriptionsBlock(relType, relName)
-  if (doc.form != null) block = new FormBlock(relType, relName)
-  if (block == null) {
-    throw new Error('Block must be one of ["table", "descriptions", "form"]')
-  }
-  return block
+  const table = doc.table as YamlBlockTableType
+
+  const tableXPath = ctx.blockXPath + '.table'
+  assertNotNull(table.items, tableXPath + '.items')
+  assertIsArray(table.items, tableXPath + '.items')
+  const model = parseModel(table.items!, ctx)
+
+  return new TableBlock(relType, relName, model)
+}
+
+function parseDescriptionsBlock(doc: YamlBlockType, ctx: ParseContext): DescriptionsBlock {
+  const relType = doc.relationship as BlockRelationshipType
+  const relName = doc.name ?? ''
+  const descriptions = doc.descriptions as YamlBlockDescriptionsType
+
+  const descriptionsXPath = ctx.blockXPath + '.descriptions'
+  assertNotNull(descriptions.items, descriptionsXPath + '.items')
+  assertIsArray(descriptions.items, descriptionsXPath + '.items')
+  const model = parseModel(descriptions.items!, ctx)
+
+  return new DescriptionsBlock(relType, relName, model)
+}
+
+function parseFormBlock(doc: YamlBlockType, ctx: ParseContext): FormBlock {
+  const relType = doc.relationship as BlockRelationshipType
+  const relName = doc.name ?? ''
+  const form = doc.form as YamlBlockFormType
+
+  const formXPath = ctx.blockXPath + '.form'
+  assertNotNull(form.items, formXPath + '.items')
+  assertIsArray(form.items, formXPath + '.items')
+  const model = parseModel(form.items!, ctx)
+
+  return new FormBlock(relType, relName, model)
+}
+
+function parseModel(doc: YamlModelAttributeType[], ctx: ParseContext): Model {
+  const model = new Model()
+  doc.forEach((item) => model.attributes.push(parseModelAttribute(item, ctx)))
+  return model
+}
+
+function parseModelAttribute(doc: YamlModelAttributeType, ctx: ParseContext): ModelAttribute {
+  return new ModelAttribute('')
 }
 
 export { parse }

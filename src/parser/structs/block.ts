@@ -1,3 +1,5 @@
+import Model from './model'
+
 enum BlockRelationshipType {
   Self = 'self',
   HasOne = 'has_one',
@@ -64,13 +66,15 @@ class TableBlock {
   relType: BlockRelationshipType
   relName: string
 
-  // Data Format
-  data?: any
+  // Data Structuring
+  model: Model
+  collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string) {
+  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
     this.relType = relType
     this.relName = relName
-    this.data = null
+    this.model = model
+    this.collection = true
   }
 }
 
@@ -134,13 +138,15 @@ class DescriptionsBlock {
   relType: BlockRelationshipType
   relName: string
 
-  // Data Format
-  data?: any
+  // Data Structuring
+  model: Model
+  collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string) {
+  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
     this.relType = relType
     this.relName = relName
-    this.data = null
+    this.model = model
+    this.collection = false
   }
 }
 
@@ -204,24 +210,20 @@ class FormBlock {
   relType: BlockRelationshipType
   relName: string
 
-  // Data Format
-  data?: any
+  // Data Structuring
+  model: Model
+  collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string) {
+  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
     this.relType = relType
     this.relName = relName
-    this.data = null
+    this.model = model
+    this.collection = false
   }
 }
 
 // .
 type Block = TableBlock | DescriptionsBlock | FormBlock
 
-export {
-  BlockRelationshipType,
-  TableBlock,
-  DescriptionsBlock,
-  FormBlock,
-  Block
-}
+export { BlockRelationshipType, TableBlock, DescriptionsBlock, FormBlock, Block }
 export default Block
