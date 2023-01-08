@@ -1,20 +1,72 @@
+// https://developers.google.com/protocol-buffers/docs/proto3#scalar
+enum BasicScalarValueType {
+  Double = 'double',
+  Float = 'float',
+  Int32 = 'int32',
+  Int64 = 'int64',
+  Uint32 = 'uint32',
+  Uint64 = 'uint64',
+  Sint32 = 'sint32',
+  Sint64 = 'sint64',
+  Fixed32 = 'fixed32',
+  Fixed64 = 'fixed64',
+  Sfixed32 = 'sfixed32',
+  Sfixed64 = 'sfixed64',
+  Bool = 'bool',
+  String = 'string'
+}
+
+enum ExtendedScalarValueType {
+  Datetime = 'datetime' // A `string` representing the datetime, formatted according to ISO8601
+}
+
+enum BasicObjectValueType {
+  Object = 'object'
+}
+
+type ScalarValueType = BasicScalarValueType | ExtendedScalarValueType
+type ObjectValueType = BasicObjectValueType
+
+class ObjectValueAttribute {
+  name: string
+  type: ScalarValueType
+  collection: boolean
+
+  constructor(name: string, type: ScalarValueType, collection: boolean) {
+    this.name = name
+    this.type = type
+    this.collection = collection
+  }
+}
+
+class ObjectValue {
+  attributes: ObjectValueAttribute[]
+
+  constructor(attributes: ObjectValueAttribute[]) {
+    this.attributes = attributes
+  }
+}
+
 class ModelAttribute {
   name: string
-  type: string
+  type: ScalarValueType | ObjectValueType
+  collection: boolean
+  object?: ObjectValue
 
-  constructor(name: string) {
+  constructor(name: string, type: ScalarValueType | ObjectValueType, collection: boolean, object?: ObjectValue) {
     this.name = name
-    this.type = ''
+    this.type = type
+    this.collection = collection
   }
 }
 
 class Model {
   attributes: ModelAttribute[]
 
-  constructor() {
-    this.attributes = []
+  constructor(attributes: ModelAttribute[]) {
+    this.attributes = attributes
   }
 }
 
-export { ModelAttribute, Model }
+export { ScalarValueType, ObjectValueType, ObjectValueAttribute, ObjectValue, ModelAttribute, Model }
 export default Model

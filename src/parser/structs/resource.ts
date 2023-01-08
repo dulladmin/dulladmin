@@ -4,9 +4,9 @@ class Resource {
   name: string
   views: View[]
 
-  constructor(name: string) {
+  constructor(name: string, views: View[]) {
     this.name = name
-    this.views = []
+    this.views = views
   }
 }
 

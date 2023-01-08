@@ -1,3 +1,4 @@
+import { assertNotNull, assertIsArray, assertIsObject, assertIsString } from './assert'
 import {
   YamlResourceType,
   YamlViewsType,
@@ -7,10 +8,8 @@ import {
   YamlBlockDescriptionsType,
   YamlBlockTableType,
   YamlModelAttributeType,
-  load,
-  assertNotNull,
-  assertIsArray,
-  assertIsBlockRelationshipType
+  YamlModelAttributeObjectAttributeType,
+  load
 } from './loader'
 import {
   Resource,
@@ -21,155 +20,150 @@ import {
   DescriptionsBlock,
   FormBlock,
   Block,
+  ScalarValueType,
+  ObjectValueType,
+  ObjectValueAttribute,
+  ObjectValue,
   ModelAttribute,
   Model
 } from './structs'
-
-class ParseContext {
-  resource: Resource
-  view?: View
-
-  constructor(resource: Resource) {
-    this.resource = resource
-  }
-
-  get blockXPath(): string {
-    return `views.${this.view!.type}.blocks[${this.view!.blocks.length}]`
-  }
-}
 
 function parse(str: string): Resource {
   return parseResource(load(str))
 }
 
 function parseResource(doc: YamlResourceType): Resource {
-  assertNotNull(doc.name, 'name')
-  assertNotNull(doc.views, 'views')
+  const name = doc.name
+  assertNotNull(name, '/name')
+  assertIsString(name, '/name')
 
-  const resource = new Resource(doc.name!)
-  const ctx = new ParseContext(resource)
-  resource.views = parseViews(doc.views!, ctx)
-  return resource
+  const views = doc.views
+  assertNotNull(views, '/views')
+  assertIsObject(views, '/views')
+  const parsedViews = parseViews(views!, '/views')
+
+  return new Resource(name!, parsedViews)
 }
 
-function parseViews(doc: YamlViewsType, ctx: ParseContext): View[] {
+function parseViews(doc: YamlViewsType, xpath: string): View[] {
   const views = []
-  if (doc.index != null) views.push(parseViewIndex(doc.index, ctx))
-  if (doc.show != null) views.push(parseViewShow(doc.show, ctx))
-  if (doc.new != null) views.push(parseViewNew(doc.new, ctx))
-  if (doc.edit != null) views.push(parseViewEdit(doc.edit, ctx))
+  if (doc.index != null) views.push(parseView(doc.index, xpath + '/index', ViewType.Index))
+  if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', ViewType.Show))
+  if (doc.new != null) views.push(parseView(doc.new, xpath + '/new', ViewType.New))
+  if (doc.edit != null) views.push(parseView(doc.edit, xpath + '/edit', ViewType.Edit))
   return views
 }
 
-function parseViewIndex(doc: YamlViewType, ctx: ParseContext): View {
-  const view = new View(ViewType.Index)
-  ctx.view = view
+function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
+  const blocks = doc.blocks
+  const blocksXPath = xpath + '/blocks'
+  assertNotNull(blocks, blocksXPath)
+  assertIsArray(blocks, blocksXPath)
+  const parsedBlocks = blocks!.map((block, idx) => parseBlock(block, blocksXPath + `[${idx}]`))
 
-  assertNotNull(doc.blocks, 'views.index.blocks')
-  assertIsArray(doc.blocks, 'views.index.blocks')
-  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
-
-  ctx.view = undefined
-  return view
+  return new View(viewType, parsedBlocks)
 }
 
-function parseViewShow(doc: YamlViewType, ctx: ParseContext): View {
-  const view = new View(ViewType.Show)
-  ctx.view = view
-
-  assertNotNull(doc.blocks, 'views.show.blocks')
-  assertIsArray(doc.blocks, 'views.show.blocks')
-  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
-
-  ctx.view = undefined
-  return view
-}
-
-function parseViewNew(doc: YamlViewType, ctx: ParseContext): View {
-  const view = new View(ViewType.New)
-  ctx.view = view
-
-  assertNotNull(doc.blocks, 'views.new.blocks')
-  assertIsArray(doc.blocks, 'views.new.blocks')
-  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
-
-  ctx.view = undefined
-  return view
-}
-
-function parseViewEdit(doc: YamlViewType, ctx: ParseContext): View {
-  const view = new View(ViewType.Edit)
-  ctx.view = view
-
-  assertNotNull(doc.blocks, 'views.edit.blocks')
-  assertIsArray(doc.blocks, 'views.edit.blocks')
-  doc.blocks!.forEach((block) => view.blocks.push(parseBlock(block, ctx)))
-
-  ctx.view = undefined
-  return view
-}
-
-function parseBlock(doc: YamlBlockType, ctx: ParseContext): Block {
-  let relType = doc.relationship as BlockRelationshipType
-  if (relType == null) {
-    relType = BlockRelationshipType.Self
-  } else {
-    assertIsBlockRelationshipType(relType, ctx.blockXPath + '.relationship')
-  }
-
-  if (doc.table != null) return parseTableBlock(doc, ctx)
-  if (doc.descriptions != null) return parseDescriptionsBlock(doc, ctx)
-  if (doc.form != null) return parseFormBlock(doc, ctx)
+function parseBlock(doc: YamlBlockType, xpath: string): Block {
+  if (doc.table != null) return parseTableBlock(doc, xpath)
+  if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath)
+  if (doc.form != null) return parseFormBlock(doc, xpath)
   throw new Error('Block must be one of ["table", "descriptions", "form"]')
 }
 
-function parseTableBlock(doc: YamlBlockType, ctx: ParseContext): TableBlock {
+function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
   const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
   const table = doc.table as YamlBlockTableType
 
-  const tableXPath = ctx.blockXPath + '.table'
-  assertNotNull(table.items, tableXPath + '.items')
-  assertIsArray(table.items, tableXPath + '.items')
-  const model = parseModel(table.items!, ctx)
+  const model = table.items
+  const modelXPath = xpath + '/table/items'
+  assertNotNull(model, modelXPath)
+  assertIsArray(model, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath)
 
-  return new TableBlock(relType, relName, model)
+  return new TableBlock(relType, relName, parsedModel)
 }
 
-function parseDescriptionsBlock(doc: YamlBlockType, ctx: ParseContext): DescriptionsBlock {
+function parseDescriptionsBlock(doc: YamlBlockType, xpath: string): DescriptionsBlock {
   const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
   const descriptions = doc.descriptions as YamlBlockDescriptionsType
 
-  const descriptionsXPath = ctx.blockXPath + '.descriptions'
-  assertNotNull(descriptions.items, descriptionsXPath + '.items')
-  assertIsArray(descriptions.items, descriptionsXPath + '.items')
-  const model = parseModel(descriptions.items!, ctx)
+  const model = descriptions.items
+  const modelXPath = xpath + '/descriptions/items'
+  assertNotNull(model, modelXPath)
+  assertIsArray(model, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath)
 
-  return new DescriptionsBlock(relType, relName, model)
+  return new DescriptionsBlock(relType, relName, parsedModel)
 }
 
-function parseFormBlock(doc: YamlBlockType, ctx: ParseContext): FormBlock {
+function parseFormBlock(doc: YamlBlockType, xpath: string): FormBlock {
   const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
   const form = doc.form as YamlBlockFormType
 
-  const formXPath = ctx.blockXPath + '.form'
-  assertNotNull(form.items, formXPath + '.items')
-  assertIsArray(form.items, formXPath + '.items')
-  const model = parseModel(form.items!, ctx)
+  const model = form.items
+  const modelXPath = xpath + '/form/items'
+  assertNotNull(model, modelXPath)
+  assertIsArray(model, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath)
 
-  return new FormBlock(relType, relName, model)
+  return new FormBlock(relType, relName, parsedModel)
 }
 
-function parseModel(doc: YamlModelAttributeType[], ctx: ParseContext): Model {
-  const model = new Model()
-  doc.forEach((item) => model.attributes.push(parseModelAttribute(item, ctx)))
-  return model
+function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
+  const parsedAttributes = doc.map((item, idx) => parseModelAttribute(item, xpath + `[${idx}]`))
+  return new Model(parsedAttributes)
 }
 
-function parseModelAttribute(doc: YamlModelAttributeType, ctx: ParseContext): ModelAttribute {
-  return new ModelAttribute('')
+function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
+  const name = doc.name
+  assertNotNull(name, xpath + '/name')
+  assertIsString(name, xpath + '/name')
+
+  let type = doc.type
+  let collection = false
+  assertNotNull(type, xpath + '/type')
+  assertIsString(type, xpath + '/type')
+  if (type!.endsWith('[]')) {
+    type = type!.replace('[]', '')
+    collection = true
+  }
+
+  let object
+  if (type === 'object') {
+    const attributes = doc.attributes
+    const attributesXPath = xpath + '/attributes'
+    assertNotNull(attributes, attributesXPath)
+    assertIsArray(attributes, attributesXPath)
+    object = parseObject(attributes!, attributesXPath)
+  }
+
+  return new ModelAttribute(name!, type as ScalarValueType | ObjectValueType, collection, object)
+}
+
+function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string): ObjectValue {
+  const parsedAttributes = doc.map((item, idx) => parseObjectAttribute(item, xpath + `[${idx}]`))
+  return new ObjectValue(parsedAttributes)
+}
+
+function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath: string): ObjectValueAttribute {
+  const name = doc.name
+  assertNotNull(name, xpath + '/name')
+  assertIsString(name, xpath + '/name')
+
+  let type = doc.type
+  let collection = false
+  assertNotNull(type, xpath + '/type')
+  assertIsString(type, xpath + '/type')
+  if (type!.endsWith('[]')) {
+    type = type!.replace('[]', '')
+    collection = true
+  }
+
+  return new ObjectValueAttribute(name!, type as ScalarValueType, collection)
 }
 
 export { parse }

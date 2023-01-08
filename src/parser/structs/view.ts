@@ -11,9 +11,9 @@ class View {
   type: ViewType
   blocks: Block[]
 
-  constructor(type: ViewType) {
+  constructor(type: ViewType, blocks: Block[]) {
     this.type = type
-    this.blocks = []
+    this.blocks = blocks
   }
 }
 
