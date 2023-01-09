@@ -1,4 +1,4 @@
-import { BlockRelationshipType } from './structs'
+import { BlockRelationshipType, ScalarValueType, ObjectValueType } from './structs'
 
 function assertNotNull(fieldValue: unknown, fieldName: string): void {
   if (fieldValue != null) return
@@ -22,7 +22,26 @@ function assertIsString(fieldValue: unknown, fieldName: string): void {
 
 function assertIsBlockRelationshipType(fieldValue: unknown, fieldName: string): void {
   if (Object.values(BlockRelationshipType).includes(fieldValue as BlockRelationshipType)) return
-  throw new Error(`Field \`${fieldName}\` must be one of ["self", "has_one", "has_many"]}`)
+  throw new Error(`Field \`${fieldName}\` must be one of ["self", "embeds_one", "embeds_many"]}`)
 }
 
-export { assertNotNull, assertIsArray, assertIsObject, assertIsString, assertIsBlockRelationshipType }
+function assertIsDullAdminValueType(fieldValue: unknown, fieldName: string): void {
+  if (Object.values(ScalarValueType).includes(fieldValue as ScalarValueType)) return
+  if (Object.values(ObjectValueType).includes(fieldValue as ObjectValueType)) return
+  throw new Error(`Field \`${fieldName}\` is not a legal value type`)
+}
+
+function assertIsDullAdminScalarValueType(fieldValue: unknown, fieldName: string): void {
+  if (Object.values(ScalarValueType).includes(fieldValue as ScalarValueType)) return
+  throw new Error(`Field \`${fieldName}\` is not a legal scalar value type`)
+}
+
+export {
+  assertNotNull,
+  assertIsArray,
+  assertIsObject,
+  assertIsString,
+  assertIsBlockRelationshipType,
+  assertIsDullAdminValueType,
+  assertIsDullAdminScalarValueType
+}

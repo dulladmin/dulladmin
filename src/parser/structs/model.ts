@@ -1,5 +1,5 @@
-// https://developers.google.com/protocol-buffers/docs/proto3#scalar
-enum BasicScalarValueType {
+enum ScalarValueType {
+  // https://developers.google.com/protocol-buffers/docs/proto3#scalar
   Double = 'double',
   Float = 'float',
   Int32 = 'int32',
@@ -13,19 +13,15 @@ enum BasicScalarValueType {
   Sfixed32 = 'sfixed32',
   Sfixed64 = 'sfixed64',
   Bool = 'bool',
-  String = 'string'
-}
+  String = 'string',
 
-enum ExtendedScalarValueType {
+  // Extended
   Datetime = 'datetime' // A `string` representing the datetime, formatted according to ISO8601
 }
 
-enum BasicObjectValueType {
+enum ObjectValueType {
   Object = 'object'
 }
-
-type ScalarValueType = BasicScalarValueType | ExtendedScalarValueType
-type ObjectValueType = BasicObjectValueType
 
 class ObjectValueAttribute {
   name: string
@@ -57,6 +53,7 @@ class ModelAttribute {
     this.name = name
     this.type = type
     this.collection = collection
+    this.object = object
   }
 }
 

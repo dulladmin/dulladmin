@@ -1,4 +1,12 @@
-import { assertNotNull, assertIsArray, assertIsObject, assertIsString } from './assert'
+import {
+  assertNotNull,
+  assertIsArray,
+  assertIsObject,
+  assertIsString,
+  assertIsBlockRelationshipType,
+  assertIsDullAdminValueType,
+  assertIsDullAdminScalarValueType
+} from './assert'
 import {
   YamlResourceType,
   YamlViewsType,
@@ -8,8 +16,7 @@ import {
   YamlBlockDescriptionsType,
   YamlBlockTableType,
   YamlModelAttributeType,
-  YamlModelAttributeObjectAttributeType,
-  load
+  YamlModelAttributeObjectAttributeType
 } from './loader'
 import {
   Resource,
@@ -27,10 +34,6 @@ import {
   ModelAttribute,
   Model
 } from './structs'
-
-function parse(str: string): Resource {
-  return parseResource(load(str))
-}
 
 function parseResource(doc: YamlResourceType): Resource {
   const name = doc.name
@@ -65,6 +68,11 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
+  const relType = doc.relationship as BlockRelationshipType
+  const relationshipXPath = xpath + '/relationship'
+  assertNotNull(relType, relationshipXPath)
+  assertIsBlockRelationshipType(relType, relationshipXPath)
+
   if (doc.table != null) return parseTableBlock(doc, xpath)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath)
   if (doc.form != null) return parseFormBlock(doc, xpath)
@@ -120,20 +128,23 @@ function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
 
 function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
   const name = doc.name
-  assertNotNull(name, xpath + '/name')
-  assertIsString(name, xpath + '/name')
+  const nameXPath = xpath + '/name'
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
 
   let type = doc.type
   let collection = false
-  assertNotNull(type, xpath + '/type')
-  assertIsString(type, xpath + '/type')
+  const typeXPath = xpath + '/type'
+  assertNotNull(type, typeXPath)
+  assertIsString(type, typeXPath)
+  assertIsDullAdminValueType(type!.replace('[]', ''), typeXPath)
   if (type!.endsWith('[]')) {
     type = type!.replace('[]', '')
     collection = true
   }
 
   let object
-  if (type === 'object') {
+  if (type === ObjectValueType.Object) {
     const attributes = doc.attributes
     const attributesXPath = xpath + '/attributes'
     assertNotNull(attributes, attributesXPath)
@@ -151,13 +162,16 @@ function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string
 
 function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath: string): ObjectValueAttribute {
   const name = doc.name
-  assertNotNull(name, xpath + '/name')
-  assertIsString(name, xpath + '/name')
+  const nameXPath = xpath + '/name'
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
 
   let type = doc.type
   let collection = false
-  assertNotNull(type, xpath + '/type')
-  assertIsString(type, xpath + '/type')
+  const typeXPath = xpath + '/type'
+  assertNotNull(type, typeXPath)
+  assertIsString(type, typeXPath)
+  assertIsDullAdminScalarValueType(type!.replace('[]', ''), typeXPath)
   if (type!.endsWith('[]')) {
     type = type!.replace('[]', '')
     collection = true
@@ -166,4 +180,4 @@ function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath:
   return new ObjectValueAttribute(name!, type as ScalarValueType, collection)
 }
 
-export { parse }
+export { parseResource }

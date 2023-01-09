@@ -1,9 +1,15 @@
 import Model from './model'
 
+enum BlockType {
+  TableBlock = 'table',
+  DescriptionsBlock = 'descriptions',
+  FormBlock = 'form'
+}
+
 enum BlockRelationshipType {
   Self = 'self',
-  HasOne = 'has_one',
-  HasMany = 'has_many'
+  EmbedsOne = 'embeds_one',
+  EmbedsMany = 'embeds_many'
 }
 
 /*
@@ -62,6 +68,8 @@ enum BlockRelationshipType {
  * Note the item's id is required, and must be a `string` type.
  */
 class TableBlock {
+  type: BlockType
+
   // Data Source
   relType: BlockRelationshipType
   relName: string
@@ -71,6 +79,7 @@ class TableBlock {
   collection: boolean
 
   constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+    this.type = BlockType.TableBlock
     this.relType = relType
     this.relName = relName
     this.model = model
@@ -134,6 +143,8 @@ class TableBlock {
  * Note the item's id is required, and must be a `string` type.
  */
 class DescriptionsBlock {
+  type: BlockType
+
   // Data Source
   relType: BlockRelationshipType
   relName: string
@@ -143,6 +154,7 @@ class DescriptionsBlock {
   collection: boolean
 
   constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+    this.type = BlockType.DescriptionsBlock
     this.relType = relType
     this.relName = relName
     this.model = model
@@ -206,6 +218,8 @@ class DescriptionsBlock {
  * item's id is required, and must be a `string` type.
  */
 class FormBlock {
+  type: BlockType
+
   // Data Source
   relType: BlockRelationshipType
   relName: string
@@ -215,6 +229,7 @@ class FormBlock {
   collection: boolean
 
   constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+    this.type = BlockType.FormBlock
     this.relType = relType
     this.relName = relName
     this.model = model
@@ -225,5 +240,5 @@ class FormBlock {
 // .
 type Block = TableBlock | DescriptionsBlock | FormBlock
 
-export { BlockRelationshipType, TableBlock, DescriptionsBlock, FormBlock, Block }
+export { BlockType, BlockRelationshipType, TableBlock, DescriptionsBlock, FormBlock, Block }
 export default Block
