@@ -32,6 +32,12 @@ function semanticAnalysisResource(resource: Resource): void {
 }
 
 function semanticAnalysisView(view: View, ctx: Context): void {
+  const blockNames = view.blocks.map((block) => block.relName)
+  const dupBlockNames = blockNames.filter((name, index) => blockNames.indexOf(name) !== index)
+  if (dupBlockNames.length !== 0) {
+    throw Error(`View's blocks can not have duplicate name: ${JSON.stringify(dupBlockNames)}`)
+  }
+
   const selfBlocks = view.blocks.filter((block) => block.relType === BlockRelationshipType.Self)
   if (selfBlocks.length !== 1) {
     throw Error('View must have a self-relationship Block')
@@ -39,43 +45,27 @@ function semanticAnalysisView(view: View, ctx: Context): void {
 
   switch (view.type) {
     case ViewType.Index:
-      semanticAnalysisIndexView(view, ctx)
+      if (selfBlocks[0].type === BlockType.TableBlock) {
+        throw Error('self-relaltionship Block in IndexView must be a TableBlock')
+      }
       break
     case ViewType.Show:
-      semanticAnalysisShowView(view, ctx)
+      if (selfBlocks[0].type === BlockType.DescriptionsBlock) {
+        throw Error('self-relaltionship Block in ShowView must be a DescriptionsBlock')
+      }
       break
     case ViewType.New:
-      semanticAnalysisNewView(view, ctx)
+      if (selfBlocks[0].type === BlockType.FormBlock) {
+        throw Error('self-relaltionship Block in NewView must be a FormBlock')
+      }
       break
     case ViewType.Edit:
-      semanticAnalysisEditView(view, ctx)
+      if (selfBlocks[0].type === BlockType.FormBlock) {
+        throw Error('self-relaltionship Block in EditView must be a FormBlock')
+      }
       break
   }
-}
 
-function semanticAnalysisIndexView(view: View, ctx: Context): void {
-  if (!ctx.resource.plural) {
-    throw Error('IndexView can only be used in plural resources')
-  }
-
-  view.blocks.forEach((block) => {
-    semanticAnalysisBlock(block, ctx)
-  })
-}
-
-function semanticAnalysisShowView(view: View, ctx: Context): void {
-  view.blocks.forEach((block) => {
-    semanticAnalysisBlock(block, ctx)
-  })
-}
-
-function semanticAnalysisNewView(view: View, ctx: Context): void {
-  view.blocks.forEach((block) => {
-    semanticAnalysisBlock(block, ctx)
-  })
-}
-
-function semanticAnalysisEditView(view: View, ctx: Context): void {
   view.blocks.forEach((block) => {
     semanticAnalysisBlock(block, ctx)
   })
@@ -111,7 +101,7 @@ function semanticAnalysisModel(model: Model, ctx: Context): void {
   const attrNames = model.attributes.map((attr) => attr.name)
   const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
   if (dupAttrNames.length !== 0) {
-    throw Error(`Items can not have duplicate key: ${JSON.stringify(dupAttrNames)}`)
+    throw Error(`Block's items can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
   }
 
   model.attributes.forEach((attribute) => {
@@ -129,7 +119,7 @@ function semanticAnalysisObjectValue(object: ObjectValue, ctx: Context): void {
   const attrNames = object.attributes.map((attr) => attr.name)
   const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
   if (dupAttrNames.length !== 0) {
-    throw Error(`Attributes can not have duplicate key: ${JSON.stringify(dupAttrNames)}`)
+    throw Error(`Object's attributes can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
   }
 }
 

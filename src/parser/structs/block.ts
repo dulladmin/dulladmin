@@ -15,10 +15,10 @@ enum BlockRelationshipType {
 /*
  * Render the data into a Table, e.g.
  *
- * Definition in `dulladmin/resources/user.yml`:
+ * Definition in `dulladmin/resources/users.yml`:
  *
  *  ```yml
- *  name: "user"
+ *  name: "users"
  *  views:
  *    index:
  *      blocks:
@@ -30,7 +30,7 @@ enum BlockRelationshipType {
  *              - { name: "email", type: "string" }
  *  ```
  *
- * Virtual DOM:
+ * Virtual DOM (route: `/users.html`):
  *
  *  ```html
  *  <body>
@@ -49,14 +49,14 @@ enum BlockRelationshipType {
  *  </body>
  *  ```
  *
- * Restful API, data receive from `users#index`, a.k.a `GET /users`:
+ * Restful API, data receive from `GET /users/index/self.json`:
  *
  * ```json
  * {
  *  "status": 0,
  *  "msg": "ok",
  *  "data": {
- *    "users": [{
+ *    "collection": [{
  *      "id": "1",
  *      "name": "John Doe",
  *      "email": "johndoe@example.com"
@@ -90,10 +90,10 @@ class TableBlock {
 /*
  * Render the data into a Descriptions, e.g.
  *
- * Definition in `dulladmin/resources/user.yml`:
+ * Definition in `dulladmin/resources/users.yml`:
  *
  *  ```yml
- *  name: "user"
+ *  name: "users"
  *  views:
  *    show:
  *      blocks:
@@ -105,7 +105,7 @@ class TableBlock {
  *              - { name: "email", type: "string" }
  *  ```
  *
- * Virtual DOM:
+ * Virtual DOM (route: `/users/1.html`):
  *
  *  ```html
  *  <body>
@@ -126,21 +126,21 @@ class TableBlock {
  *  </body>
  *  ```
  *
- * Restful API, data receive from `users#show`, a.k.a `GET /users/:id`:
+ * Restful API, data receive from `GET /users/1/show/self.json`:
  *
  * ```json
  * {
  *  "status": 0,
  *  "msg": "ok",
  *  "data": {
- *    "id": "1",
- *    "name": "John Doe",
- *    "email": "johndoe@example.com"
+ *    "model": {
+ *      "id": "1",
+ *      "name": "John Doe",
+ *      "email": "johndoe@example.com"
+ *    }
  *  }
  * }
  * ```
- *
- * Note the item's id is required, and must be a `string` type.
  */
 class DescriptionsBlock {
   type: BlockType
@@ -165,10 +165,10 @@ class DescriptionsBlock {
 /*
  * Render the data into a Form, e.g.
  *
- * Definition in `dulladmin/resources/user.yml`:
+ * Definition in `dulladmin/resources/users.yml`:
  *
  *  ```yml
- *  name: "user"
+ *  name: "users"
  *  views:
  *    new:
  *      blocks:
@@ -179,11 +179,11 @@ class DescriptionsBlock {
  *              - { name: "email", type: "string" }
  *  ```
  *
- * Virtual DOM:
+ * Virtual DOM (route: `/users/new.html`):
  *
  *  ```html
  *  <body>
- *    <form action="/users" method="POST">
+ *    <form action="/users/new/self.json" method="PUT">
  *      <div>
  *        <label>Name</label>
  *        <input type="text"></input>
@@ -199,23 +199,24 @@ class DescriptionsBlock {
  *  </body>
  *  ```
  *
- * Restful API, data receive from `users#new`, a.k.a `GET /users/new`,
- * and send to `users#create`, a.k.a `POST /users`:
+ * Restful API, data receive from `GET /users/new/self/edit.json`,
+ * and send to `PUT /users/new/self.json`.
  *
  * ```json
  * {
  *  "status": 0,
  *  "msg": "ok",
  *  "data": {
- *    "name": "",
- *    "email": ""
+ *    "model": {
+ *      "name": "John Doe",
+ *      "email": "johndoe@example.com"
+ *    }
  *  }
  * }
  * ```
  *
- * In 'edit' View, data receive from `users#edit`, a.k.a `GET /users/:id/edit`,
- * and send to `users#update`, a.k.a `PUT /users/:id/update`. And note the
- * item's id is required, and must be a `string` type.
+ * In EditView, data receive from `GET /users/:id/edit/self/edit.json`,
+ * and send to `PUT /users/:id/edit/self.json`.
  */
 class FormBlock {
   type: BlockType

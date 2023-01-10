@@ -68,10 +68,22 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
+  if (doc.relationship == null) {
+    doc.relationship = 'self'
+  }
+  if (doc.relationship === 'self' && doc.name == null) {
+    doc.name = 'self'
+  }
+
   const relType = doc.relationship as BlockRelationshipType
   const relationshipXPath = xpath + '/relationship'
   assertNotNull(relType, relationshipXPath)
   assertIsBlockRelationshipType(relType, relationshipXPath)
+
+  const relName = doc.name
+  const nameXPath = xpath + '/name'
+  assertNotNull(relName, nameXPath)
+  assertIsString(relName, nameXPath)
 
   if (doc.table != null) return parseTableBlock(doc, xpath)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath)
