@@ -11,13 +11,13 @@ export default function setupUserAuthGuard(router: Router) {
       return;
     }
 
-    if (to.name === 'login') {
+    if (to.name === '$login') {
       next();
       return;
     }
 
     next({
-      name: 'login',
+      name: '$login',
       query: {
         redirect: to.name,
         ...to.query,

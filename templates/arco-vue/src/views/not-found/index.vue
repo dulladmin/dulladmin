@@ -13,11 +13,11 @@
   const router = useRouter();
 
   const back = () => {
-    router.push({ name: 'dashboard' });
+    router.push({ name: '$welcome' });
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .content {
     position: absolute;
     top: 50%;

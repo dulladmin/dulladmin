@@ -9,7 +9,7 @@
   import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import jaJP from '@arco-design/web-vue/es/locale/lang/ja-jp';
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
-  import useLocale from '@/hooks/locale';
+  import { useLocale } from '@/hooks';
 
   const { currentLocale } = useLocale();
 

@@ -64,7 +64,7 @@
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
-  import useLoading from '@/hooks/loading';
+  import { useLoading } from '@/hooks';
   import { useUserStore } from '@/store';
   import type { CreateRequestForm as AuthCreateRequestForm } from '@/api/auth';
 
@@ -96,7 +96,7 @@
 
       const { redirect, ...othersQuery } = router.currentRoute.value.query;
       router.push({
-        name: (redirect as string) || 'dashboard',
+        name: (redirect as string) || '$welcome',
         query: {
           ...othersQuery,
         },
