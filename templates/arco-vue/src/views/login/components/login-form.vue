@@ -120,12 +120,14 @@
       font-weight: 500;
       font-size: 24px;
       line-height: 32px;
+      text-align: center;
     }
 
     &-error-message {
       height: 32px;
       color: rgb(var(--red-6));
       line-height: 32px;
+      text-align: center;
     }
   }
 </style>

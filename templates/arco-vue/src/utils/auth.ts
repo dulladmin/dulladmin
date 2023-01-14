@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'auth.token';
+const TOKEN_KEY = 'user.token';
 
 const isLoggedIn = () => {
   return !!localStorage.getItem(TOKEN_KEY);

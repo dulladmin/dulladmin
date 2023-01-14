@@ -7,10 +7,12 @@ export default {
   'navbar.screen.toExit': '点击退出全屏模式',
   'navbar.screen.toFull': '点击切换全屏模式',
   'navbar.user.logout': '登出账号',
-  'login.form.title': '登入',
+  'login.form.title': 'DullAdmin',
   'login.form.username.placeholder': '用户名',
   'login.form.username.presence.message': '不能为空',
   'login.form.password.placeholder': '密码',
   'login.form.password.presence.message': '不能为空',
   'login.form.login': '登入',
+  'not-found.descriptions.title': '没有找到相关页面',
+  'not-found.descriptions.back': '返回',
 };

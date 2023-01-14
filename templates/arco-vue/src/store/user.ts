@@ -12,7 +12,8 @@ const useUserStore = defineStore('user', () => {
   const info = useStorage<UserInfo>(
     'user.info',
     { name: 'unknown', role: 'unknown' },
-    localStorage
+    localStorage,
+    { mergeDefaults: true }
   );
 
   const login = async (formData: AuthCreateRequestForm) => {

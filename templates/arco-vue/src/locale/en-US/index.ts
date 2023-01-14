@@ -7,10 +7,12 @@ export default {
   'navbar.screen.toExit': 'Click to exit the full screen mode',
   'navbar.screen.toFull': 'Click to switch to full screen mode',
   'navbar.user.logout': 'Logout',
-  'login.form.title': 'Login',
+  'login.form.title': 'DullAdmin',
   'login.form.username.placeholder': 'Username',
   'login.form.username.presence.message': 'cannot be empty',
   'login.form.password.placeholder': 'Password',
   'login.form.password.presence.message': 'cannot be empty',
   'login.form.login': 'Login',
+  'not-found.descriptions.title': 'Not Found',
+  'not-found.descriptions.back': 'Back',
 };

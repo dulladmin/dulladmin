@@ -146,7 +146,7 @@
     attribute: 'arco-theme',
     valueDark: 'dark',
     valueLight: 'light',
-    storageKey: 'arco-theme',
+    storageKey: 'arco.theme',
     onChanged(dark: boolean) {
       appStore.changeTheme(dark);
     },
