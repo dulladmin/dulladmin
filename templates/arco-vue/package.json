@@ -1,10 +1,10 @@
 {
-  "name": "",
-  "description": "",
-  "version": "0.0.1",
   "private": true,
-  "author": "",
-  "license": "",
+  "name": "dulladmin-arco-design-pro",
+  "version": "0.0.1",
+  "description": "DullAdmin + Arco Design Pro",
+  "author": "John Doe <johndoe@example.com>",
+  "license": "MIT",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
