@@ -1,12 +1,10 @@
 import { createI18n as _createI18n } from 'vue-i18n';
 import enUS from './en-US';
-import jaJP from './ja-JP';
 import zhCN from './zh-CN';
 
 const LOCALE_OPTIONS = [
   { label: 'English', value: 'en-US' },
-  { label: '日本語', value: 'ja-JP' },
-  { label: '中文', value: 'zh-CN' },
+  { label: '简体中文', value: 'zh-CN' },
 ];
 
 const i18n = (() => {
@@ -19,7 +17,6 @@ const i18n = (() => {
     allowComposition: true,
     messages: {
       'en-US': enUS,
-      'ja-JP': jaJP,
       'zh-CN': zhCN,
     },
   });

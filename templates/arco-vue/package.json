@@ -78,9 +78,5 @@
   },
   "engines": {
     "node": ">=14.0.0"
-  },
-  "resolutions": {
-    "rollup": "^2.56.3",
-    "gifsicle": "5.2.0"
   }
 }

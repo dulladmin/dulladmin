@@ -57,6 +57,7 @@ export default function configStyleImportPlugin() {
             'input-group': 'input',
             'radio-group': 'radio',
             'checkbox-group': 'checkbox',
+            'button-group': 'button',
             'layout-sider': 'layout',
             'layout-content': 'layout',
             'layout-footer': 'layout',

@@ -9,8 +9,9 @@ export interface CreateRequest {
   form: CreateRequestForm;
 }
 
-interface CreateResponseUserInfo {
+export interface CreateResponseUserInfo {
   name: string;
+  role: string;
 }
 
 interface CreateResponse {

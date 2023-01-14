@@ -7,7 +7,6 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
-  import jaJP from '@arco-design/web-vue/es/locale/lang/ja-jp';
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import { useLocale } from '@/hooks';
 
@@ -17,8 +16,6 @@
     switch (currentLocale.value) {
       case 'en-US':
         return enUS;
-      case 'ja-JP':
-        return jaJP;
       case 'zh-CN':
         return zhCN;
       default:
