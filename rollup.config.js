@@ -16,13 +16,17 @@ export default [
     }
   },
   {
+    external: ['yargs'],
     input: 'src/cli.ts',
     output: [
       {
         file: 'dist/cli.js',
-        format: 'cjs'
+        format: 'es'
       }
     ],
-    plugins: [resolve(), typescript()]
+    plugins: [resolve(), typescript()],
+    watch: {
+      include: 'src/**'
+    }
   }
 ]
