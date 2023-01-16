@@ -1,6 +1,6 @@
-import { spawn } from 'child-process-promise'
 import path from 'path'
 import chalk from 'chalk'
+import { spawn } from 'child-process-promise'
 import { fs, logger } from './utils'
 
 const install = {
