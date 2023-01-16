@@ -1,5 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs'
 import copy from 'rollup-plugin-copy'
 import del from 'rollup-plugin-delete'
 
@@ -18,8 +19,8 @@ export default [
     }
   },
   {
-    external: ['yargs'],
-    input: 'src/cli.ts',
+    external: ['chalk', 'child-process-promise', 'cosmiconfig', 'fs-extra', 'lodash.merge', 'yargs'],
+    input: 'src/cli/index.ts',
     output: [
       {
         file: 'dist/cli.js',
@@ -29,6 +30,7 @@ export default [
     plugins: [
       resolve(),
       typescript(),
+      commonjs(),
       copy({
         targets: [
           {
@@ -47,8 +49,7 @@ export default [
             ],
             dest: 'dist/templates/arco-vue'
           }
-        ],
-        verbose: true
+        ]
       }),
       del({
         targets: ['**/.DS_Store', '**/yarn-error.log']
