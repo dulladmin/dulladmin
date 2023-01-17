@@ -1,12 +1,12 @@
 import { Resource } from './structs'
-import { load } from './loader'
+import { loadResource } from './loader'
 import { parseResource } from './parser'
 import { semanticAnalysisResource } from './semantic'
 
-function parse(str: string): Resource {
-  const resource = parseResource(load(str))
+function parseResourceFile(str: string): Resource {
+  const resource = parseResource(loadResource(str))
   semanticAnalysisResource(resource)
   return resource
 }
 
-export { parse }
+export { parseResourceFile }

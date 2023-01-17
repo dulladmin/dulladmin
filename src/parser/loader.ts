@@ -47,7 +47,7 @@ interface YamlModelAttributeObjectAttributeType {
   type?: string
 }
 
-function load(str: string): YamlResourceType {
+function loadResource(str: string): YamlResourceType {
   return yaml.load(str) as YamlResourceType
 }
 
@@ -61,5 +61,5 @@ export {
   YamlBlockFormType,
   YamlModelAttributeType,
   YamlModelAttributeObjectAttributeType,
-  load
+  loadResource
 }

@@ -1,6 +1,7 @@
+import child_process from 'child_process'
 import path from 'path'
+import util from 'util'
 import chalk from 'chalk'
-import { spawn } from 'child-process-promise'
 import { fs, logger } from './utils'
 
 const install = {
@@ -12,7 +13,7 @@ const install = {
 
     if (await fs.pathExists(clientDir)) {
       logger.error('The given path already exists')
-      return
+      process.exit(1)
     }
 
     try {
@@ -23,21 +24,22 @@ const install = {
       await fs.copy(templateDir, clientDir)
     } catch (err) {
       logger.error((err as Error).message)
-      return
+      process.exit(1)
     }
 
     try {
       logger.info('[2/2] Setting up project dependency...')
-      await spawn('bin/setup', [], { cwd: clientDir, stdio: 'inherit' })
+      await util.promisify(child_process.spawn)('bin/setup', [], { cwd: clientDir, stdio: 'inherit' })
     } catch (err) {
       logger.error((err as Error).message)
+      process.exit(1)
     }
   }
 }
 
 const update = {
   command: 'client:update',
-  desc: 'Update the client to latest version',
+  desc: 'Update the skeletal to latest version',
   handler: async (argv: any): Promise<void> => {
     const clientDir = path.resolve(argv.config.clientDir)
     logger.info('Updating the client at ' + chalk.green(clientDir))
@@ -45,7 +47,7 @@ const update = {
     const pkgFile = path.resolve(clientDir, 'package.json')
     if (!(await fs.pathExists(pkgFile))) {
       logger.error('The given path is not valid')
-      return
+      process.exit(1)
     }
 
     try {
@@ -56,14 +58,15 @@ const update = {
       await fs.copy(templateDir, clientDir)
     } catch (err) {
       logger.error((err as Error).message)
-      return
+      process.exit(1)
     }
 
     try {
       logger.info('[2/2] Setting up project dependency...')
-      await spawn('bin/setup', [], { cwd: clientDir, stdio: 'inherit' })
+      await util.promisify(child_process.spawn)('bin/setup', [], { cwd: clientDir, stdio: 'inherit' })
     } catch (err) {
       logger.error((err as Error).message)
+      process.exit(1)
     }
   }
 }

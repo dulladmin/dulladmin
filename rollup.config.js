@@ -6,6 +6,7 @@ import del from 'rollup-plugin-delete'
 
 export default [
   {
+    external: ['js-yaml'],
     input: 'src/index.ts',
     output: [
       {
@@ -19,7 +20,7 @@ export default [
     }
   },
   {
-    external: ['chalk', 'child-process-promise', 'cosmiconfig', 'fs-extra', 'lodash.merge', 'yargs'],
+    external: ['chalk', 'cosmiconfig', 'fs-extra', 'lodash.merge', 'yargs'],
     input: 'src/cli/index.ts',
     output: [
       {

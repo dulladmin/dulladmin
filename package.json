@@ -73,7 +73,6 @@
   },
   "dependencies": {
     "chalk": "^5.2.0",
-    "child-process-promise": "^2.2.1",
     "cosmiconfig": "^8.0.0",
     "fs-extra": "^11.1.0",
     "js-yaml": "^4.0.5",

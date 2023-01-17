@@ -1,6 +1,7 @@
 import { cosmiconfig } from 'cosmiconfig'
 import merge from 'lodash.merge'
 import yargs from 'yargs'
+import { build } from './build'
 import { install as clientInstall, update as clientUpdate } from './client'
 
 export async function run(): Promise<void> {
@@ -18,6 +19,7 @@ export async function run(): Promise<void> {
         clientDir: './client'
       })
     })
+    .command(build)
     .command(clientInstall)
     .command(clientUpdate)
     .demandCommand()
