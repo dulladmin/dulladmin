@@ -6,10 +6,10 @@
   "author": "John Doe <johndoe@example.com>",
   "license": "MIT",
   "scripts": {},
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "dulladmin": "file:../.."
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=14.0.0"
   }

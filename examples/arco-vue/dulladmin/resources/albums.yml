@@ -1,0 +1,10 @@
+name: 'albums'
+views:
+  index:
+    blocks:
+      - table:
+          items:
+            - name: 'id'
+              type: 'string'
+            - name: 'title'
+              type: 'string'

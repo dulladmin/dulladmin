@@ -20,7 +20,7 @@
   const router = useRouter();
 
   const back = () => {
-    router.push({ name: '$welcome' });
+    router.push({ name: '$app' });
   };
 </script>
 

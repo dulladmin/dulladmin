@@ -1,0 +1,40 @@
+name: 'users'
+views:
+  index:
+    blocks:
+      - table:
+          items:
+            - name: 'id'
+              type: 'string'
+            - name: 'name'
+              type: 'string'
+            - name: 'username'
+              type: 'string'
+            - name: 'email'
+              type: 'string'
+            - name: 'address'
+              type: 'object'
+              attributes:
+                - name: 'street'
+                  type: 'string'
+                - name: 'suite'
+                  type: 'string'
+                - name: 'city'
+                  type: 'string'
+                - name: 'zipcode'
+                  type: 'string'
+                - name: 'geo'
+                  type: 'string'
+            - name: 'phone'
+              type: 'string'
+            - name: 'website'
+              type: 'string'
+            - name: 'company'
+              type: 'object'
+              attributes:
+                - name: 'name'
+                  type: 'string'
+                - name: 'catchPhrase'
+                  type: 'string'
+                - name: 'bs'
+                  type: 'string'

@@ -1,0 +1,12 @@
+name: 'todos'
+views:
+  index:
+    blocks:
+      - table:
+          items:
+            - name: 'id'
+              type: 'string'
+            - name: 'title'
+              type: 'string'
+            - name: 'completed'
+              type: 'boolean'

@@ -1,4 +1,4 @@
-import type { RouteRecordNormalized } from 'vue-router';
+import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router';
 
 function formatModules(_modules: any, result: RouteRecordNormalized[]) {
   Object.keys(_modules).forEach((key) => {
@@ -11,8 +11,27 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
   });
   return result;
 }
-
 const modules = import.meta.glob('./modules/*.ts', { eager: true });
 const appRoutes: RouteRecordNormalized[] = formatModules(modules, []);
 
-export default appRoutes;
+// Routes: /login
+export const ROUTE_LOGIN: RouteRecordRaw = {
+  path: '/login',
+  name: '$login',
+  component: () => import('@/views/login/index.vue'),
+};
+
+// Routes: /
+export const ROUTE_MAIN: RouteRecordRaw = {
+  path: '/',
+  name: '$app',
+  component: () => import('@/layouts/main.vue'),
+  children: appRoutes,
+};
+
+// Routes /:pathMatch(.*)*
+export const ROUTE_NOT_FOUND: RouteRecordRaw = {
+  path: '/:pathMatch(.*)*',
+  name: '$not-found',
+  component: () => import('@/views/not-found/index.vue'),
+};

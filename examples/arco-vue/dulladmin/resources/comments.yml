@@ -1,0 +1,14 @@
+name: 'comments'
+views:
+  index:
+    blocks:
+      - table:
+          items:
+            - name: 'id'
+              type: 'string'
+            - name: 'name'
+              type: 'string'
+            - name: 'email'
+              type: 'string'
+            - name: 'body'
+              type: 'string'
