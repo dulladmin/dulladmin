@@ -45,22 +45,22 @@ function semanticAnalysisView(view: View, ctx: Context): void {
 
   switch (view.type) {
     case ViewType.Index:
-      if (selfBlocks[0].type === BlockType.TableBlock) {
+      if (selfBlocks[0].type !== BlockType.TableBlock) {
         throw Error('self-relaltionship Block in IndexView must be a TableBlock')
       }
       break
     case ViewType.Show:
-      if (selfBlocks[0].type === BlockType.DescriptionsBlock) {
+      if (selfBlocks[0].type !== BlockType.DescriptionsBlock) {
         throw Error('self-relaltionship Block in ShowView must be a DescriptionsBlock')
       }
       break
     case ViewType.New:
-      if (selfBlocks[0].type === BlockType.FormBlock) {
+      if (selfBlocks[0].type !== BlockType.FormBlock) {
         throw Error('self-relaltionship Block in NewView must be a FormBlock')
       }
       break
     case ViewType.Edit:
-      if (selfBlocks[0].type === BlockType.FormBlock) {
+      if (selfBlocks[0].type !== BlockType.FormBlock) {
         throw Error('self-relaltionship Block in EditView must be a FormBlock')
       }
       break

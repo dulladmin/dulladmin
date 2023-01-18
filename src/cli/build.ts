@@ -1,6 +1,10 @@
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import chalk from 'chalk'
-import { fs, logger } from './utils'
+import fse from 'fs-extra'
+import { globby } from 'globby'
+import { parseResourceFile } from '@/parser'
+import logger from '@/logger'
 
 const build = {
   command: 'build',
@@ -9,10 +13,22 @@ const build = {
     const dulladminDir = path.resolve(process.cwd(), 'dulladmin')
     logger.info('Parsing DULLADMIN_FILES in ' + chalk.green(dulladminDir))
 
-    if (!(await fs.pathExists(dulladminDir))) {
+    if (!(await fse.pathExists(dulladminDir))) {
       logger.error('The given path does not exist')
       process.exit(1)
     }
+
+    const files = await globby('resources/*.yml', { cwd: dulladminDir })
+    files.forEach((file) => {
+      try {
+        logger.info('  ' + chalk.green(file))
+        const data = fs.readFileSync(path.resolve(dulladminDir, file), 'utf8')
+        parseResourceFile(data)
+      } catch (err) {
+        logger.error((err as Error).message)
+        process.exit(1)
+      }
+    })
   }
 }
 

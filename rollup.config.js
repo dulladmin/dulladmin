@@ -6,25 +6,11 @@ import del from 'rollup-plugin-delete'
 
 export default [
   {
-    external: ['js-yaml'],
+    external: ['chalk', 'cosmiconfig', 'fs-extra', 'globby', 'js-yaml', 'lodash.merge', 'yargs'],
     input: 'src/index.ts',
     output: [
       {
         file: 'dist/index.js',
-        format: 'es'
-      }
-    ],
-    plugins: [resolve(), typescript()],
-    watch: {
-      include: 'src/**'
-    }
-  },
-  {
-    external: ['chalk', 'cosmiconfig', 'fs-extra', 'lodash.merge', 'yargs'],
-    input: 'src/cli/index.ts',
-    output: [
-      {
-        file: 'dist/cli.js',
         format: 'es'
       }
     ],
