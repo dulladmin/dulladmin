@@ -1,15 +1,12 @@
 import child_process from 'node:child_process'
 import path from 'node:path'
-import url from 'node:url'
 import util from 'node:util'
 import chalk from 'chalk'
 import fse from 'fs-extra'
 import logger from '@/logger'
+import { findGenerator } from '@/codegen'
 
-const _filename = url.fileURLToPath(import.meta.url)
-const _dirname = path.dirname(_filename)
-
-const install = {
+export const install = {
   command: 'client:install',
   desc: 'Generate a skeletal installation in clientDir',
   handler: async (argv: any): Promise<void> => {
@@ -17,16 +14,16 @@ const install = {
     logger.info('Installing the client at ' + chalk.green(clientDir))
 
     if (await fse.pathExists(clientDir)) {
-      logger.error('The given path already exists')
+      logger.error('The clientDir is already exists')
       process.exit(1)
     }
 
     try {
       logger.info('[1/2] Copying template content...')
       const templateName = 'arco-vue'
-      const templateDir = path.resolve(_dirname, 'templates/' + templateName)
+      const generator = findGenerator(templateName)
       await fse.ensureDir(clientDir)
-      await fse.copy(templateDir, clientDir)
+      await fse.copy(generator.templateDir, clientDir)
     } catch (err) {
       logger.error((err as Error).message)
       process.exit(1)
@@ -42,7 +39,7 @@ const install = {
   }
 }
 
-const update = {
+export const update = {
   command: 'client:update',
   desc: 'Update the skeletal to latest version',
   handler: async (argv: any): Promise<void> => {
@@ -51,16 +48,16 @@ const update = {
 
     const pkgFile = path.resolve(clientDir, 'package.json')
     if (!(await fse.pathExists(pkgFile))) {
-      logger.error('The given path is not valid')
+      logger.error('The clientDir is not valid')
       process.exit(1)
     }
 
     try {
       logger.info('[1/2] Copying template content...')
       const templateName = 'arco-vue'
-      const templateDir = path.resolve(_dirname, 'templates/' + templateName)
+      const generator = findGenerator(templateName)
       await fse.ensureDir(clientDir)
-      await fse.copy(templateDir, clientDir)
+      await fse.copy(generator.templateDir, clientDir)
     } catch (err) {
       logger.error((err as Error).message)
       process.exit(1)
@@ -75,5 +72,3 @@ const update = {
     }
   }
 }
-
-export { install, update }

@@ -6,7 +6,7 @@ import del from 'rollup-plugin-delete'
 
 export default [
   {
-    external: ['chalk', 'cosmiconfig', 'fs-extra', 'globby', 'js-yaml', 'lodash.merge', 'yargs'],
+    external: ['chalk', 'cosmiconfig', 'fs-extra', 'globby', 'handlebars', 'js-yaml', 'lodash.merge', 'yargs'],
     input: 'src/index.ts',
     output: [
       {

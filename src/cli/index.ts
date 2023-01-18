@@ -16,6 +16,7 @@ export async function run(): Promise<void> {
       const explorer = cosmiconfig('dulladmin')
       const result = argv.config != null ? await explorer.load(argv.config) : await explorer.search()
       argv.config = merge(result?.config ?? {}, {
+        dulladminDir: './dulladmin',
         clientDir: './client'
       })
     })
