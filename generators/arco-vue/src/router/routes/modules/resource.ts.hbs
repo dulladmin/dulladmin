@@ -1,0 +1,7 @@
+import type { RouteRecordRaw } from 'vue-router'; const routes: RouteRecordRaw[] = [];
+
+{{#each routes}}
+  routes.push({ path: '{{path}}', name: '{{name}}', component: () => import('{{component}}'), });
+{{/each}}
+
+export default routes;

@@ -22,6 +22,7 @@
     "dulladmin": "bin/dulladmin.mjs"
   },
   "files": [
+    "dist/generators/**/*",
     "dist/templates/**/*",
     "dist/types/**/*",
     "dist/index.js",

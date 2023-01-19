@@ -10,7 +10,7 @@ export const install = {
   command: 'client:install',
   desc: 'Generate a skeletal installation in clientDir',
   handler: async (argv: any): Promise<void> => {
-    const clientDir = path.resolve(argv.config.clientDir)
+    const clientDir = argv.config.clientDir
     logger.info('Installing the client at ' + chalk.green(clientDir))
 
     if (await fse.pathExists(clientDir)) {
@@ -43,10 +43,10 @@ export const update = {
   command: 'client:update',
   desc: 'Update the skeletal to latest version',
   handler: async (argv: any): Promise<void> => {
-    const clientDir = path.resolve(argv.config.clientDir)
+    const clientDir = argv.config.clientDir
     logger.info('Updating the client at ' + chalk.green(clientDir))
 
-    const pkgFile = path.resolve(clientDir, 'package.json')
+    const pkgFile = path.join(clientDir, 'package.json')
     if (!(await fse.pathExists(pkgFile))) {
       logger.error('The clientDir is not valid')
       process.exit(1)

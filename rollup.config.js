@@ -21,24 +21,29 @@ export default [
       copy({
         targets: [
           {
+            // Templates
             src: [
               'templates/arco-vue/*',
               'templates/arco-vue/.*',
               '!templates/arco-vue/node_modules',
               '!templates/arco-vue/dist',
               '!templates/arco-vue/dist-ssr',
-
-              // The 'rollup-plugin-copy' will not ignore files in subdirectories,
-              // use 'rollup-plugin-delete' to delete them later.
               '!templates/arco-vue/.env',
               '!templates/arco-vue/.DS_Store',
               '!templates/arco-vue/yarn-error.log'
             ],
             dest: 'dist/templates/arco-vue'
+          },
+          {
+            // Generators
+            src: 'generators/arco-vue/*',
+            dest: 'dist/generators/arco-vue'
           }
         ]
       }),
       del({
+        // The 'rollup-plugin-copy' will not ignore files in subdirectories,
+        // use 'rollup-plugin-delete' to delete them later.
         targets: ['**/.DS_Store', '**/yarn-error.log']
       })
     ]

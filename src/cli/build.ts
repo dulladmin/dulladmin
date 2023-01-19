@@ -11,8 +11,8 @@ export const build = {
   command: 'build',
   desc: 'Parse DULLADMIN_FILES and generate output in clientDir',
   handler: async (argv: any): Promise<void> => {
-    const dulladminDir = path.resolve(argv.config.dulladminDir)
-    const clientDir = path.resolve(argv.config.clientDir)
+    const dulladminDir = argv.config.dulladminDir
+    const clientDir = argv.config.clientDir
     logger.info('Parsing DULLADMIN_FILES in ' + chalk.green(dulladminDir))
     logger.info('  output to ' + chalk.green(clientDir))
 
@@ -26,7 +26,7 @@ export const build = {
       process.exit(1)
     }
 
-    const pkgFile = path.resolve(clientDir, 'package.json')
+    const pkgFile = path.join(clientDir, 'package.json')
     if (!(await fse.pathExists(pkgFile))) {
       logger.error('The clientDir is not valid')
       process.exit(1)
@@ -37,11 +37,16 @@ export const build = {
     const files = await globby('resources/*.yml', { cwd: dulladminDir })
     files.forEach((file) => {
       try {
+        file = path.join(dulladminDir, file)
         logger.info(chalk.green(file))
-        const data = fs.readFileSync(path.resolve(dulladminDir, file), 'utf8')
+        const data = fs.readFileSync(file, 'utf8')
         const resource = parseResourceFile(data)
-        const files = generator.buildResource(resource)
-        console.log(files)
+        const outputFiles = generator.buildResource(resource)
+        outputFiles.forEach((outputFile) => {
+          const outputFilePath = path.join(clientDir, outputFile.name)
+          logger.info(outputFilePath)
+          fs.writeFileSync(outputFilePath, outputFile.content)
+        })
       } catch (err) {
         logger.error((err as Error).message)
         process.exit(1)
