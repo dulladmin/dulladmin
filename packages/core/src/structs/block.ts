@@ -53,7 +53,7 @@ enum BlockRelationshipType {
  *
  * ```json
  * {
- *  "status": 0,
+ *  "code": 0,
  *  "msg": "ok",
  *  "data": {
  *    "collection": [{
@@ -130,7 +130,7 @@ class TableBlock {
  *
  * ```json
  * {
- *  "status": 0,
+ *  "code": 0,
  *  "msg": "ok",
  *  "data": {
  *    "model": {
@@ -199,12 +199,12 @@ class DescriptionsBlock {
  *  </body>
  *  ```
  *
- * Restful API, data receive from `GET /users/new/self/edit.json`,
+ * Restful API, data receive from `GET /users/new/self.json`,
  * and send to `PUT /users/new/self.json`.
  *
  * ```json
  * {
- *  "status": 0,
+ *  "code": 0,
  *  "msg": "ok",
  *  "data": {
  *    "model": {
@@ -215,7 +215,7 @@ class DescriptionsBlock {
  * }
  * ```
  *
- * In EditView, data receive from `GET /users/:id/edit/self/edit.json`,
+ * In EditView, data receive from `GET /users/:id/edit/self.json`,
  * and send to `PUT /users/:id/edit/self.json`.
  */
 class FormBlock {

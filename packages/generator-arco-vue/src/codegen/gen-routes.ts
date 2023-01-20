@@ -6,24 +6,18 @@ import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
 
 export function genRoutes(resource: Resource): GeneratedFile[] {
-  const routes = resource.views.map((view) => {
-    const path = genRoutePath(resource, view)
-    const name = genRouteName(resource, view)
-    const component = genRouteComponent(resource, view)
-    return { path, name, component }
-  })
-
-  const templateFilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
-  const templateFileContent = Handlebars.compile(fs.readFileSync(templateFilePath, 'utf-8'))
-  return [
-    {
-      path: `src/router/routes/modules/${resource.name}.ts`,
-      content: templateFileContent({ routes })
-    }
-  ]
+  const routes = resource.views.map((view) => calcRouteInfo(resource, view))
+  return [buildRouteInfoFile(resource, routes)]
 }
 
-function genRoutePath(resource: Resource, view: View): string {
+function calcRouteInfo(resource: Resource, view: View): Record<string, string> {
+  const path = calcRoutePath(resource, view)
+  const name = calcRouteName(resource, view)
+  const component = calcRouteComponent(resource, view)
+  return { path, name, component }
+}
+
+function calcRoutePath(resource: Resource, view: View): string {
   switch (view.type) {
     case ViewType.Index:
       if (resource.singular) throw Error('Unreachable')
@@ -37,10 +31,18 @@ function genRoutePath(resource: Resource, view: View): string {
   }
 }
 
-function genRouteName(resource: Resource, view: View): string {
+function calcRouteName(resource: Resource, view: View): string {
   return `${resource.name}#${view.type}`
 }
 
-function genRouteComponent(resource: Resource, view: View): string {
+function calcRouteComponent(resource: Resource, view: View): string {
   return `@/views/modules/${resource.name}/${view.type}/index.vue`
+}
+
+function buildRouteInfoFile(resource: Resource, routes: Array<Record<string, string>>): GeneratedFile {
+  const infilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
+  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
+  const outfilePath = `src/router/routes/modules/${resource.name}.ts`
+  const outfileContent = infileContent({ routes })
+  return { path: outfilePath, content: outfileContent }
 }

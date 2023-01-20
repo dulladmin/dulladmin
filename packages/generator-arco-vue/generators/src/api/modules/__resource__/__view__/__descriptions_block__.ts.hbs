@@ -1,0 +1,24 @@
+import axios from 'axios';
+
+/* Model */
+export interface Model {
+{{#each model.attributes}}
+  {{#if object.attributes}}
+  {{name}}: {
+    {{#each object.attributes}}
+    {{name}}: {{type}};
+    {{/each}}
+  }{{#if collection}}[]{{/if}};
+  {{else}}
+  {{name}}: {{type}}{{#if collection}}[]{{/if}};
+  {{/if}}
+{{/each}}
+}
+
+/* GET {{url}} */
+export interface GetResponse {
+  model: Model;
+}
+export function get(id: string) {
+  return axios.get<GetResponse>(`{{url}}`);
+}
