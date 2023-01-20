@@ -27,18 +27,17 @@
     "dist/types/**/*"
   ],
   "scripts": {
+    "dev": "rollup -wc",
+    "test": "mocha ./spec/**/*.js",
+    "clean": "rimraf ./dist",
     "format": "prettier --ignore-path=../../.prettierignore --write .",
     "format:check": "prettier --ignore-path=../../.prettierignore --check .",
     "lint": "eslint --ignore-path=../../.eslintignore --fix .",
     "lint:check": "eslint --ignore-path=../../.eslintignore .",
     "prebuild": "pnpm clean",
     "build": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
-    "dev": "rollup -wc",
     "prerelease": "pnpm build && git --no-pager diff && echo && npm pack --dry-run",
-    "release": "pnpm publish",
-    "pretest": "pnpm build",
-    "test": "mocha ./spec/**/*.js",
-    "clean": "rimraf ./dist"
+    "release": "pnpm publish"
   },
   "dependencies": {
     "@dulladmin/core": "workspace:^",

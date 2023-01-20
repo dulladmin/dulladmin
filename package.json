@@ -12,8 +12,8 @@
     "prepare": "husky install",
     "format": "pnpm -r format",
     "format:check": "pnpm -r format:check",
-    "lint": "pnpm -r lint",
-    "lint:check": "pnpm -r lint:check"
+    "lint": "pnpm -r build && pnpm -r lint",
+    "lint:check": "pnpm -r build && pnpm -r lint:check"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
