@@ -2,8 +2,11 @@ name: 'posts'
 views:
   index:
     blocks:
-      - table:
+      - relationship: 'self'
+        table:
           items:
+            - name: 'userId'
+              type: 'string'
             - name: 'id'
               type: 'string'
             - name: 'title'

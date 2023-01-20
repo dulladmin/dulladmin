@@ -4,17 +4,16 @@ import axios from 'axios';
 
 /* Model */
 export interface Model {
-  postId: string;
   id: string;
-  name: string;
-  email: string;
-  body: string;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
 }
 
-/* GET /comments/index/self */
+/* GET /albums/${id}/show/photos */
 export interface ListResponse {
   collection: Model[];
 }
-export function list() {
-  return axios.get<ListResponse>(`/comments/index/self`);
+export function list(id: string) {
+  return axios.get<ListResponse>(`/albums/${id}/show/photos`);
 }

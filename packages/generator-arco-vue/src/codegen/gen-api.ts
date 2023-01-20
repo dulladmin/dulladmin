@@ -65,47 +65,58 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 }
 
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const url = calcUrl(resource, view, block)
+  const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
   const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__table_block__.ts.hbs')
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
   const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
-  const outfileContent = infileContent({ url, model })
+  const outfileContent = infileContent({ url, requiredID, model })
   return { path: outfilePath, content: outfileContent }
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
-  const url = calcUrl(resource, view, block)
+  const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
   const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs')
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
   const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
-  const outfileContent = infileContent({ url, model })
+  const outfileContent = infileContent({ url, requiredID, model })
   return { path: outfilePath, content: outfileContent }
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
-  const url = calcUrl(resource, view, block)
+  const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
   const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__form_block__.ts.hbs')
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
   const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
-  const outfileContent = infileContent({ url, model })
+  const outfileContent = infileContent({ url, requiredID, model })
   return { path: outfilePath, content: outfileContent }
 }
 
-function calcUrl(resource: Resource, view: View, block: Block): string {
+function calcUrl(resource: Resource, view: View, block: Block): Record<string, any> {
   switch (view.type) {
     case ViewType.Index:
     case ViewType.New:
-      return `/${resource.name}/${view.type}/${block.relName}`
+      return {
+        url: `/${resource.name}/${view.type}/${block.relName}`,
+        requiredID: false
+      }
     case ViewType.Show:
     case ViewType.Edit:
-      if (resource.singular) return `${resource.name}/${view.type}/${block.relName}`
-      return `/${resource.name}/\${id}/${view.type}/${block.relName}`
+      if (resource.singular) {
+        return {
+          url: `${resource.name}/${view.type}/${block.relName}`,
+          requiredID: false
+        }
+      }
+      return {
+        url: `/${resource.name}/\${id}/${view.type}/${block.relName}`,
+        requiredID: true
+      }
   }
 }
 

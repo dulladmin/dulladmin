@@ -2,7 +2,8 @@ name: 'users'
 views:
   index:
     blocks:
-      - table:
+      - relationship: 'self'
+        table:
           items:
             - name: 'id'
               type: 'string'

@@ -2,8 +2,11 @@ name: 'comments'
 views:
   index:
     blocks:
-      - table:
+      - relationship: 'self'
+        table:
           items:
+            - name: 'postId'
+              type: 'string'
             - name: 'id'
               type: 'string'
             - name: 'name'
