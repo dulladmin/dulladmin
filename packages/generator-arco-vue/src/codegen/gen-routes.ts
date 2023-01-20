@@ -13,7 +13,7 @@ export function genRoutes(resource: Resource): GeneratedFile[] {
     return { path, name, component }
   })
 
-  const templateFilePath = path.join(generatorsDir, 'src/router/routes/modules/resource.ts.hbs')
+  const templateFilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
   const templateFileContent = Handlebars.compile(fs.readFileSync(templateFilePath, 'utf-8'))
   return [
     {
@@ -41,6 +41,6 @@ function genRouteName(resource: Resource, view: View): string {
   return `${resource.name}#${view.type}`
 }
 
-function genRouteComponent(_resource: Resource, _view: View): string {
-  return ''
+function genRouteComponent(resource: Resource, view: View): string {
+  return `@/views/modules/${resource.name}/${view.type}/index.vue`
 }

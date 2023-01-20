@@ -1,7 +1,9 @@
 /examples
 /dist
 /node_modules
+/generators
 /skeletal
 /packages/**/dist
 /packages/**/node_modules
+/packages/generator-*/generators
 /packages/generator-*/skeletal

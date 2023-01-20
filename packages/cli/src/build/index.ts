@@ -37,16 +37,19 @@ export const build = {
     resourceFiles.forEach((resourceFile) => {
       try {
         const resourceFilePath = path.join(dulladminDir, resourceFile)
-        logger.info(`   ${resourceFilePath} -> `)
+        logger.info(`    - ${resourceFilePath}`)
 
         const data = fs.readFileSync(resourceFilePath, 'utf8')
         const resource = parseResourceFile(data)
         const generatedFiles = clientGenerator.buildResource(resource)
-        generatedFiles.forEach((generatedFile) => {
-          const generatedFilePath = path.join(clientDir, generatedFile.path)
-          logger.info(`      ${generatedFilePath}`)
-          fs.writeFileSync(generatedFilePath, generatedFile.content)
-        })
+        generatedFiles.forEach(
+          (generatedFile) =>
+            (async () => {
+              const generatedFilePath = path.join(clientDir, generatedFile.path)
+              logger.info(`       + ${generatedFilePath}`)
+              await fse.outputFile(generatedFilePath, generatedFile.content)
+            })() as unknown
+        )
       } catch (err) {
         logger.error((err as Error).message)
         process.exit(1)
