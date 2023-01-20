@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "example-dulladmin-arco-design-pro",
+  "scripts": {},
+  "dependencies": {
+    "@dulladmin/cli": "file:../../packages/cli",
+    "@dulladmin/generator-arco-vue": "file:../../packages/generator-arco-vue"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

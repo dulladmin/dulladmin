@@ -1,52 +1,25 @@
 {
-  "name": "dulladmin",
-  "version": "0.0.1",
+  "private": true,
+  "name": "@dulladmin/all",
   "description": "DullAdmin is a specification for building admin panel.",
-  "keywords": [
-    "typescript",
-    "dulladmin"
-  ],
   "author": "John Doe <johndoe@example.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dulladmin/dulladmin"
   },
-  "bugs": {
-    "url": "https://github.com/dulladmin/dulladmin/issues"
-  },
-  "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
-  "bin": {
-    "dulladmin": "bin/dulladmin.mjs"
-  },
-  "files": [
-    "dist/generators/**/*",
-    "dist/templates/**/*",
-    "dist/types/**/*",
-    "dist/index.js",
-    "bin/dulladmin.mjs"
-  ],
   "scripts": {
     "prepare": "husky install",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "lint": "eslint --fix .",
-    "lint:check": "eslint .",
-    "prebuild": "yarn clean",
-    "build": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
-    "dev": "rollup -wc",
-    "prerelease": "yarn build && git --no-pager diff && echo && npm pack --dry-run",
-    "release": "npm publish",
-    "pretest": "yarn build",
-    "test": "mocha ./spec/**/*.js",
-    "clean": "rimraf ./dist"
+    "format": "pnpm -r format",
+    "format:check": "pnpm -r format:check",
+    "lint": "pnpm -r lint",
+    "lint:check": "pnpm -r lint:check"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
+    "@types/fs-extra": "^11.0.1",
     "@types/js-yaml": "^4.0.5",
     "@types/lodash.merge": "^4.6.7",
     "@types/node": "^18.11.18",
@@ -69,15 +42,5 @@
     "rollup-plugin-delete": "^2.0.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "chalk": "^5.2.0",
-    "cosmiconfig": "^8.0.0",
-    "fs-extra": "^11.1.0",
-    "globby": "^13.1.3",
-    "handlebars": "^4.7.7",
-    "js-yaml": "^4.0.5",
-    "lodash.merge": "^4.6.2",
-    "yargs": "^17.6.2"
   }
 }

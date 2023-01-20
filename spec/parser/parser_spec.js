@@ -1,3 +1,0 @@
-describe('parser', () => {
-  describe('#parse', () => {})
-})
