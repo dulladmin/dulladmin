@@ -17,6 +17,7 @@ import {
 } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
+import { toPath } from '../naming'
 
 const TYPES = {
   [ScalarValueType.Double]: 'number',
@@ -68,53 +69,78 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
   const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
-  const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__table_block__.ts.hbs')
+  const infileRawPath = 'src/api/modules/__resource__/__view__/__table_block__.ts.hbs'
+  const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
+
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const blockName = toPath(block.relName)
+  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
   const outfileContent = infileContent({ url, requiredID, model })
-  return { path: outfilePath, content: outfileContent }
+  const outfile = { path: outfilePath, content: outfileContent }
+
+  return outfile
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
   const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
-  const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs')
+  const infileRawPath = 'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs'
+  const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
+
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const blockName = toPath(block.relName)
+  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
   const outfileContent = infileContent({ url, requiredID, model })
-  return { path: outfilePath, content: outfileContent }
+  const outfile = { path: outfilePath, content: outfileContent }
+
+  return outfile
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
   const { url, requiredID } = calcUrl(resource, view, block)
   const model = calcModel(block.model)
 
-  const infilePath = path.join(generatorsDir, 'src/api/modules/__resource__/__view__/__form_block__.ts.hbs')
+  const infileRawPath = 'src/api/modules/__resource__/__view__/__form_block__.ts.hbs'
+  const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfilePath = `src/api/modules/${resource.name}/${view.type}/${block.relName}.ts`
+
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const blockName = toPath(block.relName)
+  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
   const outfileContent = infileContent({ url, requiredID, model })
-  return { path: outfilePath, content: outfileContent }
+  const outfile = { path: outfilePath, content: outfileContent }
+
+  return outfile
 }
 
 function calcUrl(resource: Resource, view: View, block: Block): Record<string, any> {
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const blockName = toPath(block.relName)
+
   switch (view.type) {
     case ViewType.Index:
     case ViewType.New:
       return {
-        url: `/${resource.name}/${view.type}/${block.relName}`,
+        url: `/${resourceName}/${viewName}/${blockName}`,
         requiredID: false
       }
     case ViewType.Show:
     case ViewType.Edit:
       if (resource.singular) {
         return {
-          url: `${resource.name}/${view.type}/${block.relName}`,
+          url: `/${resourceName}/${viewName}/${blockName}`,
           requiredID: false
         }
       }
       return {
-        url: `/${resource.name}/\${id}/${view.type}/${block.relName}`,
+        url: `/${resourceName}/\${id}/${viewName}/${blockName}`,
         requiredID: true
       }
   }

@@ -6,12 +6,12 @@ const routes: RouteRecordRaw[] = [];
 
 routes.push({
   path: 'albums',
-  name: 'albums#index',
+  name: 'albums--index',
   component: () => import('@/views/modules/albums/index/index.vue'),
 });
 routes.push({
   path: 'albums/:id',
-  name: 'albums#show',
+  name: 'albums--show',
   component: () => import('@/views/modules/albums/show/index.vue'),
 });
 

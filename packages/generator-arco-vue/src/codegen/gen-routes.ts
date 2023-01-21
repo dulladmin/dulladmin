@@ -4,15 +4,21 @@ import Handlebars from 'handlebars'
 import { Resource, ViewType, View } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
+import { toPath } from '../naming'
 
 export function genRoutes(resource: Resource): GeneratedFile[] {
   const routes = resource.views.map((view) => calcRouteInfo(resource, view))
-  const infilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
+
+  const infileRawPath = 'src/router/routes/modules/__resource__.ts.hbs'
+  const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfilePath = `src/router/routes/modules/${resource.name}.ts`
+
+  const resourceName = toPath(resource.name)
+  const outfilePath = `src/router/routes/modules/${resourceName}.ts`
   const outfileContent = infileContent({ routes })
-  const routesFile = { path: outfilePath, content: outfileContent }
-  return ([] as GeneratedFile[]).concat([routesFile])
+  const outfile = { path: outfilePath, content: outfileContent }
+
+  return ([] as GeneratedFile[]).concat([outfile])
 }
 
 function calcRouteInfo(resource: Resource, view: View): Record<string, string> {
@@ -23,23 +29,29 @@ function calcRouteInfo(resource: Resource, view: View): Record<string, string> {
 }
 
 function calcRoutePath(resource: Resource, view: View): string {
+  const resourceName = toPath(resource.name)
+
   switch (view.type) {
     case ViewType.Index:
       if (resource.singular) throw Error('Unreachable')
-      return `${resource.name}`
+      return `${resourceName}`
     case ViewType.Show:
-      return resource.singular ? `${resource.name}` : `${resource.name}/:id`
+      return resource.singular ? `${resourceName}` : `${resourceName}/:id`
     case ViewType.New:
-      return resource.singular ? `${resource.name}/new` : `${resource.name}/:id/new`
+      return resource.singular ? `${resourceName}/new` : `${resourceName}/:id/new`
     case ViewType.Edit:
-      return resource.singular ? `${resource.name}/edit` : `${resource.name}/:id/edit`
+      return resource.singular ? `${resourceName}/edit` : `${resourceName}/:id/edit`
   }
 }
 
 function calcRouteName(resource: Resource, view: View): string {
-  return `${resource.name}#${view.type}`
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  return `${resourceName}--${viewName}`
 }
 
 function calcRouteComponent(resource: Resource, view: View): string {
-  return `@/views/modules/${resource.name}/${view.type}/index.vue`
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  return `@/views/modules/${resourceName}/${viewName}/index.vue`
 }

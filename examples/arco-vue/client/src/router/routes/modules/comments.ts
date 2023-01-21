@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [];
 
 routes.push({
   path: 'comments',
-  name: 'comments#index',
+  name: 'comments--index',
   component: () => import('@/views/modules/comments/index/index.vue'),
 });
 

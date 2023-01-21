@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [];
 
 routes.push({
   path: 'todos',
-  name: 'todos#index',
+  name: 'todos--index',
   component: () => import('@/views/modules/todos/index/index.vue'),
 });
 
