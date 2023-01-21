@@ -32,7 +32,13 @@
           <Menu />
         </a-drawer>
         <a-layout class="layout-content" :style="contentPaddingStyle">
-          <a-layout-content> </a-layout-content>
+          <a-layout-content>
+            <router-view v-slot="{ Component, route }">
+              <transition name="fade" mode="out-in" appear>
+                <component :is="Component" :key="route.fullPath" />
+              </transition>
+            </router-view>
+          </a-layout-content>
         </a-layout>
       </a-layout>
     </a-layout>

@@ -7,7 +7,12 @@ import { generatorsDir } from '../files'
 
 export function genRoutes(resource: Resource): GeneratedFile[] {
   const routes = resource.views.map((view) => calcRouteInfo(resource, view))
-  return [buildRouteInfoFile(resource, routes)]
+  const infilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
+  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
+  const outfilePath = `src/router/routes/modules/${resource.name}.ts`
+  const outfileContent = infileContent({ routes })
+  const routesFile = { path: outfilePath, content: outfileContent }
+  return ([] as GeneratedFile[]).concat([routesFile])
 }
 
 function calcRouteInfo(resource: Resource, view: View): Record<string, string> {
@@ -37,12 +42,4 @@ function calcRouteName(resource: Resource, view: View): string {
 
 function calcRouteComponent(resource: Resource, view: View): string {
   return `@/views/modules/${resource.name}/${view.type}/index.vue`
-}
-
-function buildRouteInfoFile(resource: Resource, routes: Array<Record<string, string>>): GeneratedFile {
-  const infilePath = path.join(generatorsDir, 'src/router/routes/modules/__resource__.ts.hbs')
-  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfilePath = `src/router/routes/modules/${resource.name}.ts`
-  const outfileContent = infileContent({ routes })
-  return { path: outfilePath, content: outfileContent }
 }

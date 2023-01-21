@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@dulladmin/core": "workspace:^",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "inflection": "^2.0.1"
   }
 }
