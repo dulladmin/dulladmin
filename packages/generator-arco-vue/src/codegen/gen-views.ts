@@ -6,6 +6,7 @@ import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBl
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
 import { toCamelizeName, toPath } from '../naming'
+import { extraceApiInfo, extractModelInfo } from './info'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
@@ -49,6 +50,9 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 }
 
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
+  const api = extraceApiInfo(resource, view, block)
+  const model = extractModelInfo(resource, view, block)
+
   const infileRawPath = 'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs'
   const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
@@ -57,7 +61,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const viewName = toPath(view.type)
   const blockName = toPath(block.relName)
   const outfilePath = `src/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`
-  const outfileContent = infileContent({})
+  const outfileContent = infileContent({ api, model })
   const outfile = { path: outfilePath, content: outfileContent }
 
   return outfile

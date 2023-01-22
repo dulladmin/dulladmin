@@ -3,11 +3,144 @@
 <template>
   <div>
     <a-card>
-      <a-table> </a-table>
+      <a-row style="margin-bottom: 16px">
+        <a-col
+          style="display: flex; align-items: center; justify-content: end"
+          :span="24"
+        >
+          <a-tooltip :content="$t('table.actions.refresh')">
+            <div class="action-icon" @click="fetchTableData"
+              ><icon-refresh size="18"
+            /></div>
+          </a-tooltip>
+          <a-tooltip :content="$t('table.actions.columnSetting')">
+            <a-popover trigger="click" position="bl">
+              <div class="action-icon"><icon-settings size="18" /></div>
+              <template #content>
+                <div>
+                  <div
+                    v-for="(item, index) in tableColumnsWithShow"
+                    :key="item.dataIndex"
+                  >
+                    <div>
+                      <a-checkbox
+                        v-model="item.show"
+                        @change="
+                          handleTableColumnsShowChange(
+                            $event,
+                            item as TableColumnData,
+                            index
+                          )
+                        "
+                      >
+                        {{ item.title }}
+                      </a-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </a-popover>
+          </a-tooltip>
+        </a-col>
+      </a-row>
+      <a-table
+        row-key="id"
+        :loading="loading"
+        :columns="(tableColumnsShow as TableColumnData[])"
+        :data="tableData"
+      >
+      </a-table>
     </a-card>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { computed, ref, watch } from 'vue';
+  import { useRoute } from 'vue-router';
+  import cloneDeep from 'lodash/cloneDeep';
+  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import { Model, list } from '@/api/modules/todos/index/self';
+  import { useLoading } from '@/hooks';
 
-<style lang="less" scoped></style>
+  // types
+  type Column = TableColumnData & { show?: true };
+
+  // route info
+  const route = useRoute();
+  const id = route.params.id ?? '';
+
+  // tableColumns definition
+  const tableColumnsWithShow = ref<Column[]>([]);
+  const tableColumnsShow = ref<Column[]>([]);
+  const tableColumns = computed<Column[]>(() => [
+    {
+      title: 'UserId',
+      dataIndex: 'userId',
+    },
+    {
+      title: 'Id',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+    },
+    {
+      title: 'Completed',
+      dataIndex: 'completed',
+    },
+  ]);
+
+  // tableColumns initialize
+  watch(
+    () => tableColumns.value,
+    (val) => {
+      tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = true;
+      });
+      tableColumnsShow.value = cloneDeep(tableColumnsWithShow.value);
+    },
+    { deep: true, immediate: true }
+  );
+
+  // tableColumns show/hide
+  const handleTableColumnsShowChange = (
+    checked: boolean | (string | boolean | number)[],
+    column: Column,
+    index: number
+  ) => {
+    if (checked) {
+      tableColumnsShow.value.splice(index, 0, column);
+    } else {
+      tableColumnsShow.value = tableColumnsWithShow.value.filter(
+        (item) => item.dataIndex !== column.dataIndex
+      );
+    }
+  };
+
+  // tableData definition
+  const { loading, setLoading } = useLoading(true);
+  const tableData = ref<Model[]>([]);
+  const fetchTableData = async () => {
+    setLoading(true);
+    try {
+      const { data } = await list(id);
+      tableData.value = data.collection;
+    } catch (_) {
+      // .
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // tableData fetch
+  fetchTableData();
+</script>
+
+<style lang="less" scoped>
+  .action-icon {
+    margin-left: 12px;
+    cursor: pointer;
+  }
+</style>

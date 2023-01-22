@@ -17,21 +17,21 @@ export interface Model {
 {{/each}}
 }
 
-/* GET {{url}} */
+/* GET {{api.url}} */
 export interface GetResponse {
   model: Model;
 }
-export function get({{#if requiredID}}id: string{{/if}}) {
-  return axios.get<GetResponse>(`{{url}}`);
+export function get({{#if api.requiredID}}id: string{{/if}}) {
+  return axios.get<GetResponse>(`{{api.url}}`);
 }
 
-/* PUT {{url}} */
+/* PUT {{api.url}} */
 export interface UpdateRequest {
   model: Model;
 }
 export interface UpdateResponse {
   model: Model;
 }
-export function update({{#if requiredID}}id: string, {{/if}}req: UpdateRequest) {
-  return axios.put<UpdateResponse>(`{{url}}`, req);
+export function update({{#if api.requiredID}}id: string, {{/if}}req: UpdateRequest) {
+  return axios.put<UpdateResponse>(`{{api.url}}`, req);
 }

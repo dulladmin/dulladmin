@@ -17,10 +17,10 @@ export interface Model {
 {{/each}}
 }
 
-/* GET {{url}} */
+/* GET {{api.url}} */
 export interface GetResponse {
   model: Model;
 }
-export function get({{#if requiredID}}id: string{{/if}}) {
-  return axios.get<GetResponse>(`{{url}}`);
+export function get({{#if api.requiredID}}id: string{{/if}}) {
+  return axios.get<GetResponse>(`{{api.url}}`);
 }
