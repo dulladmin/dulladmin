@@ -23,7 +23,7 @@ export default [
               '!skeletal/node_modules',
               '!skeletal/dist',
               '!skeletal/dist-ssr',
-              '!skeletal/.env',
+              '!skeletal/.env.*',
               '!skeletal/.DS_Store',
               '!skeletal/yarn-error.log'
             ],
