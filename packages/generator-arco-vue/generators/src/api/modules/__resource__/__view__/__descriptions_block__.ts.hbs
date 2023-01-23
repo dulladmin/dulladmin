@@ -21,6 +21,6 @@ export interface Model {
 export interface GetResponse {
   model: Model;
 }
-export function get({{#if api.requiredID}}id: string{{/if}}) {
+export function get(id: string) {
   return axios.get<GetResponse>(`{{api.url}}`);
 }

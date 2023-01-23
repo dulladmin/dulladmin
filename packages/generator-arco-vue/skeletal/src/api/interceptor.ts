@@ -1,9 +1,10 @@
 import axios from 'axios';
+import qs from 'qs'
 import { Message } from '@arco-design/web-vue';
 import { getToken } from '@/utils/auth';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-export interface HttpResponse<T = unknown> {
+interface HttpResponse<T = unknown> {
   code: number;
   msg: string;
   data: T;
@@ -12,6 +13,10 @@ export interface HttpResponse<T = unknown> {
 if (import.meta.env.VITE_API_BASE_URL) {
   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 }
+
+axios.defaults.paramsSerializer = (params) => {
+  return qs.stringify(params, { arrayFormat: 'brackets' });
+};
 
 axios.interceptors.request.use(
   // Do something before request is sent

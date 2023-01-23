@@ -13,6 +13,15 @@ async function loadDatabase(filename) {
   return db;
 }
 
+function makePagination(collection, pagination) {
+  const page_size = parseInt(pagination.page_size);
+  const current = parseInt(pagination.current);
+  const total = collection.length;
+  collection = collection.slice((current - 1) * page_size, current * page_size);
+  pagination = { page_size, current, total };
+  return { collection, pagination };
+}
+
 export async function enhance(app) {
   const usersDB = await loadDatabase('./db/users.json');
   const albumsDB = await loadDatabase('./db/albums.json');
@@ -21,33 +30,46 @@ export async function enhance(app) {
   const commentsDB = await loadDatabase('./db/comments.json');
   const todosDB = await loadDatabase('./db/todos.json');
 
-  app.get('/users/index/self', async (_req, res) => {
+  app.get('/users/index/self', async (req, res) => {
     const collection = usersDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 
-  app.get('/albums/index/self', async (_req, res) => {
+  app.get('/albums/index/self', async (req, res) => {
     const collection = albumsDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
+  });
+  app.get('/albums/:id/show/photos', async (req, res) => {
+    const collection = photosDB.data.filter(
+      (item) => item.albumId == req.params.id
+    );
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 
-  app.get('/photos/index/self', async (_req, res) => {
+  app.get('/photos/index/self', async (req, res) => {
     const collection = photosDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 
-  app.get('/posts/index/self', async (_req, res) => {
+  app.get('/posts/index/self', async (req, res) => {
     const collection = postsDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 
-  app.get('/comments/index/self', async (_req, res) => {
+  app.get('/comments/index/self', async (req, res) => {
     const collection = commentsDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 
-  app.get('/todos/index/self', async (_req, res) => {
+  app.get('/todos/index/self', async (req, res) => {
     const collection = todosDB.data;
-    res.send(buildSuccessResponse({ collection }));
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
   });
 }

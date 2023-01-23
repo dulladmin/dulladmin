@@ -9,7 +9,7 @@
           :span="24"
         >
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="fetchTableData"
+            <div class="action-icon" @click="onTableRefresh"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
@@ -46,8 +46,10 @@
       <a-table
         row-key="id"
         :loading="loading"
+        :pagination="tablePagination"
         :columns="(tableColumnsShow as TableColumnData[])"
         :data="tableData"
+        @page-change="onTablePageChange"
       >
       </a-table>
     </a-card>
@@ -55,19 +57,36 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { Model, list } from '@/api/modules/albums/index/self';
+  import { Model, ListRequest, list } from '@/api/modules/albums/index/self';
   import { useLoading } from '@/hooks';
 
   // types
   type Column = TableColumnData & { show?: true };
+  type Pagination = Record<string, any>;
 
   // route info
   const route = useRoute();
-  const id = route.params.id ?? '';
+  const id = (route.params.id as string) ?? '';
+
+  // pagination info
+  const baseTablePagination: Pagination = {
+    pageSize: 20,
+    current: 1,
+    showTotal: true,
+  };
+  const tablePagination = reactive({
+    ...baseTablePagination,
+  });
+  const apiPagination = (pagination: Pagination): any => {
+    return {
+      page_size: pagination.pageSize,
+      current: pagination.current,
+    };
+  };
 
   // tableColumns definition
   const tableColumnsWithShow = ref<Column[]>([]);
@@ -118,11 +137,23 @@
   // tableData definition
   const { loading, setLoading } = useLoading(true);
   const tableData = ref<Model[]>([]);
-  const fetchTableData = async () => {
+  const fetchTableData = async (req: ListRequest) => {
     setLoading(true);
     try {
-      const { data } = await list(id);
-      tableData.value = data.collection;
+      const { data } = await list(id, req);
+      const { collection, pagination } = data;
+      tableData.value = collection;
+
+      if (pagination) {
+        tablePagination.pageSize = pagination.page_size;
+        tablePagination.current = pagination.current;
+        tablePagination.total = pagination.total;
+      } else {
+        tablePagination.pageSize = baseTablePagination.pageSize;
+        tablePagination.current = baseTablePagination.current;
+        tablePagination.total = null;
+        tablePagination.hideOnSinglePage = true;
+      }
     } catch (_) {
       // .
     } finally {
@@ -130,8 +161,22 @@
     }
   };
 
-  // tableData fetch
-  fetchTableData();
+  // table - refresh
+  const onTableRefresh = async () => {
+    const req = { pagination: apiPagination(tablePagination) };
+    await fetchTableData(req);
+  };
+
+  // table - page-change
+  const onTablePageChange = async (current: number) => {
+    const req = {
+      pagination: { ...apiPagination(tablePagination), current },
+    };
+    await fetchTableData(req);
+  };
+
+  // table - init
+  onTableRefresh();
 </script>
 
 <style lang="less" scoped>

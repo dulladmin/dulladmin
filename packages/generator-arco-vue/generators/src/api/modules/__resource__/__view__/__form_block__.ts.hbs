@@ -21,7 +21,7 @@ export interface Model {
 export interface GetResponse {
   model: Model;
 }
-export function get({{#if api.requiredID}}id: string{{/if}}) {
+export function get(id: string) {
   return axios.get<GetResponse>(`{{api.url}}`);
 }
 
@@ -32,6 +32,6 @@ export interface UpdateRequest {
 export interface UpdateResponse {
   model: Model;
 }
-export function update({{#if api.requiredID}}id: string, {{/if}}req: UpdateRequest) {
+export function update(id: string, req: UpdateRequest) {
   return axios.put<UpdateResponse>(`{{api.url}}`, req);
 }

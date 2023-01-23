@@ -27,7 +27,6 @@ export function extraceApiInfo(resource: Resource, view: View, block: Block): Re
 
   const importPath = `@/api/modules/${resourceName}/${viewName}/${blockName}`
   let url = `/${resourceName}/${viewName}/${blockName}`
-  let requiredID = false
 
   switch (view.type) {
     case ViewType.Index:
@@ -37,12 +36,11 @@ export function extraceApiInfo(resource: Resource, view: View, block: Block): Re
     case ViewType.Edit:
       if (!resource.singular) {
         url = `/${resourceName}/\${id}/${viewName}/${blockName}`
-        requiredID = true
       }
       break
   }
 
-  return { importPath, url, requiredID }
+  return { importPath, url }
 }
 
 export function extractModelInfo(_resource: Resource, _view: View, block: Block): Record<string, any> {
