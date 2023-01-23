@@ -136,7 +136,7 @@
     if (checked) {
       tableColumnsShow.value.splice(index, 0, column);
     } else {
-      tableColumnsShow.value = tableColumnsWithShow.value.filter(
+      tableColumnsShow.value = tableColumnsShow.value.filter(
         (item) => item.dataIndex !== column.dataIndex
       );
     }
