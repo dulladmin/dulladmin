@@ -51,6 +51,36 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
+        <template #postId="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #id="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #name="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #email="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #body="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
       </a-table>
     </a-card>
   </div>
@@ -62,11 +92,34 @@
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/comments/index/self';
+  import SimpleData from '@/components/renderer/data/simple_data.vue';
+  import SimpleList from '@/components/renderer/data/simple_list.vue';
+  import SimpleDescriptions from '@/components/renderer/data/simple_descriptions.vue';
+  import SimpleTable from '@/components/renderer/data/simple_table.vue';
   import { useLoading } from '@/hooks';
 
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+
+  // model info
+  const modelInfo: { [key: string]: any } = {
+    postId: {
+      type: 'string',
+    },
+    id: {
+      type: 'string',
+    },
+    name: {
+      type: 'string',
+    },
+    email: {
+      type: 'string',
+    },
+    body: {
+      type: 'string',
+    },
+  };
 
   // route info
   const route = useRoute();
@@ -95,22 +148,27 @@
     {
       title: 'PostId',
       dataIndex: 'postId',
+      slotName: 'postId',
     },
     {
       title: 'Id',
       dataIndex: 'id',
+      slotName: 'id',
     },
     {
       title: 'Name',
       dataIndex: 'name',
+      slotName: 'name',
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      slotName: 'email',
     },
     {
       title: 'Body',
       dataIndex: 'body',
+      slotName: 'body',
     },
   ]);
 

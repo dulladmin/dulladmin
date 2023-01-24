@@ -51,6 +51,35 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
+      {{#each model.attributes}}
+        <template #{{name}}="{ record, column }">
+        {{#if collection}}
+          {{#if object}}
+          <SimpleTable
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+          {{else}}
+          <SimpleList
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+          {{/if}}
+        {{else}}
+          {{#if object}}
+          <SimpleDescriptions
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+          {{else}}
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+          {{/if}}
+        {{/if}}
+        </template>
+      {{/each}}
       </a-table>
     </a-card>
   </div>
@@ -62,11 +91,34 @@
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '{{ api.importPath }}';
+  import SimpleData from '@/components/renderer/data/simple_data.vue';
+  import SimpleList from '@/components/renderer/data/simple_list.vue';
+  import SimpleDescriptions from '@/components/renderer/data/simple_descriptions.vue';
+  import SimpleTable from '@/components/renderer/data/simple_table.vue';
   import { useLoading } from '@/hooks';
 
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+
+  // model info
+  const modelInfo: { [key: string]: any } = {
+  {{#each model.attributes}}
+    {{#if object.attributes}}
+    {{name}}: {
+      {{#each object.attributes}}
+      {{name}}: {
+        type: '{{type}}',
+      },
+      {{/each}}
+    },
+    {{else}}
+    {{name}}: {
+      type: '{{type}}',
+    },
+    {{/if}}
+  {{/each}}
+  };
 
   // route info
   const route = useRoute();
@@ -96,6 +148,7 @@
     {
       title: '{{camelizeName}}',
       dataIndex: '{{name}}',
+      slotName: '{{name}}',
     },
   {{/each}}
   ]);

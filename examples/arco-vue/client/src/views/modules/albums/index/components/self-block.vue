@@ -51,6 +51,24 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
+        <template #userId="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #id="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
+        <template #title="{ record, column }">
+          <SimpleData
+            :data="record[column.dataIndex]"
+            :meta="modelInfo[column.dataIndex]"
+          />
+        </template>
       </a-table>
     </a-card>
   </div>
@@ -62,11 +80,28 @@
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/albums/index/self';
+  import SimpleData from '@/components/renderer/data/simple_data.vue';
+  import SimpleList from '@/components/renderer/data/simple_list.vue';
+  import SimpleDescriptions from '@/components/renderer/data/simple_descriptions.vue';
+  import SimpleTable from '@/components/renderer/data/simple_table.vue';
   import { useLoading } from '@/hooks';
 
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+
+  // model info
+  const modelInfo: { [key: string]: any } = {
+    userId: {
+      type: 'string',
+    },
+    id: {
+      type: 'string',
+    },
+    title: {
+      type: 'string',
+    },
+  };
 
   // route info
   const route = useRoute();
@@ -95,14 +130,17 @@
     {
       title: 'UserId',
       dataIndex: 'userId',
+      slotName: 'userId',
     },
     {
       title: 'Id',
       dataIndex: 'id',
+      slotName: 'id',
     },
     {
       title: 'Title',
       dataIndex: 'title',
+      slotName: 'title',
     },
   ]);
 
