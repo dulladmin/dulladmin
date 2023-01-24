@@ -1,5 +1,5 @@
 import { Resource, ViewType, View, Block, ScalarValueType, ObjectValueType } from '@dulladmin/core'
-import { toCamelizeName, toPath } from '../naming'
+import { toPath } from '../naming'
 
 const TYPES = {
   [ScalarValueType.Double]: 'number',
@@ -49,9 +49,9 @@ export function extractModelInfo(_resource: Resource, _view: View, block: Block)
   return {
     attributes: model.attributes.map((attr) => {
       return {
-        camelizeName: toCamelizeName(attr.name),
         name: attr.name,
-        type: TYPES[attr.type],
+        type: attr.type,
+        underlyingType: TYPES[attr.type],
         collection: attr.collection,
         object:
           attr.object == null
@@ -59,9 +59,9 @@ export function extractModelInfo(_resource: Resource, _view: View, block: Block)
             : {
                 attributes: attr.object.attributes.map((objAttr) => {
                   return {
-                    camelizeName: toCamelizeName(objAttr.name),
                     name: objAttr.name,
-                    type: TYPES[objAttr.type],
+                    type: objAttr.type,
+                    underlyingType: TYPES[objAttr.type],
                     collection: objAttr.collection
                   }
                 })

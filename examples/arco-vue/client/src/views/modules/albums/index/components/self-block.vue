@@ -128,17 +128,17 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: 'UserId',
+      title: 'userId',
       dataIndex: 'userId',
       slotName: 'userId',
     },
     {
-      title: 'Id',
+      title: 'id',
       dataIndex: 'id',
       slotName: 'id',
     },
     {
-      title: 'Title',
+      title: 'title',
       dataIndex: 'title',
       slotName: 'title',
     },

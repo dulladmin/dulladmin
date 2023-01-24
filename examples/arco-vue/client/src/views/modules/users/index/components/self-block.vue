@@ -195,42 +195,42 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: 'Id',
+      title: 'id',
       dataIndex: 'id',
       slotName: 'id',
     },
     {
-      title: 'Name',
+      title: 'name',
       dataIndex: 'name',
       slotName: 'name',
     },
     {
-      title: 'Username',
+      title: 'username',
       dataIndex: 'username',
       slotName: 'username',
     },
     {
-      title: 'Email',
+      title: 'email',
       dataIndex: 'email',
       slotName: 'email',
     },
     {
-      title: 'Address',
+      title: 'address',
       dataIndex: 'address',
       slotName: 'address',
     },
     {
-      title: 'Phone',
+      title: 'phone',
       dataIndex: 'phone',
       slotName: 'phone',
     },
     {
-      title: 'Website',
+      title: 'website',
       dataIndex: 'website',
       slotName: 'website',
     },
     {
-      title: 'Company',
+      title: 'company',
       dataIndex: 'company',
       slotName: 'company',
     },

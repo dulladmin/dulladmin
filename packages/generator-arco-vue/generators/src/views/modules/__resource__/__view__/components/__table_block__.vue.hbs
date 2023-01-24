@@ -146,7 +146,7 @@
   const tableColumns = computed<Column[]>(() => [
   {{#each model.attributes}}
     {
-      title: '{{camelizeName}}',
+      title: '{{name}}',
       dataIndex: '{{name}}',
       slotName: '{{name}}',
     },

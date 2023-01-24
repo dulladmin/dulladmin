@@ -146,27 +146,27 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: 'AlbumId',
+      title: 'albumId',
       dataIndex: 'albumId',
       slotName: 'albumId',
     },
     {
-      title: 'Id',
+      title: 'id',
       dataIndex: 'id',
       slotName: 'id',
     },
     {
-      title: 'Title',
+      title: 'title',
       dataIndex: 'title',
       slotName: 'title',
     },
     {
-      title: 'Url',
+      title: 'url',
       dataIndex: 'url',
       slotName: 'url',
     },
     {
-      title: 'ThumbnailUrl',
+      title: 'thumbnailUrl',
       dataIndex: 'thumbnailUrl',
       slotName: 'thumbnailUrl',
     },
