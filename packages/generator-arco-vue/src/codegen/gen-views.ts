@@ -68,6 +68,9 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
 }
 
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
+  const api = extraceApiInfo(resource, view, block)
+  const model = extractModelInfo(resource, view, block)
+
   const infileRawPath = 'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs'
   const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
@@ -76,7 +79,7 @@ function genViews_DescriptionsBlock(resource: Resource, view: View, block: Descr
   const viewName = toPath(view.type)
   const blockName = toPath(block.relName)
   const outfilePath = `src/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`
-  const outfileContent = infileContent({})
+  const outfileContent = infileContent({ api, model })
   const outfile = { path: outfilePath, content: outfileContent }
 
   return outfile

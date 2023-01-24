@@ -19,6 +19,9 @@ app.use(
     responseWhitelist: ['body'],
   })
 );
+app.use((_req, _res, next) => {
+  setTimeout(next, Math.floor(Math.random() * 2000 + 100));
+});
 
 // Auth
 const authFile = new URL('./auth.mjs', import.meta.url).pathname;

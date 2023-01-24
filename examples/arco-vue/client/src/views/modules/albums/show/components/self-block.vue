@@ -3,11 +3,132 @@
 <template>
   <div>
     <a-card>
-      <a-form> </a-form>
+      <a-spin style="display: block" :loading="loading">
+        <div
+          class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border"
+        >
+          <div class="arco-descriptions-body">
+            <table class="arco-descriptions-table">
+              <tbody>
+                <tr class="arco-descriptions-row">
+                  <td
+                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
+                  >
+                    userId
+                  </td>
+                  <td
+                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
+                  >
+                    <SimpleData
+                      :data="store.userId"
+                      :meta="modelInfo['userId']"
+                    />
+                  </td>
+                </tr>
+                <tr class="arco-descriptions-row">
+                  <td
+                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
+                  >
+                    id
+                  </td>
+                  <td
+                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
+                  >
+                    <SimpleData
+                      :data="store.id"
+                      :meta="modelInfo['id']"
+                    />
+                  </td>
+                </tr>
+                <tr class="arco-descriptions-row">
+                  <td
+                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
+                  >
+                    title
+                  </td>
+                  <td
+                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
+                  >
+                    <SimpleData
+                      :data="store.title"
+                      :meta="modelInfo['title']"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </a-spin>
     </a-card>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { computed, ref, watch } from 'vue';
+  import { useRoute } from 'vue-router';
+  import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+  import { Model, GetRequest, get } from '@/api/modules/albums/show/self';
+  import SimpleData from '@/components/renderer/data/simple_data.vue';
+  import SimpleList from '@/components/renderer/data/simple_list.vue';
+  import SimpleDescriptions from '@/components/renderer/data/simple_descriptions.vue';
+  import SimpleTable from '@/components/renderer/data/simple_table.vue';
+  import { useLoading } from '@/hooks';
+
+  // types
+  type Desc = DescData & { dataIndex: string };
+
+  // model info
+  const modelInfo: { [key: string]: any } = {
+    userId: {
+      type: 'string',
+    },
+    id: {
+      type: 'string',
+    },
+    title: {
+      type: 'string',
+    },
+  };
+
+  // route info
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // descriptions - store
+  const { loading, setLoading } = useLoading(true);
+  const store = ref<Model>({});
+  const fetchStore = async () => {
+    setLoading(true);
+    try {
+      const { data } = await get(id);
+      const { model } = data;
+      store.value = model;
+    } catch (_) {
+      // .
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // descriptions - data
+  const descriptionsData = ref<Desc[]>([
+    {
+      label: 'userId',
+      dataIndex: 'userId',
+    },
+    {
+      label: 'id',
+      dataIndex: 'id',
+    },
+    {
+      label: 'title',
+      dataIndex: 'title',
+    },
+  ]);
+
+  // descriptions - init
+  fetchStore();
+</script>
 
 <style lang="less" scoped></style>

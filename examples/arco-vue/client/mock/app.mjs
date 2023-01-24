@@ -41,6 +41,10 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/albums/:id/show/self', async (req, res) => {
+    const model = albumsDB.data.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
   app.get('/albums/:id/show/photos', async (req, res) => {
     const collection = photosDB.data.filter(
       (item) => item.albumId == req.params.id

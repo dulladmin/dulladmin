@@ -123,7 +123,7 @@
     };
   };
 
-  // tableColumns definition
+  // table - columns initialize
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
@@ -143,8 +143,6 @@
       slotName: 'title',
     },
   ]);
-
-  // tableColumns initialize
   watch(
     () => tableColumns.value,
     (val) => {
@@ -157,7 +155,7 @@
     { deep: true, immediate: true }
   );
 
-  // tableColumns show/hide
+  // table - columns show/hide
   const handleTableColumnsShowChange = (
     checked: boolean | (string | boolean | number)[],
     column: Column,
@@ -172,15 +170,15 @@
     }
   };
 
-  // tableData definition
+  // table - store
   const { loading, setLoading } = useLoading(true);
-  const tableData = ref<Model[]>([]);
-  const fetchTableData = async (req: ListRequest) => {
+  const store = ref<Model[]>([]);
+  const fetchStore = async (req: ListRequest) => {
     setLoading(true);
     try {
       const { data } = await list(id, req);
       const { collection, pagination } = data;
-      tableData.value = collection;
+      store.value = collection;
 
       if (pagination) {
         tablePagination.pageSize = pagination.page_size;
@@ -199,18 +197,21 @@
     }
   };
 
+  // table - data
+  const tableData = computed(() => store.value);
+
   // table - refresh
   const onTableRefresh = async () => {
     const req = { pagination: apiPagination(tablePagination) };
-    await fetchTableData(req);
+    await fetchStore(req);
   };
 
-  // table - page-change
+  // table - pageChange
   const onTablePageChange = async (current: number) => {
     const req = {
       pagination: { ...apiPagination(tablePagination), current },
     };
-    await fetchTableData(req);
+    await fetchStore(req);
   };
 
   // table - init
