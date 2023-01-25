@@ -1,3 +1,14 @@
+function formatModules(_modules: any, result: Record<string, string>) {
+  Object.keys(_modules).forEach((key) => {
+    const defaultModule = _modules[key].default;
+    if (!defaultModule) return;
+    result = { ...result, ...defaultModule };
+  });
+  return result;
+}
+const modules = import.meta.glob('./modules/*.json', { eager: true });
+const i18nMessages: Record<string, string> = formatModules(modules, {});
+
 export default {
   // components - messagebox
   'messagebox.logout.success': '登出成功',
@@ -26,4 +37,7 @@ export default {
   // views - not-found
   'not-found.descriptions.title': '没有找到相关页面',
   'not-found.descriptions.back': '返回',
+
+  // views
+  ...i18nMessages,
 };

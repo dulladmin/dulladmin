@@ -8,11 +8,11 @@ export interface Model {
   {{#if object.attributes}}
   {{name}}: {
     {{#each object.attributes}}
-    {{name}}: {{underlyingType}};
+    {{name}}: {{jsonType}};
     {{/each}}
   }{{#if collection}}[]{{/if}};
   {{else}}
-  {{name}}: {{underlyingType}}{{#if collection}}[]{{/if}};
+  {{name}}: {{jsonType}}{{#if collection}}[]{{/if}};
   {{/if}}
 {{/each}}
 }

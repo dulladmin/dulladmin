@@ -77,6 +77,7 @@
 <script lang="ts" setup>
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/albums/index/self';
@@ -89,6 +90,9 @@
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+
+  // i18n
+  const { t } = useI18n();
 
   // model info
   const modelInfo: { [key: string]: any } = {
@@ -128,17 +132,17 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: 'userId',
+      title: t('albums--index.self-block.model.attributes.userId'),
       dataIndex: 'userId',
       slotName: 'userId',
     },
     {
-      title: 'id',
+      title: t('albums--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
     },
     {
-      title: 'title',
+      title: t('albums--index.self-block.model.attributes.title'),
       dataIndex: 'title',
       slotName: 'title',
     },

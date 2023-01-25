@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-  import SelfBlock from './components/self-block.vue';
+  import SelfBlock from '@/views/modules/albums/index/components/self-block.vue';
 </script>
 
 <style lang="less" scoped>

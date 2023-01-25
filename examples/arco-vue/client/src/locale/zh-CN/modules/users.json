@@ -1,0 +1,18 @@
+{
+  "users--index.self-block.model.attributes.id": null,
+  "users--index.self-block.model.attributes.name": null,
+  "users--index.self-block.model.attributes.username": null,
+  "users--index.self-block.model.attributes.email": null,
+  "users--index.self-block.model.attributes.address": null,
+  "users--index.self-block.model.attributes.address.street": null,
+  "users--index.self-block.model.attributes.address.suite": null,
+  "users--index.self-block.model.attributes.address.city": null,
+  "users--index.self-block.model.attributes.address.zipcode": null,
+  "users--index.self-block.model.attributes.address.geo": null,
+  "users--index.self-block.model.attributes.phone": null,
+  "users--index.self-block.model.attributes.website": null,
+  "users--index.self-block.model.attributes.company": null,
+  "users--index.self-block.model.attributes.company.name": null,
+  "users--index.self-block.model.attributes.company.catchPhrase": null,
+  "users--index.self-block.model.attributes.company.bs": null
+}

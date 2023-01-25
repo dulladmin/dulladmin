@@ -5,25 +5,23 @@ import Handlebars from 'handlebars'
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
-import { toCamelizeName, toPath } from '../naming'
-import { extraceApiInfo, extractModelInfo } from './info'
+import { toPath } from '../naming'
+import { extractApiInfo, extractModelInfo, extractBlockInfo } from './info'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
 }
 
 function genViews_Resource(resource: Resource): GeneratedFile[] {
-  return resource.views
-    .map((view) => genViews_View(resource, view))
-    .reduce<GeneratedFile[]>((acc, files) => acc.concat(files), [])
+  return resource.views.map((view) => genViews_View(resource, view)).reduce<GeneratedFile[]>((a, v) => [...a, ...v], [])
 }
 
 function genViews_View(resource: Resource, view: View): GeneratedFile[] {
   const blockOutfiles = view.blocks
     .map((block) => genViews_Block(resource, view, block))
-    .reduce<GeneratedFile[]>((acc, file) => acc.concat([file]), [])
+    .reduce<GeneratedFile[]>((a, v) => [...a, v], [])
 
-  const blocks = view.blocks.map((block) => calcBlockInfo(resource, view, block))
+  const blocks = view.blocks.map((block) => extractBlockInfo(resource, view, block))
 
   const infileRawPath = 'src/views/modules/__resource__/__view__/index.vue.hbs'
   const infilePath = path.join(generatorsDir, infileRawPath)
@@ -50,7 +48,7 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 }
 
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const api = extraceApiInfo(resource, view, block)
+  const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   const infileRawPath = 'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs'
@@ -68,7 +66,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
 }
 
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
-  const api = extraceApiInfo(resource, view, block)
+  const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   const infileRawPath = 'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs'
@@ -98,20 +96,4 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const outfile = { path: outfilePath, content: outfileContent }
 
   return outfile
-}
-
-function calcBlockInfo(resource: Resource, view: View, block: Block): Record<string, string> {
-  const componentName = calcBlockComponentName(resource, view, block)
-  const componentPath = calcBlockComponentPath(resource, view, block)
-  return { componentName, componentPath }
-}
-
-function calcBlockComponentName(_resource: Resource, _view: View, block: Block): string {
-  const blockName = toCamelizeName(block.relName)
-  return `${blockName}Block`
-}
-
-function calcBlockComponentPath(_resource: Resource, _view: View, block: Block): string {
-  const blockName = toPath(block.relName)
-  return `./components/${blockName}-block.vue`
 }

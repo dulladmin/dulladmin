@@ -1,0 +1,9 @@
+{
+  "albums--show.self-block.model.attributes.userId": "User Id",
+  "albums--show.self-block.model.attributes.id": "Id",
+  "albums--show.self-block.model.attributes.title": "Title",
+  "albums--show.photos-block.model.attributes.id": "Id",
+  "albums--show.photos-block.model.attributes.title": "Title",
+  "albums--show.photos-block.model.attributes.url": "Url",
+  "albums--show.photos-block.model.attributes.thumbnailUrl": "Thumbnail Url"
+}

@@ -1,0 +1,9 @@
+{
+  "albums--show.self-block.model.attributes.userId": null,
+  "albums--show.self-block.model.attributes.id": null,
+  "albums--show.self-block.model.attributes.title": null,
+  "albums--show.photos-block.model.attributes.id": null,
+  "albums--show.photos-block.model.attributes.title": null,
+  "albums--show.photos-block.model.attributes.url": null,
+  "albums--show.photos-block.model.attributes.thumbnailUrl": null
+}

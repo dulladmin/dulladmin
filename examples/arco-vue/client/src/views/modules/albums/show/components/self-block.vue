@@ -14,7 +14,7 @@
                   <td
                     class="arco-descriptions-item-label arco-descriptions-item-label-block"
                   >
-                    userId
+                    {{ $t('albums--show.self-block.model.attributes.userId') }}
                   </td>
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"
@@ -29,7 +29,7 @@
                   <td
                     class="arco-descriptions-item-label arco-descriptions-item-label-block"
                   >
-                    id
+                    {{ $t('albums--show.self-block.model.attributes.id') }}
                   </td>
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"
@@ -44,7 +44,7 @@
                   <td
                     class="arco-descriptions-item-label arco-descriptions-item-label-block"
                   >
-                    title
+                    {{ $t('albums--show.self-block.model.attributes.title') }}
                   </td>
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"

@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-  import SelfBlock from './components/self-block.vue';
-  import PhotosBlock from './components/photos-block.vue';
+  import SelfBlock from '@/views/modules/albums/show/components/self-block.vue';
+  import PhotosBlock from '@/views/modules/albums/show/components/photos-block.vue';
 </script>
 
 <style lang="less" scoped>

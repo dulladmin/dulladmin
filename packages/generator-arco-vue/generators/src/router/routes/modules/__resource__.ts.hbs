@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [];
 routes.push({
   path: '{{path}}',
   name: '{{name}}',
-  component: () => import('{{component}}'),
+  component: () => import('{{viewImportPath}}'),
 });
 {{/each}}
 

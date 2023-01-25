@@ -89,6 +89,7 @@
 <script lang="ts" setup>
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import cloneDeep from 'lodash/cloneDeep';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/comments/index/self';
@@ -101,6 +102,9 @@
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+
+  // i18n
+  const { t } = useI18n();
 
   // model info
   const modelInfo: { [key: string]: any } = {
@@ -146,27 +150,27 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: 'postId',
+      title: t('comments--index.self-block.model.attributes.postId'),
       dataIndex: 'postId',
       slotName: 'postId',
     },
     {
-      title: 'id',
+      title: t('comments--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
     },
     {
-      title: 'name',
+      title: t('comments--index.self-block.model.attributes.name'),
       dataIndex: 'name',
       slotName: 'name',
     },
     {
-      title: 'email',
+      title: t('comments--index.self-block.model.attributes.email'),
       dataIndex: 'email',
       slotName: 'email',
     },
     {
-      title: 'body',
+      title: t('comments--index.self-block.model.attributes.body'),
       dataIndex: 'body',
       slotName: 'body',
     },

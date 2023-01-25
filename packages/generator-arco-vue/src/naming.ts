@@ -1,6 +1,7 @@
 import inflection from 'inflection'
 
-export const toCamelizeName = (name: string): string => inflection.camelize(name)
-export const toUnderscoreName = (name: string): string => inflection.underscore(name)
+export const toCamelize = (name: string): string => inflection.camelize(name)
+export const toUnderscore = (name: string): string => inflection.underscore(name)
 
-export const toPath = (name: string): string => inflection.dasherize(toUnderscoreName(name))
+export const toI18nMessage = (name: string): string => inflection.titleize(toUnderscore(name))
+export const toPath = (name: string): string => inflection.dasherize(toUnderscore(name))

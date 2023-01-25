@@ -6,22 +6,20 @@ import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBl
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
 import { toPath } from '../naming'
-import { extraceApiInfo, extractModelInfo } from './info'
+import { extractApiInfo, extractModelInfo } from './info'
 
 export function genAPI(resource: Resource): GeneratedFile[] {
   return genAPI_Resource(resource)
 }
 
 function genAPI_Resource(resource: Resource): GeneratedFile[] {
-  return resource.views
-    .map((view) => genAPI_View(resource, view))
-    .reduce<GeneratedFile[]>((acc, files) => acc.concat(files), [])
+  return resource.views.map((view) => genAPI_View(resource, view)).reduce<GeneratedFile[]>((a, v) => [...a, ...v], [])
 }
 
 function genAPI_View(resource: Resource, view: View): GeneratedFile[] {
   return view.blocks
     .map((block) => genAPI_Block(resource, view, block))
-    .reduce<GeneratedFile[]>((acc, file) => acc.concat([file]), [])
+    .reduce<GeneratedFile[]>((a, v) => [...a, v], [])
 }
 
 function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFile {
@@ -36,7 +34,7 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 }
 
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const api = extraceApiInfo(resource, view, block)
+  const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   const infileRawPath = 'src/api/modules/__resource__/__view__/__table_block__.ts.hbs'
@@ -54,7 +52,7 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
-  const api = extraceApiInfo(resource, view, block)
+  const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   const infileRawPath = 'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs'
@@ -72,7 +70,7 @@ function genAPI_DescriptionsBlock(resource: Resource, view: View, block: Descrip
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
-  const api = extraceApiInfo(resource, view, block)
+  const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   const infileRawPath = 'src/api/modules/__resource__/__view__/__form_block__.ts.hbs'

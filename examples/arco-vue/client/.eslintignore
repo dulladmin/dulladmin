@@ -1,3 +1,4 @@
 /dist
 /node_modules
 /components.d.ts
+/src/locale/*/modules

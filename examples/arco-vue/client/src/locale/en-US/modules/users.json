@@ -1,0 +1,18 @@
+{
+  "users--index.self-block.model.attributes.id": "Id",
+  "users--index.self-block.model.attributes.name": "Name",
+  "users--index.self-block.model.attributes.username": "Username",
+  "users--index.self-block.model.attributes.email": "Email",
+  "users--index.self-block.model.attributes.address": "Address",
+  "users--index.self-block.model.attributes.address.street": "Street",
+  "users--index.self-block.model.attributes.address.suite": "Suite",
+  "users--index.self-block.model.attributes.address.city": "City",
+  "users--index.self-block.model.attributes.address.zipcode": "Zipcode",
+  "users--index.self-block.model.attributes.address.geo": "Geo",
+  "users--index.self-block.model.attributes.phone": "Phone",
+  "users--index.self-block.model.attributes.website": "Website",
+  "users--index.self-block.model.attributes.company": "Company",
+  "users--index.self-block.model.attributes.company.name": "Name",
+  "users--index.self-block.model.attributes.company.catchPhrase": "Catch Phrase",
+  "users--index.self-block.model.attributes.company.bs": "Bs"
+}
