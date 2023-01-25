@@ -5,9 +5,9 @@ views:
       - relationship: 'self'
         table:
           items:
-            - name: 'userId'
-              type: 'string'
             - name: 'id'
+              type: 'string'
+            - name: 'userId'
               type: 'string'
             - name: 'title'
               type: 'string'

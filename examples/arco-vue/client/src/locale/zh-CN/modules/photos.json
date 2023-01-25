@@ -1,7 +1,7 @@
 {
-  "photos--index.self-block.model.attributes.albumId": null,
-  "photos--index.self-block.model.attributes.id": null,
-  "photos--index.self-block.model.attributes.title": null,
-  "photos--index.self-block.model.attributes.url": null,
-  "photos--index.self-block.model.attributes.thumbnailUrl": null
+  "photos--index.self-block.model.attributes.id": "编号",
+  "photos--index.self-block.model.attributes.albumId": "所属相册",
+  "photos--index.self-block.model.attributes.title": "标题",
+  "photos--index.self-block.model.attributes.url": "网址",
+  "photos--index.self-block.model.attributes.thumbnailUrl": "缩略图网址"
 }

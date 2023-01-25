@@ -1,6 +1,6 @@
 {
-  "comments--index.self-block.model.attributes.postId": "Post Id",
   "comments--index.self-block.model.attributes.id": "Id",
+  "comments--index.self-block.model.attributes.postId": "Post Id",
   "comments--index.self-block.model.attributes.name": "Name",
   "comments--index.self-block.model.attributes.email": "Email",
   "comments--index.self-block.model.attributes.body": "Body"

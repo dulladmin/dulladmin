@@ -5,8 +5,8 @@ import { Pagination } from '@/api/common';
 
 /* Model */
 export interface Model {
-  albumId: string;
   id: string;
+  albumId: string;
   title: string;
   url: string;
   thumbnailUrl: string;

@@ -128,48 +128,62 @@
   const modelInfo: { [key: string]: any } = {
     id: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.id',
     },
     name: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.name',
     },
     username: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.username',
     },
     email: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.email',
     },
     address: {
       street: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.address.street',
       },
       suite: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.address.suite',
       },
       city: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.address.city',
       },
       zipcode: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.address.zipcode',
       },
       geo: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.address.geo',
       },
     },
     phone: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.phone',
     },
     website: {
       type: 'string',
+      i18nKey: 'users--index.self-block.model.attributes.website',
     },
     company: {
       name: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.company.name',
       },
       catchPhrase: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.company.catchPhrase',
       },
       bs: {
         type: 'string',
+        i18nKey: 'users--index.self-block.model.attributes.company.bs',
       },
     },
   };

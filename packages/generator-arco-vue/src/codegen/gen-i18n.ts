@@ -9,12 +9,8 @@ export function genI18n(resource: Resource): GeneratedFile[] {
 }
 
 function genI18n_Resource(resource: Resource): GeneratedFile[] {
-  return resource.views.map((view) => genI18n_View(resource, view)).reduce<GeneratedFile[]>((a, v) => [...a, ...v], [])
-}
-
-function genI18n_View(resource: Resource, view: View): GeneratedFile[] {
-  const messages = view.blocks
-    .map((block) => genI18n_Block(resource, view, block))
+  const messages = resource.views
+    .map((view) => genI18n_View(resource, view))
     .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
 
   const defaultLocale = 'en-US'
@@ -26,8 +22,14 @@ function genI18n_View(resource: Resource, view: View): GeneratedFile[] {
     const resourceName = toPath(resource.name)
     const outfilePath = `src/locale/${locale}/modules/${resourceName}.json`
     const outfileContent = JSON.stringify(i18nMessages, null, 2)
-    return { path: outfilePath, content: outfileContent }
+    return { path: outfilePath, content: outfileContent + '\n' }
   })
+}
+
+function genI18n_View(resource: Resource, view: View): Record<string, string> {
+  return view.blocks
+    .map((block) => genI18n_Block(resource, view, block))
+    .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
 }
 
 function genI18n_Block(resource: Resource, view: View, block: Block): Record<string, string> {

@@ -79,12 +79,14 @@
       {{#each object.attributes}}
       {{name}}: {
         type: '{{type}}',
+        i18nKey: '{{i18nKey}}',
       },
       {{/each}}
     },
     {{else}}
     {{name}}: {
       type: '{{type}}',
+      i18nKey: '{{i18nKey}}',
     },
     {{/if}}
   {{/each}}

@@ -51,13 +51,13 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
-        <template #userId="{ record, column }">
+        <template #id="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
           />
         </template>
-        <template #id="{ record, column }">
+        <template #userId="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
@@ -102,17 +102,21 @@
 
   // model info
   const modelInfo: { [key: string]: any } = {
-    userId: {
-      type: 'string',
-    },
     id: {
       type: 'string',
+      i18nKey: 'todos--index.self-block.model.attributes.id',
+    },
+    userId: {
+      type: 'string',
+      i18nKey: 'todos--index.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
+      i18nKey: 'todos--index.self-block.model.attributes.title',
     },
     completed: {
       type: 'bool',
+      i18nKey: 'todos--index.self-block.model.attributes.completed',
     },
   };
 
@@ -141,14 +145,14 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: t('todos--index.self-block.model.attributes.userId'),
-      dataIndex: 'userId',
-      slotName: 'userId',
-    },
-    {
       title: t('todos--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
+    },
+    {
+      title: t('todos--index.self-block.model.attributes.userId'),
+      dataIndex: 'userId',
+      slotName: 'userId',
     },
     {
       title: t('todos--index.self-block.model.attributes.title'),

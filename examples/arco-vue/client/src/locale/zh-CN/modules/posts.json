@@ -1,6 +1,6 @@
 {
-  "posts--index.self-block.model.attributes.userId": null,
-  "posts--index.self-block.model.attributes.id": null,
-  "posts--index.self-block.model.attributes.title": null,
-  "posts--index.self-block.model.attributes.body": null
+  "posts--index.self-block.model.attributes.id": "编号",
+  "posts--index.self-block.model.attributes.userId": "所属用户",
+  "posts--index.self-block.model.attributes.title": "标题",
+  "posts--index.self-block.model.attributes.body": "内容"
 }

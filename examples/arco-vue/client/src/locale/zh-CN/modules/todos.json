@@ -1,6 +1,6 @@
 {
-  "todos--index.self-block.model.attributes.userId": null,
-  "todos--index.self-block.model.attributes.id": null,
-  "todos--index.self-block.model.attributes.title": null,
-  "todos--index.self-block.model.attributes.completed": null
+  "todos--index.self-block.model.attributes.id": "编号",
+  "todos--index.self-block.model.attributes.userId": "所属用户",
+  "todos--index.self-block.model.attributes.title": "标题",
+  "todos--index.self-block.model.attributes.completed": "是否完成"
 }

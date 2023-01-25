@@ -51,13 +51,13 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
-        <template #postId="{ record, column }">
+        <template #id="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
           />
         </template>
-        <template #id="{ record, column }">
+        <template #postId="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
@@ -108,20 +108,25 @@
 
   // model info
   const modelInfo: { [key: string]: any } = {
-    postId: {
-      type: 'string',
-    },
     id: {
       type: 'string',
+      i18nKey: 'comments--index.self-block.model.attributes.id',
+    },
+    postId: {
+      type: 'string',
+      i18nKey: 'comments--index.self-block.model.attributes.postId',
     },
     name: {
       type: 'string',
+      i18nKey: 'comments--index.self-block.model.attributes.name',
     },
     email: {
       type: 'string',
+      i18nKey: 'comments--index.self-block.model.attributes.email',
     },
     body: {
       type: 'string',
+      i18nKey: 'comments--index.self-block.model.attributes.body',
     },
   };
 
@@ -150,14 +155,14 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: t('comments--index.self-block.model.attributes.postId'),
-      dataIndex: 'postId',
-      slotName: 'postId',
-    },
-    {
       title: t('comments--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
+    },
+    {
+      title: t('comments--index.self-block.model.attributes.postId'),
+      dataIndex: 'postId',
+      slotName: 'postId',
     },
     {
       title: t('comments--index.self-block.model.attributes.name'),

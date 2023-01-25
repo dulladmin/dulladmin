@@ -104,15 +104,19 @@
   const modelInfo: { [key: string]: any } = {
     id: {
       type: 'string',
+      i18nKey: 'albums--show.photos-block.model.attributes.id',
     },
     title: {
       type: 'string',
+      i18nKey: 'albums--show.photos-block.model.attributes.title',
     },
     url: {
       type: 'string',
+      i18nKey: 'albums--show.photos-block.model.attributes.url',
     },
     thumbnailUrl: {
       type: 'string',
+      i18nKey: 'albums--show.photos-block.model.attributes.thumbnailUrl',
     },
   };
 

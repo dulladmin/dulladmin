@@ -14,21 +14,6 @@
                   <td
                     class="arco-descriptions-item-label arco-descriptions-item-label-block"
                   >
-                    {{ $t('albums--show.self-block.model.attributes.userId') }}
-                  </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
-                    <SimpleData
-                      :data="store.userId"
-                      :meta="modelInfo['userId']"
-                    />
-                  </td>
-                </tr>
-                <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
                     {{ $t('albums--show.self-block.model.attributes.id') }}
                   </td>
                   <td
@@ -37,6 +22,21 @@
                     <SimpleData
                       :data="store.id"
                       :meta="modelInfo['id']"
+                    />
+                  </td>
+                </tr>
+                <tr class="arco-descriptions-row">
+                  <td
+                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
+                  >
+                    {{ $t('albums--show.self-block.model.attributes.userId') }}
+                  </td>
+                  <td
+                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
+                  >
+                    <SimpleData
+                      :data="store.userId"
+                      :meta="modelInfo['userId']"
                     />
                   </td>
                 </tr>
@@ -80,14 +80,17 @@
 
   // model info
   const modelInfo: { [key: string]: any } = {
-    userId: {
-      type: 'string',
-    },
     id: {
       type: 'string',
+      i18nKey: 'albums--show.self-block.model.attributes.id',
+    },
+    userId: {
+      type: 'string',
+      i18nKey: 'albums--show.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
+      i18nKey: 'albums--show.self-block.model.attributes.title',
     },
   };
 
@@ -114,12 +117,12 @@
   // descriptions - data
   const descriptionsData = ref<Desc[]>([
     {
-      label: 'userId',
-      dataIndex: 'userId',
-    },
-    {
       label: 'id',
       dataIndex: 'id',
+    },
+    {
+      label: 'userId',
+      dataIndex: 'userId',
     },
     {
       label: 'title',

@@ -47,7 +47,21 @@ export const build = {
             (async () => {
               const generatedFilePath = path.join(clientDir, generatedFile.path)
               logger.info(`       + ${generatedFilePath}`)
-              await fse.outputFile(generatedFilePath, generatedFile.content)
+
+              if (generatedFilePath.endsWith('.json') && (await fse.pathExists(generatedFilePath))) {
+                const oldData = JSON.parse(fs.readFileSync(generatedFilePath, 'utf8'))
+                const newData = JSON.parse(generatedFile.content)
+
+                const r: Record<string, any> = {}
+                Object.keys(newData).forEach((k) => {
+                  // * use Object.keys to delete extraneous properties
+                  // * use Object#hasOwnProperty to skip updating properties that exist
+                  r[k] = Object.hasOwnProperty.call(oldData, k) ? oldData[k] : newData[k]
+                })
+                await fse.outputFile(generatedFilePath, JSON.stringify(r, null, 2) + '\n')
+              } else {
+                await fse.outputFile(generatedFilePath, generatedFile.content)
+              }
             })() as unknown
         )
       } catch (err) {

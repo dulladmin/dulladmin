@@ -1,7 +1,7 @@
 {
-  "comments--index.self-block.model.attributes.postId": null,
-  "comments--index.self-block.model.attributes.id": null,
-  "comments--index.self-block.model.attributes.name": null,
-  "comments--index.self-block.model.attributes.email": null,
-  "comments--index.self-block.model.attributes.body": null
+  "comments--index.self-block.model.attributes.id": "编号",
+  "comments--index.self-block.model.attributes.postId": "所属文章",
+  "comments--index.self-block.model.attributes.name": "标题",
+  "comments--index.self-block.model.attributes.email": "邮箱",
+  "comments--index.self-block.model.attributes.body": "内容"
 }

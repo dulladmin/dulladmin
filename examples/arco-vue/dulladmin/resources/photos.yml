@@ -5,9 +5,9 @@ views:
       - relationship: 'self'
         table:
           items:
-            - name: 'albumId'
-              type: 'string'
             - name: 'id'
+              type: 'string'
+            - name: 'albumId'
               type: 'string'
             - name: 'title'
               type: 'string'

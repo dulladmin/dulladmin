@@ -51,13 +51,13 @@
         :data="tableData"
         @page-change="onTablePageChange"
       >
-        <template #albumId="{ record, column }">
+        <template #id="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
           />
         </template>
-        <template #id="{ record, column }">
+        <template #albumId="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
             :meta="modelInfo[column.dataIndex]"
@@ -108,20 +108,25 @@
 
   // model info
   const modelInfo: { [key: string]: any } = {
-    albumId: {
-      type: 'string',
-    },
     id: {
       type: 'string',
+      i18nKey: 'photos--index.self-block.model.attributes.id',
+    },
+    albumId: {
+      type: 'string',
+      i18nKey: 'photos--index.self-block.model.attributes.albumId',
     },
     title: {
       type: 'string',
+      i18nKey: 'photos--index.self-block.model.attributes.title',
     },
     url: {
       type: 'string',
+      i18nKey: 'photos--index.self-block.model.attributes.url',
     },
     thumbnailUrl: {
       type: 'string',
+      i18nKey: 'photos--index.self-block.model.attributes.thumbnailUrl',
     },
   };
 
@@ -150,14 +155,14 @@
   const tableColumnsShow = ref<Column[]>([]);
   const tableColumns = computed<Column[]>(() => [
     {
-      title: t('photos--index.self-block.model.attributes.albumId'),
-      dataIndex: 'albumId',
-      slotName: 'albumId',
-    },
-    {
       title: t('photos--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
+    },
+    {
+      title: t('photos--index.self-block.model.attributes.albumId'),
+      dataIndex: 'albumId',
+      slotName: 'albumId',
     },
     {
       title: t('photos--index.self-block.model.attributes.title'),

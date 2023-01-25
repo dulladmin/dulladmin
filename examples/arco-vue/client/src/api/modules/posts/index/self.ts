@@ -5,8 +5,8 @@ import { Pagination } from '@/api/common';
 
 /* Model */
 export interface Model {
-  userId: string;
   id: string;
+  userId: string;
   title: string;
   body: string;
 }

@@ -13,7 +13,7 @@
             <td
               class="arco-descriptions-item-label arco-descriptions-item-label-block"
             >
-              {{ key }}
+              {{ $t(meta[key]['i18nKey']) }}
             </td>
             <td
               class="arco-descriptions-item-value arco-descriptions-item-value-block"

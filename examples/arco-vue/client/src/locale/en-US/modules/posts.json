@@ -1,6 +1,6 @@
 {
-  "posts--index.self-block.model.attributes.userId": "User Id",
   "posts--index.self-block.model.attributes.id": "Id",
+  "posts--index.self-block.model.attributes.userId": "User Id",
   "posts--index.self-block.model.attributes.title": "Title",
   "posts--index.self-block.model.attributes.body": "Body"
 }
