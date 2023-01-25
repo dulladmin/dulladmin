@@ -1,4 +1,12 @@
-import { Resource, ViewType, View, Block, ScalarValueType, ObjectValueType } from '@dulladmin/core'
+import {
+  Resource,
+  ViewType,
+  View,
+  BlockRelationshipType,
+  Block,
+  ScalarValueType,
+  ObjectValueType
+} from '@dulladmin/core'
 import { toCamelize, toI18nMessage, toPath } from '../naming'
 
 const JSON_TYPES = {
@@ -83,11 +91,21 @@ export function extractBlockInfo(resource: Resource, view: View, block: Block): 
   const resourceName = toPath(resource.name)
   const viewName = toPath(view.type)
   const blockName = toPath(block.relName)
+  const i18nKeyPrefix = `${resourceName}--${viewName}.${blockName}-block`
 
   const importPath = `@/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`
   const componentName = `${toCamelize(block.relName)}Block`
 
-  return { importPath, componentName }
+  return {
+    importPath,
+    componentName,
+    title: {
+      i18nKey: `${i18nKeyPrefix}.title`,
+      i18nValue: `${toI18nMessage(
+        block.relType === BlockRelationshipType.Self ? resource.name : block.relName
+      )} ${toI18nMessage(block.type)}`
+    }
+  }
 }
 
 export function extractRouteInfo(resource: Resource, view: View): Record<string, any> {

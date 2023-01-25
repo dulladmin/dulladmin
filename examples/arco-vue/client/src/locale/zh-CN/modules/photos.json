@@ -1,4 +1,5 @@
 {
+  "photos--index.self-block.title": "相片列表",
   "photos--index.self-block.model.attributes.id": "编号",
   "photos--index.self-block.model.attributes.albumId": "所属相册",
   "photos--index.self-block.model.attributes.title": "标题",

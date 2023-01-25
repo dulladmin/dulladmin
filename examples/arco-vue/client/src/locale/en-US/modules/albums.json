@@ -1,10 +1,13 @@
 {
+  "albums--index.self-block.title": "Albums Table",
   "albums--index.self-block.model.attributes.id": "Id",
   "albums--index.self-block.model.attributes.userId": "User Id",
   "albums--index.self-block.model.attributes.title": "Title",
+  "albums--show.self-block.title": "Albums Descriptions",
   "albums--show.self-block.model.attributes.id": "Id",
   "albums--show.self-block.model.attributes.userId": "User Id",
   "albums--show.self-block.model.attributes.title": "Title",
+  "albums--show.photos-block.title": "Photos Table",
   "albums--show.photos-block.model.attributes.id": "Id",
   "albums--show.photos-block.model.attributes.title": "Title",
   "albums--show.photos-block.model.attributes.url": "Url",

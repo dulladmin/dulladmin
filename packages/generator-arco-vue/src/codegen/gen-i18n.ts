@@ -2,7 +2,7 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../naming'
-import { extractModelInfo } from './info'
+import { extractModelInfo, extractBlockInfo } from './info'
 
 export function genI18n(resource: Resource): GeneratedFile[] {
   return genI18n_Resource(resource)
@@ -44,15 +44,30 @@ function genI18n_Block(resource: Resource, view: View, block: Block): Record<str
 }
 
 function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): Record<string, string> {
-  return genI18n_Model(resource, view, block)
+  const blockInfo = extractBlockInfo(resource, view, block)
+  const blockMessages = {
+    [blockInfo.title.i18nKey]: blockInfo.title.i18nValue
+  }
+
+  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
 }
 
 function genI18n_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): Record<string, string> {
-  return genI18n_Model(resource, view, block)
+  const blockInfo = extractBlockInfo(resource, view, block)
+  const blockMessages = {
+    [blockInfo.title.i18nKey]: blockInfo.title.i18nValue
+  }
+
+  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
 }
 
 function genI18n_FormBlock(resource: Resource, view: View, block: FormBlock): Record<string, string> {
-  return genI18n_Model(resource, view, block)
+  const blockInfo = extractBlockInfo(resource, view, block)
+  const blockMessages = {
+    [blockInfo.title.i18nKey]: blockInfo.title.i18nValue
+  }
+
+  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
 }
 
 function genI18n_Model(resource: Resource, view: View, block: Block): Record<string, string> {

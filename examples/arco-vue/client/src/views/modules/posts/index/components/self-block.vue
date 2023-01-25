@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card>
+    <a-card :title="$t('posts--index.self-block.title')">
       <a-row style="margin-bottom: 16px">
         <a-col
           style="display: flex; align-items: center; justify-content: end"

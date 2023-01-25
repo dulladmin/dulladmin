@@ -1,4 +1,5 @@
 {
+  "users--index.self-block.title": "Users Table",
   "users--index.self-block.model.attributes.id": "Id",
   "users--index.self-block.model.attributes.name": "Name",
   "users--index.self-block.model.attributes.username": "Username",

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card>
+    <a-card :title="$t('albums--show.self-block.title')">
       <a-spin style="display: block" :loading="loading">
         <div
           class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border"
