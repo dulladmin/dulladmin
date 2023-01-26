@@ -8,6 +8,9 @@ routes.push({
   path: 'todos',
   name: 'todos--index',
   component: () => import('@/views/modules/todos/index/index.vue'),
+  meta: {
+    roles: ['*'],
+  },
 });
 
 export default routes;

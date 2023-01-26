@@ -38,6 +38,6 @@ export default {
   'not-found.descriptions.title': '没有找到相关页面',
   'not-found.descriptions.back': '返回',
 
-  // views
+  // .
   ...i18nMessages,
 };

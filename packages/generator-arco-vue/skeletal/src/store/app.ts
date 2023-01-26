@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 const useAppStore = defineStore('app', () => {
@@ -9,6 +9,9 @@ const useAppStore = defineStore('app', () => {
   const changeDevice = (dev: string) => {
     device.value = dev;
   };
+  const isMobile = computed((): boolean => {
+    return device.value === 'mobile';
+  });
 
   const changeTheme = (dark: boolean) => {
     if (dark) {
@@ -27,6 +30,7 @@ const useAppStore = defineStore('app', () => {
   return {
     device,
     changeDevice,
+    isMobile,
 
     theme,
     changeTheme,

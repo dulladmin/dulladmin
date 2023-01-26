@@ -8,6 +8,9 @@ routes.push({
   path: 'users',
   name: 'users--index',
   component: () => import('@/views/modules/users/index/index.vue'),
+  meta: {
+    roles: ['*'],
+  },
 });
 
 export default routes;

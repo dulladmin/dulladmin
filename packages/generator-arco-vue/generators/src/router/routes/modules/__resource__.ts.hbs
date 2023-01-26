@@ -9,6 +9,9 @@ routes.push({
   path: '{{path}}',
   name: '{{name}}',
   component: () => import('{{viewImportPath}}'),
+  meta: {
+    roles: ['*'],
+  },
 });
 {{/each}}
 

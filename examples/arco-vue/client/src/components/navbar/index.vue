@@ -3,7 +3,7 @@
     <div class="left-side">
       <a-space>
         <icon-menu-fold
-          v-if="appStore.device === 'mobile'"
+          v-if="appStore.isMobile"
           style="font-size: 22px; cursor: pointer"
           @click="toggleDrawerMenu"
         />
@@ -126,7 +126,7 @@
   // Menu in Drawer
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 
-  // changeLocale
+  // locale
   const { currentLocale, changeLocale } = useLocale();
   const locales = [...LOCALE_OPTIONS];
   const triggerBtn = ref();
@@ -139,7 +139,7 @@
     triggerBtn.value.dispatchEvent(event);
   };
 
-  // toggleTheme
+  // theme
   const theme = computed(() => appStore.theme);
   const isDark = useDark({
     selector: 'body',
@@ -154,10 +154,10 @@
   const toggleTheme = useToggle(isDark);
   const handleToggleTheme = () => toggleTheme();
 
-  // toggleFullScreen
+  // fullscreen
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
-  // User
+  // login/logout
   const handleLogout = () => {
     logout();
   };

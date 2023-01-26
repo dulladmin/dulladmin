@@ -38,6 +38,6 @@ export default {
   'not-found.descriptions.title': 'Not Found',
   'not-found.descriptions.back': 'Back',
 
-  // views
+  // .
   ...i18nMessages,
 };

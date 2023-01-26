@@ -8,11 +8,17 @@ routes.push({
   path: 'albums',
   name: 'albums--index',
   component: () => import('@/views/modules/albums/index/index.vue'),
+  meta: {
+    roles: ['*'],
+  },
 });
 routes.push({
   path: 'albums/:id',
   name: 'albums--show',
   component: () => import('@/views/modules/albums/show/index.vue'),
+  meta: {
+    roles: ['*'],
+  },
 });
 
 export default routes;

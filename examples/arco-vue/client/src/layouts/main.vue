@@ -1,5 +1,5 @@
 <template>
-  <a-layout class="layout" :class="{ mobile: appStore.device === 'mobile' }">
+  <a-layout class="layout" :class="{ mobile: appStore.isMobile }">
     <div class="layout-navbar">
       <NavBar />
     </div>
@@ -55,7 +55,7 @@
   useResponsive(true);
 
   // Menu in Sider
-  const menuHidden = computed(() => appStore.device === 'mobile');
+  const menuHidden = computed(() => appStore.isMobile);
   const menuCollapsed = computed(() => appStore.menuCollapse);
   const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220));
   const setMenuCollapsed = (val: boolean) => appStore.changeMenuCollapse(val);
