@@ -2,8 +2,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import chalk from 'chalk'
 import fse from 'fs-extra'
-import { globby } from 'globby'
-import { parseResourceFile } from '@dulladmin/core'
 import type { Generator } from '@dulladmin/core'
 import logger from '../logger'
 
@@ -33,41 +31,38 @@ export const build = {
       process.exit(1)
     }
 
-    const resourceFiles = await globby('resources/*.yml', { cwd: dulladminDir })
-    resourceFiles.forEach((resourceFile) => {
-      try {
-        const resourceFilePath = path.join(dulladminDir, resourceFile)
-        logger.info(`    - ${resourceFilePath}`)
+    const buildInfo = clientGenerator.build(dulladminDir)
+    if (buildInfo.code !== 0) {
+      logger.error(buildInfo.msg)
+      process.exit(1)
+    }
 
-        const data = fs.readFileSync(resourceFilePath, 'utf8')
-        const resource = parseResourceFile(data)
-        const generatedFiles = clientGenerator.buildResource(resource)
-        generatedFiles.forEach(
-          (generatedFile) =>
-            (async () => {
-              const generatedFilePath = path.join(clientDir, generatedFile.path)
-              logger.info(`       + ${generatedFilePath}`)
+    Object.entries(buildInfo.data!.files).forEach(([infilePath, outfiles]) => {
+      logger.info(`    - ${infilePath}`)
 
-              if (generatedFilePath.endsWith('.json') && (await fse.pathExists(generatedFilePath))) {
-                const oldData = JSON.parse(fs.readFileSync(generatedFilePath, 'utf8'))
-                const newData = JSON.parse(generatedFile.content)
+      outfiles.forEach(
+        (outfile) =>
+          (async () => {
+            const outfilePath = path.join(clientDir, outfile.path)
+            logger.info(`      + ${outfilePath}`)
 
-                const r: Record<string, any> = {}
-                Object.keys(newData).forEach((k) => {
-                  // * use Object.keys to delete extraneous properties
-                  // * use Object#hasOwnProperty to skip updating properties that exist
-                  r[k] = Object.hasOwnProperty.call(oldData, k) ? oldData[k] : newData[k]
-                })
-                await fse.outputFile(generatedFilePath, JSON.stringify(r, null, 2) + '\n')
-              } else {
-                await fse.outputFile(generatedFilePath, generatedFile.content)
-              }
-            })() as unknown
-        )
-      } catch (err) {
-        logger.error((err as Error).message)
-        process.exit(1)
-      }
+            if (outfilePath.endsWith('.json')) {
+              const oldData = (await fse.pathExists(outfilePath))
+                ? JSON.parse(fs.readFileSync(outfilePath, 'utf8'))
+                : {}
+              const newData = JSON.parse(outfile.content)
+              const r: Record<string, any> = {}
+              Object.keys(newData).forEach((k) => {
+                // * use Object.keys to delete extraneous properties
+                // * use Object#hasOwnProperty to skip updating properties that exist
+                r[k] = Object.hasOwnProperty.call(oldData, k) ? oldData[k] : newData[k]
+              })
+              await fse.outputFile(outfilePath, JSON.stringify(r, null, 2) + '\n')
+            } else {
+              await fse.outputFile(outfilePath, outfile.content)
+            }
+          })() as unknown
+      )
     })
   }
 }

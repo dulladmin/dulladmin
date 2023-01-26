@@ -1,11 +1,17 @@
-import { Resource } from '../structs'
-
 export interface GeneratedFile {
   path: string
   content: string
 }
 
+export interface BuildInfo {
+  code: number
+  msg: string
+  data?: {
+    files: Record<string, GeneratedFile[]>
+  }
+}
+
 export interface Generator {
   readonly templateDir: string
-  buildResource: (resource: Resource) => GeneratedFile[]
+  build: (dulladminDir: string) => BuildInfo
 }
