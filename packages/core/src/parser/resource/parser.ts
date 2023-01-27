@@ -13,7 +13,7 @@ import {
   ObjectValue,
   ModelAttribute,
   Model
-} from '../structs'
+} from '../../structs'
 import {
   assertNotNull,
   assertIsArray,
@@ -22,7 +22,7 @@ import {
   assertIsBlockRelationshipType,
   assertIsDullAdminValueType,
   assertIsDullAdminScalarValueType
-} from './assert'
+} from '../assert'
 import {
   YamlResourceType,
   YamlViewsType,

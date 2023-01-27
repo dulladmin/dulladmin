@@ -12,7 +12,7 @@ import {
   ObjectValue,
   ModelAttribute,
   Model
-} from '../structs'
+} from '../../structs'
 
 class Context {
   resource: Resource
