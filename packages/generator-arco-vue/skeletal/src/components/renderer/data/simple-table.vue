@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import SimpleData from '@/components/renderer/data/simple_data.vue';
+  import SimpleData from '@/components/renderer/data/simple-data.vue';
 
   const props = defineProps<{
     data: Record<string, any>[];
