@@ -9,7 +9,7 @@ export async function enhance(app) {
     const admin = administrators.find((u) => u.name === form.username);
     if (admin && admin.password === form.password) {
       const info = { name: admin.name, role: admin.role };
-      res.send(buildSuccessResponse({ token: jwt.sign(info), info }));
+      res.send(buildSuccessResponse({ token: jwt.sign(info, 'secret'), info }));
     } else {
       res.send(buildFailureResponse('Invalid Username or Password'));
     }
