@@ -5,7 +5,7 @@ export interface YamlAppType {
 }
 
 export interface YamlAppMenuType {
-  items?: YamlAppMenuItemType[] | YamlAppSubMenuType[]
+  items?: Array<YamlAppMenuItemType | YamlAppSubMenuType>
 }
 
 export interface YamlAppSubMenuType {
@@ -16,8 +16,8 @@ export interface YamlAppSubMenuType {
 
 export interface YamlAppMenuItemType {
   name?: string
-  view?: string
   icon?: string
+  view?: string
 }
 
 export function loadApp(str: string): YamlAppType {

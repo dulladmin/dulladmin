@@ -3,7 +3,7 @@ import { assertNotNull, assertIsArray, assertIsString } from '../assert'
 import { YamlAppType, YamlAppMenuType, YamlAppSubMenuType, YamlAppMenuItemType } from './loader'
 
 function parseApp(doc: YamlAppType): App {
-  const parsedMenu = doc.menu != null ? parseMenu(doc.menu) : undefined
+  const parsedMenu = doc.menu != null ? parseMenu(doc.menu) : null
   return new App(parsedMenu)
 }
 
@@ -42,9 +42,14 @@ function parseMenuItem(doc: YamlAppMenuItemType, xpath: string): AppMenuItem {
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
 
-  const view = doc.view ?? ''
+  const viewUri = doc.view
+  const viewUriXPath = xpath + '/view'
+  assertNotNull(viewUri, viewUriXPath)
+  assertIsString(viewUri, viewUriXPath)
+
   const icon = doc.icon ?? ''
-  return new AppMenuItem(name!, view, icon)
+  const [resource, view] = viewUri!.split('#')
+  return new AppMenuItem(name!, icon, resource, view ?? '')
 }
 
 export { parseApp }

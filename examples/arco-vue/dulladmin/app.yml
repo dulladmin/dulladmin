@@ -1,0 +1,20 @@
+menu:
+  items:
+    - name: 'users-management'
+      items:
+        - name: 'users'
+          view: 'users#index'
+        - name: 'albums'
+          view: 'albums#index'
+        - name: 'photos'
+          view: 'photos#index'
+    - name: 'posts-management'
+      items:
+        - name: 'posts'
+          view: 'posts#index'
+        - name: 'comments'
+          view: 'comments#index'
+    - name: 'todos-management'
+      items:
+        - name: 'todos'
+          view: 'todos#index'

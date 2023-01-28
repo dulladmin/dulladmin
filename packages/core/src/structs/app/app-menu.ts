@@ -1,16 +1,26 @@
-class AppMenuItem {
-  name: string
-  view: string
-  icon: string
+enum AppMenuItemType {
+  Item = 'item',
+  SubMenu = 'sub_menu'
+}
 
-  constructor(name: string, view: string, icon: string) {
+class AppMenuItem {
+  type: AppMenuItemType
+  name: string
+  icon: string
+  resource: string
+  view: string
+
+  constructor(name: string, icon: string, resource: string, view: string) {
     this.name = name
-    this.view = view
     this.icon = icon
+    this.resource = resource
+    this.view = view
+    this.type = AppMenuItemType.Item
   }
 }
 
 class AppSubMenu {
+  type: AppMenuItemType
   name: string
   icon: string
   items: AppMenuItem[]
@@ -19,6 +29,7 @@ class AppSubMenu {
     this.name = name
     this.icon = icon
     this.items = items
+    this.type = AppMenuItemType.SubMenu
   }
 }
 
@@ -30,5 +41,5 @@ class AppMenu {
   }
 }
 
-export { AppMenuItem, AppSubMenu, AppMenu }
+export { AppMenuItemType, AppMenuItem, AppSubMenu, AppMenu }
 export default AppMenu

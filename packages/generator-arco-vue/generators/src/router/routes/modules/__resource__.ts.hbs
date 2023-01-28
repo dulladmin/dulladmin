@@ -2,17 +2,17 @@
 
 import type { RouteRecordRaw } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [];
-
+const routes: RouteRecordRaw[] = [
 {{#each routes}}
-routes.push({
-  path: '{{path}}',
-  name: '{{name}}',
-  component: () => import('{{viewImportPath}}'),
-  meta: {
-    roles: ['*'],
+  {
+    path: '{{path}}',
+    name: '{{name}}',
+    component: () => import('{{viewImportPath}}'),
+    meta: {
+      roles: ['*'],
+    },
   },
-});
 {{/each}}
+];
 
 export default routes;

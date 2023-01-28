@@ -152,7 +152,7 @@ function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelA
     collection = true
   }
 
-  let object
+  let object = null
   if (type === ObjectValueType.Object) {
     const attributes = doc.attributes
     const attributesXPath = xpath + '/attributes'

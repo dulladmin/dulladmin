@@ -47,9 +47,9 @@ class ModelAttribute {
   name: string
   type: ScalarValueType | ObjectValueType
   collection: boolean
-  object?: ObjectValue
+  object: ObjectValue | null
 
-  constructor(name: string, type: ScalarValueType | ObjectValueType, collection: boolean, object?: ObjectValue) {
+  constructor(name: string, type: ScalarValueType | ObjectValueType, collection: boolean, object: ObjectValue | null) {
     this.name = name
     this.type = type
     this.collection = collection
