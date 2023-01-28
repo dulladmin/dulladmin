@@ -16,12 +16,18 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('{{viewImportPath}}'),
         meta: {
           roles: ['*'],
+          {{#if icon}}
+          icon: '{{icon}}',
+          {{/if}}
           title: '{{title.i18nKey}}',
         },
       },
     {{/each}}
     ],
     meta: {
+      {{#if icon}}
+      icon: '{{icon}}',
+      {{/if}}
       title: '{{title.i18nKey}}',
     },
   },
@@ -32,6 +38,9 @@ const menuTree: RouteRecordRaw[] = [
     component: () => import('{{viewImportPath}}'),
     meta: {
       roles: ['*'],
+      {{#if icon}}
+      icon: '{{icon}}',
+      {{/if}}
       title: '{{title.i18nKey}}',
     },
   },

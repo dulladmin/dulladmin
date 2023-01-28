@@ -1,20 +1,29 @@
 menu:
   items:
     - name: 'users_management'
+      icon: 'icon-user-group'
       items:
         - name: 'users'
+          icon: 'icon-user-group'
           view: 'users#index'
         - name: 'albums'
+          icon: 'icon-folder'
           view: 'albums#index'
         - name: 'photos'
+          icon: 'icon-image'
           view: 'photos#index'
     - name: 'posts_management'
+      icon: 'icon-file'
       items:
         - name: 'posts'
+          icon: 'icon-file'
           view: 'posts#index'
         - name: 'comments'
+          icon: 'icon-reply'
           view: 'comments#index'
     - name: 'todos_management'
+      icon: 'icon-list'
       items:
         - name: 'todos'
+          icon: 'icon-list'
           view: 'todos#index'

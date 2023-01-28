@@ -13,6 +13,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/users/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-user-group',
           title: 'menu.menuitem.users',
         },
       },
@@ -22,6 +23,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/albums/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-folder',
           title: 'menu.menuitem.albums',
         },
       },
@@ -31,11 +33,13 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/photos/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-image',
           title: 'menu.menuitem.photos',
         },
       },
     ],
     meta: {
+      icon: 'icon-user-group',
       title: 'menu.submenu.users-management',
     },
   },
@@ -49,6 +53,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/posts/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-file',
           title: 'menu.menuitem.posts',
         },
       },
@@ -58,11 +63,13 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/comments/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-reply',
           title: 'menu.menuitem.comments',
         },
       },
     ],
     meta: {
+      icon: 'icon-file',
       title: 'menu.submenu.posts-management',
     },
   },
@@ -76,11 +83,13 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/todos/index/index.vue'),
         meta: {
           roles: ['*'],
+          icon: 'icon-list',
           title: 'menu.menuitem.todos',
         },
       },
     ],
     meta: {
+      icon: 'icon-list',
       title: 'menu.submenu.todos-management',
     },
   },

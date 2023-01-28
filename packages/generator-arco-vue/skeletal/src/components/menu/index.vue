@@ -12,7 +12,7 @@
 </template>
 
 <script lang="tsx" setup>
-  import { computed, ref, onUnmounted } from 'vue';
+  import { compile, computed, h, ref, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
   import { useAppStore } from '@/store';
@@ -57,12 +57,23 @@
     const travel = (_route: RouteRecordRaw[], nodes = []) => {
       if (_route) {
         _route.forEach((element) => {
+          const icon = element.meta.icon
+            ? () => h(compile(`<${element.meta.icon}/>`))
+            : null;
           const node = element.children ? (
-            <a-sub-menu key={element.name} title={t(element.meta.title)}>
+            <a-sub-menu
+              key={element.name}
+              title={t(element.meta.title)}
+              v-slots={{ icon }}
+            >
               {travel(element.children)}
             </a-sub-menu>
           ) : (
-            <a-menu-item key={element.name} onClick={() => goto(element)}>
+            <a-menu-item
+              key={element.name}
+              v-slots={{ icon }}
+              onClick={() => goto(element)}
+            >
               {t(element.meta.title)}
             </a-menu-item>
           );

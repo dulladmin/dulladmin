@@ -63,6 +63,7 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
 
   return {
     ...route,
+    icon: menuItem.icon,
     title: {
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(menuItem.name)}`
@@ -77,6 +78,7 @@ function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<
   return {
     name: `--${subMenuName}`,
     path: `--${subMenuName}`,
+    icon: subMenu.icon,
     title: {
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(subMenu.name)}`
