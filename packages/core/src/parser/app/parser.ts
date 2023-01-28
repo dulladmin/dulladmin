@@ -3,7 +3,7 @@ import { assertNotNull, assertIsArray, assertIsString } from '../assert'
 import { YamlAppType, YamlAppMenuType, YamlAppSubMenuType, YamlAppMenuItemType } from './loader'
 
 function parseApp(doc: YamlAppType): App {
-  const parsedMenu = doc.menu != null ? parseMenu(doc.menu) : null
+  const parsedMenu = doc?.menu != null ? parseMenu(doc.menu) : null
   return new App(parsedMenu)
 }
 

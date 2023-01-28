@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import fse from 'fs-extra'
 import { globbySync } from 'globby'
 import { parseAppFile, parseResourceFile, Resource } from '@dulladmin/core'
 import type { GeneratedFile, BuildInfo, Generator } from '@dulladmin/core'
@@ -38,9 +39,11 @@ class GeneratorArcoVue implements Generator {
 
     const appFilePath = path.join(dulladminDir, 'app.yml')
     try {
-      const appFileContent = fs.readFileSync(appFilePath, 'utf8')
-      const app = parseAppFile(appFileContent)
-      files[appFilePath] = ([] as GeneratedFile[]).concat(genAppMenu(app.menu, resources))
+      if (fse.pathExistsSync(appFilePath)) {
+        const appFileContent = fs.readFileSync(appFilePath, 'utf8')
+        const app = parseAppFile(appFileContent)
+        files[appFilePath] = ([] as GeneratedFile[]).concat(genAppMenu(app.menu, resources))
+      }
     } catch (err) {
       return {
         code: 1,
