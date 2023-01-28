@@ -4,8 +4,8 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: 'comments',
     name: 'comments--index',
+    path: 'comments',
     component: () => import('@/views/modules/comments/index/index.vue'),
     meta: {
       roles: ['*'],

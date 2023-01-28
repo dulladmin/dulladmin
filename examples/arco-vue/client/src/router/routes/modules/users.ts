@@ -4,8 +4,8 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: 'users',
     name: 'users--index',
+    path: 'users',
     component: () => import('@/views/modules/users/index/index.vue'),
     meta: {
       roles: ['*'],

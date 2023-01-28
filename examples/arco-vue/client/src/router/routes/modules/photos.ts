@@ -4,8 +4,8 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: 'photos',
     name: 'photos--index',
+    path: 'photos',
     component: () => import('@/views/modules/photos/index/index.vue'),
     meta: {
       roles: ['*'],

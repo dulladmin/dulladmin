@@ -58,8 +58,8 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
   if (view == null) return null
 
   const route = extractRouteInfo(resource, view)
-  const name = toPath(menuItem.name)
-  const i18nKeyPrefix = `menu.menuitem.${name}`
+  const menuItemName = toPath(menuItem.name)
+  const i18nKeyPrefix = `menu.menuitem.${menuItemName}`
 
   return {
     ...route,
@@ -71,11 +71,12 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
 }
 
 function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<string, any> | null {
-  const name = toPath(subMenu.name)
-  const i18nKeyPrefix = `menu.submenu.${name}`
+  const subMenuName = toPath(subMenu.name)
+  const i18nKeyPrefix = `menu.submenu.${subMenuName}`
 
   return {
-    path: `${name}`,
+    name: `--${subMenuName}`,
+    path: `--${subMenuName}`,
     title: {
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(subMenu.name)}`
@@ -96,13 +97,13 @@ function genAppMenu_defaultMenu(resources: Resource[]): Record<string, any> {
     if (view == null) return
 
     const route = extractRouteInfo(resource, view)
-    const name = toPath(resource.name)
-    const i18nKeyPrefix = `menu.${name}`
+    const menuItemName = toPath(resource.name)
+    const i18nKeyPrefix = `menu.menuitem.${menuItemName}`
 
     items.push({
       ...route,
       title: {
-        i18nKey: `${i18nKeyPrefix}.title`,
+        i18nKey: `${i18nKeyPrefix}`,
         i18nValue: `${toI18nMessage(resource.name)}`
       }
     })

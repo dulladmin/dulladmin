@@ -6,12 +6,13 @@ const menuTree: RouteRecordRaw[] = [
 {{#each menu.items}}
   {{#if children}}
   {
+    name: '{{name}}',
     path: '{{path}}',
     children: [
     {{#each children}}
       {
-        path: '{{path}}',
         name: '{{name}}',
+        path: '{{path}}',
         component: () => import('{{viewImportPath}}'),
         meta: {
           roles: ['*'],
@@ -26,8 +27,8 @@ const menuTree: RouteRecordRaw[] = [
   },
   {{else}}
   {
-    path: '{{path}}',
     name: '{{name}}',
+    path: '{{path}}',
     component: () => import('{{viewImportPath}}'),
     meta: {
       roles: ['*'],

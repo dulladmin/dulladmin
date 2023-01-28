@@ -4,11 +4,12 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const menuTree: RouteRecordRaw[] = [
   {
-    path: 'users-management',
+    name: '--users-management',
+    path: '--users-management',
     children: [
       {
-        path: 'users',
         name: 'users--index',
+        path: 'users',
         component: () => import('@/views/modules/users/index/index.vue'),
         meta: {
           roles: ['*'],
@@ -16,8 +17,8 @@ const menuTree: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'albums',
         name: 'albums--index',
+        path: 'albums',
         component: () => import('@/views/modules/albums/index/index.vue'),
         meta: {
           roles: ['*'],
@@ -25,8 +26,8 @@ const menuTree: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'photos',
         name: 'photos--index',
+        path: 'photos',
         component: () => import('@/views/modules/photos/index/index.vue'),
         meta: {
           roles: ['*'],
@@ -39,11 +40,12 @@ const menuTree: RouteRecordRaw[] = [
     },
   },
   {
-    path: 'posts-management',
+    name: '--posts-management',
+    path: '--posts-management',
     children: [
       {
-        path: 'posts',
         name: 'posts--index',
+        path: 'posts',
         component: () => import('@/views/modules/posts/index/index.vue'),
         meta: {
           roles: ['*'],
@@ -51,8 +53,8 @@ const menuTree: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'comments',
         name: 'comments--index',
+        path: 'comments',
         component: () => import('@/views/modules/comments/index/index.vue'),
         meta: {
           roles: ['*'],
@@ -65,11 +67,12 @@ const menuTree: RouteRecordRaw[] = [
     },
   },
   {
-    path: 'todos-management',
+    name: '--todos-management',
+    path: '--todos-management',
     children: [
       {
-        path: 'todos',
         name: 'todos--index',
+        path: 'todos',
         component: () => import('@/views/modules/todos/index/index.vue'),
         meta: {
           roles: ['*'],

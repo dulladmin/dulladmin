@@ -5,8 +5,8 @@ import type { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
 {{#each routes}}
   {
-    path: '{{path}}',
     name: '{{name}}',
+    path: '{{path}}',
     component: () => import('{{viewImportPath}}'),
     meta: {
       roles: ['*'],
