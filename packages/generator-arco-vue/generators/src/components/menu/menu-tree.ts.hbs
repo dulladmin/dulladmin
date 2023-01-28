@@ -4,20 +4,25 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const menuTree: RouteRecordRaw[] = [
 {{#each menu.items}}
-  {{#if items}}
+  {{#if children}}
   {
-    path: '',
+    path: '{{path}}',
     children: [
-    {{#each items}}
+    {{#each children}}
       {
         path: '{{path}}',
         name: '{{name}}',
         component: () => import('{{viewImportPath}}'),
         meta: {
           roles: ['*'],
+          title: '{{title.i18nKey}}',
         },
       },
     {{/each}}
+    ],
+    meta: {
+      title: '{{title.i18nKey}}',
+    },
   },
   {{else}}
   {
@@ -26,6 +31,7 @@ const menuTree: RouteRecordRaw[] = [
     component: () => import('{{viewImportPath}}'),
     meta: {
       roles: ['*'],
+      title: '{{title.i18nKey}}',
     },
   },
   {{/if}}

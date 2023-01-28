@@ -4,9 +4,9 @@ import path from 'node:path'
 import Handlebars from 'handlebars'
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
-import { generatorsDir } from '../files'
-import { toPath } from '../naming'
-import { extractApiInfo, extractModelInfo, extractBlockInfo } from './info'
+import { generatorsDir } from '../../files'
+import { toPath } from '../../naming'
+import { extractApiInfo, extractModelInfo, extractBlockInfo } from '../info'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)

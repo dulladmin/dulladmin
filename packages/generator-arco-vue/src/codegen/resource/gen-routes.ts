@@ -3,9 +3,9 @@ import path from 'node:path'
 import Handlebars from 'handlebars'
 import { Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
-import { generatorsDir } from '../files'
-import { toPath } from '../naming'
-import { extractRouteInfo } from './info'
+import { generatorsDir } from '../../files'
+import { toPath } from '../../naming'
+import { extractRouteInfo } from '../info'
 
 export function genRoutes(resource: Resource): GeneratedFile[] {
   const routes = resource.views.map((view) => extractRouteInfo(resource, view))

@@ -4,7 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const menuTree: RouteRecordRaw[] = [
   {
-    path: '',
+    path: 'users-management',
     children: [
       {
         path: 'users',
@@ -12,6 +12,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/users/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.users',
         },
       },
       {
@@ -20,6 +21,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/albums/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.albums',
         },
       },
       {
@@ -28,11 +30,16 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/photos/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.photos',
         },
       },
+    ],
+    meta: {
+      title: 'menu.submenu.users-management',
+    },
   },
   {
-    path: '',
+    path: 'posts-management',
     children: [
       {
         path: 'posts',
@@ -40,6 +47,7 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/posts/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.posts',
         },
       },
       {
@@ -48,11 +56,16 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/comments/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.comments',
         },
       },
+    ],
+    meta: {
+      title: 'menu.submenu.posts-management',
+    },
   },
   {
-    path: '',
+    path: 'todos-management',
     children: [
       {
         path: 'todos',
@@ -60,8 +73,13 @@ const menuTree: RouteRecordRaw[] = [
         component: () => import('@/views/modules/todos/index/index.vue'),
         meta: {
           roles: ['*'],
+          title: 'menu.menuitem.todos',
         },
       },
+    ],
+    meta: {
+      title: 'menu.submenu.todos-management',
+    },
   },
 ];
 

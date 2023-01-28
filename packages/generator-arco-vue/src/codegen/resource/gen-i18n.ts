@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
-import { toPath } from '../naming'
-import { extractModelInfo, extractBlockInfo } from './info'
+import { toPath } from '../../naming'
+import { extractModelInfo, extractBlockInfo } from '../info'
+import { i18nFile } from '../generated'
 
 export function genI18n(resource: Resource): GeneratedFile[] {
   return genI18n_Resource(resource)
@@ -13,17 +14,7 @@ function genI18n_Resource(resource: Resource): GeneratedFile[] {
     .map((view) => genI18n_View(resource, view))
     .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
 
-  const defaultLocale = 'en-US'
-  const availableLocales = ['en-US', 'zh-CN']
-  return availableLocales.map((locale) => {
-    const i18nMessages =
-      locale === defaultLocale ? messages : Object.keys(messages).reduce((a, v) => ({ ...a, [v]: null }), {})
-
-    const resourceName = toPath(resource.name)
-    const outfilePath = `src/locale/${locale}/modules/${resourceName}.json`
-    const outfileContent = JSON.stringify(i18nMessages, null, 2)
-    return { path: outfilePath, content: outfileContent + '\n' }
-  })
+  return i18nFile(messages, toPath(resource.name))
 }
 
 function genI18n_View(resource: Resource, view: View): Record<string, string> {

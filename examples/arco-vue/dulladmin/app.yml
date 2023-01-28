@@ -1,6 +1,6 @@
 menu:
   items:
-    - name: 'users-management'
+    - name: 'users_management'
       items:
         - name: 'users'
           view: 'users#index'
@@ -8,13 +8,13 @@ menu:
           view: 'albums#index'
         - name: 'photos'
           view: 'photos#index'
-    - name: 'posts-management'
+    - name: 'posts_management'
       items:
         - name: 'posts'
           view: 'posts#index'
         - name: 'comments'
           view: 'comments#index'
-    - name: 'todos-management'
+    - name: 'todos_management'
       items:
         - name: 'todos'
           view: 'todos#index'
