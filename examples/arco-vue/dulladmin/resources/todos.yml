@@ -2,14 +2,9 @@ name: 'todos'
 views:
   index:
     blocks:
-      - relationship: 'self'
-        table:
+      - table:
           items:
-            - name: 'id'
-              type: 'string'
-            - name: 'userId'
-              type: 'string'
-            - name: 'title'
-              type: 'string'
-            - name: 'completed'
-              type: 'bool'
+            - { name: 'id'       , type: 'string' }
+            - { name: 'userId'   , type: 'string' }
+            - { name: 'title'    , type: 'string' }
+            - { name: 'completed', type: 'bool'   }

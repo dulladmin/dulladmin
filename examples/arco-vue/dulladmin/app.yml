@@ -1,29 +1,17 @@
 menu:
   items:
     - name: 'users_management'
-      icon: 'icon-user-group'
+      icon: 'icon_user_group'
       items:
-        - name: 'users'
-          icon: 'icon-user-group'
-          view: 'users#index'
-        - name: 'albums'
-          icon: 'icon-folder'
-          view: 'albums#index'
-        - name: 'photos'
-          icon: 'icon-image'
-          view: 'photos#index'
+        - { name: 'users' , icon: 'icon_user_group', view: 'users#index'  }
+        - { name: 'albums', icon: 'icon_folder'    , view: 'albums#index' }
+        - { name: 'photos', icon: 'icon_image'     , view: 'photos#index' }
     - name: 'posts_management'
-      icon: 'icon-file'
+      icon: 'icon_file'
       items:
-        - name: 'posts'
-          icon: 'icon-file'
-          view: 'posts#index'
-        - name: 'comments'
-          icon: 'icon-reply'
-          view: 'comments#index'
+        - { name: 'posts'   , icon: 'icon_file' , view: 'posts#index'    }
+        - { name: 'comments', icon: 'icon_reply', view: 'comments#index' }
     - name: 'todos_management'
-      icon: 'icon-list'
+      icon: 'icon_list'
       items:
-        - name: 'todos'
-          icon: 'icon-list'
-          view: 'todos#index'
+        - { name: 'todos', icon: 'icon_list', view: 'todos#index' }

@@ -5,7 +5,7 @@ import Handlebars from 'handlebars'
 import { AppMenuItemType, AppMenu, AppSubMenu, AppMenuItem, Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../../files'
-import { toI18nMessage, toPath } from '../../naming'
+import { toDasherize, toI18nMessage, toPath } from '../../naming'
 import { extractRouteInfo } from '../info'
 import { i18nFile } from '../generated'
 
@@ -63,7 +63,7 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
 
   return {
     ...route,
-    icon: menuItem.icon,
+    icon: toDasherize(menuItem.icon),
     title: {
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(menuItem.name)}`
@@ -78,7 +78,7 @@ function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<
   return {
     name: `--${subMenuName}`,
     path: `--${subMenuName}`,
-    icon: subMenu.icon,
+    icon: toDasherize(subMenu.icon),
     title: {
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(subMenu.name)}`

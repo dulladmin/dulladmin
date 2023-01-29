@@ -2,16 +2,10 @@ name: 'photos'
 views:
   index:
     blocks:
-      - relationship: 'self'
-        table:
+      - table:
           items:
-            - name: 'id'
-              type: 'string'
-            - name: 'albumId'
-              type: 'string'
-            - name: 'title'
-              type: 'string'
-            - name: 'url'
-              type: 'string'
-            - name: 'thumbnailUrl'
-              type: 'string'
+            - { name: 'id'          , type: 'string' }
+            - { name: 'albumId'     , type: 'string' }
+            - { name: 'title'       , type: 'string' }
+            - { name: 'url'         , type: 'string' }
+            - { name: 'thumbnailUrl', type: 'string' }
