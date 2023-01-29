@@ -33,11 +33,14 @@ export const build = {
 
     const buildInfo = clientGenerator.build(dulladminDir)
     if (buildInfo.code !== 0) {
-      logger.error(buildInfo.msg)
+      Object.entries(buildInfo.data.errors!).forEach(([infilePath, errorMessage]) => {
+        logger.error(`    - ${infilePath}`)
+        logger.error(`      + ${errorMessage}`)
+      })
       process.exit(1)
     }
 
-    Object.entries(buildInfo.data!.files).forEach(([infilePath, outfiles]) => {
+    Object.entries(buildInfo.data.files!).forEach(([infilePath, outfiles]) => {
       logger.info(`    - ${infilePath}`)
 
       outfiles.forEach(

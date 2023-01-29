@@ -30,7 +30,7 @@ function parseSubMenu(doc: YamlAppSubMenuType, xpath: string): AppSubMenu {
   const menuItemsXPath = xpath + '/items'
   assertNotNull(menuItems, menuItemsXPath)
   assertIsArray(menuItems, menuItemsXPath)
-  const parsedMenuItems = menuItems!.map((item, idx) => parseMenuItem(item, xpath + `[${idx}]`))
+  const parsedMenuItems = menuItems!.map((item, idx) => parseMenuItem(item, menuItemsXPath + `[${idx}]`))
 
   const icon = doc.icon ?? ''
   return new AppSubMenu(name!, icon, parsedMenuItems)

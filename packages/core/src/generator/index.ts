@@ -6,8 +6,9 @@ export interface GeneratedFile {
 export interface BuildInfo {
   code: number
   msg: string
-  data?: {
-    files: Record<string, GeneratedFile[]>
+  data: {
+    files?: Record<string, GeneratedFile[]>
+    errors?: Record<string, string>
   }
 }
 

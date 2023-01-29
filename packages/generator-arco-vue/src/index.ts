@@ -14,13 +14,13 @@ class GeneratorArcoVue implements Generator {
 
   build(dulladminDir: string): BuildInfo {
     const files: Record<string, GeneratedFile[]> = {}
+    const errors: Record<string, string> = {}
 
     const resources: Resource[] = []
     const resourceFiles = globbySync('resources/*.yml', { cwd: dulladminDir })
-    for (let i = 0; i < resourceFiles.length; i += 1) {
+    resourceFiles.forEach((resourceFile) => {
+      const resourceFilePath = path.join(dulladminDir, resourceFile)
       try {
-        const resourceFile = resourceFiles[i]
-        const resourceFilePath = path.join(dulladminDir, resourceFile)
         const resourceFileContent = fs.readFileSync(resourceFilePath, 'utf8')
         const resource = parseResourceFile(resourceFileContent)
         resources.push(resource)
@@ -30,27 +30,28 @@ class GeneratorArcoVue implements Generator {
           .concat(genViews(resource))
           .concat(genI18n(resource))
       } catch (err) {
-        return {
-          code: 1,
-          msg: (err as Error).message
-        }
+        errors[resourceFilePath] = (err as Error).message
       }
-    }
+    })
 
     const appFilePath = path.join(dulladminDir, 'app.yml')
-    try {
-      if (fse.pathExistsSync(appFilePath)) {
+    if (fse.pathExistsSync(appFilePath)) {
+      try {
         const appFileContent = fs.readFileSync(appFilePath, 'utf8')
         const app = parseAppFile(appFileContent)
         files[appFilePath] = ([] as GeneratedFile[]).concat(genAppMenu(app.menu, resources))
-      }
-    } catch (err) {
-      return {
-        code: 1,
-        msg: (err as Error).message
+      } catch (err) {
+        errors[appFilePath] = (err as Error).message
       }
     }
 
+    if (Object.keys(errors).length !== 0) {
+      return {
+        code: 1,
+        msg: 'failed',
+        data: { errors }
+      }
+    }
     return {
       code: 0,
       msg: 'ok',
