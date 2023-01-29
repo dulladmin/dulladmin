@@ -38,7 +38,35 @@
   // selectedKey
   const selectedKey = ref<string[]>([]);
   listenerRouteChange((newRoute) => {
-    selectedKey.value = [newRoute.name];
+    // recursive search in menuTree to find a RouteRecordRaw by :path
+    const travel = (_route: RouteRecordRaw[], path: string) => {
+      let found = null;
+      for (let i = 0; i < _route.length; i += 1) {
+        const element = _route[i];
+        if (element.children) {
+          found = travel(element.children, path);
+        } else {
+          found = element.path === path ? element : null;
+        }
+        if (found) break;
+      }
+      return found;
+    };
+
+    if (newRoute.matched[0].name === '$app') {
+      const appRoutes = newRoute.matched[0].children;
+
+      let found = null;
+      let path = appRoutes.find((e) => e.name === newRoute.name)?.path ?? '';
+      while (path) {
+        found = travel(menuTree, path);
+        if (found) break;
+        path = path.substring(0, path.lastIndexOf('/'));
+      }
+      selectedKey.value = found ? [found.name] : [];
+    } else {
+      selectedKey.value = [];
+    }
   }, true);
   onUnmounted(() => {
     removeRouteListener();
@@ -54,33 +82,29 @@
 
   // render
   const renderFn = () => {
-    const travel = (_route: RouteRecordRaw[], nodes = []) => {
-      if (_route) {
-        _route.forEach((element) => {
-          const icon = element.meta.icon
-            ? () => h(compile(`<${element.meta.icon}/>`))
-            : null;
-          const node = element.children ? (
-            <a-sub-menu
-              key={element.name}
-              title={t(element.meta.title)}
-              v-slots={{ icon }}
-            >
-              {travel(element.children)}
-            </a-sub-menu>
-          ) : (
-            <a-menu-item
-              key={element.name}
-              v-slots={{ icon }}
-              onClick={() => goto(element)}
-            >
-              {t(element.meta.title)}
-            </a-menu-item>
-          );
-          nodes.push(node);
-        });
-      }
-      return nodes;
+    const travel = (_route: RouteRecordRaw[]) => {
+      return _route.map((element) => {
+        const icon = element.meta.icon
+          ? () => h(compile(`<${element.meta.icon}/>`))
+          : null;
+        return element.children ? (
+          <a-sub-menu
+            key={element.name}
+            title={t(element.meta.title)}
+            v-slots={{ icon }}
+          >
+            {travel(element.children)}
+          </a-sub-menu>
+        ) : (
+          <a-menu-item
+            key={element.name}
+            v-slots={{ icon }}
+            onClick={() => goto(element)}
+          >
+            {t(element.meta.title)}
+          </a-menu-item>
+        );
+      });
     };
     return travel(menuTree);
   };

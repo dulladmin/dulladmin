@@ -17,7 +17,7 @@ class GeneratorArcoVue implements Generator {
 
     const resources: Resource[] = []
     const resourceFiles = globbySync('resources/*.yml', { cwd: dulladminDir })
-    for (let i = 0; i < resourceFiles.length; i++) {
+    for (let i = 0; i < resourceFiles.length; i += 1) {
       try {
         const resourceFile = resourceFiles[i]
         const resourceFilePath = path.join(dulladminDir, resourceFile)
