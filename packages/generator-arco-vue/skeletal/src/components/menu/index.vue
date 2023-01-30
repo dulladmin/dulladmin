@@ -15,18 +15,45 @@
   import { compile, computed, h, ref, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
-  import { useAppStore } from '@/store';
+  import cloneDeep from 'lodash/cloneDeep';
+  import { usePermission } from '@/hooks';
+  import { useAppStore, useUserStore } from '@/store';
   import {
     listenerRouteChange,
     removeRouteListener,
   } from '@/utils/route-listener';
-  import menuTree from './menu-tree';
+  import menuTreeData from './menu-tree';
 
   // i18n
   const { t } = useI18n();
 
   // store
   const appStore = useAppStore();
+  const userStore = useUserStore();
+
+  // menuTree
+  const { accessRouter } = usePermission();
+  const menuTree = computed(() => {
+    // recursive filter unauthorized RouteRecordRaw
+    const travel = (_route: RouteRecordRaw[], nodes = []) => {
+      _route.forEach((element) => {
+        // submenu
+        if (element.children) {
+          const children = travel(element.children);
+          if (children.length === 0) return;
+          element.children = children;
+          nodes.push(element);
+          return;
+        }
+        // menuitem
+        if (accessRouter(element)) {
+          nodes.push(element);
+        }
+      });
+      return nodes;
+    };
+    return travel(cloneDeep(menuTreeData));
+  });
 
   // collapsed
   const collapsed = computed({
@@ -62,7 +89,7 @@
       let found = null;
       let path = appRoutes.find((e) => e.name === newRoute.name)?.path ?? '';
       while (path) {
-        found = travel(menuTree, path);
+        found = travel(menuTree.value, path);
         if (found) break;
         path = path.substring(0, path.lastIndexOf('/'));
       }
@@ -109,7 +136,7 @@
         );
       });
     };
-    return travel(menuTree);
+    return travel(menuTree.value);
   };
 </script>
 

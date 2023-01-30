@@ -102,7 +102,7 @@ const menuTree: RouteRecordRaw[] = [
         path: 'administrators',
         component: () => import('@/views/modules/administrators/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['admin'],
           icon: 'icon-user-group',
           title: 'menu.menuitem.administrators',
         },

@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { buildSuccessResponse, buildFailureResponse } from './utils.mjs';
 
-const administrators = [{ name: 'admin', role: 'admin', password: 'admin' }];
+const administrators = [
+  { name: 'admin', role: 'admin', password: '123456' },
+  { name: 'user', password: '123456' },
+];
 
 export async function enhance(app) {
   app.post('/auth', async (req, res) => {
