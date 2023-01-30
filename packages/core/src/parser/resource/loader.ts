@@ -2,6 +2,7 @@ import * as yaml from 'js-yaml'
 
 export interface YamlResourceType {
   name?: string
+  singular?: boolean
   views?: YamlViewsType
 }
 

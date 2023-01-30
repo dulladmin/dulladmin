@@ -5,10 +5,10 @@ class Resource {
   views: View[]
   singular: boolean
 
-  constructor(name: string, views: View[]) {
+  constructor(name: string, singular: boolean, views: View[]) {
     this.name = name
+    this.singular = singular
     this.views = views
-    this.singular = false
   }
 }
 

@@ -33,6 +33,8 @@ import {
 } from './loader'
 
 function parseResource(doc: YamlResourceType): Resource {
+  if (doc.singular == null) doc.singular = false
+
   const name = doc.name
   assertNotNull(name, '/name')
   assertIsString(name, '/name')
@@ -42,7 +44,7 @@ function parseResource(doc: YamlResourceType): Resource {
   assertIsObject(views, '/views')
   const parsedViews = parseViews(views!, '/views')
 
-  return new Resource(name!, parsedViews)
+  return new Resource(name!, doc.singular, parsedViews)
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
@@ -65,12 +67,8 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
-  if (doc.relationship == null) {
-    doc.relationship = 'self'
-  }
-  if (doc.relationship === 'self' && doc.name == null) {
-    doc.name = 'self'
-  }
+  if (doc.relationship == null) doc.relationship = 'self'
+  if (doc.relationship === 'self' && doc.name == null) doc.name = 'self'
 
   const relType = doc.relationship as BlockRelationshipType
   const relationshipXPath = xpath + '/relationship'
