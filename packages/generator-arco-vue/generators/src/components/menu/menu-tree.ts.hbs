@@ -15,7 +15,7 @@ const menuTree: RouteRecordRaw[] = [
         path: '{{path}}',
         component: () => import('{{viewImportPath}}'),
         meta: {
-          roles: ['*'],
+          authority: {{{authority}}},
           {{#if icon}}
           icon: '{{icon}}',
           {{/if}}
@@ -37,7 +37,7 @@ const menuTree: RouteRecordRaw[] = [
     path: '{{path}}',
     component: () => import('{{viewImportPath}}'),
     meta: {
-      roles: ['*'],
+      authority: {{{authority}}},
       {{#if icon}}
       icon: '{{icon}}',
       {{/if}}

@@ -6,9 +6,9 @@ export default function usePermission() {
 
   const accessRouter = (route: RouteLocationNormalized | RouteRecordRaw) => {
     return (
-      !route.meta?.roles ||
-      route.meta?.roles?.includes('*') ||
-      route.meta?.roles?.includes(userStore.info.role)
+      !route.meta?.authority ||
+      route.meta?.authority?.includes('*') ||
+      route.meta?.authority?.includes(userStore.info.role)
     );
   };
 

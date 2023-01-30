@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     path: 'todos',
     component: () => import('@/views/modules/todos/index/index.vue'),
     meta: {
-      roles: ['*'],
+      authority: ['*'],
     },
   },
 ];
