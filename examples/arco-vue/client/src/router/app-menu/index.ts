@@ -2,7 +2,7 @@
 
 import type { RouteRecordRaw } from 'vue-router';
 
-const menuTree: RouteRecordRaw[] = [
+const appMenuRoutes: RouteRecordRaw[] = [
   {
     name: '--users-management',
     path: '--users-management',
@@ -115,4 +115,4 @@ const menuTree: RouteRecordRaw[] = [
   },
 ];
 
-export default menuTree;
+export default appMenuRoutes;

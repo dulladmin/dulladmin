@@ -12,11 +12,11 @@ import { i18nFile } from '../generated'
 export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): GeneratedFile[] {
   const menu = appMenu != null ? genAppMenu_menu(appMenu, resources) : genAppMenu_defaultMenu(resources)
 
-  const infileRawPath = 'src/components/menu/menu-tree.ts.hbs'
+  const infileRawPath = 'src/router/app-menu/index.ts.hbs'
   const infilePath = path.join(generatorsDir, infileRawPath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
 
-  const outfilePath = 'src/components/menu/menu-tree.ts'
+  const outfilePath = 'src/router/app-menu/index.ts'
   const outfileContent = infileContent({ menu })
   const outfile = { path: outfilePath, content: outfileContent }
 

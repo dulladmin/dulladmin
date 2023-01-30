@@ -25,7 +25,8 @@ export default [
               '!skeletal/dist-ssr',
               '!skeletal/.env.*',
               '!skeletal/.DS_Store',
-              '!skeletal/yarn-error.log'
+              '!skeletal/yarn-error.log',
+              '!skeletal/components.d.ts'
             ],
             dest: 'dist/skeletal'
           },

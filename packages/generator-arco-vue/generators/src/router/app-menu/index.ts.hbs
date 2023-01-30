@@ -2,7 +2,7 @@
 
 import type { RouteRecordRaw } from 'vue-router';
 
-const menuTree: RouteRecordRaw[] = [
+const appMenuRoutes: RouteRecordRaw[] = [
 {{#each menu.items}}
   {{#if children}}
   {
@@ -48,4 +48,4 @@ const menuTree: RouteRecordRaw[] = [
 {{/each}}
 ];
 
-export default menuTree;
+export default appMenuRoutes;
