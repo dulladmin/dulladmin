@@ -68,7 +68,7 @@
   import { computed, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-  import { Model, GetRequest, get } from '@/api/modules/albums/show/self';
+  import { Model, get } from '@/api/modules/albums/show/self';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
   import SimpleList from '@/components/renderer/data/simple-list.vue';
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
@@ -100,7 +100,7 @@
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({});
+  const store = ref<Model>({} as Model);
   const fetchStore = async () => {
     setLoading(true);
     try {
@@ -113,22 +113,6 @@
       setLoading(false);
     }
   };
-
-  // descriptions - data
-  const descriptionsData = ref<Desc[]>([
-    {
-      label: 'id',
-      dataIndex: 'id',
-    },
-    {
-      label: 'userId',
-      dataIndex: 'userId',
-    },
-    {
-      label: 'title',
-      dataIndex: 'title',
-    },
-  ]);
 
   // descriptions - init
   fetchStore();

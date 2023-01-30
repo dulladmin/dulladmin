@@ -8,10 +8,15 @@ import type {
   CreateResponseUserInfo as UserInfo,
 } from '@/api/auth';
 
+const DEFAULT_USER_INFO = {
+  name: 'unknown',
+  role: 'unknown',
+};
+
 const useUserStore = defineStore('user', () => {
   const info = useStorage<UserInfo>(
     'user.info',
-    { name: 'unknown', role: 'unknown' },
+    DEFAULT_USER_INFO,
     localStorage,
     { mergeDefaults: true }
   );
@@ -20,7 +25,7 @@ const useUserStore = defineStore('user', () => {
     try {
       const res = await authCreate({ form: formData } as AuthCreateRequest);
       setToken(res.data.token);
-      info.value = res.data.info;
+      info.value = { ...DEFAULT_USER_INFO, ...res.data.info };
     } catch (err) {
       clearToken();
       throw err;

@@ -39,7 +39,10 @@
   const selectedKey = ref<string[]>([]);
   listenerRouteChange((newRoute) => {
     // recursive search in menuTree to find a RouteRecordRaw by :path
-    const travel = (_route: RouteRecordRaw[], path: string) => {
+    const travel = (
+      _route: RouteRecordRaw[],
+      path: string
+    ): RouteRecordRaw | null => {
       let found = null;
       for (let i = 0; i < _route.length; i += 1) {
         const element = _route[i];
@@ -63,7 +66,7 @@
         if (found) break;
         path = path.substring(0, path.lastIndexOf('/'));
       }
-      selectedKey.value = found ? [found.name] : [];
+      selectedKey.value = found ? [found.name as string] : [];
     } else {
       selectedKey.value = [];
     }
@@ -84,13 +87,13 @@
   const renderFn = () => {
     const travel = (_route: RouteRecordRaw[]) => {
       return _route.map((element) => {
-        const icon = element.meta.icon
-          ? () => h(compile(`<${element.meta.icon}/>`))
+        const icon = element!.meta!.icon
+          ? () => h(compile(`<${element!.meta!.icon}/>`))
           : null;
         return element.children ? (
           <a-sub-menu
             key={element.name}
-            title={t(element.meta.title)}
+            title={t(element!.meta!.title!)}
             v-slots={{ icon }}
           >
             {travel(element.children)}
@@ -101,7 +104,7 @@
             v-slots={{ icon }}
             onClick={() => goto(element)}
           >
-            {t(element.meta.title)}
+            {t(element!.meta!.title!)}
           </a-menu-item>
         );
       });
