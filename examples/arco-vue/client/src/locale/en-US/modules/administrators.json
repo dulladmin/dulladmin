@@ -1,0 +1,6 @@
+{
+  "administrators--index.self-block.title": "Administrators Table",
+  "administrators--index.self-block.model.attributes.id": "Id",
+  "administrators--index.self-block.model.attributes.name": "Name",
+  "administrators--index.self-block.model.attributes.role": "Role"
+}

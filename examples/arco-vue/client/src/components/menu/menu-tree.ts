@@ -93,6 +93,26 @@ const menuTree: RouteRecordRaw[] = [
       title: 'menu.submenu.todos-management',
     },
   },
+  {
+    name: '--system-management',
+    path: '--system-management',
+    children: [
+      {
+        name: 'administrators--index',
+        path: 'administrators',
+        component: () => import('@/views/modules/administrators/index/index.vue'),
+        meta: {
+          authority: ['*'],
+          icon: 'icon-user-group',
+          title: 'menu.menuitem.administrators',
+        },
+      },
+    ],
+    meta: {
+      icon: 'icon-settings',
+      title: 'menu.submenu.system-management',
+    },
+  },
 ];
 
 export default menuTree;

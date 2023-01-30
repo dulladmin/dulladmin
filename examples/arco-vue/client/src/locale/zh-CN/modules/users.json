@@ -1,7 +1,7 @@
 {
   "users--index.self-block.title": "用户列表",
   "users--index.self-block.model.attributes.id": "编号",
-  "users--index.self-block.model.attributes.name": "姓名",
+  "users--index.self-block.model.attributes.name": "名称",
   "users--index.self-block.model.attributes.username": "昵称",
   "users--index.self-block.model.attributes.email": "邮箱",
   "users--index.self-block.model.attributes.address": "居住地址",

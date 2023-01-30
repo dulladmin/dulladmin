@@ -2,10 +2,12 @@
   "menu.submenu.users-management": "用户管理",
   "menu.submenu.posts-management": "帖子管理",
   "menu.submenu.todos-management": "事项管理",
+  "menu.submenu.system-management": "系统管理",
   "menu.menuitem.users": "用户列表",
   "menu.menuitem.albums": "相册列表",
   "menu.menuitem.photos": "相片列表",
   "menu.menuitem.posts": "帖子列表",
   "menu.menuitem.comments": "评论列表",
-  "menu.menuitem.todos": "待办列表"
+  "menu.menuitem.todos": "待办列表",
+  "menu.menuitem.administrators": "管理员列表"
 }

@@ -2,10 +2,12 @@
   "menu.submenu.users-management": "Users Management",
   "menu.submenu.posts-management": "Posts Management",
   "menu.submenu.todos-management": "Todos Management",
+  "menu.submenu.system-management": "System Management",
   "menu.menuitem.users": "Users",
   "menu.menuitem.albums": "Albums",
   "menu.menuitem.photos": "Photos",
   "menu.menuitem.posts": "Posts",
   "menu.menuitem.comments": "Comments",
-  "menu.menuitem.todos": "Todos"
+  "menu.menuitem.todos": "Todos",
+  "menu.menuitem.administrators": "Administrators"
 }

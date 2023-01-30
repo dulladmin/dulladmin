@@ -15,3 +15,7 @@ menu:
       icon: 'icon_list'
       items:
         - { name: 'todos', icon: 'icon_list', view: 'todos#index' }
+    - name: 'system_management'
+      icon: 'icon_settings'
+      items:
+        - { name: 'administrators', icon: 'icon_user_group', view: 'administrators#index' }

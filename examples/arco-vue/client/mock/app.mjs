@@ -29,6 +29,7 @@ export async function enhance(app) {
   const postsDB = await loadDatabase('./db/posts.json');
   const commentsDB = await loadDatabase('./db/comments.json');
   const todosDB = await loadDatabase('./db/todos.json');
+  const administratorsDB = await loadDatabase('./db/administrators.json');
 
   app.get('/users/index/self', async (req, res) => {
     const collection = usersDB.data;
@@ -73,6 +74,12 @@ export async function enhance(app) {
 
   app.get('/todos/index/self', async (req, res) => {
     const collection = todosDB.data;
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
+  });
+
+  app.get('/administrators/index/self', async (req, res) => {
+    const collection = administratorsDB.data;
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });

@@ -1,0 +1,6 @@
+{
+  "administrators--index.self-block.title": "管理员列表",
+  "administrators--index.self-block.model.attributes.id": "编号",
+  "administrators--index.self-block.model.attributes.name": "名称",
+  "administrators--index.self-block.model.attributes.role": "角色"
+}
