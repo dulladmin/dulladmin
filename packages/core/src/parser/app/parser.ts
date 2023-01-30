@@ -1,13 +1,19 @@
 import { App, AppMenu, AppSubMenu, AppMenuItem } from '../../structs'
-import { assertNotNull, assertIsArray, assertIsString } from '../assert'
+import { assertFieldNames, assertNotNull, assertIsArray, assertIsString } from '../assert'
 import { YamlAppType, YamlAppMenuType, YamlAppSubMenuType, YamlAppMenuItemType } from './loader'
 
 function parseApp(doc: YamlAppType): App {
+  const allowedFiledNames = ['menu']
+  assertFieldNames(doc, allowedFiledNames, '/')
+
   const parsedMenu = doc?.menu != null ? parseMenu(doc.menu) : null
   return new App(parsedMenu)
 }
 
 function parseMenu(doc: YamlAppMenuType): AppMenu {
+  const allowedFiledNames = ['items']
+  assertFieldNames(doc, allowedFiledNames, '/menu')
+
   const items = doc.items
   const itemsXPath = '/menu/items'
   assertNotNull(items, itemsXPath)
@@ -21,6 +27,9 @@ function parseMenu(doc: YamlAppMenuType): AppMenu {
 }
 
 function parseSubMenu(doc: YamlAppSubMenuType, xpath: string): AppSubMenu {
+  const allowedFiledNames = ['name', 'icon', 'items']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const name = doc.name
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
@@ -37,6 +46,9 @@ function parseSubMenu(doc: YamlAppSubMenuType, xpath: string): AppSubMenu {
 }
 
 function parseMenuItem(doc: YamlAppMenuItemType, xpath: string): AppMenuItem {
+  const allowedFiledNames = ['name', 'icon', 'view']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const name = doc.name
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)

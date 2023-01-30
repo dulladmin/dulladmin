@@ -15,6 +15,7 @@ import {
   Model
 } from '../../structs'
 import {
+  assertFieldNames,
   assertNotNull,
   assertIsArray,
   assertIsObject,
@@ -34,6 +35,9 @@ import {
 
 function parseResource(doc: YamlResourceType): Resource {
   if (doc.singular == null) doc.singular = false
+
+  const allowedFiledNames = ['name', 'singular', 'views']
+  assertFieldNames(doc, allowedFiledNames, '/')
 
   const name = doc.name
   assertNotNull(name, '/name')
@@ -57,6 +61,9 @@ function parseViews(doc: YamlViewsType, xpath: string): View[] {
 }
 
 function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
+  const allowedFiledNames = ['blocks']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const blocks = doc.blocks
   const blocksXPath = xpath + '/blocks'
   assertNotNull(blocks, blocksXPath)
@@ -69,6 +76,9 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.relationship == null) doc.relationship = 'self'
   if (doc.relationship === 'self' && doc.name == null) doc.name = 'self'
+
+  const allowedFiledNames = ['relationship', 'name', 'table', 'descriptions', 'form']
+  assertFieldNames(doc, allowedFiledNames, xpath)
 
   const relType = doc.relationship as BlockRelationshipType
   const relationshipXPath = xpath + '/relationship'
@@ -83,13 +93,16 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.table != null) return parseTableBlock(doc, xpath)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath)
   if (doc.form != null) return parseFormBlock(doc, xpath)
-  throw new Error('Block must be one of ["table", "descriptions", "form"]')
+  throw new Error(`Missing BlockType in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
 }
 
 function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
   const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
   const table = doc.table ?? {}
+
+  const allowedFiledNames = ['items']
+  assertFieldNames(table, allowedFiledNames, xpath + '/table')
 
   const model = table.items
   const modelXPath = xpath + '/table/items'
@@ -105,6 +118,9 @@ function parseDescriptionsBlock(doc: YamlBlockType, xpath: string): Descriptions
   const relName = doc.name ?? ''
   const descriptions = doc.descriptions ?? {}
 
+  const allowedFiledNames = ['items']
+  assertFieldNames(descriptions, allowedFiledNames, xpath + '/descriptions')
+
   const model = descriptions.items
   const modelXPath = xpath + '/descriptions/items'
   assertNotNull(model, modelXPath)
@@ -118,6 +134,9 @@ function parseFormBlock(doc: YamlBlockType, xpath: string): FormBlock {
   const relType = doc.relationship as BlockRelationshipType
   const relName = doc.name ?? ''
   const form = doc.form ?? {}
+
+  const allowedFiledNames = ['items']
+  assertFieldNames(form, allowedFiledNames, xpath + '/form')
 
   const model = form.items
   const modelXPath = xpath + '/form/items'
@@ -134,6 +153,9 @@ function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
 }
 
 function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
+  const allowedFiledNames = ['name', 'type', 'attributes']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const name = doc.name
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
@@ -168,6 +190,9 @@ function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string
 }
 
 function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath: string): ObjectValueAttribute {
+  const allowedFiledNames = ['name', 'type']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const name = doc.name
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
