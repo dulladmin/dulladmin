@@ -9,10 +9,12 @@ enum ViewType {
 
 class View {
   type: ViewType
+  authority: string[] | null
   blocks: Block[]
 
-  constructor(type: ViewType, blocks: Block[]) {
+  constructor(type: ViewType, authority: string[] | null, blocks: Block[]) {
     this.type = type
+    this.authority = authority
     this.blocks = blocks
   }
 }

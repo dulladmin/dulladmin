@@ -69,6 +69,7 @@ enum BlockRelationshipType {
  */
 class TableBlock {
   type: BlockType
+  authority: string[] | null
 
   // Data Source
   relType: BlockRelationshipType
@@ -78,10 +79,11 @@ class TableBlock {
   model: Model
   collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
     this.type = BlockType.TableBlock
     this.relType = relType
     this.relName = relName
+    this.authority = authority
     this.model = model
     this.collection = true
   }
@@ -144,6 +146,7 @@ class TableBlock {
  */
 class DescriptionsBlock {
   type: BlockType
+  authority: string[] | null
 
   // Data Source
   relType: BlockRelationshipType
@@ -153,10 +156,11 @@ class DescriptionsBlock {
   model: Model
   collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
     this.type = BlockType.DescriptionsBlock
     this.relType = relType
     this.relName = relName
+    this.authority = authority
     this.model = model
     this.collection = false
   }
@@ -220,6 +224,7 @@ class DescriptionsBlock {
  */
 class FormBlock {
   type: BlockType
+  authority: string[] | null
 
   // Data Source
   relType: BlockRelationshipType
@@ -229,10 +234,11 @@ class FormBlock {
   model: Model
   collection: boolean
 
-  constructor(relType: BlockRelationshipType, relName: string, model: Model) {
+  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
     this.type = BlockType.FormBlock
     this.relType = relType
     this.relName = relName
+    this.authority = authority
     this.model = model
     this.collection = false
   }

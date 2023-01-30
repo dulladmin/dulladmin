@@ -3,6 +3,7 @@ import * as yaml from 'js-yaml'
 export interface YamlResourceType {
   name?: string
   singular?: boolean
+  authority?: string[]
   views?: YamlViewsType
 }
 
@@ -14,12 +15,14 @@ export interface YamlViewsType {
 }
 
 export interface YamlViewType {
+  authority?: string[]
   blocks?: YamlBlockType[]
 }
 
 export interface YamlBlockType {
   relationship?: string
   name?: string
+  authority?: string[]
   table?: YamlBlockTableType
   descriptions?: YamlBlockDescriptionsType
   form?: YamlBlockFormType
