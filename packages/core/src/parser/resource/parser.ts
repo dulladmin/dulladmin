@@ -4,6 +4,8 @@ import {
   View,
   BlockRelationshipType,
   TableBlock,
+  TableBlockSorter,
+  TableBlockSorterDirection,
   DescriptionsBlock,
   FormBlock,
   Block,
@@ -22,13 +24,15 @@ import {
   assertIsString,
   assertIsBlockRelationshipType,
   assertIsDullAdminValueType,
-  assertIsDullAdminScalarValueType
+  assertIsDullAdminScalarValueType,
+  assertIsTableBlockSorterDirection
 } from '../assert'
 import {
   YamlResourceType,
   YamlViewsType,
   YamlViewType,
   YamlBlockType,
+  YamlBlockTableSorterType,
   YamlModelAttributeType,
   YamlModelAttributeObjectAttributeType
 } from './loader'
@@ -110,7 +114,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
   if (authority != null) assertIsArray(authority, xpath + '/authority')
 
   const table = doc.table ?? {}
-  const allowedFiledNames = ['items']
+  const allowedFiledNames = ['items', 'sorters']
   assertFieldNames(table, allowedFiledNames, xpath + '/table')
 
   const model = table.items
@@ -119,7 +123,33 @@ function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
   assertIsArray(model, modelXPath)
   const parsedModel = parseModel(model!, modelXPath)
 
-  return new TableBlock(relType, relName, authority, parsedModel)
+  let parsedSorters: TableBlockSorter[] = []
+  const sorters = table.sorters
+  const sortersXPath = xpath + '/table/sorters'
+  if (sorters != null) {
+    assertIsArray(sorters, sortersXPath)
+    parsedSorters = sorters.map((item, idx) => parseTableBlockSorter(item, sortersXPath + `[${idx}]`))
+  }
+
+  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters)
+}
+
+function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): TableBlockSorter {
+  const name = doc.name
+  const nameXPath = xpath + '/name'
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
+
+  const directions = doc.directions
+  const directionsXPath = xpath + '/directions'
+  assertNotNull(directions, directionsXPath)
+  assertIsArray(directions, directionsXPath)
+  const parsedDirections = directions!.map((item, idx) => {
+    assertIsTableBlockSorterDirection(item, directionsXPath + `[${idx}]`)
+    return item as TableBlockSorterDirection
+  })
+
+  return new TableBlockSorter(name!, parsedDirections)
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string): DescriptionsBlock {

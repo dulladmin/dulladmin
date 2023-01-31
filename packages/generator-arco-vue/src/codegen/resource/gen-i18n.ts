@@ -26,11 +26,11 @@ function genI18n_View(resource: Resource, view: View): Record<string, string> {
 function genI18n_Block(resource: Resource, view: View, block: Block): Record<string, string> {
   switch (block.type) {
     case BlockType.TableBlock:
-      return genI18n_TableBlock(resource, view, block)
+      return genI18n_TableBlock(resource, view, block as TableBlock)
     case BlockType.DescriptionsBlock:
-      return genI18n_DescriptionsBlock(resource, view, block)
+      return genI18n_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
-      return genI18n_FormBlock(resource, view, block)
+      return genI18n_FormBlock(resource, view, block as FormBlock)
   }
 }
 

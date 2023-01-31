@@ -25,11 +25,11 @@ function genAPI_View(resource: Resource, view: View): GeneratedFile[] {
 function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFile {
   switch (block.type) {
     case BlockType.TableBlock:
-      return genAPI_TableBlock(resource, view, block)
+      return genAPI_TableBlock(resource, view, block as TableBlock)
     case BlockType.DescriptionsBlock:
-      return genAPI_DescriptionsBlock(resource, view, block)
+      return genAPI_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
-      return genAPI_FormBlock(resource, view, block)
+      return genAPI_FormBlock(resource, view, block as FormBlock)
   }
 }
 

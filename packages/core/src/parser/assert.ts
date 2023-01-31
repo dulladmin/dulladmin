@@ -1,4 +1,4 @@
-import { BlockRelationshipType, ScalarValueType, ObjectValueType } from '../structs'
+import { BlockRelationshipType, ScalarValueType, ObjectValueType, TableBlockSorterDirection } from '../structs'
 
 export function assertFieldNames(doc: unknown, allowedFiledNames: string[], fieldXPath: string): void {
   Object.keys(doc as object).forEach((name) => {
@@ -42,4 +42,9 @@ export function assertIsDullAdminValueType(fieldValue: unknown, fieldXPath: stri
 export function assertIsDullAdminScalarValueType(fieldValue: unknown, fieldXPath: string): void {
   if (Object.values(ScalarValueType).includes(fieldValue as ScalarValueType)) return
   throw new Error(`Field \`${fieldXPath}\` is not a legal scalar value type`)
+}
+
+export function assertIsTableBlockSorterDirection(fieldValue: unknown, fieldXPath: string): void {
+  if (Object.values(TableBlockSorterDirection).includes(fieldValue as TableBlockSorterDirection)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ["ascend", "descend"]}`)
 }

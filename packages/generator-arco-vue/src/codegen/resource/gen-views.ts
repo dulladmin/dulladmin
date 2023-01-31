@@ -39,11 +39,11 @@ function genViews_View(resource: Resource, view: View): GeneratedFile[] {
 function genViews_Block(resource: Resource, view: View, block: Block): GeneratedFile {
   switch (block.type) {
     case BlockType.TableBlock:
-      return genViews_TableBlock(resource, view, block)
+      return genViews_TableBlock(resource, view, block as TableBlock)
     case BlockType.DescriptionsBlock:
-      return genViews_DescriptionsBlock(resource, view, block)
+      return genViews_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
-      return genViews_FormBlock(resource, view, block)
+      return genViews_FormBlock(resource, view, block as FormBlock)
   }
 }
 

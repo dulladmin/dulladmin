@@ -30,6 +30,12 @@ export interface YamlBlockType {
 
 export interface YamlBlockTableType {
   items?: YamlModelAttributeType[]
+  sorters?: YamlBlockTableSorterType[]
+}
+
+export interface YamlBlockTableSorterType {
+  name?: string
+  directions?: string[]
 }
 
 export interface YamlBlockDescriptionsType {

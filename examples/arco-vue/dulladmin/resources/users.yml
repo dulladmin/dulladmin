@@ -3,13 +3,13 @@ views:
   index:
     blocks:
       - table:
-          _address: &_address
+          _items_address: &_items_address
             - { name: 'street' , type: 'string' }
             - { name: 'suite'  , type: 'string' }
             - { name: 'city'   , type: 'string' }
             - { name: 'zipcode', type: 'string' }
             - { name: 'geo'    , type: 'string' }
-          _company: &_company
+          _items_company: &_items_company
             - { name: 'name'       , type: 'string' }
             - { name: 'catchPhrase', type: 'string' }
             - { name: 'bs'         , type: 'string' }
@@ -18,7 +18,7 @@ views:
             - { name: 'name'    , type: 'string' }
             - { name: 'username', type: 'string' }
             - { name: 'email'   , type: 'string' }
-            - { name: 'address' , type: 'object', attributes: *_address }
+            - { name: 'address' , type: 'object', attributes: *_items_address }
             - { name: 'phone'   , type: 'string' }
             - { name: 'website' , type: 'string' }
-            - { name: 'company' , type: 'object', attributes: *_company }
+            - { name: 'company' , type: 'object', attributes: *_items_company }
