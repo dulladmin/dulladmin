@@ -1,24 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import fs from 'node:fs'
-import path from 'node:path'
-import Handlebars from 'handlebars'
 import { AppMenuItemType, AppMenu, AppSubMenu, AppMenuItem, Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
-import { generatorsDir } from '../../files'
 import { toDasherize, toI18nMessage, toPath } from '../../naming'
 import { extractRouteInfo } from '../info'
-import { i18nFile } from '../generated'
+import { handlebarsFile, i18nFile } from '../generated'
 
 export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): GeneratedFile[] {
   const menu = appMenu != null ? genAppMenu_menu(appMenu, resources) : genAppMenu_defaultMenu(resources)
-
-  const infileRawPath = 'src/router/app-menu/index.ts.hbs'
-  const infilePath = path.join(generatorsDir, infileRawPath)
-  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-
-  const outfilePath = 'src/router/app-menu/index.ts'
-  const outfileContent = infileContent({ menu })
-  const outfile = { path: outfilePath, content: outfileContent }
 
   const messages: Record<string, string> = {}
   menu.items.forEach((item: Record<string, any>) => {
@@ -30,7 +18,10 @@ export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): Gene
     })
   })
 
-  return ([] as GeneratedFile[]).concat([outfile]).concat(i18nFile(messages, '13-app-menu'))
+  const i18nOutfiles = i18nFile('13-app-menu', messages)
+  const routeOutfile = handlebarsFile('src/router/app-menu/index.ts', 'src/router/app-menu/index.ts.hbs', { menu })
+
+  return [...i18nOutfiles, routeOutfile]
 }
 
 function genAppMenu_menu(appMenu: AppMenu, resources: Resource[]): Record<string, any> {
@@ -38,15 +29,31 @@ function genAppMenu_menu(appMenu: AppMenu, resources: Resource[]): Record<string
     items: appMenu.items
       .map((item) => {
         switch (item.type) {
-          case AppMenuItemType.Item:
-            return genAppMenu_menuItem(item as AppMenuItem, resources)
           case AppMenuItemType.SubMenu:
             return genAppMenu_subMenu(item as AppSubMenu, resources)
+          case AppMenuItemType.Item:
+            return genAppMenu_menuItem(item as AppMenuItem, resources)
           default:
             return null
         }
       })
-      .filter((item) => item != null)
+      .filter(Boolean)
+  }
+}
+
+function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<string, any> | null {
+  const subMenuName = toPath(subMenu.name)
+  const i18nKeyPrefix = `menu.submenu.${subMenuName}`
+
+  return {
+    name: `--${subMenuName}`,
+    path: `--${subMenuName}`,
+    icon: toDasherize(subMenu.icon),
+    title: {
+      i18nKey: `${i18nKeyPrefix}`,
+      i18nValue: `${toI18nMessage(subMenu.name)}`
+    },
+    children: subMenu.items.map((item) => genAppMenu_menuItem(item, resources)).filter(Boolean)
   }
 }
 
@@ -68,26 +75,6 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
       i18nKey: `${i18nKeyPrefix}`,
       i18nValue: `${toI18nMessage(menuItem.name)}`
     }
-  }
-}
-
-function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<string, any> | null {
-  const subMenuName = toPath(subMenu.name)
-  const i18nKeyPrefix = `menu.submenu.${subMenuName}`
-
-  return {
-    name: `--${subMenuName}`,
-    path: `--${subMenuName}`,
-    icon: toDasherize(subMenu.icon),
-    title: {
-      i18nKey: `${i18nKeyPrefix}`,
-      i18nValue: `${toI18nMessage(subMenu.name)}`
-    },
-    children: subMenu.items
-      .map((item) => {
-        return genAppMenu_menuItem(item, resources)
-      })
-      .filter((item) => item != null)
   }
 }
 

@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import fs from 'node:fs'
-import path from 'node:path'
-import Handlebars from 'handlebars'
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
-import { generatorsDir } from '../../files'
 import { toPath } from '../../naming'
 import { extractApiInfo, extractModelInfo } from '../info'
+import { handlebarsFile } from '../generated'
 
 export function genAPI(resource: Resource): GeneratedFile[] {
   return genAPI_Resource(resource)
@@ -37,52 +34,31 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  const infileRawPath = 'src/api/modules/__resource__/__view__/__table_block__.ts.hbs'
-  const infilePath = path.join(generatorsDir, infileRawPath)
-  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const blockName = toPath(block.relName)
-  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
-  const outfileContent = infileContent({ api, model })
-  const outfile = { path: outfilePath, content: outfileContent }
-
-  return outfile
+  return handlebarsFile(
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
+    { api, model }
+  )
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  const infileRawPath = 'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs'
-  const infilePath = path.join(generatorsDir, infileRawPath)
-  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const blockName = toPath(block.relName)
-  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
-  const outfileContent = infileContent({ api, model })
-  const outfile = { path: outfilePath, content: outfileContent }
-
-  return outfile
+  return handlebarsFile(
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
+    { api, model }
+  )
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  const infileRawPath = 'src/api/modules/__resource__/__view__/__form_block__.ts.hbs'
-  const infilePath = path.join(generatorsDir, infileRawPath)
-  const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const blockName = toPath(block.relName)
-  const outfilePath = `src/api/modules/${resourceName}/${viewName}/${blockName}.ts`
-  const outfileContent = infileContent({ api, model })
-  const outfile = { path: outfilePath, content: outfileContent }
-
-  return outfile
+  return handlebarsFile(
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
+    { api, model }
+  )
 }

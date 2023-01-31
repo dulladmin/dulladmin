@@ -13,8 +13,7 @@ function genI18n_Resource(resource: Resource): GeneratedFile[] {
   const messages = resource.views
     .map((view) => genI18n_View(resource, view))
     .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
-
-  return i18nFile(messages, toPath(resource.name))
+  return i18nFile(toPath(resource.name), messages)
 }
 
 function genI18n_View(resource: Resource, view: View): Record<string, string> {
