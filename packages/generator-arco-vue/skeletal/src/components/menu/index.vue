@@ -15,7 +15,7 @@
   import { compile, computed, h, ref, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
-  import cloneDeep from 'lodash/cloneDeep';
+  import { cloneDeep } from 'lodash';
   import appMenuRoutes from '@/router/app-menu';
   import { usePermission } from '@/hooks';
   import { useAppStore, useUserStore } from '@/store';

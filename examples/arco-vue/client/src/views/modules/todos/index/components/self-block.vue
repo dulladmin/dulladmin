@@ -165,6 +165,7 @@
       slotName: 'id',
       sortable: {
         sortDirections: ['ascend', 'descend', ],
+        sorter: true,
       },
     },
     {
