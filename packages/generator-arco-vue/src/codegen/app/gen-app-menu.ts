@@ -2,8 +2,7 @@
 import { AppMenuItemType, AppMenu, AppSubMenu, AppMenuItem, Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toDasherize, toI18nMessage, toPath } from '../../naming'
-import { extractRouteInfo } from '../info'
-import { handlebarsFile, i18nFile } from '../generated'
+import { extractRouteInfo, handlebarsFile, i18nFile } from '../utils'
 
 export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): GeneratedFile[] {
   const menu = appMenu != null ? genAppMenu_menu(appMenu, resources) : genAppMenu_defaultMenu(resources)
@@ -18,10 +17,10 @@ export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): Gene
     })
   })
 
-  const i18nOutfiles = i18nFile('13-app-menu', messages)
   const routeOutfile = handlebarsFile('src/router/app-menu/index.ts', 'src/router/app-menu/index.ts.hbs', { menu })
+  const i18nOutfiles = i18nFile('13-app-menu', messages)
 
-  return [...i18nOutfiles, routeOutfile]
+  return [routeOutfile, ...i18nOutfiles]
 }
 
 function genAppMenu_menu(appMenu: AppMenu, resources: Resource[]): Record<string, any> {

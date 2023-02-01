@@ -2,8 +2,7 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractApiInfo, extractModelInfo } from '../info'
-import { handlebarsFile } from '../generated'
+import { extractApiInfo, extractModelInfo, handlebarsFile } from '../utils'
 
 export function genAPI(resource: Resource): GeneratedFile[] {
   return genAPI_Resource(resource)
