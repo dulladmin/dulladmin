@@ -8,3 +8,5 @@ views:
             - { name: 'userId'   , type: 'string' }
             - { name: 'title'    , type: 'string' }
             - { name: 'completed', type: 'bool'   }
+          sorters:
+            - { name: 'id', directions: ['ascend', 'descend'] }

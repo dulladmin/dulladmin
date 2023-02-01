@@ -7,6 +7,8 @@ views:
             - { name: 'id'    , type: 'string' }
             - { name: 'userId', type: 'string' }
             - { name: 'title' , type: 'string' }
+          sorters:
+            - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
     blocks:

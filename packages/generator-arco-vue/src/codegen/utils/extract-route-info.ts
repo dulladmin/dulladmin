@@ -22,13 +22,10 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
       break
   }
 
-  const viewAuthority = view.authority ?? resource.authority ?? ['*']
-  const authority = JSON.stringify(viewAuthority).replaceAll('"', "'").replaceAll(',', ', ')
-
   return {
     name: `${resourceName}--${viewName}`,
     path,
-    authority,
+    authority: view.authority ?? resource.authority ?? ['*'],
     viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`
   }
 }

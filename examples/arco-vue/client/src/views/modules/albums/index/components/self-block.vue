@@ -50,6 +50,7 @@
         :columns="(tableColumnsShow as TableColumnData[])"
         :data="tableData"
         @page-change="onTablePageChange"
+        @sorter-change="onTableSorterChange"
       >
         <template #id="{ record, column }">
           <SimpleData
@@ -78,7 +79,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import cloneDeep from 'lodash/cloneDeep';
+  import { cloneDeep, omitBy } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/albums/index/self';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
@@ -90,6 +91,7 @@
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+  type Sorter = Record<string, any>;
 
   // i18n
   const { t } = useI18n();
@@ -130,6 +132,19 @@
     };
   };
 
+  // sorter info
+  const baseTableSorter: Sorter = {
+    name: '',
+    direction: '',
+  };
+  const tableSorter = ref({
+    ...baseTableSorter,
+  });
+  const apiSorter = (sorter: Sorter): any => {
+    if (sorter.name === '') return null;
+    return { name: sorter.name, direction: sorter.direction };
+  };
+
   // table - columns initialize
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
@@ -138,6 +153,9 @@
       title: t('albums--index.self-block.model.attributes.id'),
       dataIndex: 'id',
       slotName: 'id',
+      sortable: {
+        sortDirections: ['ascend', 'descend', ],
+      },
     },
     {
       title: t('albums--index.self-block.model.attributes.userId'),
@@ -209,15 +227,29 @@
 
   // table - refresh
   const onTableRefresh = async () => {
-    const req = { pagination: apiPagination(tablePagination) };
+    const req = omitBy({
+      pagination: apiPagination(tablePagination),
+      sorter: apiSorter(tableSorter.value),
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
   // table - pageChange
   const onTablePageChange = async (current: number) => {
-    const req = {
+    const req = omitBy({
       pagination: { ...apiPagination(tablePagination), current },
-    };
+      sorter: apiSorter(tableSorter.value),
+    }, v => v == null) as ListRequest;
+    await fetchStore(req);
+  };
+
+  // table - sorterChange
+  const onTableSorterChange = async (dataIndex: string, direction: string) => {
+    tableSorter.value = direction ? { name: dataIndex, direction } : { ...baseTablePagination };
+    const req = omitBy({
+      pagination: apiPagination(tablePagination),
+      sorter: apiSorter(tableSorter.value)
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 

@@ -9,3 +9,5 @@ views:
             - { name: 'title'       , type: 'string' }
             - { name: 'url'         , type: 'string' }
             - { name: 'thumbnailUrl', type: 'string' }
+          sorters:
+            - { name: 'id', directions: ['ascend', 'descend'] }

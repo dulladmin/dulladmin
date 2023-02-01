@@ -50,6 +50,9 @@
         :columns="(tableColumnsShow as TableColumnData[])"
         :data="tableData"
         @page-change="onTablePageChange"
+        {{#if sorters}}
+        @sorter-change="onTableSorterChange"
+        {{/if}}
       >
       {{#each model.attributes}}
         <template #{{name}}="{ record, column }">
@@ -89,9 +92,9 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import cloneDeep from 'lodash/cloneDeep';
+  import { cloneDeep, omitBy } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { Model, ListRequest, list } from '{{ api.importPath }}';
+  import { Model, ListRequest, list } from '{{ block.apiImportPath }}';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
   import SimpleList from '@/components/renderer/data/simple-list.vue';
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
@@ -101,6 +104,9 @@
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
+  {{#if sorters}}
+  type Sorter = Record<string, any>;
+  {{/if}}
 
   // i18n
   const { t } = useI18n();
@@ -146,6 +152,21 @@
     };
   };
 
+{{#if sorters}}
+  // sorter info
+  const baseTableSorter: Sorter = {
+    name: '',
+    direction: '',
+  };
+  const tableSorter = ref({
+    ...baseTableSorter,
+  });
+  const apiSorter = (sorter: Sorter): any => {
+    if (sorter.name === '') return null;
+    return { name: sorter.name, direction: sorter.direction };
+  };
+
+{{/if}}
   // table - columns initialize
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
@@ -155,6 +176,11 @@
       title: t('{{i18nKey}}'),
       dataIndex: '{{name}}',
       slotName: '{{name}}',
+      {{#if sorter}}
+      sortable: {
+        sortDirections: [{{#each sorter.directions}}'{{this}}', {{/each}}],
+      },
+      {{/if}}
     },
   {{/each}}
   ]);
@@ -217,18 +243,38 @@
 
   // table - refresh
   const onTableRefresh = async () => {
-    const req = { pagination: apiPagination(tablePagination) };
+    const req = omitBy({
+      pagination: apiPagination(tablePagination),
+      {{#if sorters}}
+      sorter: apiSorter(tableSorter.value),
+      {{/if}}
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
   // table - pageChange
   const onTablePageChange = async (current: number) => {
-    const req = {
+    const req = omitBy({
       pagination: { ...apiPagination(tablePagination), current },
-    };
+      {{#if sorters}}
+      sorter: apiSorter(tableSorter.value),
+      {{/if}}
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
+{{#if sorters}}
+  // table - sorterChange
+  const onTableSorterChange = async (dataIndex: string, direction: string) => {
+    tableSorter.value = direction ? { name: dataIndex, direction } : { ...baseTablePagination };
+    const req = omitBy({
+      pagination: apiPagination(tablePagination),
+      sorter: apiSorter(tableSorter.value)
+    }, v => v == null) as ListRequest;
+    await fetchStore(req);
+  };
+
+{{/if}}
   // table - init
   onTableRefresh();
 </script>

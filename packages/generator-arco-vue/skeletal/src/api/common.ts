@@ -3,3 +3,8 @@ export interface Pagination {
   current: number;
   total?: number;
 }
+
+export interface Sorter {
+  name: string;
+  direction: 'ascend' | 'descend';
+}

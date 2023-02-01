@@ -12,7 +12,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'users',
         component: () => import('@/views/modules/users/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-user-group',
           title: 'menu.menuitem.users',
         },
@@ -22,7 +22,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'albums',
         component: () => import('@/views/modules/albums/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-folder',
           title: 'menu.menuitem.albums',
         },
@@ -32,7 +32,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'photos',
         component: () => import('@/views/modules/photos/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-image',
           title: 'menu.menuitem.photos',
         },
@@ -52,7 +52,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'posts',
         component: () => import('@/views/modules/posts/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-file',
           title: 'menu.menuitem.posts',
         },
@@ -62,7 +62,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'comments',
         component: () => import('@/views/modules/comments/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-reply',
           title: 'menu.menuitem.comments',
         },
@@ -82,7 +82,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'todos',
         component: () => import('@/views/modules/todos/index/index.vue'),
         meta: {
-          authority: ['*'],
+          authority: ['*', ],
           icon: 'icon-list',
           title: 'menu.menuitem.todos',
         },
@@ -102,7 +102,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         path: 'administrators',
         component: () => import('@/views/modules/administrators/index/index.vue'),
         meta: {
-          authority: ['admin'],
+          authority: ['admin', ],
           icon: 'icon-user-group',
           title: 'menu.menuitem.administrators',
         },

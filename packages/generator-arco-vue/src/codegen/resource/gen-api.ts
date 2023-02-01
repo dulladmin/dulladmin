@@ -2,7 +2,7 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractApiInfo, extractModelInfo, handlebarsFile } from '../utils'
+import { extractApiInfo, extractModelInfo, enhanceModelInfoWithTableSorter, handlebarsFile } from '../utils'
 
 export function genAPI(resource: Resource): GeneratedFile[] {
   return genAPI_Resource(resource)
@@ -32,11 +32,13 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
+  const sorters = block.sorters
+  enhanceModelInfoWithTableSorter(model, sorters)
 
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
-    { api, model }
+    { api, model, sorters }
   )
 }
 

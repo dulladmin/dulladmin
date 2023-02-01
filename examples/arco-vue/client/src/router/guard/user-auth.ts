@@ -6,7 +6,6 @@ import type {
 } from 'vue-router';
 import NProgress from 'nprogress';
 import { usePermission } from '@/hooks';
-import { useUserStore } from '@/store';
 import { isLoggedIn } from '@/utils/auth';
 import appMenuRoutes from '../app-menu';
 

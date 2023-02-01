@@ -1,3 +1,8 @@
 /dist
 /node_modules
 /components.d.ts
+
+/src/api/modules
+/src/views/modules
+/src/router/routes/modules
+/src/router/app-menu/index.ts

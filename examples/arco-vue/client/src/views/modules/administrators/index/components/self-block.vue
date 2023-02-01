@@ -78,7 +78,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import cloneDeep from 'lodash/cloneDeep';
+  import { cloneDeep, omitBy } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/administrators/index/self';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
@@ -209,15 +209,17 @@
 
   // table - refresh
   const onTableRefresh = async () => {
-    const req = { pagination: apiPagination(tablePagination) };
+    const req = omitBy({
+      pagination: apiPagination(tablePagination),
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
   // table - pageChange
   const onTablePageChange = async (current: number) => {
-    const req = {
+    const req = omitBy({
       pagination: { ...apiPagination(tablePagination), current },
-    };
+    }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 

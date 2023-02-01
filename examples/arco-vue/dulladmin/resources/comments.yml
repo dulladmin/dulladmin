@@ -9,3 +9,5 @@ views:
             - { name: 'name'  , type: 'string' }
             - { name: 'email' , type: 'string' }
             - { name: 'body'  , type: 'string' }
+          sorters:
+            - { name: 'id', directions: ['ascend', 'descend'] }
