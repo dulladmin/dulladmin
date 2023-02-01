@@ -232,7 +232,7 @@
       dataIndex: 'id',
       slotName: 'id',
       sortable: {
-        sortDirections: ['ascend', 'descend', ],
+        sortDirections: ['descend', 'ascend', ],
         sorter: true,
       },
     },
@@ -240,16 +240,28 @@
       title: t('users--index.self-block.model.attributes.name'),
       dataIndex: 'name',
       slotName: 'name',
+      sortable: {
+        sortDirections: ['descend', ],
+        sorter: true,
+      },
     },
     {
       title: t('users--index.self-block.model.attributes.username'),
       dataIndex: 'username',
       slotName: 'username',
+      sortable: {
+        sortDirections: ['ascend', 'descend', ],
+        sorter: true,
+      },
     },
     {
       title: t('users--index.self-block.model.attributes.email'),
       dataIndex: 'email',
       slotName: 'email',
+      sortable: {
+        sortDirections: ['ascend', ],
+        sorter: true,
+      },
     },
     {
       title: t('users--index.self-block.model.attributes.address'),

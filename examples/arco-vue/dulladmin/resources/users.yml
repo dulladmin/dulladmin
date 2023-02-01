@@ -23,4 +23,7 @@ views:
             - { name: 'website' , type: 'string' }
             - { name: 'company' , type: 'object', attributes: *_items_company }
           sorters:
-            - { name: 'id', directions: ['ascend', 'descend'] }
+            - { name: 'id'      , directions: ['descend', 'ascend'] }
+            - { name: 'name'    , directions: ['descend']           }
+            - { name: 'username', directions: ['ascend', 'descend'] }
+            - { name: 'email'   , directions: ['ascend']            }

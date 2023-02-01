@@ -98,8 +98,7 @@ export async function enhance(app) {
 
   app.get('/administrators/index/self', async (req, res) => {
     const data = lodash.cloneDeep(administratorsDB.data);
-    const collection = makeSorter(data, req.query.sorter);
-    const r = makePagination(collection, req.query.pagination);
+    const r = makePagination(data, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 }
