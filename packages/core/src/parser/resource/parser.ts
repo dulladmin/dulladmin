@@ -44,21 +44,32 @@ function parseResource(doc: YamlResourceType): Resource {
   assertFieldNames(doc, allowedFiledNames, '/')
 
   const name = doc.name
-  assertNotNull(name, '/name')
-  assertIsString(name, '/name')
+  const nameXPath = '/name'
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
 
   const authority = doc.authority ?? null
-  if (authority != null) assertIsArray(authority, '/authority')
+  const authorityXPath = '/authority'
+  if (authority != null) {
+    assertIsArray(authority, authorityXPath)
+    authority.forEach((item, idx) => {
+      assertIsString(item, authorityXPath + `[${idx}]`)
+    })
+  }
 
   const views = doc.views
-  assertNotNull(views, '/views')
-  assertIsObject(views, '/views')
-  const parsedViews = parseViews(views!, '/views')
+  const viewsXPath = '/views'
+  assertNotNull(views, viewsXPath)
+  assertIsObject(views, viewsXPath)
+  const parsedViews = parseViews(views!, viewsXPath)
 
   return new Resource(name!, doc.singular, authority, parsedViews)
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
+  const allowedFiledNames = ['index', 'show', 'new', 'edit']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const views = []
   if (doc.index != null) views.push(parseView(doc.index, xpath + '/index', ViewType.Index))
   if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', ViewType.Show))
@@ -72,7 +83,13 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const authority = doc.authority ?? null
-  if (authority != null) assertIsArray(authority, xpath + '/authority')
+  const authorityXPath = xpath + '/authority'
+  if (authority != null) {
+    assertIsArray(authority, authorityXPath)
+    authority.forEach((item, idx) => {
+      assertIsString(item, authorityXPath + `[${idx}]`)
+    })
+  }
 
   const blocks = doc.blocks
   const blocksXPath = xpath + '/blocks'
@@ -100,20 +117,26 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   assertNotNull(relName, nameXPath)
   assertIsString(relName, nameXPath)
 
-  if (doc.table != null) return parseTableBlock(doc, xpath)
-  if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath)
-  if (doc.form != null) return parseFormBlock(doc, xpath)
-  throw new Error(`Missing BlockType in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
+  const authority = doc.authority ?? null
+  const authorityXPath = xpath + '/authority'
+  if (authority != null) {
+    assertIsArray(authority, authorityXPath)
+    authority.forEach((item, idx) => {
+      assertIsString(item, authorityXPath + `[${idx}]`)
+    })
+  }
+
+  const attrs = { relType, relName, authority }
+  if (doc.table != null) return parseTableBlock(doc, xpath, attrs)
+  if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath, attrs)
+  if (doc.form != null) return parseFormBlock(doc, xpath, attrs)
+  throw new Error(`BlockType is required in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
 }
 
-function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
-  const relType = doc.relationship as BlockRelationshipType
-  const relName = doc.name ?? ''
-
-  const authority = doc.authority ?? null
-  if (authority != null) assertIsArray(authority, xpath + '/authority')
-
+function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): TableBlock {
+  const { relType, relName, authority } = attrs
   const table = doc.table ?? {}
+
   const allowedFiledNames = ['items', 'sorters']
   assertFieldNames(table, allowedFiledNames, xpath + '/table')
 
@@ -135,6 +158,9 @@ function parseTableBlock(doc: YamlBlockType, xpath: string): TableBlock {
 }
 
 function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): TableBlockSorter {
+  const allowedFiledNames = ['name', 'directions']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
   const name = doc.name
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
@@ -152,14 +178,10 @@ function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): Ta
   return new TableBlockSorter(name!, parsedDirections)
 }
 
-function parseDescriptionsBlock(doc: YamlBlockType, xpath: string): DescriptionsBlock {
-  const relType = doc.relationship as BlockRelationshipType
-  const relName = doc.name ?? ''
-
-  const authority = doc.authority ?? null
-  if (authority != null) assertIsArray(authority, xpath + '/authority')
-
+function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {
+  const { relType, relName, authority } = attrs
   const descriptions = doc.descriptions ?? {}
+
   const allowedFiledNames = ['items']
   assertFieldNames(descriptions, allowedFiledNames, xpath + '/descriptions')
 
@@ -172,14 +194,10 @@ function parseDescriptionsBlock(doc: YamlBlockType, xpath: string): Descriptions
   return new DescriptionsBlock(relType, relName, authority, parsedModel)
 }
 
-function parseFormBlock(doc: YamlBlockType, xpath: string): FormBlock {
-  const relType = doc.relationship as BlockRelationshipType
-  const relName = doc.name ?? ''
-
-  const authority = doc.authority ?? null
-  if (authority != null) assertIsArray(authority, xpath + '/authority')
-
+function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): FormBlock {
+  const { relType, relName, authority } = attrs
   const form = doc.form ?? {}
+
   const allowedFiledNames = ['items']
   assertFieldNames(form, allowedFiledNames, xpath + '/form')
 

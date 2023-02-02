@@ -5,6 +5,7 @@ import {
   BlockType,
   BlockRelationshipType,
   TableBlock,
+  TableBlockSorter,
   DescriptionsBlock,
   FormBlock,
   Block,
@@ -17,10 +18,12 @@ import {
 class Context {
   resource: Resource
   view: View
+  block: Block | null
 
   constructor(resource: Resource, view: View) {
     this.resource = resource
     this.view = view
+    this.block = null
   }
 }
 
@@ -70,6 +73,7 @@ function semanticAnalysisView(view: View, ctx: Context): void {
   }
 
   view.blocks.forEach((block) => {
+    ctx.block = block
     semanticAnalysisBlock(block, ctx)
   })
 }
@@ -90,6 +94,26 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
 
 function semanticAnalysisTableBlock(block: TableBlock, ctx: Context): void {
   semanticAnalysisModel(block.model, ctx)
+  semanticAnalysisTableSorter(block.sorters, ctx)
+}
+
+function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context): void {
+  const sorterNames = sorters.map((sorter) => sorter.name)
+  const dupSorterNames = sorterNames.filter((name, index) => sorterNames.indexOf(name) !== index)
+  if (dupSorterNames.length !== 0) {
+    throw Error(`Block's sorters can not have duplicate name: ${JSON.stringify(dupSorterNames)}`)
+  }
+
+  const block = ctx.block as TableBlock
+  sorters.forEach((sorter) => {
+    const attr = block.model.attributes.find((attr) => attr.name === sorter.name)
+    if (attr == null) {
+      throw Error("TableBlockSorter's name must be defined in items")
+    }
+    if (attr.collection || attr.object != null) {
+      throw Error("TableBlockSorter's type must be a scalar value type")
+    }
+  })
 }
 
 function semanticAnalysisDescriptionsBlock(block: DescriptionsBlock, ctx: Context): void {
