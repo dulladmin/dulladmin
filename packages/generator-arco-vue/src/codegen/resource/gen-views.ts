@@ -42,12 +42,13 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
   const sorters = block.sorters
+  const sortable = sorters.length !== 0
   enhanceModelInfoWithTableSorter(model, sorters)
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { block: _block, model, sorters }
+    { block: _block, model, sortable }
   )
 }
 

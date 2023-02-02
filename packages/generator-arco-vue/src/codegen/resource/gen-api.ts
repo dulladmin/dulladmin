@@ -33,12 +33,13 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
   const sorters = block.sorters
+  const sortable = sorters.length !== 0
   enhanceModelInfoWithTableSorter(model, sorters)
 
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
-    { api, model, sorters }
+    { api, model, sortable }
   )
 }
 

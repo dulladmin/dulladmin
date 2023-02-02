@@ -50,7 +50,7 @@
         :columns="(tableColumnsShow as TableColumnData[])"
         :data="tableData"
         @page-change="onTablePageChange"
-        {{#if sorters}}
+        {{#if sortable}}
         @sorter-change="onTableSorterChange"
         {{/if}}
       >
@@ -104,7 +104,7 @@
   // types
   type Column = TableColumnData & { show?: true };
   type Pagination = Record<string, any>;
-  {{#if sorters}}
+  {{#if sortable}}
   type Sorter = Record<string, any>;
   {{/if}}
 
@@ -152,7 +152,7 @@
     };
   };
 
-{{#if sorters}}
+{{#if sortable}}
   // sorter info
   const baseTableSorter: Sorter = {
     name: '',
@@ -246,7 +246,7 @@
   const onTableRefresh = async () => {
     const req = omitBy({
       pagination: apiPagination(tablePagination),
-      {{#if sorters}}
+      {{#if sortable}}
       sorter: apiSorter(tableSorter.value),
       {{/if}}
     }, v => v == null) as ListRequest;
@@ -257,14 +257,14 @@
   const onTablePageChange = async (current: number) => {
     const req = omitBy({
       pagination: { ...apiPagination(tablePagination), current },
-      {{#if sorters}}
+      {{#if sortable}}
       sorter: apiSorter(tableSorter.value),
       {{/if}}
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
-{{#if sorters}}
+{{#if sortable}}
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
     tableSorter.value = direction ? { name: dataIndex, direction } : { ...baseTablePagination };
