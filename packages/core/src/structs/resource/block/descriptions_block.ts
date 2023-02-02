@@ -76,6 +76,10 @@ class DescriptionsBlock {
     this.model = model
     this.collection = false
   }
+
+  toString(): string {
+    return `#<DescriptionsBlock @name="${this.relName}">`
+  }
 }
 
 export { DescriptionsBlock }

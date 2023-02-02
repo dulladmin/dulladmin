@@ -14,6 +14,10 @@ class TableBlockSorter {
     this.name = name
     this.directions = directions
   }
+
+  toString(): string {
+    return `#<TableBlockSorter @name="${this.name}">`
+  }
 }
 
 /*
@@ -100,6 +104,10 @@ class TableBlock {
     this.model = model
     this.sorters = sorters
     this.collection = true
+  }
+
+  toString(): string {
+    return `#<TableBlock @name="${this.relName}">`
   }
 }
 

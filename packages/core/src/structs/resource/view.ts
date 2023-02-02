@@ -17,6 +17,12 @@ class View {
     this.authority = authority
     this.blocks = blocks
   }
+
+  toString(): string {
+    let klass = `${this.type}View`
+    klass = klass.charAt(0).toUpperCase() + klass.slice(1)
+    return `#<${klass}>`
+  }
 }
 
 export { ViewType, View }

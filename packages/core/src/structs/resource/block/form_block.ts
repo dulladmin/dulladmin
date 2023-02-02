@@ -77,6 +77,10 @@ class FormBlock {
     this.model = model
     this.collection = false
   }
+
+  toString(): string {
+    return `#<FormBlock @name="${this.relName}">`
+  }
 }
 
 export { FormBlock }

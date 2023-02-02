@@ -12,6 +12,10 @@ class Resource {
     this.authority = authority
     this.views = views
   }
+
+  toString(): string {
+    return `#<Resource @name="${this.name}">`
+  }
 }
 
 export { Resource }
