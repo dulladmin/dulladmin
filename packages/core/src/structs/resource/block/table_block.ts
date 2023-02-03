@@ -1,6 +1,31 @@
 import Model from '../model'
 import { BlockType, BlockRelationshipType } from './base'
 
+enum TableBlockSearcherPredicate {
+  Eq = 'eq',
+  Lt = 'lt',
+  Gt = 'gt',
+  Lteq = 'lteq',
+  Gteq = 'gteq',
+  Cont = 'cont'
+}
+
+class TableBlockSearcher {
+  name: string
+  predicate: TableBlockSearcherPredicate
+  optionals: Array<string | number | boolean>
+
+  constructor(name: string, predicate: TableBlockSearcherPredicate, optionals: Array<string | number | boolean>) {
+    this.name = name
+    this.predicate = predicate
+    this.optionals = optionals
+  }
+
+  toString(): string {
+    return `#<TableBlockSearcher @name="${this.name}">`
+  }
+}
+
 enum TableBlockSorterDirection {
   Ascend = 'ascend',
   Descend = 'descend'
@@ -90,12 +115,16 @@ class TableBlock {
   // Sorter
   sorters: TableBlockSorter[]
 
+  // Searcher
+  searchers: TableBlockSearcher[]
+
   constructor(
     relType: BlockRelationshipType,
     relName: string,
     authority: string[] | null,
     model: Model,
-    sorters: TableBlockSorter[]
+    sorters: TableBlockSorter[],
+    searchers: TableBlockSearcher[]
   ) {
     this.type = BlockType.TableBlock
     this.relType = relType
@@ -103,6 +132,7 @@ class TableBlock {
     this.authority = authority
     this.model = model
     this.sorters = sorters
+    this.searchers = searchers
     this.collection = true
   }
 
@@ -111,5 +141,5 @@ class TableBlock {
   }
 }
 
-export { TableBlockSorterDirection, TableBlockSorter, TableBlock }
+export { TableBlockSearcherPredicate, TableBlockSearcher, TableBlockSorterDirection, TableBlockSorter, TableBlock }
 export default TableBlock

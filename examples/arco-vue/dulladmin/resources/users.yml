@@ -27,3 +27,6 @@ views:
             - { name: 'name'    , directions: ['descend']           }
             - { name: 'username', directions: ['ascend', 'descend'] }
             - { name: 'email'   , directions: ['ascend']            }
+          searchers:
+            - { name: 'id'  , predicate: 'eq'   }
+            - { name: 'name', predicate: 'cont' }

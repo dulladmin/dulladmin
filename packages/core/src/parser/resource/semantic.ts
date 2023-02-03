@@ -6,6 +6,7 @@ import {
   BlockRelationshipType,
   TableBlock,
   TableBlockSorter,
+  TableBlockSearcher,
   DescriptionsBlock,
   FormBlock,
   Block,
@@ -52,22 +53,22 @@ function semanticAnalysisView(view: View, ctx: Context): void {
         throw Error(`${ctx.resource.toString()} is a singular resource, can not have IndexView`)
       }
       if (selfBlocks[0].type !== BlockType.TableBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship must be a TableBlock`)
+        throw Error(`${view.toString()}'s self-relaltionship Block must be a TableBlock`)
       }
       break
     case ViewType.Show:
       if (selfBlocks[0].type !== BlockType.DescriptionsBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship must be a DescriptionsBlock`)
+        throw Error(`${view.toString()}'s self-relaltionship Block must be a DescriptionsBlock`)
       }
       break
     case ViewType.New:
       if (selfBlocks[0].type !== BlockType.FormBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship must be a FormBlock`)
+        throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
       }
       break
     case ViewType.Edit:
       if (selfBlocks[0].type !== BlockType.FormBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship must be a FormBlock`)
+        throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
       }
       break
   }
@@ -95,6 +96,7 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
 function semanticAnalysisTableBlock(block: TableBlock, ctx: Context): void {
   semanticAnalysisModel(block.model, ctx)
   semanticAnalysisTableSorter(block.sorters, ctx)
+  semanticAnalysisTableSearcher(block.searchers, ctx)
 }
 
 function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context): void {
@@ -113,6 +115,28 @@ function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context):
     }
     if (attr.collection || attr.object != null) {
       throw Error(`${sorter.toString()}'s type must be a scalar value type`)
+    }
+  })
+}
+
+function semanticAnalysisTableSearcher(searchers: TableBlockSearcher[], ctx: Context): void {
+  const block = ctx.block as TableBlock
+
+  const searcherNames = searchers.map((searcher) => searcher.name + '_' + searcher.predicate)
+  const dupSearcherNames = searcherNames.filter((name, index) => searcherNames.indexOf(name) !== index)
+  if (dupSearcherNames.length !== 0) {
+    throw Error(
+      `${block.toString()}'s searchers can not have duplicate (name, predicate): ${JSON.stringify(dupSearcherNames)}`
+    )
+  }
+
+  searchers.forEach((searcher) => {
+    const attr = block.model.attributes.find((attr) => attr.name === searcher.name)
+    if (attr == null) {
+      throw Error(`${searcher.toString()}'s name must be defined in items`)
+    }
+    if (attr.collection || attr.object != null) {
+      throw Error(`${searcher.toString()}'s type must be a scalar value type`)
     }
   })
 }

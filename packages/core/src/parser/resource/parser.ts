@@ -6,6 +6,8 @@ import {
   TableBlock,
   TableBlockSorter,
   TableBlockSorterDirection,
+  TableBlockSearcher,
+  TableBlockSearcherPredicate,
   DescriptionsBlock,
   FormBlock,
   Block,
@@ -25,7 +27,8 @@ import {
   assertIsBlockRelationshipType,
   assertIsDullAdminValueType,
   assertIsDullAdminScalarValueType,
-  assertIsTableBlockSorterDirection
+  assertIsTableBlockSorterDirection,
+  assertIsTableBlockSearcherPredicate
 } from '../assert'
 import {
   YamlResourceType,
@@ -33,6 +36,7 @@ import {
   YamlViewType,
   YamlBlockType,
   YamlBlockTableSorterType,
+  YamlBlockTableSearcherType,
   YamlModelAttributeType,
   YamlModelAttributeObjectAttributeType
 } from './loader'
@@ -137,7 +141,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
   const { relType, relName, authority } = attrs
   const table = doc.table ?? {}
 
-  const allowedFiledNames = ['items', 'sorters']
+  const allowedFiledNames = ['items', 'sorters', 'searchers']
   assertFieldNames(table, allowedFiledNames, xpath + '/table')
 
   const model = table.items
@@ -154,7 +158,15 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
     parsedSorters = sorters.map((item, idx) => parseTableBlockSorter(item, sortersXPath + `[${idx}]`))
   }
 
-  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters)
+  let parsedSearchers: TableBlockSearcher[] = []
+  const searchers = table.searchers
+  const searchersXPath = xpath + '/table/searchers'
+  if (searchers != null) {
+    assertIsArray(searchers, searchersXPath)
+    parsedSearchers = searchers.map((item, idx) => parseTableBlockSearcher(item, searchersXPath + `[${idx}]`))
+  }
+
+  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters, parsedSearchers)
 }
 
 function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): TableBlockSorter {
@@ -176,6 +188,27 @@ function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): Ta
   })
 
   return new TableBlockSorter(name!, parsedDirections)
+}
+
+function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string): TableBlockSearcher {
+  const allowedFiledNames = ['name', 'predicate', 'optionals']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
+  const name = doc.name
+  const nameXPath = xpath + '/name'
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
+
+  const predicate = doc.predicate as TableBlockSearcherPredicate
+  const predicateXPath = xpath + '/predicate'
+  assertNotNull(predicate, predicateXPath)
+  assertIsTableBlockSearcherPredicate(predicate, predicateXPath)
+
+  const optionals = doc.optionals
+  const optionalsXPath = xpath + '/optionals'
+  if (optionals != null) assertIsArray(optionals, optionalsXPath)
+
+  return new TableBlockSearcher(name!, predicate, optionals!)
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {

@@ -31,11 +31,18 @@ export interface YamlBlockType {
 export interface YamlBlockTableType {
   items?: YamlModelAttributeType[]
   sorters?: YamlBlockTableSorterType[]
+  searchers?: YamlBlockTableSearcherType[]
 }
 
 export interface YamlBlockTableSorterType {
   name?: string
   directions?: string[]
+}
+
+export interface YamlBlockTableSearcherType {
+  name?: string
+  predicate?: string
+  optionals?: Array<string | number | boolean>
 }
 
 export interface YamlBlockDescriptionsType {

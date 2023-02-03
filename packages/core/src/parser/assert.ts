@@ -1,4 +1,10 @@
-import { BlockRelationshipType, ScalarValueType, ObjectValueType, TableBlockSorterDirection } from '../structs'
+import {
+  BlockRelationshipType,
+  ScalarValueType,
+  ObjectValueType,
+  TableBlockSorterDirection,
+  TableBlockSearcherPredicate
+} from '../structs'
 
 export function assertFieldNames(doc: unknown, allowedFiledNames: string[], fieldXPath: string): void {
   Object.keys(doc as object).forEach((name) => {
@@ -28,23 +34,45 @@ export function assertIsString(fieldValue: unknown, fieldXPath: string): void {
   throw new Error(`Field \`${fieldXPath}\` must be a string`)
 }
 
+const BlockRelationshipTypeValues = Object.values(BlockRelationshipType)
+const BlockRelationshipTypeToStr = JSON.stringify(BlockRelationshipTypeValues)
 export function assertIsBlockRelationshipType(fieldValue: unknown, fieldXPath: string): void {
-  if (Object.values(BlockRelationshipType).includes(fieldValue as BlockRelationshipType)) return
-  throw new Error(`Field \`${fieldXPath}\` must be one of ["self", "embeds_one", "embeds_many"]}`)
+  if (BlockRelationshipTypeValues.includes(fieldValue as BlockRelationshipType)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${BlockRelationshipTypeToStr}`)
 }
 
-export function assertIsDullAdminValueType(fieldValue: unknown, fieldXPath: string): void {
-  if (Object.values(ScalarValueType).includes(fieldValue as ScalarValueType)) return
-  if (Object.values(ObjectValueType).includes(fieldValue as ObjectValueType)) return
-  throw new Error(`Field \`${fieldXPath}\` is not a legal value type`)
-}
-
+const ScalarValueTypeValues = Object.values(ScalarValueType)
+const ScalarValueTypeToStr = JSON.stringify(ScalarValueTypeValues)
 export function assertIsDullAdminScalarValueType(fieldValue: unknown, fieldXPath: string): void {
-  if (Object.values(ScalarValueType).includes(fieldValue as ScalarValueType)) return
-  throw new Error(`Field \`${fieldXPath}\` is not a legal scalar value type`)
+  if (ScalarValueTypeValues.includes(fieldValue as ScalarValueType)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${ScalarValueTypeToStr}`)
 }
 
+const ObjectValueTypeValues = Object.values(ObjectValueType)
+const ObjectValueTypeToStr = JSON.stringify(ObjectValueTypeValues)
+export function assertIsDullAdminObjectValueType(fieldValue: unknown, fieldXPath: string): void {
+  if (ObjectValueTypeValues.includes(fieldValue as ObjectValueType)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${ObjectValueTypeToStr}`)
+}
+
+const ValueTypeValues = ([] as string[]).concat(ScalarValueTypeValues).concat(ObjectValueTypeValues)
+const ValueTypeToStr = JSON.stringify(ValueTypeValues)
+export function assertIsDullAdminValueType(fieldValue: unknown, fieldXPath: string): void {
+  if (ScalarValueTypeValues.includes(fieldValue as ScalarValueType)) return
+  if (ObjectValueTypeValues.includes(fieldValue as ObjectValueType)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${ValueTypeToStr}`)
+}
+
+const TableBlockSorterDirectionValues = Object.values(TableBlockSorterDirection)
+const TableBlockSorterDirectionToStr = JSON.stringify(TableBlockSorterDirectionValues)
 export function assertIsTableBlockSorterDirection(fieldValue: unknown, fieldXPath: string): void {
   if (Object.values(TableBlockSorterDirection).includes(fieldValue as TableBlockSorterDirection)) return
-  throw new Error(`Field \`${fieldXPath}\` must be one of ["ascend", "descend"]}`)
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${TableBlockSorterDirectionToStr}`)
+}
+
+const TableBlockSearcherPredicateValues = Object.values(TableBlockSearcherPredicate)
+const TableBlockSearcherPredicateToStr = JSON.stringify(TableBlockSearcherPredicateValues)
+export function assertIsTableBlockSearcherPredicate(fieldValue: unknown, fieldXPath: string): void {
+  if (TableBlockSearcherPredicateValues.includes(fieldValue as TableBlockSearcherPredicate)) return
+  throw new Error(`Field \`${fieldXPath}\` must be one of ${TableBlockSearcherPredicateToStr}`)
 }
