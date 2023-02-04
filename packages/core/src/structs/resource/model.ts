@@ -23,6 +23,8 @@ enum ObjectValueType {
   Object = 'object'
 }
 
+type ValueType = ScalarValueType | ObjectValueType
+
 class ObjectValueAttribute {
   name: string
   type: ScalarValueType
@@ -45,11 +47,11 @@ class ObjectValue {
 
 class ModelAttribute {
   name: string
-  type: ScalarValueType | ObjectValueType
+  type: ValueType
   collection: boolean
   object: ObjectValue | null
 
-  constructor(name: string, type: ScalarValueType | ObjectValueType, collection: boolean, object: ObjectValue | null) {
+  constructor(name: string, type: ValueType, collection: boolean, object: ObjectValue | null) {
     this.name = name
     this.type = type
     this.collection = collection
@@ -65,5 +67,5 @@ class Model {
   }
 }
 
-export { ScalarValueType, ObjectValueType, ObjectValueAttribute, ObjectValue, ModelAttribute, Model }
+export { ScalarValueType, ObjectValueType, ValueType, ObjectValueAttribute, ObjectValue, ModelAttribute, Model }
 export default Model

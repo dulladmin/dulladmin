@@ -1,4 +1,4 @@
-import Model from '../model'
+import { ScalarValueType, Model } from '../model'
 import { BlockType, BlockRelationshipType } from './base'
 
 enum TableBlockSearcherPredicate {
@@ -13,16 +13,23 @@ enum TableBlockSearcherPredicate {
 class TableBlockSearcher {
   name: string
   predicate: TableBlockSearcherPredicate
-  optionals: Array<string | number | boolean>
+  type: ScalarValueType | null
+  optionals: Array<string | number | boolean> | null
 
-  constructor(name: string, predicate: TableBlockSearcherPredicate, optionals: Array<string | number | boolean>) {
+  constructor(
+    name: string,
+    predicate: TableBlockSearcherPredicate,
+    type: ScalarValueType | null,
+    optionals: Array<string | number | boolean> | null
+  ) {
     this.name = name
     this.predicate = predicate
+    this.type = type
     this.optionals = optionals
   }
 
   toString(): string {
-    return `#<TableBlockSearcher @name="${this.name}">`
+    return `#<TableBlockSearcher @name="${this.name}" @predicate="${this.predicate}">`
   }
 }
 

@@ -42,6 +42,7 @@ export interface YamlBlockTableSorterType {
 export interface YamlBlockTableSearcherType {
   name?: string
   predicate?: string
+  type?: string
   optionals?: Array<string | number | boolean>
 }
 

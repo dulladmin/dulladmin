@@ -114,7 +114,7 @@ function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context):
       throw Error(`${sorter.toString()}'s name must be defined in items`)
     }
     if (attr.collection || attr.object != null) {
-      throw Error(`${sorter.toString()}'s type must be a scalar value type`)
+      throw Error(`${sorter.toString()}'s associated item's type must be a scalar value type`)
     }
   })
 }
@@ -131,12 +131,16 @@ function semanticAnalysisTableSearcher(searchers: TableBlockSearcher[], ctx: Con
   }
 
   searchers.forEach((searcher) => {
+    if (searcher.type != null) {
+      return
+    }
+
     const attr = block.model.attributes.find((attr) => attr.name === searcher.name)
     if (attr == null) {
       throw Error(`${searcher.toString()}'s name must be defined in items`)
     }
     if (attr.collection || attr.object != null) {
-      throw Error(`${searcher.toString()}'s type must be a scalar value type`)
+      throw Error(`${searcher.toString()}'s associated item's type must be a scalar value type`)
     }
   })
 }

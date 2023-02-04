@@ -191,7 +191,7 @@ function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): Ta
 }
 
 function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string): TableBlockSearcher {
-  const allowedFiledNames = ['name', 'predicate', 'optionals']
+  const allowedFiledNames = ['name', 'predicate', 'type', 'optionals']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
@@ -204,11 +204,15 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
   assertNotNull(predicate, predicateXPath)
   assertIsTableBlockSearcherPredicate(predicate, predicateXPath)
 
-  const optionals = doc.optionals
+  const type = (doc.type as ScalarValueType) ?? null
+  const typeXPath = xpath + '/type'
+  if (type != null) assertIsDullAdminScalarValueType(type, typeXPath)
+
+  const optionals = doc.optionals ?? null
   const optionalsXPath = xpath + '/optionals'
   if (optionals != null) assertIsArray(optionals, optionalsXPath)
 
-  return new TableBlockSearcher(name!, predicate, optionals!)
+  return new TableBlockSearcher(name!, predicate, type, optionals)
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {
