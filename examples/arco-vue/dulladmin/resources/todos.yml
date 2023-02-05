@@ -10,3 +10,6 @@ views:
             - { name: 'completed', type: 'bool'   }
           sorters:
             - { name: 'id', directions: ['ascend', 'descend'] }
+          searchers:
+            - { name: 'userId'   , predicate: 'eq' }
+            - { name: 'completed', predicate: 'eq' }

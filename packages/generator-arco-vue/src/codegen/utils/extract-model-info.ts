@@ -1,24 +1,6 @@
-import { Resource, View, Block, ScalarValueType, ObjectValueType } from '@dulladmin/core'
+import { Resource, View, Block } from '@dulladmin/core'
 import { toI18nMessage, toPath } from '../../naming'
-
-const JSON_TYPES = {
-  [ScalarValueType.Double]: 'number',
-  [ScalarValueType.Float]: 'number',
-  [ScalarValueType.Int32]: 'number',
-  [ScalarValueType.Int64]: 'number',
-  [ScalarValueType.Uint32]: 'number',
-  [ScalarValueType.Uint64]: 'number',
-  [ScalarValueType.Sint32]: 'number',
-  [ScalarValueType.Sint64]: 'number',
-  [ScalarValueType.Fixed32]: 'number',
-  [ScalarValueType.Fixed64]: 'number',
-  [ScalarValueType.Sfixed32]: 'number',
-  [ScalarValueType.Sfixed64]: 'number',
-  [ScalarValueType.Bool]: 'boolean',
-  [ScalarValueType.String]: 'string',
-  [ScalarValueType.Datetime]: 'string',
-  [ObjectValueType.Object]: 'object'
-}
+import { toJsonType } from './base'
 
 export function extractModelInfo(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourceName = toPath(resource.name)
@@ -31,7 +13,7 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
       return {
         name: attr.name,
         type: attr.type,
-        jsonType: JSON_TYPES[attr.type],
+        jsonType: toJsonType(attr.type),
         collection: attr.collection,
         object:
           attr.object == null
@@ -41,7 +23,7 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
                   return {
                     name: objAttr.name,
                     type: objAttr.type,
-                    jsonType: JSON_TYPES[objAttr.type],
+                    jsonType: toJsonType(objAttr.type),
                     collection: objAttr.collection,
                     i18nKey: `${i18nKeyPrefix}.attributes.${attr.name}.${objAttr.name}`,
                     i18nValue: toI18nMessage(objAttr.name)

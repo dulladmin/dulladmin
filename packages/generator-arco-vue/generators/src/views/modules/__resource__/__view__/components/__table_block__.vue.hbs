@@ -167,6 +167,8 @@
   };
 
 {{/if}}
+{{#if no-newline}}  {{^}}  {{/if~}}
+
   // table - columns initialize
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
@@ -276,6 +278,8 @@
   };
 
 {{/if}}
+{{#if no-newline}}  {{^}}  {{/if~}}
+
   // table - init
   onTableRefresh();
 </script>

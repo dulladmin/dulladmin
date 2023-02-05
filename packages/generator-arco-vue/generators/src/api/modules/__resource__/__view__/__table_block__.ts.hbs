@@ -23,11 +23,25 @@ export interface Model {
 {{/each}}
 }
 
+{{#if searchable}}
+/* Searcher */
+interface Searcher {
+  {{#each model.searchers}}
+  {{name}}_{{predicate}}: {{jsonType}};
+  {{/each}}
+}
+
+{{/if}}
+{{#if no-newline}}{{^}}{{/if~}}
+
 /* GET {{api.url}} */
 export interface ListRequest {
   pagination: Pagination;
   {{#if sortable}}
   sorter?: Sorter;
+  {{/if}}
+  {{#if searchable}}
+  searcher?: Searcher;
   {{/if}}
 }
 export interface ListResponse {

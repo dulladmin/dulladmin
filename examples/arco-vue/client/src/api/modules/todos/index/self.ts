@@ -14,10 +14,17 @@ export interface Model {
   completed: boolean;
 }
 
+/* Searcher */
+interface Searcher {
+  userId_eq: string;
+  completed_eq: boolean;
+}
+
 /* GET /todos/index/self */
 export interface ListRequest {
   pagination: Pagination;
   sorter?: Sorter;
+  searcher?: Searcher;
 }
 export interface ListResponse {
   collection: Model[];

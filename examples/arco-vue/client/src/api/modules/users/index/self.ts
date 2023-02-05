@@ -28,10 +28,17 @@ export interface Model {
   };
 }
 
+/* Searcher */
+interface Searcher {
+  id_eq: string;
+  name_cont: string;
+}
+
 /* GET /users/index/self */
 export interface ListRequest {
   pagination: Pagination;
   sorter?: Sorter;
+  searcher?: Searcher;
 }
 export interface ListResponse {
   collection: Model[];
