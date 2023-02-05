@@ -28,12 +28,23 @@ type ValueType = ScalarValueType | ObjectValueType
 class ObjectValueAttribute {
   name: string
   type: ScalarValueType
+  optionals: Array<string | number | boolean> | null
   collection: boolean
 
-  constructor(name: string, type: ScalarValueType, collection: boolean) {
+  constructor(
+    name: string,
+    type: ScalarValueType,
+    optionals: Array<string | number | boolean> | null,
+    collection: boolean
+  ) {
     this.name = name
     this.type = type
+    this.optionals = optionals
     this.collection = collection
+  }
+
+  toString(): string {
+    return `#<ObjectValueAttribute @name="${this.name}">`
   }
 }
 
@@ -48,14 +59,26 @@ class ObjectValue {
 class ModelAttribute {
   name: string
   type: ValueType
+  optionals: Array<string | number | boolean> | null
   collection: boolean
   object: ObjectValue | null
 
-  constructor(name: string, type: ValueType, collection: boolean, object: ObjectValue | null) {
+  constructor(
+    name: string,
+    type: ValueType,
+    optionals: Array<string | number | boolean> | null,
+    collection: boolean,
+    object: ObjectValue | null
+  ) {
     this.name = name
     this.type = type
+    this.optionals = optionals
     this.collection = collection
     this.object = object
+  }
+
+  toString(): string {
+    return `#<ModelAttribute @name="${this.name}">`
   }
 }
 

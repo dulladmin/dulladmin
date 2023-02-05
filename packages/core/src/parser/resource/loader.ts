@@ -57,12 +57,14 @@ export interface YamlBlockFormType {
 export interface YamlModelAttributeType {
   name?: string
   type?: string
+  optionals?: Array<string | number | boolean>
   attributes?: YamlModelAttributeObjectAttributeType[]
 }
 
 export interface YamlModelAttributeObjectAttributeType {
   name?: string
   type?: string
+  optionals?: Array<string | number | boolean>
 }
 
 export function loadResource(str: string): YamlResourceType {

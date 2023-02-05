@@ -10,11 +10,10 @@ import {
   DescriptionsBlock,
   FormBlock,
   Block,
-  ObjectValueType,
-  ObjectValue,
   ModelAttribute,
   Model
 } from '../../structs'
+import { isDullAdminScalarValueType, isDullAdminObjectValueType } from '../assert'
 
 class Context {
   resource: Resource
@@ -113,9 +112,6 @@ function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context):
     if (attr == null) {
       throw Error(`${sorter.toString()}'s name must be defined in items`)
     }
-    if (attr.collection || attr.object != null) {
-      throw Error(`${sorter.toString()}'s associated item's type must be a scalar value type`)
-    }
   })
 }
 
@@ -139,7 +135,7 @@ function semanticAnalysisTableSearcher(searchers: TableBlockSearcher[], ctx: Con
     if (attr == null) {
       throw Error(`${searcher.toString()}'s name must be defined in items`)
     }
-    if (attr.collection || attr.object != null) {
+    if (!isDullAdminScalarValueType(attr.type)) {
       throw Error(`${searcher.toString()}'s associated item's type must be a scalar value type`)
     }
   })
@@ -167,17 +163,18 @@ function semanticAnalysisModel(model: Model, ctx: Context): void {
   })
 }
 
-function semanticAnalysisModelAttribute(attribute: ModelAttribute, ctx: Context): void {
-  if (attribute.type === ObjectValueType.Object) {
-    semanticAnalysisObjectValue(attribute.object as ObjectValue, ctx)
-  }
-}
+function semanticAnalysisModelAttribute(attribute: ModelAttribute, _ctx: Context): void {
+  if (isDullAdminObjectValueType(attribute.type)) {
+    if (attribute.optionals != null) {
+      throw Error(`${attribute.toString()} can not have \`optionals\` when using object value type`)
+    }
 
-function semanticAnalysisObjectValue(object: ObjectValue, _ctx: Context): void {
-  const attrNames = object.attributes.map((attr) => attr.name)
-  const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
-  if (dupAttrNames.length !== 0) {
-    throw Error(`#<ObjectValue>'s attributes can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
+    const object = attribute.object!
+    const attrNames = object.attributes.map((attr) => attr.name)
+    const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
+    if (dupAttrNames.length !== 0) {
+      throw Error(`${attribute.toString()}'s attributes can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
+    }
   }
 }
 

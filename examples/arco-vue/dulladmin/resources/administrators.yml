@@ -7,4 +7,4 @@ views:
           items:
             - { name: 'id'   , type: 'string' }
             - { name: 'name' , type: 'string' }
-            - { name: 'role' , type: 'string' }
+            - { name: 'role' , type: 'string', optionals: ["admin", "user"] }

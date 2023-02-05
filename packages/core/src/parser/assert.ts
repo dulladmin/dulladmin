@@ -43,15 +43,21 @@ export function assertIsBlockRelationshipType(fieldValue: unknown, fieldXPath: s
 
 const ScalarValueTypeValues = Object.values(ScalarValueType)
 const ScalarValueTypeToStr = JSON.stringify(ScalarValueTypeValues)
+export function isDullAdminScalarValueType(fieldValue: unknown): boolean {
+  return ScalarValueTypeValues.includes(fieldValue as ScalarValueType)
+}
 export function assertIsDullAdminScalarValueType(fieldValue: unknown, fieldXPath: string): void {
-  if (ScalarValueTypeValues.includes(fieldValue as ScalarValueType)) return
+  if (isDullAdminScalarValueType(fieldValue)) return
   throw new Error(`Field \`${fieldXPath}\` must be one of ${ScalarValueTypeToStr}`)
 }
 
 const ObjectValueTypeValues = Object.values(ObjectValueType)
 const ObjectValueTypeToStr = JSON.stringify(ObjectValueTypeValues)
+export function isDullAdminObjectValueType(fieldValue: unknown): boolean {
+  return ObjectValueTypeValues.includes(fieldValue as ObjectValueType)
+}
 export function assertIsDullAdminObjectValueType(fieldValue: unknown, fieldXPath: string): void {
-  if (ObjectValueTypeValues.includes(fieldValue as ObjectValueType)) return
+  if (isDullAdminObjectValueType(fieldValue)) return
   throw new Error(`Field \`${fieldXPath}\` must be one of ${ObjectValueTypeToStr}`)
 }
 

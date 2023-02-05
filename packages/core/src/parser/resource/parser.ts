@@ -13,6 +13,7 @@ import {
   Block,
   ScalarValueType,
   ObjectValueType,
+  ValueType,
   ObjectValueAttribute,
   ObjectValue,
   ModelAttribute,
@@ -206,11 +207,15 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 
   const type = (doc.type as ScalarValueType) ?? null
   const typeXPath = xpath + '/type'
-  if (type != null) assertIsDullAdminScalarValueType(type, typeXPath)
+  if (type != null) {
+    assertIsDullAdminScalarValueType(type, typeXPath)
+  }
 
   const optionals = doc.optionals ?? null
   const optionalsXPath = xpath + '/optionals'
-  if (optionals != null) assertIsArray(optionals, optionalsXPath)
+  if (optionals != null) {
+    assertIsArray(optionals, optionalsXPath)
+  }
 
   return new TableBlockSearcher(name!, predicate, type, optionals)
 }
@@ -253,7 +258,7 @@ function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
 }
 
 function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
-  const allowedFiledNames = ['name', 'type', 'attributes']
+  const allowedFiledNames = ['name', 'type', 'optionals', 'attributes']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
@@ -272,6 +277,12 @@ function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelA
     collection = true
   }
 
+  const optionals = doc.optionals ?? null
+  const optionalsXPath = xpath + '/optionals'
+  if (optionals != null) {
+    assertIsArray(optionals, optionalsXPath)
+  }
+
   let object = null
   if (type === ObjectValueType.Object) {
     const attributes = doc.attributes
@@ -281,7 +292,7 @@ function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelA
     object = parseObject(attributes!, attributesXPath)
   }
 
-  return new ModelAttribute(name!, type as ScalarValueType | ObjectValueType, collection, object)
+  return new ModelAttribute(name!, type as ValueType, optionals, collection, object)
 }
 
 function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string): ObjectValue {
@@ -290,7 +301,7 @@ function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string
 }
 
 function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath: string): ObjectValueAttribute {
-  const allowedFiledNames = ['name', 'type']
+  const allowedFiledNames = ['name', 'type', 'optionals']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
@@ -309,7 +320,13 @@ function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath:
     collection = true
   }
 
-  return new ObjectValueAttribute(name!, type as ScalarValueType, collection)
+  const optionals = doc.optionals ?? null
+  const optionalsXPath = xpath + '/optionals'
+  if (optionals != null) {
+    assertIsArray(optionals, optionalsXPath)
+  }
+
+  return new ObjectValueAttribute(name!, type as ScalarValueType, optionals, collection)
 }
 
 export { parseResource }
