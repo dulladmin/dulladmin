@@ -107,6 +107,14 @@
     role: {
       type: 'string',
       i18nKey: 'administrators--index.self-block.model.attributes.role',
+      optionals: {
+        admin: {
+          i18nKey: 'administrators--index.self-block.model.attributes.role.optionals.admin',
+        },
+        user: {
+          i18nKey: 'administrators--index.self-block.model.attributes.role.optionals.user',
+        },
+      },
     },
   };
 

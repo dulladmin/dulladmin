@@ -64,7 +64,11 @@ function genI18n_Model(resource: Resource, view: View, block: Block): Record<str
   const model = extractModelInfo(resource, view, block)
   model.attributes.forEach((attr: Record<string, any>) => {
     messages[attr.i18nKey] = attr.i18nValue
-    attr.object?.attributes?.forEach((objAttr: Record<string, any>) => (messages[objAttr.i18nKey] = objAttr.i18nValue))
+    attr.optionals?.forEach((opt: Record<string, any>) => (messages[opt.i18nKey] = opt.i18nValue))
+    attr.object?.attributes?.forEach((objAttr: Record<string, any>) => {
+      messages[objAttr.i18nKey] = objAttr.i18nValue
+      objAttr.optionals?.forEach((objOpt: Record<string, any>) => (messages[objOpt.i18nKey] = objOpt.i18nValue))
+    })
   })
   return messages
 }

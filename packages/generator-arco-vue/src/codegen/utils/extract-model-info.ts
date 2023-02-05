@@ -14,6 +14,14 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
         name: attr.name,
         type: attr.type,
         jsonType: toJsonType(attr.type),
+        optionals: attr.optionals?.map((rawOpt) => {
+          const opt = String(rawOpt)
+          return {
+            name: opt,
+            i18nKey: `${i18nKeyPrefix}.attributes.${attr.name}.optionals.${opt}`,
+            i18nValue: toI18nMessage(opt)
+          }
+        }),
         collection: attr.collection,
         object:
           attr.object == null
@@ -24,6 +32,14 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
                     name: objAttr.name,
                     type: objAttr.type,
                     jsonType: toJsonType(objAttr.type),
+                    optionals: attr.optionals?.map((rawObjOpt) => {
+                      const objOpt = String(rawObjOpt)
+                      return {
+                        name: objOpt,
+                        i18nKey: `${i18nKeyPrefix}.attributes.${attr.name}.${objAttr.name}.optionals.${objOpt}`,
+                        i18nValue: toI18nMessage(objOpt)
+                      }
+                    }),
                     collection: objAttr.collection,
                     i18nKey: `${i18nKeyPrefix}.attributes.${attr.name}.${objAttr.name}`,
                     i18nValue: toI18nMessage(objAttr.name)

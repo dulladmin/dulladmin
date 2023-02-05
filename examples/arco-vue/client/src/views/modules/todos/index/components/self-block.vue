@@ -119,6 +119,14 @@
     completed: {
       type: 'bool',
       i18nKey: 'todos--index.self-block.model.attributes.completed',
+      optionals: {
+        true: {
+          i18nKey: 'todos--index.self-block.model.attributes.completed.optionals.true',
+        },
+        false: {
+          i18nKey: 'todos--index.self-block.model.attributes.completed.optionals.false',
+        },
+      },
     },
   };
 

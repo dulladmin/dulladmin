@@ -7,7 +7,7 @@ views:
             - { name: 'id'       , type: 'string' }
             - { name: 'userId'   , type: 'string' }
             - { name: 'title'    , type: 'string' }
-            - { name: 'completed', type: 'bool'   }
+            - { name: 'completed', type: 'bool'  , optionals: [true, false] }
           sorters:
             - { name: 'id', directions: ['ascend', 'descend'] }
           searchers:

@@ -2,5 +2,7 @@
   "administrators--index.self-block.title": "Administrators Table",
   "administrators--index.self-block.model.attributes.id": "Id",
   "administrators--index.self-block.model.attributes.name": "Name",
-  "administrators--index.self-block.model.attributes.role": "Role"
+  "administrators--index.self-block.model.attributes.role": "Role",
+  "administrators--index.self-block.model.attributes.role.optionals.admin": "Admin",
+  "administrators--index.self-block.model.attributes.role.optionals.user": "User"
 }

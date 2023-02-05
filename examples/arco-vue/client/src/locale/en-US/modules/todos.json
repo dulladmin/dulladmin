@@ -3,5 +3,7 @@
   "todos--index.self-block.model.attributes.id": "Id",
   "todos--index.self-block.model.attributes.userId": "User Id",
   "todos--index.self-block.model.attributes.title": "Title",
-  "todos--index.self-block.model.attributes.completed": "Completed"
+  "todos--index.self-block.model.attributes.completed": "Completed",
+  "todos--index.self-block.model.attributes.completed.optionals.true": "True",
+  "todos--index.self-block.model.attributes.completed.optionals.false": "False"
 }
