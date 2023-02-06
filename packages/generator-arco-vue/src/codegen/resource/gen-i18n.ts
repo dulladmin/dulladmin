@@ -2,7 +2,7 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractBlockInfo, extractModelInfo, i18nFile } from '../utils'
+import { extractBlockInfo, extractBlockSearcherInfo, extractModelInfo, i18nFile } from '../utils'
 
 export function genI18n(resource: Resource): GeneratedFile[] {
   return genI18n_Resource(resource)
@@ -37,6 +37,12 @@ function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): 
   const blockMessages = {
     [_block.title.i18nKey]: _block.title.i18nValue
   }
+
+  const searchers = extractBlockSearcherInfo(resource, view, block)
+  searchers.forEach((searcher: Record<string, any>) => {
+    blockMessages[searcher.i18nKey] = searcher.i18nValue
+    searcher.optionals?.forEach((opt: Record<string, any>) => (blockMessages[opt.i18nKey] = opt.i18nValue))
+  })
 
   return { ...blockMessages, ...genI18n_Model(resource, view, block) }
 }

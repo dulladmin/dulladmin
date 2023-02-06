@@ -1,5 +1,9 @@
 {
   "todos--index.self-block.title": "Todos Table",
+  "todos--index.self-block.searchers.userId_eq": "User Id Eq",
+  "todos--index.self-block.searchers.completed_eq": "Completed Eq",
+  "todos--index.self-block.searchers.completed_eq.optionals.true": "True",
+  "todos--index.self-block.searchers.completed_eq.optionals.false": "False",
   "todos--index.self-block.model.attributes.id": "Id",
   "todos--index.self-block.model.attributes.userId": "User Id",
   "todos--index.self-block.model.attributes.title": "Title",

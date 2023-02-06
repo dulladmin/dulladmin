@@ -26,8 +26,8 @@ export interface Model {
 {{#if searchable}}
 /* Searcher */
 interface Searcher {
-  {{#each model.searchers}}
-  {{name}}_{{predicate}}: {{jsonType}};
+  {{#each searchers}}
+  {{id}}: {{jsonType}};
   {{/each}}
 }
 

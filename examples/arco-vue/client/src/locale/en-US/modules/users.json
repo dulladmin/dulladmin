@@ -1,5 +1,7 @@
 {
   "users--index.self-block.title": "Users Table",
+  "users--index.self-block.searchers.id_eq": "Id Eq",
+  "users--index.self-block.searchers.name_cont": "Name Cont",
   "users--index.self-block.model.attributes.id": "Id",
   "users--index.self-block.model.attributes.name": "Name",
   "users--index.self-block.model.attributes.username": "Username",

@@ -1,5 +1,7 @@
 {
   "users--index.self-block.title": "用户列表",
+  "users--index.self-block.searchers.id_eq": "编号",
+  "users--index.self-block.searchers.name_cont": "名称",
   "users--index.self-block.model.attributes.id": "编号",
   "users--index.self-block.model.attributes.name": "名称",
   "users--index.self-block.model.attributes.username": "昵称",

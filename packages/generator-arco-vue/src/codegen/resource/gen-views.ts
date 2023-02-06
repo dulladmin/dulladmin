@@ -2,7 +2,14 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractBlockInfo, extractModelInfo, enhanceModelInfoWithTableSorter, handlebarsFile } from '../utils'
+import {
+  extractBlockInfo,
+  extractBlockSorterInfo,
+  extractBlockSearcherInfo,
+  extractModelInfo,
+  enhanceModelInfoWithSorter,
+  handlebarsFile
+} from '../utils'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
@@ -41,14 +48,18 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
-  const sorters = block.sorters
+
+  const sorters = extractBlockSorterInfo(resource, view, block)
   const sortable = sorters.length !== 0
-  enhanceModelInfoWithTableSorter(model, sorters)
+  enhanceModelInfoWithSorter(model, sorters)
+
+  const searchers = extractBlockSearcherInfo(resource, view, block)
+  const searchable = searchers.length !== 0
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { block: _block, model, sortable }
+    { block: _block, model, sortable, searchers, searchable }
   )
 }
 

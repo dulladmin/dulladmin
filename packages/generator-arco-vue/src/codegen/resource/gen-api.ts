@@ -4,9 +4,10 @@ import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
 import {
   extractApiInfo,
+  extractBlockSorterInfo,
+  extractBlockSearcherInfo,
   extractModelInfo,
-  enhanceModelInfoWithTableSorter,
-  enhanceModelInfoWithTableSearcher,
+  enhanceModelInfoWithSorter,
   handlebarsFile
 } from '../utils'
 
@@ -38,17 +39,18 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
   const api = extractApiInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
-  const sorters = block.sorters
+
+  const sorters = extractBlockSorterInfo(resource, view, block)
   const sortable = sorters.length !== 0
-  const searchers = block.searchers
+  enhanceModelInfoWithSorter(model, sorters)
+
+  const searchers = extractBlockSearcherInfo(resource, view, block)
   const searchable = searchers.length !== 0
-  enhanceModelInfoWithTableSorter(model, sorters)
-  enhanceModelInfoWithTableSearcher(model, searchers)
 
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
-    { api, model, sortable, searchable }
+    { api, model, sortable, searchers, searchable }
   )
 }
 
