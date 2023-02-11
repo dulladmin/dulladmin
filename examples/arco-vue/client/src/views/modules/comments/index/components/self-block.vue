@@ -55,31 +55,31 @@
         <template #id="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #postId="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #name="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #email="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #body="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
       </a-table>
@@ -91,7 +91,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import { cloneDeep, omitBy } from 'lodash';
+  import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/comments/index/self';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
@@ -99,17 +99,22 @@
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
   import { useLoading } from '@/hooks';
+  import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
   // types
   type Column = TableColumnData & { show?: true };
-  type Pagination = Record<string, any>;
   type Sorter = Record<string, any>;
+  type Pagination = Record<string, any>;
 
   // i18n
   const { t } = useI18n();
 
-  // model info
-  const modelInfo: { [key: string]: any } = {
+  // route
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // model
+  const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
       i18nKey: 'comments--index.self-block.model.attributes.id',
@@ -132,11 +137,20 @@
     },
   };
 
-  // route info
-  const route = useRoute();
-  const id = (route.params.id as string) ?? '';
+  // sorter
+  const baseTableSorter: Sorter = {
+    name: '',
+    direction: '',
+  };
+  const tableSorter = reactive({
+    ...baseTableSorter,
+  });
+  const apiSorter = (sorter: Sorter): any => {
+    if (sorter.name === '') return null;
+    return { name: sorter.name, direction: sorter.direction };
+  };
 
-  // pagination info
+  // pagination
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,
@@ -150,19 +164,6 @@
       page_size: pagination.pageSize,
       current: pagination.current,
     };
-  };
-
-  // sorter info
-  const baseTableSorter: Sorter = {
-    name: '',
-    direction: '',
-  };
-  const tableSorter = ref({
-    ...baseTableSorter,
-  });
-  const apiSorter = (sorter: Sorter): any => {
-    if (sorter.name === '') return null;
-    return { name: sorter.name, direction: sorter.direction };
   };
 
   // table - columns initialize
@@ -259,8 +260,8 @@
   // table - refresh
   const onTableRefresh = async () => {
     const req = omitBy({
+      sorter: apiSorter(tableSorter),
       pagination: apiPagination(tablePagination),
-      sorter: apiSorter(tableSorter.value),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
@@ -268,18 +269,24 @@
   // table - pageChange
   const onTablePageChange = async (current: number) => {
     const req = omitBy({
+      sorter: apiSorter(tableSorter),
       pagination: { ...apiPagination(tablePagination), current },
-      sorter: apiSorter(tableSorter.value),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
 
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
-    tableSorter.value = direction ? { name: dataIndex, direction } : { ...baseTablePagination };
+    if (direction) {
+      tableSorter.name = dataIndex;
+      tableSorter.direction = direction;
+    } else {
+      tableSorter.name = baseTableSorter.name;
+      tableSorter.direction = baseTableSorter.direction;
+    }
     const req = omitBy({
+      sorter: apiSorter(tableSorter),
       pagination: apiPagination(tablePagination),
-      sorter: apiSorter(tableSorter.value)
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };

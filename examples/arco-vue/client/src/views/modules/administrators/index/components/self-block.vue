@@ -54,19 +54,19 @@
         <template #id="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #name="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
         <template #role="{ record, column }">
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
         </template>
       </a-table>
@@ -78,7 +78,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import { cloneDeep, omitBy } from 'lodash';
+  import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/administrators/index/self';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
@@ -86,6 +86,7 @@
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
   import { useLoading } from '@/hooks';
+  import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
   // types
   type Column = TableColumnData & { show?: true };
@@ -94,8 +95,12 @@
   // i18n
   const { t } = useI18n();
 
-  // model info
-  const modelInfo: { [key: string]: any } = {
+  // route
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // model
+  const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
       i18nKey: 'administrators--index.self-block.model.attributes.id',
@@ -118,11 +123,7 @@
     },
   };
 
-  // route info
-  const route = useRoute();
-  const id = (route.params.id as string) ?? '';
-
-  // pagination info
+  // pagination
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,

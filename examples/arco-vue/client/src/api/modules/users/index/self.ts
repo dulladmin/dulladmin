@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 import {
-  Pagination,
   Sorter,
+  Pagination,
 } from '@/api/common';
 
 /* Model */
@@ -28,17 +28,17 @@ export interface Model {
   };
 }
 
-/* Searcher */
-interface Searcher {
+/* Search */
+interface Search {
   id_eq: string;
   name_cont: string;
 }
 
 /* GET /users/index/self */
 export interface ListRequest {
-  pagination: Pagination;
+  search?: Search;
   sorter?: Sorter;
-  searcher?: Searcher;
+  pagination: Pagination;
 }
 export interface ListResponse {
   collection: Model[];

@@ -2,10 +2,10 @@
 
 import axios from 'axios';
 import {
-  Pagination,
   {{#if sortable}}
   Sorter,
   {{/if}}
+  Pagination,
 } from '@/api/common';
 
 /* Model */
@@ -24,8 +24,8 @@ export interface Model {
 }
 
 {{#if searchable}}
-/* Searcher */
-interface Searcher {
+/* Search */
+interface Search {
   {{#each searchers}}
   {{id}}: {{jsonType}};
   {{/each}}
@@ -36,13 +36,13 @@ interface Searcher {
 
 /* GET {{api.url}} */
 export interface ListRequest {
-  pagination: Pagination;
+  {{#if searchable}}
+  search?: Search;
+  {{/if}}
   {{#if sortable}}
   sorter?: Sorter;
   {{/if}}
-  {{#if searchable}}
-  searcher?: Searcher;
-  {{/if}}
+  pagination: Pagination;
 }
 export interface ListResponse {
   collection: Model[];

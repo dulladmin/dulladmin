@@ -3,6 +3,17 @@
 <template>
   <div>
     <a-card :title="$t('{{block.title.i18nKey}}')">
+      {{#if searchable}}
+      <a-row>
+        <a-col>
+          <a-form :model="{}">
+          {{#each searchers}}
+            <a-form-item />
+          {{/each}}
+          </a-form>
+        </a-col>
+      </a-row>
+      {{/if}}
       <a-row style="margin-bottom: 16px">
         <a-col
           style="display: flex; align-items: center; justify-content: end"
@@ -60,24 +71,24 @@
           {{#if object}}
           <SimpleTable
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
           {{else}}
           <SimpleList
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
           {{/if}}
         {{else}}
           {{#if object}}
           <SimpleDescriptions
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
           {{else}}
           <SimpleData
             :data="record[column.dataIndex]"
-            :meta="modelInfo[column.dataIndex]"
+            :meta="modelMetadata[column.dataIndex]"
           />
           {{/if}}
         {{/if}}
@@ -92,7 +103,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import { cloneDeep, omitBy } from 'lodash';
+  import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '{{ block.apiImportPath }}';
   import SimpleData from '@/components/renderer/data/simple-data.vue';
@@ -100,19 +111,27 @@
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
   import { useLoading } from '@/hooks';
+  import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
   // types
   type Column = TableColumnData & { show?: true };
-  type Pagination = Record<string, any>;
+  {{#if searchable}}
+  type Search = Record<string, any>;
+  {{/if}}
   {{#if sortable}}
   type Sorter = Record<string, any>;
   {{/if}}
+  type Pagination = Record<string, any>;
 
   // i18n
   const { t } = useI18n();
 
-  // model info
-  const modelInfo: { [key: string]: any } = {
+  // route
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // model
+  const modelMetadata: { [key: string]: any } = {
   {{#each model.attributes}}
     {{#if object.attributes}}
     {{name}}: {
@@ -141,11 +160,55 @@
   {{/each}}
   };
 
-  // route info
-  const route = useRoute();
-  const id = (route.params.id as string) ?? '';
+{{#if searchable}}
+  // search
+  const searchMetadata: { [key: string]: any } = {
+  {{#each searchers}}
+    {{id}}: {
+      type: '{{type}}',
+      i18nKey: '{{i18nKey}}',
+      {{#if optionals}}
+      optionals: {
+        {{#each optionals}}
+        {{name}}: {
+          i18nKey: '{{i18nKey}}',
+        },
+        {{/each}}
+      },
+      {{/if}}
+    },
+  {{/each}}
+  };
+  const baseTableSearch: Search = {
+  {{#each searchers}}
+    {{id}}: defaultValue<{{jsonType}}>(searchMetadata.{{id}}),
+  {{/each}}
+  };
+  const tableSearch = reactive({
+    ...baseTableSearch,
+  });
+  const apiSearch = (search: Search): any => {
+    const o = omitBy(search, (v) => isDefaultValue(v));
+    return isEmpty(o) ? null : o;
+  };
 
-  // pagination info
+{{/if}}
+{{#if sortable}}
+  // sorter
+  const baseTableSorter: Sorter = {
+    name: '',
+    direction: '',
+  };
+  const tableSorter = reactive({
+    ...baseTableSorter,
+  });
+  const apiSorter = (sorter: Sorter): any => {
+    if (sorter.name === '') return null;
+    return { name: sorter.name, direction: sorter.direction };
+  };
+
+{{/if}}
+  // pagination
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,
@@ -160,23 +223,6 @@
       current: pagination.current,
     };
   };
-
-{{#if sortable}}
-  // sorter info
-  const baseTableSorter: Sorter = {
-    name: '',
-    direction: '',
-  };
-  const tableSorter = ref({
-    ...baseTableSorter,
-  });
-  const apiSorter = (sorter: Sorter): any => {
-    if (sorter.name === '') return null;
-    return { name: sorter.name, direction: sorter.direction };
-  };
-
-{{/if}}
-{{#if no-newline}}  {{^}}  {{/if~}}
 
   // table - columns initialize
   const tableColumnsWithShow = ref<Column[]>([]);
@@ -256,10 +302,13 @@
   // table - refresh
   const onTableRefresh = async () => {
     const req = omitBy({
-      pagination: apiPagination(tablePagination),
-      {{#if sortable}}
-      sorter: apiSorter(tableSorter.value),
+      {{#if searchable}}
+      search: apiSearch(tableSearch),
       {{/if}}
+      {{#if sortable}}
+      sorter: apiSorter(tableSorter),
+      {{/if}}
+      pagination: apiPagination(tablePagination),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
@@ -267,10 +316,13 @@
   // table - pageChange
   const onTablePageChange = async (current: number) => {
     const req = omitBy({
-      pagination: { ...apiPagination(tablePagination), current },
-      {{#if sortable}}
-      sorter: apiSorter(tableSorter.value),
+      {{#if searchable}}
+      search: apiSearch(tableSearch),
       {{/if}}
+      {{#if sortable}}
+      sorter: apiSorter(tableSorter),
+      {{/if}}
+      pagination: { ...apiPagination(tablePagination), current },
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
@@ -278,10 +330,19 @@
 {{#if sortable}}
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
-    tableSorter.value = direction ? { name: dataIndex, direction } : { ...baseTablePagination };
+    if (direction) {
+      tableSorter.name = dataIndex;
+      tableSorter.direction = direction;
+    } else {
+      tableSorter.name = baseTableSorter.name;
+      tableSorter.direction = baseTableSorter.direction;
+    }
     const req = omitBy({
+      {{#if searchable}}
+      search: apiSearch(tableSearch),
+      {{/if}}
+      sorter: apiSorter(tableSorter),
       pagination: apiPagination(tablePagination),
-      sorter: apiSorter(tableSorter.value)
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
