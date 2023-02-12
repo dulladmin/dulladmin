@@ -83,7 +83,6 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/administrators/index/self';
   import { useLoading } from '@/hooks';
-  import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
   // types
   type Column = TableColumnData & { show?: true };

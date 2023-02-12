@@ -7,7 +7,7 @@
 <script lang="tsx" setup>
   import { computed } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { ValueType } from '@/utils/metadata';
+  import { ValueType, val2str, str2val } from '@/utils/metadata';
 
   const { t } = useI18n();
 
@@ -21,14 +21,40 @@
 
   const modelValue = computed({
     get() {
+      if (props.meta.optionals) {
+        return val2str(props.modelValue, props.meta);
+      }
       return props.modelValue;
     },
     set(newModelValue) {
-      emits('update:modelValue', newModelValue);
+      if (props.meta.optionals) {
+        emits('update:modelValue', str2val(newModelValue, props.meta));
+      } else {
+        emits('update:modelValue', newModelValue);
+      }
     },
   });
 
+  const modelValueOptions = computed(() => {
+    if (props.meta.optionals) {
+      return Object.entries(props.meta.optionals).map(([key, value]) => {
+        return { label: t((value as Record<string, any>).i18nKey), value: key };
+      });
+    }
+    return [];
+  });
+
   const renderFn = () => {
+    if (props.meta.optionals) {
+      return (
+        <a-select
+          v-model={modelValue.value}
+          options={modelValueOptions.value}
+          allow-clear
+        />
+      );
+    }
+
     switch (props.meta.type as ValueType) {
       case ValueType.Double:
       case ValueType.Float:
@@ -46,6 +72,7 @@
       case ValueType.Bool:
         return <a-switch v-model={modelValue.value} />;
       case ValueType.String:
+        return <a-input v-model={modelValue.value} />;
       case ValueType.Datetime:
         return <a-input v-model={modelValue.value} />;
       case ValueType.Object:

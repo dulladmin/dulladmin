@@ -17,7 +17,12 @@ export enum ValueType {
   Object = 'object',
 }
 
-export function defaultValue<T>(metadata: Record<string, any>): T {
+export function val2str(
+  value: unknown,
+  metadata: Record<string, any>
+): string | null {
+  if (value == null) return null;
+
   switch (metadata.type as ValueType) {
     case ValueType.Double:
     case ValueType.Float:
@@ -31,27 +36,49 @@ export function defaultValue<T>(metadata: Record<string, any>): T {
     case ValueType.Fixed64:
     case ValueType.Sfixed32:
     case ValueType.Sfixed64:
-      return 0 as T;
+      return String(value);
     case ValueType.Bool:
-      return false as T;
+      return String(value);
     case ValueType.String:
+      return String(value);
     case ValueType.Datetime:
-      return '' as T;
+      return String(value);
     case ValueType.Object:
     default:
       throw new Error(`Unknown value type \`${metadata.type}\``);
   }
 }
 
-export function isDefaultValue(value: unknown): boolean {
-  switch (typeof value) {
-    case 'number':
-      return value === 0;
-    case 'boolean':
-      return value === false;
-    case 'string':
-      return value === '';
+export function str2val(
+  value: string | null,
+  metadata: Record<string, any>
+): string | number | boolean | null {
+  if (value == null) return null;
+
+  switch (metadata.type as ValueType) {
+    case ValueType.Double:
+    case ValueType.Float:
+    case ValueType.Int32:
+    case ValueType.Int64:
+    case ValueType.Uint32:
+    case ValueType.Uint64:
+    case ValueType.Sint32:
+    case ValueType.Sint64:
+    case ValueType.Fixed32:
+    case ValueType.Fixed64:
+    case ValueType.Sfixed32:
+    case ValueType.Sfixed64:
+      if (value === '') return null;
+      return Number(value);
+    case ValueType.Bool:
+      if (value === '') return null;
+      return value === 'true';
+    case ValueType.String:
+      return String(value);
+    case ValueType.Datetime:
+      return String(value);
+    case ValueType.Object:
     default:
-      throw new Error(`Unknown value type \`${typeof value}\``);
+      throw new Error(`Unknown value type \`${metadata.type}\``);
   }
 }

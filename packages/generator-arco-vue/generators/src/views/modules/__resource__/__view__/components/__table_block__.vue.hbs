@@ -131,7 +131,6 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '{{ block.apiImportPath }}';
   import { useLoading } from '@/hooks';
-  import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
   // types
   type Column = TableColumnData & { show?: true };
@@ -203,14 +202,14 @@
   };
   const baseTableSearch: Search = {
   {{#each searchers}}
-    {{name}}: defaultValue<{{jsonType}}>(searchMetadata.{{name}}),
+    {{name}}: null,
   {{/each}}
   };
   const tableSearch = reactive({
     ...baseTableSearch,
   });
   const apiSearch = (search: Search): any => {
-    const o = omitBy(search, (v) => isDefaultValue(v));
+    const o = omitBy(search, (v) => v == null);
     return isEmpty(o) ? null : o;
   };
 
@@ -355,6 +354,9 @@
   const onTableSearch = async () => {
     const req = omitBy({
       search: apiSearch(tableSearch),
+      {{#if sortable}}
+      sorter: apiSorter(tableSorter),
+      {{/if}}
       pagination: apiPagination(baseTablePagination),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
