@@ -248,7 +248,10 @@
     ...baseTableSearch,
   });
   const apiSearch = (search: Search): any => {
-    const o = omitBy(search, (v) => v == null);
+    const o = omitBy(search, (v, k) => {
+      if (searchMetadata[k].optionals) return v == null;
+      return v == null || v === false || v === '';
+    });
     return isEmpty(o) ? null : o;
   };
 
