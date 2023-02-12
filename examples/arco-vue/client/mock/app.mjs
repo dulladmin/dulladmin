@@ -14,13 +14,25 @@ async function loadDatabase(filename) {
   return db;
 }
 
-function makePagination(collection, pagination) {
-  const page_size = parseInt(pagination.page_size);
-  const current = parseInt(pagination.current);
-  const total = collection.length;
-  collection = collection.slice((current - 1) * page_size, current * page_size);
-  pagination = { page_size, current, total };
-  return { collection, pagination };
+function makeSearch(collection, search) {
+  if (search == null) return collection;
+  Object.keys(search).forEach((s) => {
+    const [name, predicate] = s.split('_');
+    switch (predicate) {
+      case 'eq':
+        collection = collection.filter((v) => {
+          return String(v[name]) == search[s];
+        });
+        return;
+      case 'cont':
+        collection = collection.filter((v) => {
+          return v[name].includes(search[s]);
+        });
+      default:
+        return;
+    }
+  });
+  return collection;
 }
 
 function makeSorter(collection, sorter) {
@@ -34,6 +46,15 @@ function makeSorter(collection, sorter) {
   });
 }
 
+function makePagination(collection, pagination) {
+  const page_size = parseInt(pagination.page_size);
+  const current = parseInt(pagination.current);
+  const total = collection.length;
+  collection = collection.slice((current - 1) * page_size, current * page_size);
+  pagination = { page_size, current, total };
+  return { collection, pagination };
+}
+
 export async function enhance(app) {
   const usersDB = await loadDatabase('./db/users.json');
   const albumsDB = await loadDatabase('./db/albums.json');
@@ -44,15 +65,17 @@ export async function enhance(app) {
   const administratorsDB = await loadDatabase('./db/administrators.json');
 
   app.get('/users/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(usersDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(usersDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 
   app.get('/albums/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(albumsDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(albumsDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
@@ -69,29 +92,33 @@ export async function enhance(app) {
   });
 
   app.get('/photos/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(photosDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(photosDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 
   app.get('/posts/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(postsDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(postsDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 
   app.get('/comments/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(commentsDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(commentsDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 
   app.get('/todos/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(todosDB.data);
-    const collection = makeSorter(data, req.query.sorter);
+    let collection = lodash.cloneDeep(todosDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
