@@ -22,26 +22,26 @@
                   >
                   {{#if collection}}
                     {{#if object}}
-                    <SimpleTable
+                    <DullTable
                       :data="store.{{name}}"
-                      :meta="modelInfo['{{name}}']"
+                      :meta="modelMetadata['{{name}}']"
                     />
                     {{else}}
-                    <SimpleList
+                    <DullList
                       :data="store.{{name}}"
-                      :meta="modelInfo['{{name}}']"
+                      :meta="modelMetadata['{{name}}']"
                     />
                     {{/if}}
                   {{else}}
                     {{#if object}}
-                    <SimpleDescriptions
+                    <DullDescriptions
                       :data="store.{{name}}"
-                      :meta="modelInfo['{{name}}']"
+                      :meta="modelMetadata['{{name}}']"
                     />
                     {{else}}
-                    <SimpleData
+                    <DullData
                       :data="store.{{name}}"
-                      :meta="modelInfo['{{name}}']"
+                      :meta="modelMetadata['{{name}}']"
                     />
                     {{/if}}
                   {{/if}}
@@ -62,17 +62,17 @@
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
   import { Model, get } from '{{ block.apiImportPath }}';
-  import SimpleData from '@/components/renderer/data/simple-data.vue';
-  import SimpleList from '@/components/renderer/data/simple-list.vue';
-  import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
-  import SimpleTable from '@/components/renderer/data/simple-table.vue';
   import { useLoading } from '@/hooks';
 
   // types
   type Desc = DescData & { dataIndex: string };
 
-  // model info
-  const modelInfo: { [key: string]: any } = {
+  // route
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // model
+  const modelMetadata: { [key: string]: any } = {
   {{#each model.attributes}}
     {{#if object.attributes}}
     {{name}}: {
@@ -91,10 +91,6 @@
     {{/if}}
   {{/each}}
   };
-
-  // route info
-  const route = useRoute();
-  const id = (route.params.id as string) ?? '';
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);

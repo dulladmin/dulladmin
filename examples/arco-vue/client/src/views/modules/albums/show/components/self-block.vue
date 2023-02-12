@@ -19,9 +19,9 @@
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"
                   >
-                    <SimpleData
+                    <DullData
                       :data="store.id"
-                      :meta="modelInfo['id']"
+                      :meta="modelMetadata['id']"
                     />
                   </td>
                 </tr>
@@ -34,9 +34,9 @@
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"
                   >
-                    <SimpleData
+                    <DullData
                       :data="store.userId"
-                      :meta="modelInfo['userId']"
+                      :meta="modelMetadata['userId']"
                     />
                   </td>
                 </tr>
@@ -49,9 +49,9 @@
                   <td
                     class="arco-descriptions-item-value arco-descriptions-item-value-block"
                   >
-                    <SimpleData
+                    <DullData
                       :data="store.title"
-                      :meta="modelInfo['title']"
+                      :meta="modelMetadata['title']"
                     />
                   </td>
                 </tr>
@@ -69,17 +69,17 @@
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
   import { Model, get } from '@/api/modules/albums/show/self';
-  import SimpleData from '@/components/renderer/data/simple-data.vue';
-  import SimpleList from '@/components/renderer/data/simple-list.vue';
-  import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
-  import SimpleTable from '@/components/renderer/data/simple-table.vue';
   import { useLoading } from '@/hooks';
 
   // types
   type Desc = DescData & { dataIndex: string };
 
-  // model info
-  const modelInfo: { [key: string]: any } = {
+  // route
+  const route = useRoute();
+  const id = (route.params.id as string) ?? '';
+
+  // model
+  const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
       i18nKey: 'albums--show.self-block.model.attributes.id',
@@ -93,10 +93,6 @@
       i18nKey: 'albums--show.self-block.model.attributes.title',
     },
   };
-
-  // route info
-  const route = useRoute();
-  const id = (route.params.id as string) ?? '';
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);

@@ -23,7 +23,7 @@
               <td v-for="(subitem, j) in item" :key="j" class="arco-table-td">
                 <span class="arco-table-cell arco-table-cell-align-left">
                   <span class="arco-table-td-content">
-                    <SimpleData :data="subitem.data" :meta="subitem.meta" />
+                    <DullData :data="subitem.data" :meta="subitem.meta" />
                   </span>
                 </span>
               </td>
@@ -37,7 +37,6 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import SimpleData from '@/components/renderer/data/simple-data.vue';
 
   const props = defineProps<{
     data: Record<string, any>[];

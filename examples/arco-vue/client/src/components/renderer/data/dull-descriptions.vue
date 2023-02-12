@@ -18,7 +18,7 @@
             <td
               class="arco-descriptions-item-value arco-descriptions-item-value-block"
             >
-              <SimpleData :data="value" :meta="meta[key]" />
+              <DullData :data="value" :meta="meta[key]" />
             </td>
           </tr>
         </tbody>
@@ -29,7 +29,6 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import SimpleData from '@/components/renderer/data/simple-data.vue';
 
   const props = defineProps<{
     data: Record<string, any>;

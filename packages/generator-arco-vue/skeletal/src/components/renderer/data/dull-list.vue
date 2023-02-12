@@ -6,7 +6,7 @@
           <div v-for="(item, i) in data" :key="i" class="arco-list-item">
             <div class="arco-list-item-main">
               <div class="arco-list-item-content">
-                <SimpleData :data="item" :meta="meta" />
+                <DullData :data="item" :meta="meta" />
               </div>
             </div>
           </div>
@@ -18,7 +18,6 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import SimpleData from '@/components/renderer/data/simple-data.vue';
 
   const props = defineProps<{
     data: any[];
