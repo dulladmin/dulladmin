@@ -42,9 +42,9 @@
       case ValueType.Fixed64:
       case ValueType.Sfixed32:
       case ValueType.Sfixed64:
-        return <a-input v-model={modelValue.value} />;
+        return <a-input-number v-model={modelValue.value} />;
       case ValueType.Bool:
-        return <a-input v-model={modelValue.value} />;
+        return <a-switch v-model={modelValue.value} />;
       case ValueType.String:
       case ValueType.Datetime:
         return <a-input v-model={modelValue.value} />;

@@ -6,6 +6,7 @@
       <a-row>
         <a-col>
           <a-form
+            ref="searchFormRef"
             :model="tableSearch"
             :auto-label-width="true"
           >
@@ -17,6 +18,22 @@
               v-model="tableSearch.name_cont"
               :meta="searchMetadata.name_cont"
             />
+            <a-form-item>
+              <a-space>
+                <a-button type="primary" @click="onTableSearch">
+                  <template #icon>
+                    <icon-search />
+                  </template>
+                  {{ $t('table.actions.search') }}
+                </a-button>
+                <a-button @click="onTableResetSearch">
+                  <template #icon>
+                    <icon-refresh />
+                  </template>
+                  {{ $t('table.actions.resetSearch') }}
+                </a-button>
+              </a-space>
+            </a-form-item>
           </a-form>
         </a-col>
       </a-row>
@@ -127,6 +144,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/users/index/self';
   import { useLoading } from '@/hooks';
@@ -210,6 +228,7 @@
   };
 
   // search
+  const searchFormRef = ref<FormInstance>();
   const searchMetadata: { [key: string]: any } = {
     id_eq: {
       name: 'id_eq',
@@ -251,7 +270,9 @@
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,
+    total: null,
     showTotal: true,
+    hideOnSinglePage: true,
   };
   const tablePagination = reactive({
     ...baseTablePagination,
@@ -369,7 +390,6 @@
         tablePagination.pageSize = baseTablePagination.pageSize;
         tablePagination.current = baseTablePagination.current;
         tablePagination.total = null;
-        tablePagination.hideOnSinglePage = true;
       }
     } catch (_) {
       // .
@@ -399,6 +419,19 @@
       pagination: { ...apiPagination(tablePagination), current },
     }, v => v == null) as ListRequest;
     await fetchStore(req);
+  };
+
+  // table -- search
+  const onTableSearch = async () => {
+    const req = omitBy({
+      search: apiSearch(tableSearch),
+      pagination: apiPagination(baseTablePagination),
+    }, v => v == null) as ListRequest;
+    await fetchStore(req);
+  };
+  const onTableResetSearch = async () => {
+    searchFormRef.value?.resetFields();
+    await onTableSearch();
   };
 
   // table - sorterChange

@@ -85,6 +85,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/albums/show/photos';
   import { useLoading } from '@/hooks';
@@ -125,7 +126,9 @@
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,
+    total: null,
     showTotal: true,
+    hideOnSinglePage: true,
   };
   const tablePagination = reactive({
     ...baseTablePagination,
@@ -207,7 +210,6 @@
         tablePagination.pageSize = baseTablePagination.pageSize;
         tablePagination.current = baseTablePagination.current;
         tablePagination.total = null;
-        tablePagination.hideOnSinglePage = true;
       }
     } catch (_) {
       // .

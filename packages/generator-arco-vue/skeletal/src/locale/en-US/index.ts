@@ -23,6 +23,8 @@ export default {
   'navbar.user.logout': 'Logout',
 
   // components - table
+  'table.actions.search': 'Search',
+  'table.actions.resetSearch': 'Reset',
   'table.actions.columnSetting': 'Column Setting',
   'table.actions.refresh': 'Refresh',
 

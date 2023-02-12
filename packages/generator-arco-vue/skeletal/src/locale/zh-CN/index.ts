@@ -23,6 +23,8 @@ export default {
   'navbar.user.logout': '登出账号',
 
   // components - table
+  'table.actions.search': '搜索',
+  'table.actions.resetSearch': '重置',
   'table.actions.columnSetting': '列设置',
   'table.actions.refresh': '刷新',
 
