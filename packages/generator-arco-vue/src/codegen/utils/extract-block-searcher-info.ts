@@ -9,7 +9,7 @@ export function extractBlockSearcherInfo(resource: Resource, view: View, block: 
   const i18nKeyPrefix = `${resourceName}--${viewName}.${blockName}-block.searchers`
 
   return block.searchers.map((searcher) => {
-    const id = `${searcher.name}_${searcher.predicate}`
+    const name = `${searcher.name}_${searcher.predicate}`
 
     let type = null
     let optionals = null
@@ -23,20 +23,18 @@ export function extractBlockSearcherInfo(resource: Resource, view: View, block: 
     }
 
     return {
-      id,
-      name: searcher.name,
-      predicate: searcher.predicate,
+      name,
       type,
       jsonType: toJsonType(type),
       optionals: optionals?.map((rawOpt) => {
         const opt = String(rawOpt)
         return {
           name: opt,
-          i18nKey: `${i18nKeyPrefix}.${id}.optionals.${opt}`,
+          i18nKey: `${i18nKeyPrefix}.${name}.optionals.${opt}`,
           i18nValue: toI18nMessage(opt)
         }
       }),
-      i18nKey: `${i18nKeyPrefix}.${id}`,
+      i18nKey: `${i18nKeyPrefix}.${name}`,
       i18nValue: toI18nMessage(`${searcher.name} ${searcher.predicate}`)
     }
   })

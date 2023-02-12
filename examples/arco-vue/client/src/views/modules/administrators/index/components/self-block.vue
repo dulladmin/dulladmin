@@ -85,6 +85,7 @@
   import SimpleList from '@/components/renderer/data/simple-list.vue';
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
+  import SimpleFormItem from '@/components/renderer/form-item/simple-form-item.vue';
   import { useLoading } from '@/hooks';
   import { defaultValue, isDefaultValue } from '@/utils/metadata';
 

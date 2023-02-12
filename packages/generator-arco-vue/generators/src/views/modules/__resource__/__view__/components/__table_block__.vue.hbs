@@ -6,9 +6,15 @@
       {{#if searchable}}
       <a-row>
         <a-col>
-          <a-form :model="{}">
+          <a-form
+            :model="tableSearch"
+            :auto-label-width="true"
+          >
           {{#each searchers}}
-            <a-form-item />
+            <SimpleFormItem
+              v-model="tableSearch.{{name}}"
+              :meta="searchMetadata.{{name}}"
+            />
           {{/each}}
           </a-form>
         </a-col>
@@ -110,6 +116,7 @@
   import SimpleList from '@/components/renderer/data/simple-list.vue';
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
+  import SimpleFormItem from '@/components/renderer/form-item/simple-form-item.vue';
   import { useLoading } from '@/hooks';
   import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
@@ -164,7 +171,8 @@
   // search
   const searchMetadata: { [key: string]: any } = {
   {{#each searchers}}
-    {{id}}: {
+    {{name}}: {
+      name: '{{name}}',
       type: '{{type}}',
       i18nKey: '{{i18nKey}}',
       {{#if optionals}}
@@ -181,7 +189,7 @@
   };
   const baseTableSearch: Search = {
   {{#each searchers}}
-    {{id}}: defaultValue<{{jsonType}}>(searchMetadata.{{id}}),
+    {{name}}: defaultValue<{{jsonType}}>(searchMetadata.{{name}}),
   {{/each}}
   };
   const tableSearch = reactive({

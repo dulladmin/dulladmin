@@ -1,4 +1,4 @@
-enum ValueType {
+export enum ValueType {
   Double = 'double',
   Float = 'float',
   Int32 = 'int32',

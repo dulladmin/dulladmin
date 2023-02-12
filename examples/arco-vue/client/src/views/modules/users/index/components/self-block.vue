@@ -5,9 +5,18 @@
     <a-card :title="$t('users--index.self-block.title')">
       <a-row>
         <a-col>
-          <a-form :model="{}">
-            <a-form-item />
-            <a-form-item />
+          <a-form
+            :model="tableSearch"
+            :auto-label-width="true"
+          >
+            <SimpleFormItem
+              v-model="tableSearch.id_eq"
+              :meta="searchMetadata.id_eq"
+            />
+            <SimpleFormItem
+              v-model="tableSearch.name_cont"
+              :meta="searchMetadata.name_cont"
+            />
           </a-form>
         </a-col>
       </a-row>
@@ -124,6 +133,7 @@
   import SimpleList from '@/components/renderer/data/simple-list.vue';
   import SimpleDescriptions from '@/components/renderer/data/simple-descriptions.vue';
   import SimpleTable from '@/components/renderer/data/simple-table.vue';
+  import SimpleFormItem from '@/components/renderer/form-item/simple-form-item.vue';
   import { useLoading } from '@/hooks';
   import { defaultValue, isDefaultValue } from '@/utils/metadata';
 
@@ -207,10 +217,12 @@
   // search
   const searchMetadata: { [key: string]: any } = {
     id_eq: {
+      name: 'id_eq',
       type: 'string',
       i18nKey: 'users--index.self-block.searchers.id_eq',
     },
     name_cont: {
+      name: 'name_cont',
       type: 'string',
       i18nKey: 'users--index.self-block.searchers.name_cont',
     },
