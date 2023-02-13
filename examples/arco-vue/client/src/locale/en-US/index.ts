@@ -28,6 +28,9 @@ export default {
   'table.actions.columnSetting': 'Column Setting',
   'table.actions.refresh': 'Refresh',
 
+  // components - form
+  'form.actions.save': 'Save',
+
   // views - login
   'login.form.title': 'DullAdmin',
   'login.form.username.placeholder': 'Username',

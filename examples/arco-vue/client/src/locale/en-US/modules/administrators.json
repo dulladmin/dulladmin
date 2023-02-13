@@ -8,5 +8,15 @@
   "administrators--index.self-block.model.attributes.name": "Name",
   "administrators--index.self-block.model.attributes.role": "Role",
   "administrators--index.self-block.model.attributes.role.optionals.admin": "Admin",
-  "administrators--index.self-block.model.attributes.role.optionals.user": "User"
+  "administrators--index.self-block.model.attributes.role.optionals.user": "User",
+  "administrators--new.self-block.title": "Administrators Form",
+  "administrators--new.self-block.model.attributes.name": "Name",
+  "administrators--new.self-block.model.attributes.role": "Role",
+  "administrators--new.self-block.model.attributes.role.optionals.admin": "Admin",
+  "administrators--new.self-block.model.attributes.role.optionals.user": "User",
+  "administrators--edit.self-block.title": "Administrators Form",
+  "administrators--edit.self-block.model.attributes.name": "Name",
+  "administrators--edit.self-block.model.attributes.role": "Role",
+  "administrators--edit.self-block.model.attributes.role.optionals.admin": "Admin",
+  "administrators--edit.self-block.model.attributes.role.optionals.user": "User"
 }

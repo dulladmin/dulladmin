@@ -11,3 +11,17 @@ views:
           searchers:
             - { name: 'id'  , predicate: 'eq' }
             - { name: 'role', predicate: 'eq' }
+
+  new:
+    blocks:
+      - form:
+          items:
+            - { name: 'name' , type: 'string' }
+            - { name: 'role' , type: 'string', optionals: ["admin", "user"] }
+
+  edit:
+    blocks:
+      - form:
+          items:
+            - { name: 'name' , type: 'string' }
+            - { name: 'role' , type: 'string', optionals: ["admin", "user"] }

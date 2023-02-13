@@ -2,25 +2,27 @@
 
 <template>
   <div>
-    <a-card :title="$t('{{block.title.i18nKey}}')">
+    <a-card :title="$t('administrators--new.self-block.title')">
       <a-spin style="display: block" :loading="loading">
         <a-form
           :model="store"
           :auto-label-width="true"
         >
-        {{#each model.attributes}}
           <DullFormItem
-            v-model="store.{{name}}"
-            :meta="modelMetadata.{{name}}"
+            v-model="store.name"
+            :meta="modelMetadata.name"
           />
-        {{/each}}
+          <DullFormItem
+            v-model="store.role"
+            :meta="modelMetadata.role"
+          />
           <a-form-item>
             <a-space>
               <a-button type="primary" @click="onFormSave">
                 <template #icon>
                   <icon-save />
                 </template>
-                \{{ $t('form.actions.save') }}
+                {{ $t('form.actions.save') }}
               </a-button>
             </a-space>
           </a-form-item>
@@ -35,7 +37,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
-  import { Model, UpdateRequest, get, update } from '{{ block.apiImportPath }}';
+  import { Model, UpdateRequest, get, update } from '@/api/modules/administrators/new/self';
   import { useLoading } from '@/hooks';
 
   // i18n
@@ -47,32 +49,22 @@
 
   // model
   const modelMetadata: { [key: string]: any } = {
-  {{#each model.attributes}}
-    {{#if object.attributes}}
-    {{name}}: {
-      {{#each object.attributes}}
-      {{name}}: {
-        type: '{{type}}',
-        i18nKey: '{{i18nKey}}',
-      },
-      {{/each}}
+    name: {
+      type: 'string',
+      i18nKey: 'administrators--new.self-block.model.attributes.name',
     },
-    {{else}}
-    {{name}}: {
-      type: '{{type}}',
-      i18nKey: '{{i18nKey}}',
-      {{#if optionals}}
+    role: {
+      type: 'string',
+      i18nKey: 'administrators--new.self-block.model.attributes.role',
       optionals: {
-        {{#each optionals}}
-        {{name}}: {
-          i18nKey: '{{i18nKey}}',
+        admin: {
+          i18nKey: 'administrators--new.self-block.model.attributes.role.optionals.admin',
         },
-        {{/each}}
+        user: {
+          i18nKey: 'administrators--new.self-block.model.attributes.role.optionals.user',
+        },
       },
-      {{/if}}
     },
-    {{/if}}
-  {{/each}}
   };
 
   // form - store

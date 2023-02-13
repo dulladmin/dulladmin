@@ -11,6 +11,22 @@ const routes: RouteRecordRaw[] = [
       authority: ['admin', ],
     },
   },
+  {
+    name: 'administrators--new',
+    path: 'administrators/new',
+    component: () => import('@/views/modules/administrators/new/index.vue'),
+    meta: {
+      authority: ['admin', ],
+    },
+  },
+  {
+    name: 'administrators--edit',
+    path: 'administrators/:id/edit',
+    component: () => import('@/views/modules/administrators/edit/index.vue'),
+    meta: {
+      authority: ['admin', ],
+    },
+  },
 ];
 
 export default routes;

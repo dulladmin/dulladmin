@@ -28,6 +28,9 @@ export default {
   'table.actions.columnSetting': '列设置',
   'table.actions.refresh': '刷新',
 
+  // components - form
+  'form.actions.save': '保存',
+
   // views - login
   'login.form.title': 'DullAdmin',
   'login.form.username.placeholder': '用户名',

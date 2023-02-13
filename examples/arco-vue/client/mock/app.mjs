@@ -80,13 +80,13 @@ export async function enhance(app) {
     res.send(buildSuccessResponse(r));
   });
   app.get('/albums/:id/show/self', async (req, res) => {
-    const model = albumsDB.data.find((item) => item.id == req.params.id);
+    const collection = albumsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
     res.send(buildSuccessResponse({ model }));
   });
   app.get('/albums/:id/show/photos', async (req, res) => {
-    const collection = photosDB.data.filter(
-      (item) => item.albumId == req.params.id
-    );
+    let collection = photosDB.data;
+    collection = collection.filter((item) => item.albumId == req.params.id);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
@@ -129,5 +129,26 @@ export async function enhance(app) {
     collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
+  });
+  app.get('/administrators/new/self', async (_req, res) => {
+    const model = { name: '', role: 'user' };
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.put('/administrators/new/self', async (req, res) => {
+    const collection = administratorsDB.data;
+    const model = { ...req.body.model, id: collection.length + 1 };
+    collection.push(model);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.get('/administrators/:id/edit/self', async (req, res) => {
+    const collection = administratorsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.put('/administrators/:id/edit/self', async (req, res) => {
+    const collection = administratorsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    Object.assign(model, { ...req.body.model });
+    res.send(buildSuccessResponse({ model }));
   });
 }
