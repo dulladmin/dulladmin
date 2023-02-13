@@ -249,8 +249,8 @@
   });
   const apiSearch = (search: Search): any => {
     const o = omitBy(search, (v, k) => {
-      if (searchMetadata[k].optionals) return v == null;
-      return v == null || v === false || v === '';
+      if (searchMetadata[k].optionals) return v == null || v === '';
+      return v == null || v === '' || v === false;
     });
     return isEmpty(o) ? null : o;
   };

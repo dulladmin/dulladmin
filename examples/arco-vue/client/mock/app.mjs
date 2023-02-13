@@ -124,8 +124,10 @@ export async function enhance(app) {
   });
 
   app.get('/administrators/index/self', async (req, res) => {
-    const data = lodash.cloneDeep(administratorsDB.data);
-    const r = makePagination(data, req.query.pagination);
+    let collection = lodash.cloneDeep(administratorsDB.data);
+    collection = makeSearch(collection, req.query.search);
+    collection = makeSorter(collection, req.query.sorter);
+    const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
 }

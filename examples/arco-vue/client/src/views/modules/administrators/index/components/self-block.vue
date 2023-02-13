@@ -3,6 +3,40 @@
 <template>
   <div>
     <a-card :title="$t('administrators--index.self-block.title')">
+      <a-row>
+        <a-col>
+          <a-form
+            ref="searchFormRef"
+            :model="tableSearch"
+            :auto-label-width="true"
+          >
+            <DullFormItem
+              v-model="tableSearch.id_eq"
+              :meta="searchMetadata.id_eq"
+            />
+            <DullFormItem
+              v-model="tableSearch.role_eq"
+              :meta="searchMetadata.role_eq"
+            />
+            <a-form-item>
+              <a-space>
+                <a-button type="primary" @click="onTableSearch">
+                  <template #icon>
+                    <icon-search />
+                  </template>
+                  {{ $t('table.actions.search') }}
+                </a-button>
+                <a-button @click="onTableResetSearch">
+                  <template #icon>
+                    <icon-refresh />
+                  </template>
+                  {{ $t('table.actions.resetSearch') }}
+                </a-button>
+              </a-space>
+            </a-form-item>
+          </a-form>
+        </a-col>
+      </a-row>
       <a-row style="margin-bottom: 16px">
         <a-col
           style="display: flex; align-items: center; justify-content: end"
@@ -86,6 +120,7 @@
 
   // types
   type Column = TableColumnData & { show?: true };
+  type Search = Record<string, any>;
   type Pagination = Record<string, any>;
 
   // i18n
@@ -117,6 +152,43 @@
         },
       },
     },
+  };
+
+  // search
+  const searchFormRef = ref<FormInstance>();
+  const searchMetadata: { [key: string]: any } = {
+    id_eq: {
+      name: 'id_eq',
+      type: 'string',
+      i18nKey: 'administrators--index.self-block.searchers.id_eq',
+    },
+    role_eq: {
+      name: 'role_eq',
+      type: 'string',
+      i18nKey: 'administrators--index.self-block.searchers.role_eq',
+      optionals: {
+        admin: {
+          i18nKey: 'administrators--index.self-block.searchers.role_eq.optionals.admin',
+        },
+        user: {
+          i18nKey: 'administrators--index.self-block.searchers.role_eq.optionals.user',
+        },
+      },
+    },
+  };
+  const baseTableSearch: Search = {
+    id_eq: null,
+    role_eq: null,
+  };
+  const tableSearch = reactive({
+    ...baseTableSearch,
+  });
+  const apiSearch = (search: Search): any => {
+    const o = omitBy(search, (v, k) => {
+      if (searchMetadata[k].optionals) return v == null || v === '';
+      return v == null || v === '' || v === false;
+    });
+    return isEmpty(o) ? null : o;
   };
 
   // pagination
@@ -216,6 +288,7 @@
   // table - refresh
   const onTableRefresh = async () => {
     const req = omitBy({
+      search: apiSearch(tableSearch),
       pagination: apiPagination(tablePagination),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
@@ -224,9 +297,23 @@
   // table - pageChange
   const onTablePageChange = async (current: number) => {
     const req = omitBy({
+      search: apiSearch(tableSearch),
       pagination: { ...apiPagination(tablePagination), current },
     }, v => v == null) as ListRequest;
     await fetchStore(req);
+  };
+
+  // table -- search
+  const onTableSearch = async () => {
+    const req = omitBy({
+      search: apiSearch(tableSearch),
+      pagination: apiPagination(baseTablePagination),
+    }, v => v == null) as ListRequest;
+    await fetchStore(req);
+  };
+  const onTableResetSearch = async () => {
+    searchFormRef.value?.resetFields();
+    await onTableSearch();
   };
 
   // table - init

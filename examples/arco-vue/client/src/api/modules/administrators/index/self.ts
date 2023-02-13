@@ -12,8 +12,15 @@ export interface Model {
   role: string;
 }
 
+/* Search */
+interface Search {
+  id_eq: string;
+  role_eq: string;
+}
+
 /* GET /administrators/index/self */
 export interface ListRequest {
+  search?: Search;
   pagination: Pagination;
 }
 export interface ListResponse {
