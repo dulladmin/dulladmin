@@ -69,7 +69,10 @@
 
   // form - store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({} as Model);
+  const store = ref<Model>({
+    name: null,
+    role: null,
+  } as Model);
   const fetchStore = async () => {
     setLoading(true);
     try {

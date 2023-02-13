@@ -208,7 +208,7 @@
       } else {
         tablePagination.pageSize = baseTablePagination.pageSize;
         tablePagination.current = baseTablePagination.current;
-        tablePagination.total = null;
+        tablePagination.total = baseTablePagination.total;;
       }
     } catch (_) {
       // .

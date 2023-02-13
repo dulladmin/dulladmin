@@ -96,7 +96,11 @@
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({} as Model);
+  const store = ref<Model>({
+    id: null,
+    userId: null,
+    title: null,
+  } as Model);
   const fetchStore = async () => {
     setLoading(true);
     try {

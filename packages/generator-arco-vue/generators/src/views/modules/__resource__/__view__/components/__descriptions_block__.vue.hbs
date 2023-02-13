@@ -94,7 +94,15 @@
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({} as Model);
+  const store = ref<Model>({
+  {{#each model.attributes}}
+    {{#if collection}}
+    {{name}}: [],
+    {{else}}
+    {{name}}: null,
+    {{/if}}
+  {{/each}}
+  } as Model);
   const fetchStore = async () => {
     setLoading(true);
     try {
