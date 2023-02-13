@@ -244,8 +244,6 @@
         tablePagination.current = baseTablePagination.current;
         tablePagination.total = baseTablePagination.total;;
       }
-    } catch (_) {
-      // .
     } finally {
       setLoading(false);
     }

@@ -99,18 +99,16 @@
     {{#if collection}}
     {{name}}: [],
     {{else}}
-    {{name}}: null,
+    {{name}}: undefined,
     {{/if}}
   {{/each}}
-  } as Model);
+  });
   const fetchStore = async () => {
     setLoading(true);
     try {
       const { data } = await get(id);
       const { model } = data;
       store.value = model;
-    } catch (_) {
-      // .
     } finally {
       setLoading(false);
     }

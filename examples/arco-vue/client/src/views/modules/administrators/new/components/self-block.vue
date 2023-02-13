@@ -18,7 +18,7 @@
           />
           <a-form-item>
             <a-space>
-              <a-button type="primary" @click="onFormSave">
+              <a-button type="primary" @click="onFormSave" :loading="saving">
                 <template #icon>
                   <icon-save />
                 </template>
@@ -70,37 +70,33 @@
   // form - store
   const { loading, setLoading } = useLoading(true);
   const store = ref<Model>({
-    name: null,
-    role: null,
-  } as Model);
+    name: undefined,
+    role: undefined,
+  });
   const fetchStore = async () => {
     setLoading(true);
     try {
       const { data } = await get(id);
       const { model } = data;
       store.value = model;
-    } catch (_) {
-      // .
     } finally {
       setLoading(false);
     }
   };
 
   // form - save
-  const { loading: saving, setLoading: setSaving } = useLoading(true);
+  const { loading: saving, setLoading: setSaving } = useLoading(false);
   const onFormSave = async () => {
     setSaving(true);
     try {
       const req = {
         model: omitBy(store.value, (v) => {
           return v == null
-        }) as unknown as Model,
+        }),
       } as UpdateRequest;
       const { data } = await update(id, req);
       const { model } = data;
       store.value = model;
-    } catch (_) {
-      // .
     } finally {
       setSaving(false);
     }

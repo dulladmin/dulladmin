@@ -20,7 +20,7 @@
             />
             <a-form-item>
               <a-space>
-                <a-button type="primary" @click="onTableSearch">
+                <a-button type="primary" @click="onTableSearch" :loading="searching">
                   <template #icon>
                     <icon-search />
                   </template>
@@ -309,8 +309,6 @@
         tablePagination.current = baseTablePagination.current;
         tablePagination.total = baseTablePagination.total;;
       }
-    } catch (_) {
-      // .
     } finally {
       setLoading(false);
     }
@@ -340,13 +338,19 @@
   };
 
   // table -- search
+  const { loading: searching, setLoading: setSearching } = useLoading(false);
   const onTableSearch = async () => {
-    const req = omitBy({
-      search: apiSearch(tableSearch),
-      sorter: apiSorter(tableSorter),
-      pagination: apiPagination(baseTablePagination),
-    }, v => v == null) as ListRequest;
-    await fetchStore(req);
+    setSearching(true);
+    try {
+      const req = omitBy({
+        search: apiSearch(tableSearch),
+        sorter: apiSorter(tableSorter),
+        pagination: apiPagination(baseTablePagination),
+      }, v => v == null) as ListRequest;
+      await fetchStore(req);
+    } finally {
+      setSearching(false);
+    }
   };
   const onTableResetSearch = async () => {
     searchFormRef.value?.resetFields();

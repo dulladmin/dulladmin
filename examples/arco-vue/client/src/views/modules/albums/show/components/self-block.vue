@@ -97,18 +97,16 @@
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
   const store = ref<Model>({
-    id: null,
-    userId: null,
-    title: null,
-  } as Model);
+    id: undefined,
+    userId: undefined,
+    title: undefined,
+  });
   const fetchStore = async () => {
     setLoading(true);
     try {
       const { data } = await get(id);
       const { model } = data;
       store.value = model;
-    } catch (_) {
-      // .
     } finally {
       setLoading(false);
     }
