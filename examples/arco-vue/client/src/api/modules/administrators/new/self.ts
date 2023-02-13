@@ -4,8 +4,8 @@ import axios from 'axios';
 
 /* Model */
 export interface Model {
-  name: string;
-  role: string;
+  name?: string;
+  role?: string;
 }
 
 /* GET /administrators/new/self */

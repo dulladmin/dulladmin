@@ -7,10 +7,10 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  id?: string;
+  title?: string;
+  url?: string;
+  thumbnailUrl?: string;
 }
 
 /* GET /albums/${id}/show/photos */

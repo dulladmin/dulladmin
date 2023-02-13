@@ -8,11 +8,11 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  albumId: string;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  id?: string;
+  albumId?: string;
+  title?: string;
+  url?: string;
+  thumbnailUrl?: string;
 }
 
 /* GET /photos/index/self */

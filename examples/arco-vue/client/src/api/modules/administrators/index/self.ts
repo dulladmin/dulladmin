@@ -7,15 +7,15 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  name: string;
-  role: string;
+  id?: string;
+  name?: string;
+  role?: string;
 }
 
 /* Search */
 interface Search {
-  id_eq: string;
-  role_eq: string;
+  id_eq?: string;
+  role_eq?: string;
 }
 
 /* GET /administrators/index/self */

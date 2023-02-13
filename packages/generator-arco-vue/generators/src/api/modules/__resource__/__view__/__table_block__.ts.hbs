@@ -12,13 +12,13 @@ import {
 export interface Model {
 {{#each model.attributes}}
   {{#if object.attributes}}
-  {{name}}: {
+  {{name}}?: {
     {{#each object.attributes}}
-    {{name}}: {{jsonType}};
+    {{name}}?: {{jsonType}};
     {{/each}}
   }{{#if collection}}[]{{/if}};
   {{else}}
-  {{name}}: {{jsonType}}{{#if collection}}[]{{/if}};
+  {{name}}?: {{jsonType}}{{#if collection}}[]{{/if}};
   {{/if}}
 {{/each}}
 }
@@ -27,7 +27,7 @@ export interface Model {
 /* Search */
 interface Search {
   {{#each searchers}}
-  {{name}}: {{jsonType}};
+  {{name}}?: {{jsonType}};
   {{/each}}
 }
 

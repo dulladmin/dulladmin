@@ -8,16 +8,16 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  userId: string;
-  title: string;
-  completed: boolean;
+  id?: string;
+  userId?: string;
+  title?: string;
+  completed?: boolean;
 }
 
 /* Search */
 interface Search {
-  userId_eq: string;
-  completed_eq: boolean;
+  userId_eq?: string;
+  completed_eq?: boolean;
 }
 
 /* GET /todos/index/self */

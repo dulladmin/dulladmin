@@ -4,9 +4,9 @@ import axios from 'axios';
 
 /* Model */
 export interface Model {
-  id: string;
-  userId: string;
-  title: string;
+  id?: string;
+  userId?: string;
+  title?: string;
 }
 
 /* GET /albums/${id}/show/self */

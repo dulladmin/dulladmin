@@ -8,9 +8,9 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  userId: string;
-  title: string;
+  id?: string;
+  userId?: string;
+  title?: string;
 }
 
 /* GET /albums/index/self */

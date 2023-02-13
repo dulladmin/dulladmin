@@ -8,11 +8,11 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  postId: string;
-  name: string;
-  email: string;
-  body: string;
+  id?: string;
+  postId?: string;
+  name?: string;
+  email?: string;
+  body?: string;
 }
 
 /* GET /comments/index/self */

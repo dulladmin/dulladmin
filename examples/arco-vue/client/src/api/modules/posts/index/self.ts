@@ -8,10 +8,10 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  userId: string;
-  title: string;
-  body: string;
+  id?: string;
+  userId?: string;
+  title?: string;
+  body?: string;
 }
 
 /* GET /posts/index/self */

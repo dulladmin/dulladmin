@@ -8,30 +8,30 @@ import {
 
 /* Model */
 export interface Model {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: string;
+  id?: string;
+  name?: string;
+  username?: string;
+  email?: string;
+  address?: {
+    street?: string;
+    suite?: string;
+    city?: string;
+    zipcode?: string;
+    geo?: string;
   };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
+  phone?: string;
+  website?: string;
+  company?: {
+    name?: string;
+    catchPhrase?: string;
+    bs?: string;
   };
 }
 
 /* Search */
 interface Search {
-  id_eq: string;
-  name_cont: string;
+  id_eq?: string;
+  name_cont?: string;
 }
 
 /* GET /users/index/self */
