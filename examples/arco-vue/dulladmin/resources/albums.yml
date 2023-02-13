@@ -9,6 +9,7 @@ views:
             - { name: 'title' , type: 'string' }
           sorters:
             - { name: 'id', directions: ['ascend', 'descend'] }
+
   show:
     blocks:
       - descriptions:

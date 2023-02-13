@@ -11,6 +11,22 @@ const routes: RouteRecordRaw[] = [
       authority: ['*', ],
     },
   },
+  {
+    name: 'todos--new',
+    path: 'todos/new',
+    component: () => import('@/views/modules/todos/new/index.vue'),
+    meta: {
+      authority: ['*', ],
+    },
+  },
+  {
+    name: 'todos--edit',
+    path: 'todos/:id/edit',
+    component: () => import('@/views/modules/todos/edit/index.vue'),
+    meta: {
+      authority: ['*', ],
+    },
+  },
 ];
 
 export default routes;

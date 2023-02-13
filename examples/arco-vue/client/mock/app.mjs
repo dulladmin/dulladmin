@@ -122,6 +122,27 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/todos/new/self', async (_req, res) => {
+    const model = { userId: '', title: '', completed: false };
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.put('/todos/new/self', async (req, res) => {
+    const collection = todosDB.data;
+    const model = { ...req.body.model, id: collection.length + 1 };
+    collection.push(model);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.get('/todos/:id/edit/self', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.put('/todos/:id/edit/self', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    Object.assign(model, { ...req.body.model });
+    res.send(buildSuccessResponse({ model }));
+  });
 
   app.get('/administrators/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(administratorsDB.data);
