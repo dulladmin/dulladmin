@@ -8,7 +8,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--users-management',
     children: [
       {
-        name: 'users--index',
+        name: 'UsersIndex',
         path: 'users',
         component: () => import('@/views/modules/users/index/index.vue'),
         meta: {
@@ -18,7 +18,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        name: 'albums--index',
+        name: 'AlbumsIndex',
         path: 'albums',
         component: () => import('@/views/modules/albums/index/index.vue'),
         meta: {
@@ -28,7 +28,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        name: 'photos--index',
+        name: 'PhotosIndex',
         path: 'photos',
         component: () => import('@/views/modules/photos/index/index.vue'),
         meta: {
@@ -48,7 +48,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--posts-management',
     children: [
       {
-        name: 'posts--index',
+        name: 'PostsIndex',
         path: 'posts',
         component: () => import('@/views/modules/posts/index/index.vue'),
         meta: {
@@ -58,7 +58,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        name: 'comments--index',
+        name: 'CommentsIndex',
         path: 'comments',
         component: () => import('@/views/modules/comments/index/index.vue'),
         meta: {
@@ -78,7 +78,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--todos-management',
     children: [
       {
-        name: 'todos--index',
+        name: 'TodosIndex',
         path: 'todos',
         component: () => import('@/views/modules/todos/index/index.vue'),
         meta: {
@@ -98,7 +98,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--system-management',
     children: [
       {
-        name: 'administrators--index',
+        name: 'AdministratorsIndex',
         path: 'administrators',
         component: () => import('@/views/modules/administrators/index/index.vue'),
         meta: {

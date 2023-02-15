@@ -4,7 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'posts--index',
+    name: 'PostsIndex',
     path: 'posts',
     component: () => import('@/views/modules/posts/index/index.vue'),
     meta: {

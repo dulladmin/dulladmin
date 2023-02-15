@@ -18,6 +18,12 @@
   import PhotosBlock from '@/views/modules/albums/show/components/photos-block.vue';
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'AlbumsShow',
+  };
+</script>
+
 <style lang="less" scoped>
   .container {
     padding: 20px 20px 20px 20px;

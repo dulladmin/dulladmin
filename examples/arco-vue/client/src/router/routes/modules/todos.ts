@@ -4,7 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'todos--index',
+    name: 'TodosIndex',
     path: 'todos',
     component: () => import('@/views/modules/todos/index/index.vue'),
     meta: {
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    name: 'todos--new',
+    name: 'TodosNew',
     path: 'todos/new',
     component: () => import('@/views/modules/todos/new/index.vue'),
     meta: {
@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    name: 'todos--edit',
+    name: 'TodosEdit',
     path: 'todos/:id/edit',
     component: () => import('@/views/modules/todos/edit/index.vue'),
     meta: {

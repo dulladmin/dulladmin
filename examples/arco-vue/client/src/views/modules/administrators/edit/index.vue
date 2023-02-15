@@ -14,6 +14,12 @@
   import SelfBlock from '@/views/modules/administrators/edit/components/self-block.vue';
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'AdministratorsEdit',
+  };
+</script>
+
 <style lang="less" scoped>
   .container {
     padding: 20px 20px 20px 20px;

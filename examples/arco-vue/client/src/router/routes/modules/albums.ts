@@ -4,7 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'albums--index',
+    name: 'AlbumsIndex',
     path: 'albums',
     component: () => import('@/views/modules/albums/index/index.vue'),
     meta: {
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    name: 'albums--show',
+    name: 'AlbumsShow',
     path: 'albums/:id',
     component: () => import('@/views/modules/albums/show/index.vue'),
     meta: {

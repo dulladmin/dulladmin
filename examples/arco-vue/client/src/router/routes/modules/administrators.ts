@@ -4,7 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'administrators--index',
+    name: 'AdministratorsIndex',
     path: 'administrators',
     component: () => import('@/views/modules/administrators/index/index.vue'),
     meta: {
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    name: 'administrators--new',
+    name: 'AdministratorsNew',
     path: 'administrators/new',
     component: () => import('@/views/modules/administrators/new/index.vue'),
     meta: {
@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    name: 'administrators--edit',
+    name: 'AdministratorsEdit',
     path: 'administrators/:id/edit',
     component: () => import('@/views/modules/administrators/edit/index.vue'),
     meta: {

@@ -14,6 +14,12 @@
   import SelfBlock from '@/views/modules/comments/index/components/self-block.vue';
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'CommentsIndex',
+  };
+</script>
+
 <style lang="less" scoped>
   .container {
     padding: 20px 20px 20px 20px;

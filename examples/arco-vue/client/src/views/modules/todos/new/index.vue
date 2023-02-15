@@ -14,6 +14,12 @@
   import SelfBlock from '@/views/modules/todos/new/components/self-block.vue';
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'TodosNew',
+  };
+</script>
+
 <style lang="less" scoped>
   .container {
     padding: 20px 20px 20px 20px;

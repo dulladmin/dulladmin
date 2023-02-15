@@ -7,6 +7,7 @@ import {
   extractBlockSorterInfo,
   extractBlockSearcherInfo,
   extractModelInfo,
+  extractViewInfo,
   enhanceModelInfoWithSorter,
   handlebarsFile
 } from '../utils'
@@ -24,11 +25,12 @@ function genViews_View(resource: Resource, view: View): GeneratedFile[] {
     .map((block) => genViews_Block(resource, view, block))
     .reduce<GeneratedFile[]>((a, v) => [...a, v], [])
 
+  const _view = extractViewInfo(resource, view)
   const blocks = view.blocks.map((block) => extractBlockInfo(resource, view, block))
   const viewOutfile = handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/index.vue`,
     'src/views/modules/__resource__/__view__/index.vue.hbs',
-    { blocks }
+    { ..._view, blocks }
   )
 
   return [...blockOutfiles, viewOutfile]

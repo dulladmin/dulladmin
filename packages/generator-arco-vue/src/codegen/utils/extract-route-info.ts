@@ -1,10 +1,11 @@
 import { Resource, ViewType, View } from '@dulladmin/core'
 import { toPath } from '../../naming'
+import { extractViewInfo } from './extract-view-info'
 
 export function extractRouteInfo(resource: Resource, view: View): Record<string, any> {
   const resourceName = toPath(resource.name)
   const viewName = toPath(view.type)
-  const i18nKeyPrefix = `${resourceName}--${viewName}`
+  const _view = extractViewInfo(resource, view)
 
   let path = ''
   switch (view.type) {
@@ -24,12 +25,10 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
   }
 
   return {
-    name: `${resourceName}--${viewName}`,
+    name: _view.name,
     path,
     authority: view.authority ?? resource.authority ?? ['*'],
     viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
-    title: {
-      i18nKey: `${i18nKeyPrefix}.title`
-    }
+    title: _view.title
   }
 }

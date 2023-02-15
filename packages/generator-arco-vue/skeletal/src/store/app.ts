@@ -116,8 +116,8 @@ const useAppStore = defineStore('app', () => {
     menuCollapse,
     changeMenuCollapse,
 
-    currentTab,
     tabs,
+    currentTab,
     addTab,
     removeCurrentTab,
     removeCurrentTabToTheLeft,
