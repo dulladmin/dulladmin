@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AAffix: typeof import('@arco-design/web-vue')['Affix']
     AButton: typeof import('@arco-design/web-vue')['Button']
     AButtonGroup: typeof import('@arco-design/web-vue')['ButtonGroup']
     AConfigProvider: typeof import('@arco-design/web-vue')['ConfigProvider']
@@ -16,6 +17,7 @@ declare module '@vue/runtime-core' {
     AForm: typeof import('@arco-design/web-vue')['Form']
     AFormItem: typeof import('@arco-design/web-vue')['FormItem']
     AInput: typeof import('@arco-design/web-vue')['Input']
+    AInputNumber: typeof import('@arco-design/web-vue')['InputNumber']
     AInputPassword: typeof import('@arco-design/web-vue')['InputPassword']
     ALayout: typeof import('@arco-design/web-vue')['Layout']
     ALayoutContent: typeof import('@arco-design/web-vue')['LayoutContent']
@@ -23,8 +25,10 @@ declare module '@vue/runtime-core' {
     AMenu: typeof import('@arco-design/web-vue')['Menu']
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
     AResult: typeof import('@arco-design/web-vue')['Result']
+    ASelect: typeof import('@arco-design/web-vue')['Select']
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
+    ASwitch: typeof import('@arco-design/web-vue')['Switch']
     ATooltip: typeof import('@arco-design/web-vue')['Tooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

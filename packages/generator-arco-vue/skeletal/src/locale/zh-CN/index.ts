@@ -22,6 +22,14 @@ export default {
   'navbar.screen.toFull': '点击切换全屏模式',
   'navbar.user.logout': '登出账号',
 
+  // components - tarbar
+  'tabbar.actions.reloadCurrent': '重新加载',
+  'tabbar.actions.closeCurrent': '关闭当前标签页',
+  'tabbar.actions.closeCurrentToLeft': '关闭左侧标签页',
+  'tabbar.actions.closeCurrentToRight': '关闭右侧标签页',
+  'tabbar.actions.closeOthers': '关闭其他标签页',
+  'tabbar.actions.closeAll': '关闭所有标签页',
+
   // components - table
   'table.actions.search': '搜索',
   'table.actions.resetSearch': '重置',

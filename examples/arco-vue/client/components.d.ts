@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AAffix: typeof import('@arco-design/web-vue')['Affix']
     AButton: typeof import('@arco-design/web-vue')['Button']
     AButtonGroup: typeof import('@arco-design/web-vue')['ButtonGroup']
     ACard: typeof import('@arco-design/web-vue')['Card']

@@ -22,6 +22,14 @@ export default {
   'navbar.screen.toFull': 'Click to switch to full screen mode',
   'navbar.user.logout': 'Logout',
 
+  // components - tarbar
+  'tabbar.actions.reloadCurrent': 'Refresh',
+  'tabbar.actions.closeCurrent': 'Close tab',
+  'tabbar.actions.closeCurrentToLeft': 'Close tabs to the left',
+  'tabbar.actions.closeCurrentToRight': 'Close tabs to the right',
+  'tabbar.actions.closeOthers': 'Close other tabs',
+  'tabbar.actions.closeAll': 'Close all tabs',
+
   // components - table
   'table.actions.search': 'Search',
   'table.actions.resetSearch': 'Reset',
