@@ -123,6 +123,7 @@
 
     switch (value as Action) {
       case Action.ReloadCurrent:
+        router.replace({query: { ...props.tab.query, _r: Date.now() }});
         break;
       case Action.CloseCurrent:
         nextTab = appStore.removeCurrentTab(props.tab, props.tabIndex);
