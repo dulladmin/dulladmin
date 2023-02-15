@@ -13,11 +13,11 @@
         }"
         @click="open()"
       >
-        {{ tab.fullPath }}
+        {{ $t(tab.meta.title as string) }}
       </span>
       <span
         class="arco-icon-hover arco-icon-hover-size-medium arco-tag-icon-hover tabbar-item-close-btn"
-        @click.stop="closeCurrent()"
+        @click.stop="close()"
       >
         <icon-close />
       </span>
@@ -112,7 +112,7 @@
   };
 
   // tabs - close
-  const closeCurrent = () => {
+  const close = () => {
     const nextTab = appStore.removeCurrentTab(props.tab, props.tabIndex);
     if (nextTab != null) router.push({ ...nextTab });
   };

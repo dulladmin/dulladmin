@@ -1,4 +1,5 @@
 {
+  "todos--index.title": "Todos Index",
   "todos--index.self-block.title": "Todos Table",
   "todos--index.self-block.searchers.userId_eq": "User Id Eq",
   "todos--index.self-block.searchers.completed_eq": "Completed Eq",
@@ -10,10 +11,12 @@
   "todos--index.self-block.model.attributes.completed": "Completed",
   "todos--index.self-block.model.attributes.completed.optionals.true": "True",
   "todos--index.self-block.model.attributes.completed.optionals.false": "False",
+  "todos--new.title": "Todos New",
   "todos--new.self-block.title": "Todos Form",
   "todos--new.self-block.model.attributes.userId": "User Id",
   "todos--new.self-block.model.attributes.title": "Title",
   "todos--new.self-block.model.attributes.completed": "Completed",
+  "todos--edit.title": "Todos Edit",
   "todos--edit.self-block.title": "Todos Form",
   "todos--edit.self-block.model.attributes.userId": "User Id",
   "todos--edit.self-block.model.attributes.title": "Title",

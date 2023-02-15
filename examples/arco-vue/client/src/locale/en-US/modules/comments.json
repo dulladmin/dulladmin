@@ -1,4 +1,5 @@
 {
+  "comments--index.title": "Comments Index",
   "comments--index.self-block.title": "Comments Table",
   "comments--index.self-block.model.attributes.id": "Id",
   "comments--index.self-block.model.attributes.postId": "Post Id",

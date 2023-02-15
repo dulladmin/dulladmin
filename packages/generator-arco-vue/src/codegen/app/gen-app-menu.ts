@@ -9,12 +9,9 @@ export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): Gene
 
   const messages: Record<string, string> = {}
   menu.items.forEach((item: Record<string, any>) => {
-    messages[item.title.i18nKey] = item.title.i18nValue
-  })
-  menu.items.forEach((item: Record<string, any>) => {
-    item?.children?.forEach((childItem: Record<string, any>) => {
-      messages[childItem.title.i18nKey] = childItem.title.i18nValue
-    })
+    if ((item.title.i18nKey as string).startsWith('menu.submenu.')) {
+      messages[item.title.i18nKey] = item.title.i18nValue
+    }
   })
 
   const routeOutfile = handlebarsFile('src/router/app-menu/index.ts', 'src/router/app-menu/index.ts.hbs', { menu })
@@ -63,17 +60,9 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
   const view = resource.views.find((view) => view.type === menuItem.view) ?? resource.views[0]
   if (view == null) return null
 
-  const route = extractRouteInfo(resource, view)
-  const menuItemName = toPath(menuItem.name)
-  const i18nKeyPrefix = `menu.menuitem.${menuItemName}`
-
   return {
-    ...route,
-    icon: toDasherize(menuItem.icon),
-    title: {
-      i18nKey: `${i18nKeyPrefix}`,
-      i18nValue: `${toI18nMessage(menuItem.name)}`
-    }
+    ...extractRouteInfo(resource, view),
+    icon: toDasherize(menuItem.icon)
   }
 }
 
@@ -84,16 +73,8 @@ function genAppMenu_defaultMenu(resources: Resource[]): Record<string, any> {
     const view = resource.views[0]
     if (view == null) return
 
-    const route = extractRouteInfo(resource, view)
-    const menuItemName = toPath(resource.name)
-    const i18nKeyPrefix = `menu.menuitem.${menuItemName}`
-
     items.push({
-      ...route,
-      title: {
-        i18nKey: `${i18nKeyPrefix}`,
-        i18nValue: `${toI18nMessage(resource.name)}`
-      }
+      ...extractRouteInfo(resource, view)
     })
   })
 

@@ -1,4 +1,5 @@
 {
+  "todos--index.title": "待办列表",
   "todos--index.self-block.title": "待办列表",
   "todos--index.self-block.searchers.userId_eq": "所属用户",
   "todos--index.self-block.searchers.completed_eq": "是否完成",
@@ -10,10 +11,12 @@
   "todos--index.self-block.model.attributes.completed": "是否完成",
   "todos--index.self-block.model.attributes.completed.optionals.true": "是",
   "todos--index.self-block.model.attributes.completed.optionals.false": "否",
+  "todos--new.title": "新建待办",
   "todos--new.self-block.title": "新建待办",
   "todos--new.self-block.model.attributes.userId": "所属用户",
   "todos--new.self-block.model.attributes.title": "标题",
   "todos--new.self-block.model.attributes.completed": "是否完成",
+  "todos--edit.title": "编辑待办",
   "todos--edit.self-block.title": "编辑待办",
   "todos--edit.self-block.model.attributes.userId": "所属用户",
   "todos--edit.self-block.model.attributes.title": "标题",

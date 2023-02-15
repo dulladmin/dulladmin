@@ -1,4 +1,5 @@
 {
+  "photos--index.title": "Photos Index",
   "photos--index.self-block.title": "Photos Table",
   "photos--index.self-block.model.attributes.id": "Id",
   "photos--index.self-block.model.attributes.albumId": "Album Id",

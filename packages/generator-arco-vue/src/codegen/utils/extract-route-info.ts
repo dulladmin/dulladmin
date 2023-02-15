@@ -4,6 +4,7 @@ import { toPath } from '../../naming'
 export function extractRouteInfo(resource: Resource, view: View): Record<string, any> {
   const resourceName = toPath(resource.name)
   const viewName = toPath(view.type)
+  const i18nKeyPrefix = `${resourceName}--${viewName}`
 
   let path = ''
   switch (view.type) {
@@ -26,6 +27,9 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
     name: `${resourceName}--${viewName}`,
     path,
     authority: view.authority ?? resource.authority ?? ['*'],
-    viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`
+    viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
+    title: {
+      i18nKey: `${i18nKeyPrefix}.title`
+    }
   }
 }

@@ -1,4 +1,5 @@
 {
+  "users--index.title": "Users Index",
   "users--index.self-block.title": "Users Table",
   "users--index.self-block.searchers.id_eq": "Id Eq",
   "users--index.self-block.searchers.name_cont": "Name Cont",

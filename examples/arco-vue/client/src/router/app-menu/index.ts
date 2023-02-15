@@ -14,7 +14,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-user-group',
-          title: 'menu.menuitem.users',
+          title: 'users--index.title',
         },
       },
       {
@@ -24,7 +24,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-folder',
-          title: 'menu.menuitem.albums',
+          title: 'albums--index.title',
         },
       },
       {
@@ -34,7 +34,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-image',
-          title: 'menu.menuitem.photos',
+          title: 'photos--index.title',
         },
       },
     ],
@@ -54,7 +54,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-file',
-          title: 'menu.menuitem.posts',
+          title: 'posts--index.title',
         },
       },
       {
@@ -64,7 +64,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-reply',
-          title: 'menu.menuitem.comments',
+          title: 'comments--index.title',
         },
       },
     ],
@@ -84,7 +84,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['*', ],
           icon: 'icon-list',
-          title: 'menu.menuitem.todos',
+          title: 'todos--index.title',
         },
       },
     ],
@@ -104,7 +104,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
         meta: {
           authority: ['admin', ],
           icon: 'icon-user-group',
-          title: 'menu.menuitem.administrators',
+          title: 'administrators--index.title',
         },
       },
     ],

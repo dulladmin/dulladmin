@@ -1,4 +1,5 @@
 {
+  "posts--index.title": "Posts Index",
   "posts--index.self-block.title": "Posts Table",
   "posts--index.self-block.model.attributes.id": "Id",
   "posts--index.self-block.model.attributes.userId": "User Id",

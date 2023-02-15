@@ -10,6 +10,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('{{viewImportPath}}'),
     meta: {
       authority: [{{#each authority}}'{{this}}', {{/each}}],
+      title: '{{title.i18nKey}}',
     },
   },
 {{/each}}

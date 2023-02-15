@@ -1,4 +1,5 @@
 {
+  "posts--index.title": "帖子列表",
   "posts--index.self-block.title": "帖子列表",
   "posts--index.self-block.model.attributes.id": "编号",
   "posts--index.self-block.model.attributes.userId": "所属用户",

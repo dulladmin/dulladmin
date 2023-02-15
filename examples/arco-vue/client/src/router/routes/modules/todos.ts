@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/todos/index/index.vue'),
     meta: {
       authority: ['*', ],
+      title: 'todos--index.title',
     },
   },
   {
@@ -17,6 +18,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/todos/new/index.vue'),
     meta: {
       authority: ['*', ],
+      title: 'todos--new.title',
     },
   },
   {
@@ -25,6 +27,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/todos/edit/index.vue'),
     meta: {
       authority: ['*', ],
+      title: 'todos--edit.title',
     },
   },
 ];

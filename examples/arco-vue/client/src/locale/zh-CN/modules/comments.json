@@ -1,4 +1,5 @@
 {
+  "comments--index.title": "评论列表",
   "comments--index.self-block.title": "评论列表",
   "comments--index.self-block.model.attributes.id": "编号",
   "comments--index.self-block.model.attributes.postId": "所属帖子",
