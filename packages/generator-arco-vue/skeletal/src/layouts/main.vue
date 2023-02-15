@@ -36,7 +36,7 @@
             <TabBar />
             <router-view v-slot="{ Component, route }">
               <transition name="fade" mode="out-in" appear>
-                <keep-alive>
+                <keep-alive :include="cachedTabs">
                   <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
               </transition>
@@ -79,6 +79,9 @@
       ? {}
       : { paddingLeft: `${menuWidth.value}px` };
     return { ...paddingTop, ...paddingLeft };
+  });
+  const cachedTabs = computed(() => {
+    return Array.from(appStore.cachedTabs);
   });
 </script>
 

@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
 
@@ -33,6 +33,7 @@ const useAppStore = defineStore('app', () => {
   };
 
   // tabbar
+  const cachedTabs = ref<Set<string>>(new Set());
   const tabs = ref<Tab[]>([]);
   const currentTab = ref<Tab | null>(null);
   const nextTab = (tabIndex: number): Tab => {
@@ -104,6 +105,13 @@ const useAppStore = defineStore('app', () => {
     currentTab.value = null;
     return nextTab(0);
   };
+  watch(
+    () => tabs.value,
+    (val) => {
+      cachedTabs.value = new Set(val.map((tab) => tab.name as string));
+    },
+    { deep: true, immediate: true }
+  );
 
   return {
     device,
@@ -116,6 +124,7 @@ const useAppStore = defineStore('app', () => {
     menuCollapse,
     changeMenuCollapse,
 
+    cachedTabs,
     tabs,
     currentTab,
     addTab,
