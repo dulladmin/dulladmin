@@ -37,7 +37,7 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '{{path}}',
     component: () => import('{{viewImportPath}}'),
     meta: {
-      authority: {{{authority}}},
+      authority: [{{#each authority}}'{{this}}', {{/each}}],
       {{#if icon}}
       icon: '{{icon}}',
       {{/if}}
