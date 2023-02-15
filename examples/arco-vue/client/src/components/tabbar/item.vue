@@ -9,7 +9,7 @@
       <span
         class="tabbar-item-link"
         :class="{
-          'item-link-activated': tab.fullPath === currentTab?.fullPath,
+          'item-link-activated': tab.name === currentTab?.name,
         }"
         @click="open()"
       >

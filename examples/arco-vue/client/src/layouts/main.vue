@@ -81,7 +81,7 @@
     return { ...paddingTop, ...paddingLeft };
   });
   const cachedTabs = computed(() => {
-    return Array.from(appStore.cachedTabs);
+    return appStore.cachedTabs;
   });
 </script>
 

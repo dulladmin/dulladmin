@@ -33,7 +33,7 @@ const useAppStore = defineStore('app', () => {
   };
 
   // tabbar
-  const cachedTabs = ref<Set<string>>(new Set());
+  const cachedTabs = ref<string[]>([]);
   const tabs = ref<Tab[]>([]);
   const currentTab = ref<Tab | null>(null);
   const nextTab = (tabIndex: number): Tab => {
@@ -44,8 +44,9 @@ const useAppStore = defineStore('app', () => {
       if (newRoute.name === '$app') return;
 
       const tab = newRoute;
-      const found = tabs.value.find((e) => e.fullPath === tab.fullPath);
-      if (found) {
+      const foundIndex = tabs.value.findIndex((e) => e.name === tab.name);
+      if (foundIndex !== -1) {
+        tabs.value.splice(foundIndex, 1, tab);
         currentTab.value = tab;
       } else {
         tabs.value.push(tab);
@@ -59,9 +60,7 @@ const useAppStore = defineStore('app', () => {
   const removeCurrentTab = (tab: Tab, tabIndex: number): Tab | null => {
     tabs.value.splice(tabIndex, 1);
 
-    const found = tabs.value.find(
-      (e) => e.fullPath === currentTab.value?.fullPath
-    );
+    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
     if (found) return null;
 
     currentTab.value = null;
@@ -73,9 +72,7 @@ const useAppStore = defineStore('app', () => {
   ): Tab | null => {
     tabs.value.splice(0, tabIndex);
 
-    const found = tabs.value.find(
-      (e) => e.fullPath === currentTab.value?.fullPath
-    );
+    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
     if (found) return null;
 
     currentTab.value = null;
@@ -87,9 +84,7 @@ const useAppStore = defineStore('app', () => {
   ): Tab | null => {
     tabs.value.splice(tabIndex + 1, tabs.value.length - tabIndex - 1);
 
-    const found = tabs.value.find(
-      (e) => e.fullPath === currentTab.value?.fullPath
-    );
+    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
     if (found) return null;
 
     currentTab.value = null;
@@ -108,7 +103,13 @@ const useAppStore = defineStore('app', () => {
   watch(
     () => tabs.value,
     (val) => {
-      cachedTabs.value = new Set(val.map((tab) => tab.name as string));
+      cachedTabs.value = val
+        .filter((tab) => {
+          return tab.meta.cache as boolean;
+        })
+        .map((tab) => {
+          return tab.name as string;
+        });
     },
     { deep: true, immediate: true }
   );

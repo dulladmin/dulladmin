@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/photos/index/index.vue'),
     meta: {
       authority: ['*', ],
+      cache: true,
       title: 'photos--index.title',
     },
   },

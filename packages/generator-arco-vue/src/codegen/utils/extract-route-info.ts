@@ -8,13 +8,16 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
   const _view = extractViewInfo(resource, view)
 
   let path = ''
+  let cache = false
   switch (view.type) {
     case ViewType.Index:
       if (resource.singular) throw Error('Unreachable')
       path = `${resourceName}`
+      cache = true
       break
     case ViewType.Show:
       path = resource.singular ? `${resourceName}` : `${resourceName}/:id`
+      cache = resource.singular
       break
     case ViewType.New:
       path = `${resourceName}/new`
@@ -28,6 +31,7 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
     name: _view.name,
     path,
     authority: view.authority ?? resource.authority ?? ['*'],
+    cache,
     viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
     title: _view.title
   }

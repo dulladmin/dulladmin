@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/administrators/index/index.vue'),
     meta: {
       authority: ['admin', ],
+      cache: true,
       title: 'administrators--index.title',
     },
   },
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/administrators/new/index.vue'),
     meta: {
       authority: ['admin', ],
+      cache: false,
       title: 'administrators--new.title',
     },
   },
@@ -27,6 +29,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/administrators/edit/index.vue'),
     meta: {
       authority: ['admin', ],
+      cache: false,
       title: 'administrators--edit.title',
     },
   },

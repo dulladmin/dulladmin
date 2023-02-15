@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/posts/index/index.vue'),
     meta: {
       authority: ['*', ],
+      cache: true,
       title: 'posts--index.title',
     },
   },
