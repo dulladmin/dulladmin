@@ -34,8 +34,8 @@
   // tabs
   const tabs = computed(() => appStore.tabs);
   const routeChangeHandler = (e: RouteChangeEvent) => {
-    const { to, from } = e;
-    appStore.addTab(to, from);
+    const { to } = e;
+    appStore.addTab(to);
   };
   listenerRouteChange(routeChangeHandler, true);
   onUnmounted(() => removeRouteListener(routeChangeHandler));

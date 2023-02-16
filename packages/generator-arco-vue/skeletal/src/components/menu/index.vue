@@ -57,6 +57,7 @@
   // select
   const router = useRouter();
   const goto = (item: RouteRecordRaw) => {
+    appStore.clearCurrentTab();
     router.push({
       name: item.name,
     });

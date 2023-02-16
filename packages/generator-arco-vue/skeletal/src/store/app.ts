@@ -39,10 +39,7 @@ const useAppStore = defineStore('app', () => {
   const nextTab = (tabIndex: number): Tab => {
     return tabs.value[tabIndex] ?? { name: '$app' };
   };
-  const addTab = (
-    to: RouteLocationNormalized,
-    from?: RouteLocationNormalized
-  ) => {
+  const addTab = (to: RouteLocationNormalized) => {
     if (to.matched[0].name === '$app') {
       if (to.name === '$app') return;
 
@@ -55,10 +52,12 @@ const useAppStore = defineStore('app', () => {
       }
 
       // open new tab next to the current tab
-      if (from) {
-        const fromIndex = tabs.value.findIndex((e) => e.name === from.name);
-        if (fromIndex !== -1) {
-          tabs.value.splice(fromIndex + 1, 0, to);
+      if (currentTab.value != null) {
+        const currentIndex = tabs.value.findIndex(
+          (e) => e.name === currentTab.value.name
+        );
+        if (currentIndex !== -1) {
+          tabs.value.splice(currentIndex + 1, 0, to);
           currentTab.value = to;
           return;
         }
@@ -128,6 +127,9 @@ const useAppStore = defineStore('app', () => {
     },
     { deep: true, immediate: true }
   );
+  const clearCurrentTab = () => {
+    currentTab.value = null;
+  };
 
   return {
     device,
@@ -142,13 +144,14 @@ const useAppStore = defineStore('app', () => {
 
     cachedTabs,
     tabs,
-    currentTab,
     addTab,
     removeCurrentTab,
     removeCurrentTabToTheLeft,
     removeCurrentTabToTheRight,
     removeOtherTabs,
     removeAllTabs,
+    currentTab,
+    clearCurrentTab,
   };
 });
 
