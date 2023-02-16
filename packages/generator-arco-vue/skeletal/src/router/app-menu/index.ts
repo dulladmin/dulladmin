@@ -25,9 +25,7 @@ const appMenu = computed(() => {
   return travel(cloneDeep(appMenuRoutes));
 });
 
-const findAppMenuItem = (
-  newRoute: RouteLocationNormalized
-): RouteRecordRaw[] => {
+const findAppMenuItem = (route: RouteLocationNormalized): RouteRecordRaw[] => {
   const travel = (
     _route: RouteRecordRaw[],
     path: string,
@@ -48,7 +46,7 @@ const findAppMenuItem = (
   };
 
   const nodes: RouteRecordRaw[] = [];
-  let path = newRoute.path.slice(1);
+  let path = route.path.slice(1);
   while (path) {
     if (travel(appMenu.value, path, nodes)) break;
     path = path.substring(0, path.lastIndexOf('/'));

@@ -39,19 +39,34 @@ const useAppStore = defineStore('app', () => {
   const nextTab = (tabIndex: number): Tab => {
     return tabs.value[tabIndex] ?? { name: '$app' };
   };
-  const addTab = (newRoute: RouteLocationNormalized) => {
-    if (newRoute.matched[0].name === '$app') {
-      if (newRoute.name === '$app') return;
+  const addTab = (
+    to: RouteLocationNormalized,
+    from?: RouteLocationNormalized
+  ) => {
+    if (to.matched[0].name === '$app') {
+      if (to.name === '$app') return;
 
-      const tab = newRoute;
-      const foundIndex = tabs.value.findIndex((e) => e.name === tab.name);
-      if (foundIndex !== -1) {
-        tabs.value.splice(foundIndex, 1, tab);
-        currentTab.value = tab;
-      } else {
-        tabs.value.push(tab);
-        currentTab.value = tab;
+      // switch to tab
+      const toIndex = tabs.value.findIndex((e) => e.name === to.name);
+      if (toIndex !== -1) {
+        tabs.value.splice(toIndex, 1, to);
+        currentTab.value = to;
+        return;
       }
+
+      // open new tab next to the current tab
+      if (from) {
+        const fromIndex = tabs.value.findIndex((e) => e.name === from.name);
+        if (fromIndex !== -1) {
+          tabs.value.splice(fromIndex + 1, 0, to);
+          currentTab.value = to;
+          return;
+        }
+      }
+
+      // make new tab open at the end of the tabs
+      tabs.value.push(to);
+      currentTab.value = to;
     } else {
       tabs.value = [];
       currentTab.value = null;

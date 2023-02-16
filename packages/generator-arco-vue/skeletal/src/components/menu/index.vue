@@ -21,6 +21,7 @@
     listenerRouteChange,
     removeRouteListener,
   } from '@/utils/route-listener';
+  import type { RouteChangeEvent } from '@/utils/route-listener';
 
   // i18n
   const { t } = useI18n();
@@ -38,20 +39,20 @@
 
   // selectedKey
   const selectedKey = ref<string[]>([]);
-  listenerRouteChange((newRoute) => {
-    if (newRoute.matched[0].name === '$app') {
-      if (newRoute.name === '$app') return;
+  const routeChangeHandler = (e: RouteChangeEvent) => {
+    const { to } = e;
+    if (to.matched[0].name === '$app') {
+      if (to.name === '$app') return;
 
-      const ancestors = findAppMenuItem(newRoute);
+      const ancestors = findAppMenuItem(to);
       const item = ancestors[ancestors.length - 1];
       selectedKey.value = item ? [item.name as string] : [];
     } else {
       selectedKey.value = [];
     }
-  }, true);
-  onUnmounted(() => {
-    removeRouteListener();
-  });
+  };
+  listenerRouteChange(routeChangeHandler, true);
+  onUnmounted(() => removeRouteListener(routeChangeHandler));
 
   // select
   const router = useRouter();

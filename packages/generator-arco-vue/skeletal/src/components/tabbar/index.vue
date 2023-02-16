@@ -25,6 +25,7 @@
     listenerRouteChange,
     removeRouteListener,
   } from '@/utils/route-listener';
+  import type { RouteChangeEvent } from '@/utils/route-listener';
   import TabBarItem from './item.vue';
 
   // store
@@ -32,14 +33,12 @@
 
   // tabs
   const tabs = computed(() => appStore.tabs);
-
-  // tabs - routeChange
-  listenerRouteChange((route: RouteLocationNormalized) => {
-    appStore.addTab(route);
-  }, true);
-  onUnmounted(() => {
-    removeRouteListener();
-  });
+  const routeChangeHandler = (e: RouteChangeEvent) => {
+    const { to, from } = e;
+    appStore.addTab(to, from);
+  };
+  listenerRouteChange(routeChangeHandler, true);
+  onUnmounted(() => removeRouteListener(routeChangeHandler));
 </script>
 
 <style lang="less" scoped>

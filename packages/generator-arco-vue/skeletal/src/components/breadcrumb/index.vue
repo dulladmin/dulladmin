@@ -23,36 +23,35 @@
     listenerRouteChange,
     removeRouteListener,
   } from '@/utils/route-listener';
+  import type { RouteChangeEvent } from '@/utils/route-listener';
 
   // breadcrumb
   const items = ref<string[]>([]);
   const currentItem = ref<Record<string, any> | null>(null);
+  const routeChangeHandler = (e: RouteChangeEvent) => {
+    const { to } = e;
+    if (to.matched[0].name === '$app') {
+      if (to.name === '$app') return;
 
-  // breadcrumb - routeChange
-  listenerRouteChange((newRoute) => {
-    if (newRoute.matched[0].name === '$app') {
-      if (newRoute.name === '$app') return;
-
-      const ancestors = findAppMenuItem(newRoute);
+      const ancestors = findAppMenuItem(to);
       items.value = ancestors.map((_item) => _item.meta?.title as string);
 
       const item = ancestors[ancestors.length - 1];
-      if (item?.name === newRoute.name) {
+      if (item?.name === to.name) {
         currentItem.value = null;
       } else {
         currentItem.value = {
-          title: newRoute.meta?.title,
-          id: newRoute.params?.id,
+          title: to.meta?.title,
+          id: to.params?.id,
         };
       }
     } else {
       items.value = [];
       currentItem.value = null;
     }
-  }, true);
-  onUnmounted(() => {
-    removeRouteListener();
-  });
+  };
+  listenerRouteChange(routeChangeHandler, true);
+  onUnmounted(() => removeRouteListener(routeChangeHandler));
 </script>
 
 <style lang="less" scoped>
