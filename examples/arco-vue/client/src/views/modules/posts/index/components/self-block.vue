@@ -218,7 +218,10 @@
     try {
       const { data } = await list(id, req);
       const { collection, pagination } = data;
-      store.value = collection;
+
+      if (collection) {
+        store.value = collection;
+      }
 
       if (pagination) {
         tablePagination.pageSize = pagination.page_size;

@@ -106,7 +106,10 @@
     try {
       const { data } = await get(id);
       const { model } = data;
-      store.value = model;
+
+      if (model) {
+        store.value = model;
+      }
     } finally {
       setLoading(false);
     }
