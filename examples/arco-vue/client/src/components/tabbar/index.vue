@@ -33,7 +33,7 @@
   // tabs
   const tabs = computed(() => appStore.tabs);
 
-  // tabs - add
+  // tabs - routeChange
   listenerRouteChange((route: RouteLocationNormalized) => {
     appStore.addTab(route);
   }, true);

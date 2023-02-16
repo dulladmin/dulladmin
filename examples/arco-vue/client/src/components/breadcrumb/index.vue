@@ -6,6 +6,12 @@
     <a-breadcrumb-item v-for="item in items" :key="item">
       {{ $t(item) }}
     </a-breadcrumb-item>
+    <template v-if="currentItem">
+      <a-breadcrumb-item>
+        {{ $t(currentItem.title) }}
+        <span v-if="currentItem.id"> # {{ currentItem.id }} </span>
+      </a-breadcrumb-item>
+    </template>
   </a-breadcrumb>
 </template>
 
@@ -20,14 +26,29 @@
 
   // breadcrumb
   const items = ref<string[]>([]);
+  const currentItem = ref<Record<string, any> | null>(null);
 
-  // breadcrumb - routeChanged
+  // breadcrumb - routeChange
   listenerRouteChange((newRoute) => {
     if (newRoute.matched[0].name === '$app') {
       if (newRoute.name === '$app') return;
 
       const ancestors = findAppMenuItem(newRoute);
-      items.value = ancestors.map((item) => item.meta?.title as string)
+      const item = ancestors[ancestors.length - 1];
+      if (item == null) {
+        items.value = [newRoute.meta?.title as string];
+      } else {
+        items.value = ancestors.map((_item) => _item.meta?.title as string);
+      }
+
+      if (item?.name !== newRoute.name) {
+        currentItem.value = {
+          title: newRoute.meta?.title,
+          id: newRoute.params?.id,
+        };
+      } else {
+        currentItem.value = null;
+      }
     } else {
       items.value = [];
     }

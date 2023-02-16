@@ -1,8 +1,4 @@
-import type {
-  Router,
-  RouteRecordRaw,
-  LocationQueryRaw,
-} from 'vue-router';
+import type { Router, RouteRecordRaw, LocationQueryRaw } from 'vue-router';
 import NProgress from 'nprogress';
 import { isLoggedIn } from '@/utils/auth';
 import { appMenu } from '../app-menu';

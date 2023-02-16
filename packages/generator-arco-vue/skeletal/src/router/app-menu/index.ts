@@ -30,16 +30,16 @@ const findAppMenuItem = (
 ): RouteRecordRaw[] => {
   const travel = (
     _route: RouteRecordRaw[],
-    name: string,
+    path: string,
     nodes: RouteRecordRaw[]
   ): boolean => {
     for (let i = 0; i < _route.length; i += 1) {
       const element = _route[i];
       if (element.children) {
         nodes.push(element);
-        if (travel(element.children, name, nodes)) return true;
+        if (travel(element.children, path, nodes)) return true;
         nodes.pop();
-      } else if (element.name === name) {
+      } else if (element.path === path) {
         nodes.push(element);
         return true;
       }
@@ -48,7 +48,11 @@ const findAppMenuItem = (
   };
 
   const nodes: RouteRecordRaw[] = [];
-  travel(appMenu.value, newRoute.name as string, nodes);
+  let path = newRoute.path.slice(1);
+  while (path) {
+    if (travel(appMenu.value, path, nodes)) break;
+    path = path.substring(0, path.lastIndexOf('/'));
+  }
   return nodes;
 };
 
