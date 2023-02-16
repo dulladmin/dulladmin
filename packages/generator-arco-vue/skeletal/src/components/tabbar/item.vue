@@ -130,7 +130,6 @@
         if (nextTab != null) router.push({ ...nextTab });
         break;
       case Action.CloseCurrentToRight:
-        console.log(props.tab);
         nextTab = appStore.removeCurrentTabToTheRight(
           props.tab,
           props.tabIndex

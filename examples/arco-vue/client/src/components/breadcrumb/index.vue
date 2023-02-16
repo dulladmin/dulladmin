@@ -34,23 +34,20 @@
       if (newRoute.name === '$app') return;
 
       const ancestors = findAppMenuItem(newRoute);
-      const item = ancestors[ancestors.length - 1];
-      if (item == null) {
-        items.value = [newRoute.meta?.title as string];
-      } else {
-        items.value = ancestors.map((_item) => _item.meta?.title as string);
-      }
+      items.value = ancestors.map((_item) => _item.meta?.title as string);
 
-      if (item?.name !== newRoute.name) {
+      const item = ancestors[ancestors.length - 1];
+      if (item?.name === newRoute.name) {
+        currentItem.value = null;
+      } else {
         currentItem.value = {
           title: newRoute.meta?.title,
           id: newRoute.params?.id,
         };
-      } else {
-        currentItem.value = null;
       }
     } else {
       items.value = [];
+      currentItem.value = null;
     }
   }, true);
   onUnmounted(() => {
