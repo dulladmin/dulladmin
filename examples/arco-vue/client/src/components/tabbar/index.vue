@@ -18,8 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, computed, watch, onUnmounted } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import { computed, onUnmounted } from 'vue';
   import type { RouteLocationNormalized } from 'vue-router';
   import { useAppStore } from '@/store';
   import {
@@ -27,9 +26,6 @@
     removeRouteListener,
   } from '@/utils/route-listener';
   import TabBarItem from './item.vue';
-
-  // i18n
-  const { t } = useI18n();
 
   // store
   const appStore = useAppStore();

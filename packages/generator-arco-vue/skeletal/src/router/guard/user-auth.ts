@@ -1,35 +1,27 @@
 import type {
   Router,
-  RouteLocationNormalized,
   RouteRecordRaw,
   LocationQueryRaw,
 } from 'vue-router';
 import NProgress from 'nprogress';
-import { usePermission } from '@/hooks';
 import { isLoggedIn } from '@/utils/auth';
-import appMenuRoutes from '../app-menu';
+import { appMenu } from '../app-menu';
 
 const appRootRoute = () => {
-  // search in appMenuRoutes to find an authorized RouteRecordRaw
-  const travel = (
-    _route: RouteRecordRaw[],
-    fn: (route: RouteLocationNormalized | RouteRecordRaw) => boolean
-  ): RouteRecordRaw | null => {
+  const travel = (_route: RouteRecordRaw[]): RouteRecordRaw | null => {
     let found = null;
     for (let i = 0; i < _route.length; i += 1) {
       const element = _route[i];
       if (element.children) {
-        found = travel(element.children, fn);
+        found = travel(element.children);
       } else {
-        found = fn(element) ? element : null;
+        found = element;
       }
       if (found) break;
     }
     return found;
   };
-
-  const { accessRouter } = usePermission();
-  return travel(appMenuRoutes, accessRouter);
+  return travel(appMenu.value);
 };
 
 export default function setupUserAuthGuard(router: Router) {

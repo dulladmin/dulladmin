@@ -15,9 +15,7 @@
   import { compile, computed, h, ref, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
-  import { cloneDeep } from 'lodash';
-  import appMenuRoutes from '@/router/app-menu';
-  import { usePermission } from '@/hooks';
+  import { appMenu, findAppMenuItem } from '@/router/app-menu';
   import { useAppStore, useUserStore } from '@/store';
   import {
     listenerRouteChange,
@@ -31,30 +29,6 @@
   const appStore = useAppStore();
   const userStore = useUserStore();
 
-  // appMenu
-  const { accessRouter } = usePermission();
-  const appMenu = computed(() => {
-    // filter unauthorized RouteRecordRaw
-    const travel = (_route: RouteRecordRaw[], nodes: RouteRecordRaw[] = []) => {
-      _route.forEach((element) => {
-        // submenu
-        if (element.children) {
-          const children = travel(element.children);
-          if (children.length === 0) return;
-          element.children = children;
-          nodes.push(element);
-          return;
-        }
-        // menuitem
-        if (accessRouter(element)) {
-          nodes.push(element);
-        }
-      });
-      return nodes;
-    };
-    return travel(cloneDeep(appMenuRoutes));
-  });
-
   // collapsed
   const collapsed = computed({
     get: () => (appStore.isMobile ? false : appStore.menuCollapse),
@@ -65,35 +39,12 @@
   // selectedKey
   const selectedKey = ref<string[]>([]);
   listenerRouteChange((newRoute) => {
-    // search in appMenu to find a RouteRecordRaw by :path
-    const travel = (
-      _route: RouteRecordRaw[],
-      path: string
-    ): RouteRecordRaw | null => {
-      let found = null;
-      for (let i = 0; i < _route.length; i += 1) {
-        const element = _route[i];
-        if (element.children) {
-          found = travel(element.children, path);
-        } else {
-          found = element.path === path ? element : null;
-        }
-        if (found) break;
-      }
-      return found;
-    };
-
     if (newRoute.matched[0].name === '$app') {
-      const appRoutes = newRoute.matched[0].children;
+      if (newRoute.name === '$app') return;
 
-      let found = null;
-      let path = appRoutes.find((e) => e.name === newRoute.name)?.path ?? '';
-      while (path) {
-        found = travel(appMenu.value, path);
-        if (found) break;
-        path = path.substring(0, path.lastIndexOf('/'));
-      }
-      selectedKey.value = found ? [found.name as string] : [];
+      const ancestors = findAppMenuItem(newRoute);
+      const item = ancestors[ancestors.length - 1];
+      selectedKey.value = item ? [item.name as string] : [];
     } else {
       selectedKey.value = [];
     }

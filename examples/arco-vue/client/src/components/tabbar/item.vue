@@ -63,7 +63,6 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { useAppStore } from '@/store';
   import type { Tab } from '@/store/app';
@@ -77,9 +76,6 @@
     CloseOthers = 'closeOthers',
     CloseAll = 'closeAll',
   }
-
-  // i18n
-  const { t } = useI18n();
 
   // store
   const appStore = useAppStore();
@@ -123,7 +119,7 @@
 
     switch (value as Action) {
       case Action.ReloadCurrent:
-        router.replace({query: { ...props.tab.query, _r: Date.now() }});
+        router.replace({ query: { ...props.tab.query, _r: Date.now() } });
         break;
       case Action.CloseCurrent:
         nextTab = appStore.removeCurrentTab(props.tab, props.tabIndex);

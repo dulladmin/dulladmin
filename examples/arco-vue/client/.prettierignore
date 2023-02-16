@@ -5,4 +5,4 @@
 /src/api/modules
 /src/views/modules
 /src/router/routes/modules
-/src/router/app-menu/index.ts
+/src/router/app-menu/routes.ts

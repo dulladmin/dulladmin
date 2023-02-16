@@ -14,7 +14,7 @@ export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): Gene
     }
   })
 
-  const routeOutfile = handlebarsFile('src/router/app-menu/index.ts', 'src/router/app-menu/index.ts.hbs', { menu })
+  const routeOutfile = handlebarsFile('src/router/app-menu/routes.ts', 'src/router/app-menu/routes.ts.hbs', { menu })
   const i18nOutfiles = i18nFile('13-app-menu', messages)
 
   return [routeOutfile, ...i18nOutfiles]
