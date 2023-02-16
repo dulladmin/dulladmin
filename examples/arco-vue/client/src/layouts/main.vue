@@ -34,6 +34,7 @@
         <a-layout class="layout-content" :style="contentPaddingStyle">
           <a-layout-content>
             <TabBar />
+            <Breadcrumb />
             <router-view v-slot="{ Component, route }">
               <transition name="fade" mode="out-in" appear>
                 <keep-alive :include="cachedTabs">
@@ -50,7 +51,7 @@
 
 <script lang="ts" setup>
   import { ref, computed, provide } from 'vue';
-  import { Menu, NavBar, TabBar } from '@/components';
+  import { Breadcrumb, Menu, NavBar, TabBar } from '@/components';
   import { useResponsive } from '@/hooks';
   import { useAppStore } from '@/store';
 

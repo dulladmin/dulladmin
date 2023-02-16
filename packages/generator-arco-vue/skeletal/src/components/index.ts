@@ -1,5 +1,6 @@
 import Menu from './menu/index.vue';
+import Breadcrumb from './breadcrumb/index.vue';
 import NavBar from './navbar/index.vue';
 import TabBar from './tabbar/index.vue';
 
-export { Menu, NavBar, TabBar };
+export { Breadcrumb, Menu, NavBar, TabBar };
