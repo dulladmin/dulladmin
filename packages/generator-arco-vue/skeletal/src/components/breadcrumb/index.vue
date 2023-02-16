@@ -1,5 +1,5 @@
 <template>
-  <a-breadcrumb class="container-breadcrumb">
+  <a-breadcrumb class="breadcrumb">
     <a-breadcrumb-item>
       <icon-apps />
     </a-breadcrumb-item>
@@ -38,8 +38,8 @@
 </script>
 
 <style lang="less" scoped>
-  .container-breadcrumb {
-    margin: 20px 20px 0 20px;
+  .breadcrumb {
+    margin: 16px;
 
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
