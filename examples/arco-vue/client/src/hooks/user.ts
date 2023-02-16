@@ -17,7 +17,7 @@ export default function useUser() {
       name: '$login',
       query: {
         ...router.currentRoute.value.query,
-        redirect: currentRoute.name as string,
+        redirect: currentRoute.path as string,
       },
     });
   };

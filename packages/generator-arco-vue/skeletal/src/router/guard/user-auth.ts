@@ -46,8 +46,8 @@ export default function setupUserAuthGuard(router: Router) {
       next({
         name: '$login',
         query: {
-          redirect: to.name,
           ...to.query,
+          redirect: to.path,
         } as LocationQueryRaw,
       });
     }
