@@ -8,7 +8,7 @@ const LOCALE_OPTIONS = [
 ];
 
 const i18n = (() => {
-  let locale = localStorage.getItem('i18n.locale');
+  let locale = localStorage.getItem('app.locale');
   if (locale == null) locale = 'en-US';
 
   return _createI18n({

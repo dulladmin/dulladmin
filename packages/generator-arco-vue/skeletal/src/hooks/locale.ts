@@ -10,7 +10,7 @@ export default function useLocale() {
 
   const changeLocale = (value: string) => {
     i18n.locale.value = value;
-    localStorage.setItem('i18n.locale', value);
+    localStorage.setItem('app.locale', value);
   };
 
   return {

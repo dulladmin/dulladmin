@@ -9,12 +9,9 @@
           v-show="!menuHidden"
           class="layout-sider"
           breakpoint="xl"
-          :collapsed="menuCollapsed"
-          :collapsible="true"
           :width="menuWidth"
           :style="{ paddingTop: '60px' }"
           :hide-trigger="true"
-          @collapse="setMenuCollapsed"
         >
           <div class="menu-wrapper">
             <Menu />
@@ -60,9 +57,7 @@
 
   // Menu in Sider
   const menuHidden = computed(() => appStore.isMobile);
-  const menuCollapsed = computed(() => appStore.menuCollapse);
   const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220));
-  const setMenuCollapsed = (val: boolean) => appStore.changeMenuCollapse(val);
 
   // Menu in Drawer
   const drawerVisible = ref(false);

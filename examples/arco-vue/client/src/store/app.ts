@@ -1,4 +1,5 @@
 import { computed, ref, watch } from 'vue';
+import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
 
@@ -27,7 +28,11 @@ const useAppStore = defineStore('app', () => {
   };
 
   // menu
-  const menuCollapse = ref<boolean>(false);
+  const menuCollapse = useStorage<boolean>(
+    'app.menuCollapse',
+    false,
+    localStorage
+  );
   const changeMenuCollapse = (collapse: boolean) => {
     menuCollapse.value = collapse;
   };
@@ -54,7 +59,7 @@ const useAppStore = defineStore('app', () => {
       // open new tab next to the current tab
       if (currentTab.value != null) {
         const currentIndex = tabs.value.findIndex(
-          (e) => e.name === currentTab.value.name
+          (e) => e.name === currentTab.value?.name
         );
         if (currentIndex !== -1) {
           tabs.value.splice(currentIndex + 1, 0, to);
