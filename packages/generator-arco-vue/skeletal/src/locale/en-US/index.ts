@@ -26,10 +26,13 @@ export default {
   'tabbar.actions.closeOthers': 'Close other tabs',
   'tabbar.actions.closeAll': 'Close all tabs',
 
+  // components - breadcrumb
+  'breadcrumb.actions.backToIndexView': 'Back to index page',
+
   // components - table
   'table.actions.search': 'Search',
   'table.actions.resetSearch': 'Reset',
-  'table.actions.columnSetting': 'Column Setting',
+  'table.actions.columnSetting': 'Column setting',
   'table.actions.refresh': 'Refresh',
 
   // components - form

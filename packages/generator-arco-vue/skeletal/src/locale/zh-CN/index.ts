@@ -26,6 +26,9 @@ export default {
   'tabbar.actions.closeOthers': '关闭其他标签页',
   'tabbar.actions.closeAll': '关闭所有标签页',
 
+  // components - breadcrumb
+  'breadcrumb.actions.backToIndexView': '返回列表',
+
   // components - table
   'table.actions.search': '搜索',
   'table.actions.resetSearch': '重置',

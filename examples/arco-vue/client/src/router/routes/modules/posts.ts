@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     path: 'posts',
     component: () => import('@/views/modules/posts/index/index.vue'),
     meta: {
+      nameComponents: ['Posts', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'posts--index.title',

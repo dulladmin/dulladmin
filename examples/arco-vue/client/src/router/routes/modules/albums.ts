@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     path: 'albums',
     component: () => import('@/views/modules/albums/index/index.vue'),
     meta: {
+      nameComponents: ['Albums', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'albums--index.title',
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
     path: 'albums/:id',
     component: () => import('@/views/modules/albums/show/index.vue'),
     meta: {
+      nameComponents: ['Albums', 'Show', ],
       authority: ['*', ],
       cache: false,
       title: 'albums--show.title',

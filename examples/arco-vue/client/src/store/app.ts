@@ -40,8 +40,8 @@ const useAppStore = defineStore('app', () => {
   // tabbar
   const cachedTabs = ref<string[]>([]);
   const tabs = ref<Tab[]>([]);
-  const currentTab = ref<Tab | null>(null);
-  const nextTab = (tabIndex: number): Tab => {
+  const currentActiveTab = ref<Tab | null>(null);
+  const nextActiveTab = (tabIndex: number): Tab => {
     return tabs.value[tabIndex] ?? { name: '$app' };
   };
   const addTab = (to: RouteLocationNormalized) => {
@@ -52,38 +52,40 @@ const useAppStore = defineStore('app', () => {
       const toIndex = tabs.value.findIndex((e) => e.name === to.name);
       if (toIndex !== -1) {
         tabs.value.splice(toIndex, 1, to);
-        currentTab.value = to;
+        currentActiveTab.value = to;
         return;
       }
 
-      // open new tab next to the current tab
-      if (currentTab.value != null) {
+      // open new tab next to the current active tab
+      if (currentActiveTab.value != null) {
         const currentIndex = tabs.value.findIndex(
-          (e) => e.name === currentTab.value?.name
+          (e) => e.name === currentActiveTab.value?.name
         );
         if (currentIndex !== -1) {
           tabs.value.splice(currentIndex + 1, 0, to);
-          currentTab.value = to;
+          currentActiveTab.value = to;
           return;
         }
       }
 
       // make new tab open at the end of the tabs
       tabs.value.push(to);
-      currentTab.value = to;
+      currentActiveTab.value = to;
     } else {
       tabs.value = [];
-      currentTab.value = null;
+      currentActiveTab.value = null;
     }
   };
   const removeCurrentTab = (tab: Tab, tabIndex: number): Tab | null => {
     tabs.value.splice(tabIndex, 1);
 
-    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
+    const found = tabs.value.find(
+      (e) => e.name === currentActiveTab.value?.name
+    );
     if (found) return null;
 
-    currentTab.value = null;
-    return nextTab(Math.min(tabIndex, tabs.value.length - 1));
+    currentActiveTab.value = null;
+    return nextActiveTab(Math.min(tabIndex, tabs.value.length - 1));
   };
   const removeCurrentTabToTheLeft = (
     tab: Tab,
@@ -91,11 +93,13 @@ const useAppStore = defineStore('app', () => {
   ): Tab | null => {
     tabs.value.splice(0, tabIndex);
 
-    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
+    const found = tabs.value.find(
+      (e) => e.name === currentActiveTab.value?.name
+    );
     if (found) return null;
 
-    currentTab.value = null;
-    return nextTab(0);
+    currentActiveTab.value = null;
+    return nextActiveTab(0);
   };
   const removeCurrentTabToTheRight = (
     tab: Tab,
@@ -103,21 +107,33 @@ const useAppStore = defineStore('app', () => {
   ): Tab | null => {
     tabs.value.splice(tabIndex + 1, tabs.value.length - tabIndex - 1);
 
-    const found = tabs.value.find((e) => e.name === currentTab.value?.name);
+    const found = tabs.value.find(
+      (e) => e.name === currentActiveTab.value?.name
+    );
     if (found) return null;
 
-    currentTab.value = null;
-    return nextTab(tabIndex);
+    currentActiveTab.value = null;
+    return nextActiveTab(tabIndex);
   };
   const removeOtherTabs = (tab: Tab): Tab | null => {
     tabs.value = [tab];
-    currentTab.value = tab;
-    return nextTab(0);
+    currentActiveTab.value = tab;
+    return nextActiveTab(0);
   };
   const removeAllTabs = (): Tab | null => {
     tabs.value = [];
-    currentTab.value = null;
-    return nextTab(0);
+    currentActiveTab.value = null;
+    return nextActiveTab(0);
+  };
+  const removeCurrentActiveTab = () => {
+    const foundIndex = tabs.value.findIndex(
+      (e) => e.name === currentActiveTab.value?.name
+    );
+    tabs.value.splice(foundIndex, 1);
+    currentActiveTab.value = null;
+  };
+  const clearCurrentActiveTab = () => {
+    currentActiveTab.value = null;
   };
   watch(
     () => tabs.value,
@@ -132,9 +148,6 @@ const useAppStore = defineStore('app', () => {
     },
     { deep: true, immediate: true }
   );
-  const clearCurrentTab = () => {
-    currentTab.value = null;
-  };
 
   return {
     device,
@@ -149,14 +162,15 @@ const useAppStore = defineStore('app', () => {
 
     cachedTabs,
     tabs,
+    currentActiveTab,
     addTab,
     removeCurrentTab,
     removeCurrentTabToTheLeft,
     removeCurrentTabToTheRight,
     removeOtherTabs,
     removeAllTabs,
-    currentTab,
-    clearCurrentTab,
+    removeCurrentActiveTab,
+    clearCurrentActiveTab,
   };
 });
 

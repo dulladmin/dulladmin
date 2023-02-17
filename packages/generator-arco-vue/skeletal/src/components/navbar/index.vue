@@ -85,7 +85,7 @@
         </a-tooltip>
       </li>
       <li>
-        <a-dropdown trigger="hover">
+        <a-dropdown trigger="hover" position="br">
           <a-button-group>
             <a-button class="user-nav-btn">
               {{ userStore.info.name }}

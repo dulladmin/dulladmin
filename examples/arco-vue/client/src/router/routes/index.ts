@@ -12,7 +12,7 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
   return result;
 }
 const modules = import.meta.glob('./modules/*.ts', { eager: true });
-const appRoutes: RouteRecordNormalized[] = formatModules(modules, []);
+export const appRoutes: RouteRecordNormalized[] = formatModules(modules, []);
 
 // Routes: /login
 export const ROUTE_LOGIN: RouteRecordRaw = {

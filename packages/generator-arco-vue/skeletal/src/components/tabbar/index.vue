@@ -19,7 +19,6 @@
 
 <script lang="ts" setup>
   import { computed, onUnmounted } from 'vue';
-  import type { RouteLocationNormalized } from 'vue-router';
   import { useAppStore } from '@/store';
   import {
     listenerRouteChange,
@@ -33,6 +32,8 @@
 
   // tabs
   const tabs = computed(() => appStore.tabs);
+
+  // tabs - add
   const routeChangeHandler = (e: RouteChangeEvent) => {
     const { to } = e;
     appStore.addTab(to);

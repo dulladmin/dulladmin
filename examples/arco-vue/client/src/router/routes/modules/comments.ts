@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     path: 'comments',
     component: () => import('@/views/modules/comments/index/index.vue'),
     meta: {
+      nameComponents: ['Comments', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'comments--index.title',

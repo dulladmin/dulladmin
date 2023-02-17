@@ -9,7 +9,7 @@
       <span
         class="tabbar-item-link"
         :class="{
-          'item-link-activated': tab.name === currentTab?.name,
+          'item-link-activated': tab.name === currentActiveTab?.name,
         }"
         @click="open()"
       >
@@ -77,22 +77,22 @@
     CloseAll = 'closeAll',
   }
 
-  // store
-  const appStore = useAppStore();
-
-  // data
+  // props
   const props = defineProps<{
     tab: Tab;
     tabIndex: number;
   }>();
 
+  // store
+  const appStore = useAppStore();
+
   // tabs
   const tabs = computed(() => appStore.tabs);
-  const currentTab = computed(() => appStore.currentTab);
+  const currentActiveTab = computed(() => appStore.currentActiveTab);
 
   // tabs - disabled
   const disabledReloadCurrent = computed(() => {
-    return props.tab.fullPath !== currentTab.value?.fullPath;
+    return props.tab.fullPath !== currentActiveTab.value?.fullPath;
   });
   const disabledCloseCurrentToLeft = computed(() => {
     return props.tabIndex === 0;

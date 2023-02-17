@@ -1,5 +1,5 @@
 import { Resource, ViewType, View } from '@dulladmin/core'
-import { toPath } from '../../naming'
+import { toCamelize, toPath } from '../../naming'
 import { extractViewInfo } from './extract-view-info'
 
 export function extractRouteInfo(resource: Resource, view: View): Record<string, any> {
@@ -30,9 +30,10 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
   return {
     name: _view.name,
     path,
-    authority: view.authority ?? resource.authority ?? ['*'],
-    cache,
+    title: _view.title,
     viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
-    title: _view.title
+    viewName: [toCamelize(resourceName), toCamelize(viewName)],
+    authority: view.authority ?? resource.authority ?? ['*'],
+    cache
   }
 }

@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     path: 'todos',
     component: () => import('@/views/modules/todos/index/index.vue'),
     meta: {
+      nameComponents: ['Todos', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'todos--index.title',
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/new',
     component: () => import('@/views/modules/todos/new/index.vue'),
     meta: {
+      nameComponents: ['Todos', 'New', ],
       authority: ['*', ],
       cache: false,
       title: 'todos--new.title',
@@ -28,6 +30,7 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/:id/edit',
     component: () => import('@/views/modules/todos/edit/index.vue'),
     meta: {
+      nameComponents: ['Todos', 'Edit', ],
       authority: ['*', ],
       cache: false,
       title: 'todos--edit.title',
