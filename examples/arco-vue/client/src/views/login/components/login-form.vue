@@ -92,7 +92,7 @@
     setLoading(true);
     try {
       await userStore.login(values as AuthCreateRequestForm);
-      Message.success(t('messagebox.login.success'));
+      Message.success(t('auth.login.success'));
 
       const { redirect, ...othersQuery } = router.currentRoute.value.query;
       router.push({

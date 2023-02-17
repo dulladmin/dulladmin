@@ -10,10 +10,6 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
-  // components - messagebox
-  'messagebox.login.success': 'Welcome to use',
-  'messagebox.logout.success': 'Logout success',
-
   // components - navbar
   'navbar.language': 'Language',
   'navbar.theme.toDark': 'Click to use dark mode',
@@ -38,6 +34,11 @@ export default {
 
   // components - form
   'form.actions.save': 'Save',
+  'form.actions.save.success': 'Save success',
+
+  // components - auth
+  'auth.login.success': 'Welcome to use',
+  'auth.logout.success': 'Logout success',
 
   // views - login
   'login.form.title': 'DullAdmin',

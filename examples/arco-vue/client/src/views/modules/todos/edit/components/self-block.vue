@@ -41,6 +41,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
+  import { Message } from '@arco-design/web-vue';
   import { Model, UpdateRequest, get, update } from '@/api/modules/todos/edit/self';
   import { useLoading } from '@/hooks';
 
@@ -100,7 +101,12 @@
       } as UpdateRequest;
       const { data } = await update(id, req);
       const { model } = data;
-      store.value = model;
+
+      if (model) {
+        store.value = model;
+      }
+
+      Message.success(t('form.actions.save.success'));
     } finally {
       setSaving(false);
     }

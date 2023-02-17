@@ -10,10 +10,6 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
-  // components - messagebox
-  'messagebox.logout.success': '登出成功',
-  'messagebox.login.success': '欢迎使用',
-
   // components - navbar
   'navbar.language': '语言',
   'navbar.theme.toDark': '点击切换为暗黑模式',
@@ -38,6 +34,11 @@ export default {
 
   // components - form
   'form.actions.save': '保存',
+  'form.actions.save.success': '保存成功',
+
+  // components - auth
+  'auth.login.success': '欢迎使用',
+  'auth.logout.success': '登出成功',
 
   // views - login
   'login.form.title': 'DullAdmin',

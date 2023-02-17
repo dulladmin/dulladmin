@@ -10,7 +10,7 @@ export default function useUser() {
 
   const logout = async () => {
     await userStore.logout();
-    Message.success(t('messagebox.logout.success'));
+    Message.success(t('auth.logout.success'));
 
     const currentRoute = router.currentRoute.value;
     router.push({
