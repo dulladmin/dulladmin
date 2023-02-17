@@ -30,6 +30,8 @@
 <script lang="ts" setup>
   import { ref, onUnmounted } from 'vue';
   import { useRouter, RouteRecordRaw } from 'vue-router';
+  import { isEqual } from 'lodash';
+  import { usePermission } from '@/hooks';
   import { appRoutes } from '@/router';
   import { appMenu, findAppMenuItem } from '@/router/app-menu';
   import { useAppStore } from '@/store';
@@ -70,11 +72,16 @@
       if (nameComponents[1] === 'Index') {
         currentItemIndexViewRoute.value = null;
       } else {
+        const { accessRouter } = usePermission();
         currentItemIndexViewRoute.value =
           appRoutes.find((_route) => {
-            const n = _route.meta.nameComponents ?? [];
-            return n[0] === nameComponents[0] && n[1] === 'Index';
+            return (
+              accessRouter(_route) &&
+              isEqual(_route.meta.nameComponents, [nameComponents[0], 'Index'])
+            );
           }) ?? null;
+
+        console.log(currentItemIndexViewRoute.value);
       }
     } else {
       items.value = [];
@@ -89,7 +96,7 @@
   const router = useRouter();
   const goto = (item: RouteRecordRaw) => {
     appStore.removeCurrentActiveTab();
-    router.push({
+    router.replace({
       name: item.name,
     });
   };
