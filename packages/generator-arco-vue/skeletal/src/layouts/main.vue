@@ -34,7 +34,7 @@
             <Breadcrumb />
             <router-view v-slot="{ Component, route }">
               <transition name="fade" mode="out-in" appear>
-                <keep-alive :include="cachedTabs">
+                <keep-alive :include="cachedTabs" :exclude="cachedDisabledTabs">
                   <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
               </transition>
@@ -68,6 +68,14 @@
     drawerVisible.value = !drawerVisible.value;
   });
 
+  // tabbar
+  const cachedTabs = computed(() => {
+    return appStore.cachedTabs;
+  });
+  const cachedDisabledTabs = computed(() => {
+    return Array.from(appStore.cachedDisabledTabs);
+  });
+
   // content area
   const contentPaddingStyle = computed(() => {
     const paddingTop = { paddingTop: '60px' };
@@ -75,9 +83,6 @@
       ? {}
       : { paddingLeft: `${menuWidth.value}px` };
     return { ...paddingTop, ...paddingLeft };
-  });
-  const cachedTabs = computed(() => {
-    return appStore.cachedTabs;
   });
 </script>
 

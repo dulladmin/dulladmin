@@ -38,6 +38,7 @@ const useAppStore = defineStore('app', () => {
   };
 
   // tabbar
+  const cachedDisabledTabs = ref<Set<string>>(new Set());
   const cachedTabs = ref<string[]>([]);
   const tabs = ref<Tab[]>([]);
   const currentActiveTab = ref<Tab | null>(null);
@@ -51,6 +52,20 @@ const useAppStore = defineStore('app', () => {
       // switch to tab
       const toIndex = tabs.value.findIndex((e) => e.name === to.name);
       if (toIndex !== -1) {
+        // The <KeepAlive> component use :fullPath to cache tabs, so it will
+        // store two cached instances for same Component with different
+        // :fullPath, e.g. `/items`, `/items?_r=1676721133781`.
+        //
+        // Through temporarily disable the cache feature for Component to remove
+        // all cached instances, and re-enable it later to ensure only one
+        // instance got cached.
+        if (to.meta.cache && to.fullPath !== tabs.value[toIndex].fullPath) {
+          cachedDisabledTabs.value.add(to.name as string);
+          setTimeout(() => {
+            cachedDisabledTabs.value.delete(to.name as string);
+          }, 200);
+        }
+
         tabs.value.splice(toIndex, 1, to);
         currentActiveTab.value = to;
         return;
@@ -160,6 +175,7 @@ const useAppStore = defineStore('app', () => {
     menuCollapse,
     changeMenuCollapse,
 
+    cachedDisabledTabs,
     cachedTabs,
     tabs,
     currentActiveTab,
