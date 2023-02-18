@@ -55,11 +55,11 @@
   const appStore = useAppStore();
   useResponsive(true);
 
-  // Menu in Sider
+  // menu in sider
   const menuHidden = computed(() => appStore.isMobile);
   const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220));
 
-  // Menu in Drawer
+  // menu in drawer
   const drawerVisible = ref(false);
   const drawerCancel = () => {
     drawerVisible.value = false;
@@ -68,7 +68,7 @@
     drawerVisible.value = !drawerVisible.value;
   });
 
-  // Content Area
+  // content area
   const contentPaddingStyle = computed(() => {
     const paddingTop = { paddingTop: '60px' };
     const paddingLeft = menuHidden.value

@@ -123,7 +123,7 @@
   const userStore = useUserStore();
   const { logout } = useUser();
 
-  // Menu in Drawer
+  // menu in drawer
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 
   // locale

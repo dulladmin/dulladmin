@@ -14,14 +14,14 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
 const modules = import.meta.glob('./modules/*.ts', { eager: true });
 export const appRoutes: RouteRecordNormalized[] = formatModules(modules, []);
 
-// Routes: /login
+// routes: /login
 export const ROUTE_LOGIN: RouteRecordRaw = {
   path: '/login',
   name: '$login',
   component: () => import('@/views/login/index.vue'),
 };
 
-// Routes: /
+// routes: /
 export const ROUTE_MAIN: RouteRecordRaw = {
   path: '/',
   name: '$app',
@@ -29,7 +29,7 @@ export const ROUTE_MAIN: RouteRecordRaw = {
   children: appRoutes,
 };
 
-// Routes /:pathMatch(.*)*
+// routes /:pathMatch(.*)*
 export const ROUTE_NOT_FOUND: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
   name: '$not-found',
