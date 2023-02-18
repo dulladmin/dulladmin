@@ -101,7 +101,7 @@
       return;
     }
 
-    // relace current tab
+    // replace current tab
     appStore.removeCurrentActiveTab();
     router.replace({ name: item.name });
   };

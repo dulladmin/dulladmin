@@ -45,6 +45,7 @@ const useAppStore = defineStore('app', () => {
   const nextActiveTab = (tabIndex: number): Tab => {
     return tabs.value[tabIndex] ?? { name: '$app' };
   };
+  const newTabOpenPosition = ref<number | null>(null);
   const addTab = (to: RouteLocationNormalized) => {
     if (to.matched[0].name === '$app') {
       if (to.name === '$app') return;
@@ -68,27 +69,31 @@ const useAppStore = defineStore('app', () => {
 
         tabs.value.splice(toIndex, 1, to);
         currentActiveTab.value = to;
+        newTabOpenPosition.value = null;
         return;
       }
 
       // open new tab next to the current active tab
-      if (currentActiveTab.value != null) {
+      if (newTabOpenPosition.value === null && currentActiveTab.value != null) {
         const currentIndex = tabs.value.findIndex(
           (e) => e.name === currentActiveTab.value?.name
         );
         if (currentIndex !== -1) {
           tabs.value.splice(currentIndex + 1, 0, to);
           currentActiveTab.value = to;
+          newTabOpenPosition.value = null;
           return;
         }
       }
 
-      // open new tab open at the end of the tabs
-      tabs.value.push(to);
+      // open new tab at the `newTabOpenPosition` or end of the tabs
+      tabs.value.splice(newTabOpenPosition.value ?? tabs.value.length, 0, to);
       currentActiveTab.value = to;
+      newTabOpenPosition.value = null;
     } else {
       tabs.value = [];
       currentActiveTab.value = null;
+      newTabOpenPosition.value = null;
     }
   };
   const removeCurrentTab = (tab: Tab, tabIndex: number): Tab | null => {
@@ -146,9 +151,10 @@ const useAppStore = defineStore('app', () => {
     );
     tabs.value.splice(foundIndex, 1);
     currentActiveTab.value = null;
+    newTabOpenPosition.value = foundIndex;
   };
-  const clearCurrentActiveTab = () => {
-    currentActiveTab.value = null;
+  const setNewTabOpenPosition = (position: number) => {
+    newTabOpenPosition.value = position;
   };
   watch(
     () => tabs.value,
@@ -186,7 +192,7 @@ const useAppStore = defineStore('app', () => {
     removeOtherTabs,
     removeAllTabs,
     removeCurrentActiveTab,
-    clearCurrentActiveTab,
+    setNewTabOpenPosition,
   };
 });
 

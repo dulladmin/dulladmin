@@ -64,8 +64,8 @@
       return;
     }
 
-    // open new tab open at the end of the tabs
-    appStore.clearCurrentActiveTab();
+    // open new tab at the end of the tabs
+    appStore.setNewTabOpenPosition(appStore.tabs.length);
     router.push({ name: item.name });
   };
 
