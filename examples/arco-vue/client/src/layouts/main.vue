@@ -40,6 +40,9 @@
               </transition>
             </router-view>
           </a-layout-content>
+          <a-layout-footer>
+            <Footer />
+          </a-layout-footer>
         </a-layout>
       </a-layout>
     </a-layout>
@@ -48,7 +51,7 @@
 
 <script lang="ts" setup>
   import { ref, computed, provide } from 'vue';
-  import { Breadcrumb, Menu, NavBar, TabBar } from '@/components';
+  import { Breadcrumb, Footer, Menu, NavBar, TabBar } from '@/components';
   import { useResponsive } from '@/hooks';
   import { useAppStore } from '@/store';
 

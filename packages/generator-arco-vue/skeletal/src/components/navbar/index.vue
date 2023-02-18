@@ -2,6 +2,12 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
+        <a-typography-title
+          :style="{ margin: 0, fontSize: '18px' }"
+          :heading="5"
+        >
+          DullAdmin
+        </a-typography-title>
         <icon-menu-fold
           v-if="appStore.isMobile"
           style="font-size: 22px; cursor: pointer"

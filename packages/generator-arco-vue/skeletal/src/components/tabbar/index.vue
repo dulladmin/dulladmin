@@ -1,5 +1,5 @@
 <template>
-  <div class="tabbar-container">
+  <div class="tabbar">
     <a-affix :offset-top="60">
       <div class="tabbar-box" id="tabbar-box">
         <div class="tabbar-scroll">
@@ -43,7 +43,7 @@
 </script>
 
 <style lang="less" scoped>
-  .tabbar-container {
+  .tabbar {
     position: relative;
     background-color: var(--color-bg-2);
 

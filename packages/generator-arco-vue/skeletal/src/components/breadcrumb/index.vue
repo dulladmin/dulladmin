@@ -1,6 +1,6 @@
 <template>
-  <div class="breadcrumb-wrap">
-    <a-breadcrumb class="breadcrumb">
+  <div class="breadcrumb">
+    <a-breadcrumb class="breadcrumb-menu">
       <a-breadcrumb-item>
         <icon-apps />
       </a-breadcrumb-item>
@@ -108,12 +108,12 @@
 </script>
 
 <style lang="less" scoped>
-  .breadcrumb-wrap {
+  .breadcrumb {
     display: flex;
     margin: 16px 20px;
   }
 
-  .breadcrumb {
+  .breadcrumb-menu {
     flex: 1;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
