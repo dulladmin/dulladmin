@@ -80,8 +80,6 @@
               isEqual(_route.meta.nameComponents, [nameComponents[0], 'Index'])
             );
           }) ?? null;
-
-        console.log(currentItemIndexViewRoute.value);
       }
     } else {
       items.value = [];
@@ -95,10 +93,17 @@
   // breadcrumb - backTo
   const router = useRouter();
   const goto = (item: RouteRecordRaw) => {
+    // switch to tab
+    const tab = appStore.tabs.find((e) => e.name === item.name);
+    if (tab) {
+      appStore.removeCurrentActiveTab();
+      router.replace({ ...tab });
+      return;
+    }
+
+    // relace current tab
     appStore.removeCurrentActiveTab();
-    router.replace({
-      name: item.name,
-    });
+    router.replace({ name: item.name });
   };
 </script>
 

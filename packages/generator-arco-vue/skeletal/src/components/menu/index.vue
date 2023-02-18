@@ -57,10 +57,16 @@
   // select
   const router = useRouter();
   const goto = (item: RouteRecordRaw) => {
+    // switch to tab
+    const tab = appStore.tabs.find((e) => e.name === item.name);
+    if (tab) {
+      router.push({ ...tab });
+      return;
+    }
+
+    // open new tab open at the end of the tabs
     appStore.clearCurrentActiveTab();
-    router.push({
-      name: item.name,
-    });
+    router.push({ name: item.name });
   };
 
   // render

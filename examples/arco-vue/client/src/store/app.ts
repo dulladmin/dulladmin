@@ -68,7 +68,7 @@ const useAppStore = defineStore('app', () => {
         }
       }
 
-      // make new tab open at the end of the tabs
+      // open new tab open at the end of the tabs
       tabs.value.push(to);
       currentActiveTab.value = to;
     } else {
