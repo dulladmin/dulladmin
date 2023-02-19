@@ -30,7 +30,7 @@
             </template>
           </a-button>
         </a-tooltip>
-        <a-dropdown trigger="click" @select="changeLocale as any">
+        <a-dropdown trigger="click" @select="handleChangeLocale as any">
           <div ref="triggerBtn" class="trigger-btn"></div>
           <template #content>
             <a-doption
@@ -120,14 +120,16 @@
 
 <script lang="ts" setup>
   import { computed, ref, inject } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
   import { useLocale, useUser } from '@/hooks';
   import { LOCALE_OPTIONS } from '@/locale';
   import { useAppStore, useUserStore } from '@/store';
+  import { setWindowTitle } from '@/utils/window';
 
   const appStore = useAppStore();
   const userStore = useUserStore();
-  const { logout } = useUser();
+  const route = useRoute();
 
   // menu in drawer
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
@@ -135,6 +137,10 @@
   // locale
   const { currentLocale, changeLocale } = useLocale();
   const locales = [...LOCALE_OPTIONS];
+  const handleChangeLocale = (value: string) => {
+    changeLocale(value);
+    setWindowTitle(route);
+  };
   const triggerBtn = ref();
   const setDropDownVisible = () => {
     const event = new MouseEvent('click', {
@@ -164,6 +170,7 @@
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
   // login/logout
+  const { logout } = useUser();
   const handleLogout = () => {
     logout();
   };
