@@ -1,11 +1,5 @@
-function formatModules(_modules: any, result: Record<string, string>) {
-  Object.keys(_modules).forEach((key) => {
-    const defaultModule = _modules[key].default;
-    if (!defaultModule) return;
-    result = { ...result, ...defaultModule };
-  });
-  return result;
-}
+import { formatModules, i18nFooterCopyrightDate } from '../base';
+
 const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
@@ -31,7 +25,7 @@ export default {
 
   // components - footer
   'footer.copyright': '版权所有',
-  'footer.date': '2023-present',
+  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']),
   'footer.allRightsReserved': '保留所有权利',
 
   // components - table
