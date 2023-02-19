@@ -10,6 +10,10 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
+  'site.name': 'DullAdmin',
+  'site.author': 'DullAdmin Team',
+  'site.author.url': 'https://github.com/dulladmin',
+
   // components - navbar
   'navbar.language': '语言',
   'navbar.theme.toDark': '点击切换为暗黑模式',
@@ -28,6 +32,11 @@ export default {
 
   // components - breadcrumb
   'breadcrumb.actions.backToIndexView': '返回列表',
+
+  // components - footer
+  'footer.copyright': '版权所有',
+  'footer.date': '2023-present',
+  'footer.allRightsReserved': '保留所有权利',
 
   // components - table
   'table.actions.search': '搜索',

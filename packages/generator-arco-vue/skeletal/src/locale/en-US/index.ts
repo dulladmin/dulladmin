@@ -10,6 +10,10 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
+  'site.name': 'DullAdmin',
+  'site.author': 'DullAdmin Team',
+  'site.author.url': 'https://github.com/dulladmin',
+
   // components - navbar
   'navbar.language': 'Language',
   'navbar.theme.toDark': 'Click to use dark mode',
@@ -28,6 +32,11 @@ export default {
 
   // components - breadcrumb
   'breadcrumb.actions.backToIndexView': 'Back to index page',
+
+  // components - footer
+  'footer.copyright': 'Copyright',
+  'footer.date': '2023-present',
+  'footer.allRightsReserved': 'All rights reserved',
 
   // components - table
   'table.actions.search': 'Search',

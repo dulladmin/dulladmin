@@ -1,12 +1,10 @@
 <template>
   <div class="footer">
-    Copyright © 2023-present
-    <a
-      class="arco-link"
-      href="https://github.com/dulladmin/dulladmin"
-      target="_blank"
-      >DullAdmin</a
-    >. All rights reserved.
+    {{ $t('footer.copyright') }} © {{ $t('footer.date') }}
+    <a class="arco-link" target="_blank" :href="$t('site.author.url')">{{
+      $t('site.author')
+    }}</a
+    >. {{ $t('footer.allRightsReserved') }}.
   </div>
 </template>
 
