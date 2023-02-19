@@ -5,7 +5,7 @@ import { globbySync } from 'globby'
 import { parseAppFile, parseResourceFile, Resource } from '@dulladmin/core'
 import type { GeneratedFile, BuildInfo, Generator } from '@dulladmin/core'
 import { skeletalDir } from './files'
-import { genAppMenu, genAPI, genI18n, genRoutes, genViews } from './codegen'
+import { genAppMenu, genAppSite, genAPI, genI18n, genRoutes, genViews } from './codegen'
 
 class GeneratorArcoVue implements Generator {
   get templateDir(): string {
@@ -39,7 +39,7 @@ class GeneratorArcoVue implements Generator {
       try {
         const appFileContent = fs.readFileSync(appFilePath, 'utf8')
         const app = parseAppFile(appFileContent)
-        files[appFilePath] = ([] as GeneratedFile[]).concat(genAppMenu(app.menu, resources))
+        files[appFilePath] = ([] as GeneratedFile[]).concat(genAppMenu(app.menu, resources)).concat(genAppSite())
       } catch (err) {
         errors[appFilePath] = (err as Error).message
       }

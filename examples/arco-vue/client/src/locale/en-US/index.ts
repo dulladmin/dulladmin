@@ -10,10 +10,6 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
-  'site.name': 'DullAdmin',
-  'site.author': 'DullAdmin Team',
-  'site.author.url': 'https://github.com/dulladmin',
-
   // components - navbar
   'navbar.language': 'Language',
   'navbar.theme.toDark': 'Click to use dark mode',
@@ -53,7 +49,7 @@ export default {
   'auth.logout.success': 'Logout success',
 
   // views - login
-  'login.form.title': 'DullAdmin',
+  'login.title': 'Login',
   'login.form.username.placeholder': 'Username',
   'login.form.username.presence.message': 'cannot be empty',
   'login.form.password.placeholder': 'Password',
@@ -61,7 +57,8 @@ export default {
   'login.form.login': 'Login',
 
   // views - not-found
-  'not-found.descriptions.title': 'Not Found',
+  'not-found.title': 'Page Not Found',
+  'not-found.descriptions.title': 'Page Not Found',
   'not-found.descriptions.back': 'Back',
 
   // .

@@ -1,6 +1,7 @@
 <template>
   <div class="login-form-wrapper">
-    <div class="login-form-title">{{ $t('login.form.title') }}</div>
+    <div class="login-form-title">{{ $t('site.name') }}</div>
+    <div class="login-form-sub-title">{{ $t('site.description') }}</div>
     <div class="login-form-error-message">{{ errorMessage }}</div>
     <a-form
       class="login-form"
@@ -120,6 +121,13 @@
       font-weight: 500;
       font-size: 24px;
       line-height: 32px;
+      text-align: center;
+    }
+
+    &-sub-title {
+      color: var(--color-text-3);
+      font-size: 16px;
+      line-height: 24px;
       text-align: center;
     }
 

@@ -10,10 +10,6 @@ const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
 export default {
-  'site.name': 'DullAdmin',
-  'site.author': 'DullAdmin Team',
-  'site.author.url': 'https://github.com/dulladmin',
-
   // components - navbar
   'navbar.language': '语言',
   'navbar.theme.toDark': '点击切换为暗黑模式',
@@ -53,7 +49,7 @@ export default {
   'auth.logout.success': '登出成功',
 
   // views - login
-  'login.form.title': 'DullAdmin',
+  'login.title': '登入',
   'login.form.username.placeholder': '用户名',
   'login.form.username.presence.message': '不能为空',
   'login.form.password.placeholder': '密码',
@@ -61,6 +57,7 @@ export default {
   'login.form.login': '登入',
 
   // views - not-found
+  'not-found.title': '没有找到相关页面',
   'not-found.descriptions.title': '没有找到相关页面',
   'not-found.descriptions.back': '返回',
 

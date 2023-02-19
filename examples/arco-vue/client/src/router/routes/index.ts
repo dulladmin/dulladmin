@@ -19,6 +19,9 @@ export const ROUTE_LOGIN: RouteRecordRaw = {
   path: '/login',
   name: '$login',
   component: () => import('@/views/login/index.vue'),
+  meta: {
+    title: 'login.title',
+  },
 };
 
 // routes: /
@@ -34,4 +37,7 @@ export const ROUTE_NOT_FOUND: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
   name: '$not-found',
   component: () => import('@/views/not-found/index.vue'),
+  meta: {
+    title: 'not-found.title',
+  },
 };
