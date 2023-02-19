@@ -9,27 +9,34 @@ export const clientInstall = {
   command: 'client:install',
   desc: 'Generate a skeletal installation in clientDir',
   handler: async (argv: any): Promise<void> => {
+    const dulladminDir = argv.config.dulladminDir
     const clientGenerator: Generator = (await import(argv.config.clientGenerator)).default
     const clientDir = argv.config.clientDir
     logger.info('Installing the client at ' + chalk.green(clientDir))
 
+    if (!(await fse.pathExists(dulladminDir))) {
+      logger.error('The dulladminDir does not exists')
+      process.exit(1)
+    }
     if (await fse.pathExists(clientDir)) {
       logger.error('The clientDir is already exists')
       process.exit(1)
     }
 
-    try {
-      logger.info('[1/2] Copying template content...')
-      await fse.ensureDir(clientDir)
-      await fse.copy(clientGenerator.templateDir, clientDir)
-    } catch (err) {
-      logger.error((err as Error).message)
+    const response = clientGenerator.clientInstall({ dulladminDir })
+    if (response.code !== 0) {
+      logger.error(response.msg)
       process.exit(1)
     }
 
+    const { templateDir, postinstallScript } = response.data
     try {
+      logger.info('[1/2] Copying template content...')
+      await fse.ensureDir(clientDir)
+      await fse.copy(templateDir, clientDir)
+
       logger.info('[2/2] Setting up project dependency...')
-      await util.promisify(child_process.spawn)('bin/setup', [], { cwd: clientDir, stdio: 'inherit' })
+      await util.promisify(child_process.spawn)(postinstallScript, [], { cwd: clientDir, stdio: 'inherit' })
     } catch (err) {
       logger.error((err as Error).message)
       process.exit(1)

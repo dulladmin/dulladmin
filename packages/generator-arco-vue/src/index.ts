@@ -3,16 +3,44 @@ import path from 'node:path'
 import fse from 'fs-extra'
 import { globbySync } from 'globby'
 import { parseAppFile, parseResourceFile, Resource } from '@dulladmin/core'
-import type { GeneratedFile, BuildInfo, Generator } from '@dulladmin/core'
+import type {
+  GeneratedFile,
+  ClientInstallRequest,
+  ClientInstallResponse,
+  ClientUpdateRequest,
+  ClientUpdateResponse,
+  BuildRequest,
+  BuildResponse,
+  Generator
+} from '@dulladmin/core'
 import { skeletalDir } from './files'
 import { genAppMenu, genAppSite, genAPI, genI18n, genRoutes, genViews } from './codegen'
 
 class GeneratorArcoVue implements Generator {
-  get templateDir(): string {
-    return skeletalDir
+  clientInstall(_: ClientInstallRequest): ClientInstallResponse {
+    return {
+      code: 0,
+      msg: 'ok',
+      data: {
+        templateDir: skeletalDir,
+        postinstallScript: 'bin/setup'
+      }
+    }
   }
 
-  build(dulladminDir: string): BuildInfo {
+  clientUpdate(_: ClientUpdateRequest): ClientUpdateResponse {
+    return {
+      code: 0,
+      msg: 'ok',
+      data: {
+        templateDir: skeletalDir,
+        postupdateScript: 'bin/setup'
+      }
+    }
+  }
+
+  build(req: BuildRequest): BuildResponse {
+    const { dulladminDir } = req
     const files: Record<string, GeneratedFile[]> = {}
     const errors: Record<string, string> = {}
 

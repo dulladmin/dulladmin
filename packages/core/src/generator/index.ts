@@ -3,7 +3,34 @@ export interface GeneratedFile {
   content: string
 }
 
-export interface BuildInfo {
+export interface ClientInstallRequest {
+  dulladminDir: string
+}
+export interface ClientInstallResponse {
+  code: number
+  msg: string
+  data: {
+    templateDir: string
+    postinstallScript: string
+  }
+}
+
+export interface ClientUpdateRequest {
+  dulladminDir: string
+}
+export interface ClientUpdateResponse {
+  code: number
+  msg: string
+  data: {
+    templateDir: string
+    postupdateScript: string
+  }
+}
+
+export interface BuildRequest {
+  dulladminDir: string
+}
+export interface BuildResponse {
   code: number
   msg: string
   data: {
@@ -13,6 +40,7 @@ export interface BuildInfo {
 }
 
 export interface Generator {
-  readonly templateDir: string
-  build: (dulladminDir: string) => BuildInfo
+  clientInstall: (req: ClientInstallRequest) => ClientInstallResponse
+  clientUpdate: (req: ClientUpdateRequest) => ClientUpdateResponse
+  build: (req: BuildRequest) => BuildResponse
 }

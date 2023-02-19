@@ -19,28 +19,26 @@ export const build = {
       logger.error('The dulladminDir does not exists')
       process.exit(1)
     }
-
     if (!(await fse.pathExists(clientDir))) {
       logger.error('The clientDir does not exists')
       process.exit(1)
     }
-
-    const pkgFile = path.join(clientDir, 'package.json')
-    if (!(await fse.pathExists(pkgFile))) {
+    if (!(await fse.pathExists(path.join(clientDir, 'package.json')))) {
       logger.error('The clientDir is not valid')
       process.exit(1)
     }
 
-    const buildInfo = clientGenerator.build(dulladminDir)
-    if (buildInfo.code !== 0) {
-      Object.entries(buildInfo.data.errors!).forEach(([infilePath, errorMessage]) => {
+    const response = clientGenerator.build({ dulladminDir })
+    if (response.code !== 0) {
+      Object.entries(response.data.errors!).forEach(([infilePath, errorMessage]) => {
         logger.error(`    - ${infilePath}`)
         logger.error(`      + ${errorMessage}`)
       })
       process.exit(1)
     }
 
-    Object.entries(buildInfo.data.files!).forEach(([infilePath, outfiles]) => {
+    const { files } = response.data
+    Object.entries(files!).forEach(([infilePath, outfiles]) => {
       logger.info(`    - ${infilePath}`)
 
       outfiles.forEach(
