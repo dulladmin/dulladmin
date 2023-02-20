@@ -11,7 +11,10 @@
 </template>
 
 <script lang="ts" setup>
+  import { useScrollBehavior } from '@/hooks';
   import SelfBlock from '@/views/modules/photos/index/components/self-block.vue';
+
+  useScrollBehavior();
 </script>
 
 <script lang="ts">

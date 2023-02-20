@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    {{ $t('footer.copyright') }} &copy; {{ $t('footer.date') }}
+    {{ $t('footer.copyright') }} &copy; {{ $t('footer.copyright.date') }}
     <a class="arco-link" target="_blank" :href="$t('site.author.url')">{{
       $t('site.author')
     }}</a

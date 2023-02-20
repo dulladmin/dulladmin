@@ -3,6 +3,9 @@ import { formatModules, i18nFooterCopyrightDate } from '../base';
 const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
+const creationDate = i18nMessages['site.creationDate'];
+const footerCopyrightDate = i18nFooterCopyrightDate(creationDate) as string;
+
 export default {
   // components - navbar
   'navbar.language': 'Language',
@@ -25,7 +28,7 @@ export default {
 
   // components - footer
   'footer.copyright': 'Copyright',
-  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']) as string,
+  'footer.copyright.date': footerCopyrightDate,
   'footer.allRightsReserved': 'All rights reserved',
 
   // components - table

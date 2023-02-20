@@ -9,9 +9,6 @@ NProgress.configure({ showSpinner: false });
 const router = createRouter({
   history: createWebHistory(),
   routes: [ROUTE_LOGIN, ROUTE_MAIN, ROUTE_NOT_FOUND],
-  scrollBehavior() {
-    return { top: 0 };
-  },
 });
 
 createRouteGuard(router);

@@ -13,9 +13,12 @@
 </template>
 
 <script lang="ts" setup>
+  import { useScrollBehavior } from '@/hooks';
 {{#each blocks}}
   import {{componentName}} from '{{componentImportPath}}';
 {{/each}}
+
+  useScrollBehavior();
 </script>
 
 <script lang="ts">

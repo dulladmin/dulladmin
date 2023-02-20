@@ -9,24 +9,23 @@ const WIDTH = 992;
 export default function useResponsive(immediate?: boolean) {
   const appStore = useAppStore();
 
-  function resizeHandler() {
+  const resizeHandler = useDebounceFn(() => {
     if (!document.hidden) {
       const rect = document.body.getBoundingClientRect();
       const isMobile = rect.width - 1 < WIDTH;
       appStore.changeDevice(isMobile ? 'mobile' : 'desktop');
     }
-  }
+  }, 100);
 
-  const debounceFn = useDebounceFn(resizeHandler, 100);
   onMounted(() => {
-    if (immediate) debounceFn();
+    if (immediate) resizeHandler();
   });
 
   onBeforeMount(() => {
-    addEventListen(window, 'resize', debounceFn);
+    addEventListen(window, 'resize', resizeHandler);
   });
 
   onBeforeUnmount(() => {
-    removeEventListen(window, 'resize', debounceFn);
+    removeEventListen(window, 'resize', resizeHandler);
   });
 }
