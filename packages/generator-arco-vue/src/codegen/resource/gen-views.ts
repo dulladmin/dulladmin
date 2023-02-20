@@ -58,10 +58,16 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const searchers = extractBlockSearcherInfo(resource, view, block)
   const searchable = searchers.length !== 0
 
+  const actions: Record<string, any> = {}
+  resource.views.forEach((view) => {
+    const _view = extractViewInfo(resource, view)
+    actions[view.type] = { name: _view.name }
+  })
+
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { block: _block, model, sortable, searchers, searchable }
+    { block: _block, model, sortable, searchers, searchable, actions }
   )
 }
 

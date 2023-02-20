@@ -33,6 +33,9 @@ export default {
   'table.actions.resetSearch': 'Reset',
   'table.actions.columnSetting': 'Column setting',
   'table.actions.refresh': 'Refresh',
+  'table.actions.new': 'New',
+  'table.actions.show': 'Show',
+  'table.actions.edit': 'Edit',
 
   // components - form
   'form.actions.save': 'Save',

@@ -33,6 +33,9 @@ export default {
   'table.actions.resetSearch': '重置',
   'table.actions.columnSetting': '列设置',
   'table.actions.refresh': '刷新',
+  'table.actions.new': '新建',
+  'table.actions.show': '查看',
+  'table.actions.edit': '编辑',
 
   // components - form
   'form.actions.save': '保存',

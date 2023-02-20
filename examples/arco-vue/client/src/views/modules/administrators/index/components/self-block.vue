@@ -38,9 +38,19 @@
         </a-col>
       </a-row>
       <a-row style="margin-bottom: 16px">
+        <a-col :span="12">
+          <a-space>
+            <a-button type="primary" @click="goto({ name: 'AdministratorsNew' })">
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('table.actions.new') }}
+            </a-button>
+          </a-space>
+        </a-col>
         <a-col
           style="display: flex; align-items: center; justify-content: end"
-          :span="24"
+          :span="12"
         >
           <a-tooltip :content="$t('table.actions.refresh')">
             <div class="action-icon" @click="onTableRefresh"
@@ -110,7 +120,7 @@
 
 <script lang="ts" setup>
   import { computed, reactive, ref, watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRouter, useRoute, RouteRecordRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import { FormInstance } from '@arco-design/web-vue/es/form';
@@ -127,6 +137,7 @@
   const { t } = useI18n();
 
   // route
+  const router = useRouter();
   const route = useRoute();
   const id = (route.params.id as string) ?? '';
 
@@ -321,6 +332,11 @@
   const onTableResetSearch = async () => {
     searchFormRef.value?.resetFields();
     await onTableSearch();
+  };
+
+  // table - actions
+  const goto = (_route: RouteRecordRaw) => {
+    router.push({ ..._route });
   };
 
   // table - init
