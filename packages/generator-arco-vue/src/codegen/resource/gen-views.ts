@@ -73,7 +73,10 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
     resource.views.forEach((view) => {
       const _view = extractViewInfo(resource, view)
-      mainBlockActions[view.type] = { name: _view.name }
+      mainBlockActions[view.type] = {
+        authority: view.authority ?? resource.authority,
+        name: _view.name
+      }
     })
   }
 

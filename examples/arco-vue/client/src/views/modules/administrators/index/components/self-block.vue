@@ -7,6 +7,7 @@
         <a-col :span="12">
           <a-space>
             <a-button
+              v-permission="['admin', ]"
               type="primary"
               @click="goto({ name: 'AdministratorsNew' })"
             >
@@ -91,6 +92,7 @@
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
             <a-button
+              v-permission="['admin', ]"
               type="outline"
               status="warning"
               size="small"

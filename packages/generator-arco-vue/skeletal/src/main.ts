@@ -4,6 +4,7 @@ import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import router from '@/router';
 import store from '@/store';
 import i18n from '@/locale';
+import directive from '@/directive';
 import App from '@/App.vue';
 import DullData from '@/components/renderer/data/dull-data.vue';
 import DullList from '@/components/renderer/data/dull-list.vue';
@@ -22,6 +23,7 @@ app.use(ArcoVueIcon);
 app.use(router);
 app.use(store);
 app.use(i18n);
+app.use(directive);
 
 app.component('DullData', DullData);
 app.component('DullList', DullList);

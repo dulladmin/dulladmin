@@ -8,6 +8,9 @@
           <a-space>
             {{#if mainBlockActions.new }}
             <a-button
+              {{#if mainBlockActions.new.authority}}
+              v-permission="[{{#each mainBlockActions.new.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
               type="primary"
               @click="goto({ name: '{{ mainBlockActions.new.name }}' })"
             >
@@ -110,6 +113,9 @@
           <a-space>
             {{#if mainBlockActions.show }}
             <a-button
+              {{#if mainBlockActions.show.authority}}
+              v-permission="[{{#each mainBlockActions.show.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
               type="outline"
               status="success"
               size="small"
@@ -120,6 +126,9 @@
             {{/if}}
             {{#if mainBlockActions.edit }}
             <a-button
+              {{#if mainBlockActions.edit.authority}}
+              v-permission="[{{#each mainBlockActions.edit.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
               type="outline"
               status="warning"
               size="small"
