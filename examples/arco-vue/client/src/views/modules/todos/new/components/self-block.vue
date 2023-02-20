@@ -44,6 +44,7 @@
   import { Message } from '@arco-design/web-vue';
   import { Model, UpdateRequest, get, update } from '@/api/modules/todos/new/self';
   import { useLoading } from '@/hooks';
+  import { useAppStore } from '@/store';
 
   // i18n
   const { t } = useI18n();
@@ -91,6 +92,7 @@
   };
 
   // form - save
+  const appStore = useAppStore();
   const { loading: saving, setLoading: setSaving } = useLoading(false);
   const onFormSave = async () => {
     setSaving(true);
@@ -107,12 +109,12 @@
         store.value = model;
       }
 
+      Message.success(t('form.actions.save.success'));
+
       const { back } = route.query;
       if (back) {
-        Message.success(t('form.actions.save.success'));
+        appStore.removeCurrentActiveTab();
         router.replace({ path: back as string });
-      } else {
-        Message.success(t('form.actions.save.success'));
       }
     } finally {
       setSaving(false);
