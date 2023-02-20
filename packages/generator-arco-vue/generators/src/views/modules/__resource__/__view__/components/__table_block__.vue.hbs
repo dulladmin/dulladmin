@@ -129,6 +129,32 @@
         {{/if}}
         </template>
       {{/each}}
+        <!-- eslint-disable vue/no-unused-vars -->
+        <template #tableOperationsColumn="{ record, column }">
+          <a-space>
+            {{#if actions.show }}
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: '{{ actions.show.name }}', params: { id: record.id } })"
+            >
+              \{{ $t('table.actions.show') }}
+            </a-button>
+            {{/if}}
+            {{#if actions.edit }}
+            <a-button
+              type="outline"
+              status="warning"
+              size="small"
+              @click="goto({ name: '{{ actions.edit.name }}', params: { id: record.id } })"
+            >
+              \{{ $t('table.actions.edit') }}
+            </a-button>
+            {{/if}}
+          </a-space>
+        </template>
+        <!-- eslint-enable -->
       </a-table>
     </a-card>
   </div>
@@ -136,7 +162,7 @@
 
 <script lang="ts" setup>
   import { computed, reactive, ref, watch } from 'vue';
-  import { useRouter, useRoute, RouteRecordRaw } from 'vue-router';
+  import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import { FormInstance } from '@arco-design/web-vue/es/form';
@@ -280,6 +306,11 @@
       {{/if}}
     },
   {{/each}}
+    {
+      title: t('table.columns.operations'),
+      dataIndex: 'tableOperationsColumn',
+      slotName: 'tableOperationsColumn',
+    },
   ]);
   watch(
     () => tableColumns.value,
@@ -413,8 +444,8 @@
 {{/if}}
 {{#if actions}}
   // table - actions
-  const goto = (_route: RouteRecordRaw) => {
-    router.push({ ..._route });
+  const goto = (_route: RouteLocationRaw) => {
+    router.push(_route);
   };
 {{/if}}
 

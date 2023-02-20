@@ -113,6 +113,20 @@
             :meta="modelMetadata[column.dataIndex]"
           />
         </template>
+        <!-- eslint-disable vue/no-unused-vars -->
+        <template #tableOperationsColumn="{ record, column }">
+          <a-space>
+            <a-button
+              type="outline"
+              status="warning"
+              size="small"
+              @click="goto({ name: 'AdministratorsEdit', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.edit') }}
+            </a-button>
+          </a-space>
+        </template>
+        <!-- eslint-enable -->
       </a-table>
     </a-card>
   </div>
@@ -120,7 +134,7 @@
 
 <script lang="ts" setup>
   import { computed, reactive, ref, watch } from 'vue';
-  import { useRouter, useRoute, RouteRecordRaw } from 'vue-router';
+  import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import { FormInstance } from '@arco-design/web-vue/es/form';
@@ -239,6 +253,11 @@
       dataIndex: 'role',
       slotName: 'role',
     },
+    {
+      title: t('table.columns.operations'),
+      dataIndex: 'tableOperationsColumn',
+      slotName: 'tableOperationsColumn',
+    },
   ]);
   watch(
     () => tableColumns.value,
@@ -335,8 +354,8 @@
   };
 
   // table - actions
-  const goto = (_route: RouteRecordRaw) => {
-    router.push({ ..._route });
+  const goto = (_route: RouteLocationRaw) => {
+    router.push(_route);
   };
 
   // table - init

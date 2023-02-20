@@ -25,7 +25,7 @@ export default {
 
   // components - footer
   'footer.copyright': 'Copyright',
-  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']),
+  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']) as string,
   'footer.allRightsReserved': 'All rights reserved',
 
   // components - table
@@ -34,8 +34,9 @@ export default {
   'table.actions.columnSetting': 'Column setting',
   'table.actions.refresh': 'Refresh',
   'table.actions.new': 'New',
-  'table.actions.show': 'Show',
+  'table.actions.show': 'View',
   'table.actions.edit': 'Edit',
+  'table.columns.operations': 'Operations',
 
   // components - form
   'form.actions.save': 'Save',

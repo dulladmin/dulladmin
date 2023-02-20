@@ -25,7 +25,7 @@ export default {
 
   // components - footer
   'footer.copyright': '版权所有',
-  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']),
+  'footer.date': i18nFooterCopyrightDate(i18nMessages['site.creationDate']) as string,
   'footer.allRightsReserved': '保留所有权利',
 
   // components - table
@@ -36,6 +36,7 @@ export default {
   'table.actions.new': '新建',
   'table.actions.show': '查看',
   'table.actions.edit': '编辑',
+  'table.columns.operations': '操作',
 
   // components - form
   'form.actions.save': '保存',
