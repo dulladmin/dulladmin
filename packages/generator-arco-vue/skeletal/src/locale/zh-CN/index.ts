@@ -24,7 +24,7 @@ export default {
   'tabbar.actions.closeAll': '关闭所有标签页',
 
   // components - breadcrumb
-  'breadcrumb.actions.backToIndexView': '返回列表',
+  'breadcrumb.actions.back': '关闭 & 返回',
 
   // components - footer
   'footer.copyright': '版权所有',

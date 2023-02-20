@@ -336,31 +336,17 @@
   };
 
   // table -- search
-  const { loading: searching, setLoading: setSearching } = useLoading(false);
-  const onTableSearch = async () => {
-    setSearching(true);
-    try {
-      const req = omitBy({
-        search: apiSearch(tableSearch),
-        pagination: apiPagination(baseTablePagination),
-      }, v => v == null) as ListRequest;
-      await fetchStore(req);
-    } finally {
-      setSearching(false);
-    }
-  };
-  const onTableResetSearch = async () => {
-    searchFormRef.value?.resetFields();
-  };
-
-  // table -- search modal
   const searchModalVisible = ref(false);
   const handleSearchModalVisible = () => {
     searchModalVisible.value = true;
   };
   const handleSearchModalOk = () => {
     searchModalVisible.value = false;
-    onTableSearch();
+    const req = omitBy({
+      search: apiSearch(tableSearch),
+      pagination: apiPagination(baseTablePagination),
+    }, v => v == null) as ListRequest;
+    fetchStore(req);
   };
   const handleSearchModalCancel = () => {
     searchModalVisible.value = false;
@@ -382,7 +368,7 @@
   }
   .arco-modal {
     .arco-form {
-      :deep(.arco-form-item:last-child) {
+      .arco-form-item:last-child {
         margin-bottom: 0;
       }
     }

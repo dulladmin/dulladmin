@@ -24,7 +24,7 @@ export default {
   'tabbar.actions.closeAll': 'Close all tabs',
 
   // components - breadcrumb
-  'breadcrumb.actions.backToIndexView': 'Back to index page',
+  'breadcrumb.actions.back': 'Close & Back',
 
   // components - footer
   'footer.copyright': 'Copyright',

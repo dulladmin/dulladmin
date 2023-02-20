@@ -300,7 +300,7 @@
   }
   .arco-modal {
     .arco-form {
-      :deep(.arco-form-item:last-child) {
+      .arco-form-item:last-child {
         margin-bottom: 0;
       }
     }

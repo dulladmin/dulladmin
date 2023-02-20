@@ -16,13 +16,13 @@
     </a-breadcrumb>
 
     <a-button
-      v-if="currentItemIndexViewRoute"
+      v-if="backPath"
       type="outline"
       shape="round"
       size="mini"
-      @click="goto(currentItemIndexViewRoute!)"
+      @click="goto(backPath)"
     >
-      {{ $t('breadcrumb.actions.backToIndexView') }}
+      {{ $t('breadcrumb.actions.back') }}
     </a-button>
   </div>
 </template>
@@ -47,7 +47,7 @@
   // breadcrumb
   const items = ref<string[]>([]);
   const currentItem = ref<Record<string, any> | null>(null);
-  const currentItemIndexViewRoute = ref<RouteRecordRaw | null>(null);
+  const backPath = ref<string | null>(null);
 
   // breadcrumb - routeChange
   const routeChangeHandler = (e: RouteChangeEvent) => {
@@ -68,42 +68,24 @@
         };
       }
 
-      const nameComponents = to.meta.nameComponents ?? [];
-      if (nameComponents[1] === 'Index') {
-        currentItemIndexViewRoute.value = null;
-      } else {
-        const { accessRouter } = usePermission();
-        currentItemIndexViewRoute.value =
-          appRoutes.find((_route) => {
-            return (
-              accessRouter(_route) &&
-              isEqual(_route.meta.nameComponents, [nameComponents[0], 'Index'])
-            );
-          }) ?? null;
-      }
+      const { back } = to.query;
+      backPath.value = back as string;
     } else {
       items.value = [];
       currentItem.value = null;
-      currentItemIndexViewRoute.value = null;
+      backPath.value = null;
     }
   };
   listenerRouteChange(routeChangeHandler, true);
   onUnmounted(() => removeRouteListener(routeChangeHandler));
 
-  // breadcrumb - backTo
+  // breadcrumb - back
   const router = useRouter();
-  const goto = (item: RouteRecordRaw) => {
-    // switch to tab
-    const tab = appStore.tabs.find((e) => e.name === item.name);
-    if (tab) {
+  const goto = (back: string | null) => {
+    if (back) {
       appStore.removeCurrentActiveTab();
-      router.replace({ ...tab });
-      return;
+      router.replace({ path: back });
     }
-
-    // replace current tab
-    appStore.removeCurrentActiveTab();
-    router.replace({ name: item.name });
   };
 </script>
 

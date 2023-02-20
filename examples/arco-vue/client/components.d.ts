@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     ALayoutSider: typeof import('@arco-design/web-vue')['LayoutSider']
     AMenu: typeof import('@arco-design/web-vue')['Menu']
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
+    AModal: typeof import('@arco-design/web-vue')['Modal']
     APopover: typeof import('@arco-design/web-vue')['Popover']
     AResult: typeof import('@arco-design/web-vue')['Result']
     ARow: typeof import('@arco-design/web-vue')['Row']
