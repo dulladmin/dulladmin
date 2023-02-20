@@ -23,6 +23,7 @@ export interface ClientUpdateResponse {
   msg: string
   data: {
     templateDir: string
+    ignore: string[]
     postupdateScript: string
   }
 }

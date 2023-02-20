@@ -3,6 +3,7 @@ import path from 'node:path'
 import util from 'node:util'
 import chalk from 'chalk'
 import fse from 'fs-extra'
+import { globby } from 'globby'
 import type { Generator } from '@dulladmin/core'
 import logger from '../logger'
 
@@ -30,11 +31,16 @@ export const clientUpdate = {
       process.exit(1)
     }
 
-    const { templateDir, postupdateScript } = response.data
+    const { templateDir, ignore, postupdateScript } = response.data
     try {
       logger.info('[1/2] Copying template content...')
       await fse.ensureDir(clientDir)
-      await fse.copy(templateDir, clientDir)
+      const files = await globby('.', { ignore, cwd: templateDir, dot: true })
+      files.forEach((filePath) => {
+        ;(async () => {
+          await fse.copy(path.join(templateDir, filePath), path.join(clientDir, filePath))
+        })() as unknown
+      })
 
       logger.info('[2/2] Setting up project dependency...')
       await util.promisify(child_process.spawn)(postupdateScript, [], { cwd: clientDir, stdio: 'inherit' })

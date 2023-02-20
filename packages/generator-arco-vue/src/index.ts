@@ -34,6 +34,7 @@ class GeneratorArcoVue implements Generator {
       msg: 'ok',
       data: {
         templateDir: skeletalDir,
+        ignore: ['src/router/app-menu/routes.ts', 'components.d.ts'],
         postupdateScript: 'bin/setup'
       }
     }
