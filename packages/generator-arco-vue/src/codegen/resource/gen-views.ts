@@ -1,5 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
+import {
+  Resource,
+  ViewType,
+  View,
+  BlockType,
+  BlockRelationshipType,
+  Block,
+  TableBlock,
+  DescriptionsBlock,
+  FormBlock
+} from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
 import {
@@ -58,16 +68,19 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const searchers = extractBlockSearcherInfo(resource, view, block)
   const searchable = searchers.length !== 0
 
-  const actions: Record<string, any> = {}
-  resource.views.forEach((view) => {
-    const _view = extractViewInfo(resource, view)
-    actions[view.type] = { name: _view.name }
-  })
+  // main TableBlock in IndexView
+  const mainBlockActions: Record<string, any> = {}
+  if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
+    resource.views.forEach((view) => {
+      const _view = extractViewInfo(resource, view)
+      mainBlockActions[view.type] = { name: _view.name }
+    })
+  }
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { block: _block, model, sortable, searchers, searchable, actions }
+    { block: _block, model, sortable, searchers, searchable, mainBlockActions }
   )
 }
 
@@ -86,9 +99,14 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
+  // main FormBlock in IndexView
+  const mainBlock =
+    (block.relType === BlockRelationshipType.Self || view.type === ViewType.New) &&
+    (block.relType === BlockRelationshipType.Self || view.type === ViewType.Edit)
+
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
-    { block: _block, model }
+    { block: _block, model, mainBlock }
   )
 }

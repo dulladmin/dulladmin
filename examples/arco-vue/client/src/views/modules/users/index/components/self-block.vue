@@ -478,8 +478,8 @@
   };
 
   // table - actions
-  const goto = (_route: RouteLocationRaw) => {
-    router.push(_route);
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
   // table - init

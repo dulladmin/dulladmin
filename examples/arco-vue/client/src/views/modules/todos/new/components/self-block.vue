@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
   import { computed, reactive, ref } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
@@ -49,6 +49,7 @@
   const { t } = useI18n();
 
   // route
+  const router = useRouter();
   const route = useRoute();
   const id = (route.params.id as string) ?? '';
 
@@ -106,7 +107,13 @@
         store.value = model;
       }
 
-      Message.success(t('form.actions.save.success'));
+      const { back } = route.query;
+      if (back) {
+        Message.success(t('form.actions.save.success'));
+        router.replace({ path: back as string });
+      } else {
+        Message.success(t('form.actions.save.success'));
+      }
     } finally {
       setSaving(false);
     }

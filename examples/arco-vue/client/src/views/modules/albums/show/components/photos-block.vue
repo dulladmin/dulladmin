@@ -82,14 +82,6 @@
         <!-- eslint-disable vue/no-unused-vars -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
-            <a-button
-              type="outline"
-              status="success"
-              size="small"
-              @click="goto({ name: 'AlbumsShow', params: { id: record.id } })"
-            >
-              {{ $t('table.actions.show') }}
-            </a-button>
           </a-space>
         </template>
         <!-- eslint-enable -->
@@ -262,8 +254,8 @@
   };
 
   // table - actions
-  const goto = (_route: RouteLocationRaw) => {
-    router.push(_route);
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
   // table - init

@@ -40,7 +40,10 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="goto({ name: 'AdministratorsNew' })">
+            <a-button
+              type="primary"
+              @click="goto({ name: 'AdministratorsNew' })"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -354,8 +357,8 @@
   };
 
   // table - actions
-  const goto = (_route: RouteLocationRaw) => {
-    router.push(_route);
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
   // table - init

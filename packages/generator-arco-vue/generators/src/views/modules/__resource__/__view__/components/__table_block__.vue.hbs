@@ -40,8 +40,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            {{#if actions.new }}
-            <a-button type="primary" @click="goto({ name: '{{ actions.new.name }}' })">
+            {{#if mainBlockActions.new }}
+            <a-button
+              type="primary"
+              @click="goto({ name: '{{ mainBlockActions.new.name }}' })"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -132,22 +135,22 @@
         <!-- eslint-disable vue/no-unused-vars -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
-            {{#if actions.show }}
+            {{#if mainBlockActions.show }}
             <a-button
               type="outline"
               status="success"
               size="small"
-              @click="goto({ name: '{{ actions.show.name }}', params: { id: record.id } })"
+              @click="goto({ name: '{{ mainBlockActions.show.name }}', params: { id: record.id } })"
             >
               \{{ $t('table.actions.show') }}
             </a-button>
             {{/if}}
-            {{#if actions.edit }}
+            {{#if mainBlockActions.edit }}
             <a-button
               type="outline"
               status="warning"
               size="small"
-              @click="goto({ name: '{{ actions.edit.name }}', params: { id: record.id } })"
+              @click="goto({ name: '{{ mainBlockActions.edit.name }}', params: { id: record.id } })"
             >
               \{{ $t('table.actions.edit') }}
             </a-button>
@@ -442,10 +445,10 @@
   };
 
 {{/if}}
-{{#if actions}}
+{{#if mainBlockActions}}
   // table - actions
-  const goto = (_route: RouteLocationRaw) => {
-    router.push(_route);
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 {{/if}}
 
