@@ -2,8 +2,8 @@
   "private": true,
   "name": "@dulladmin/all",
   "description": "DullAdmin is a specification for building admin panel.",
-  "author": "John Doe <johndoe@example.com>",
-  "license": "MIT",
+  "author": "DullAdmin Team",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dulladmin/dulladmin"

@@ -1,9 +1,9 @@
 {
   "name": "@dulladmin/cli",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "",
-  "author": "John Doe <johndoe@example.com>",
-  "license": "MIT",
+  "author": "DullAdmin Team",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dulladmin/dulladmin"
