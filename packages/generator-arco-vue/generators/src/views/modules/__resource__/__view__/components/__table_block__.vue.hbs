@@ -3,40 +3,6 @@
 <template>
   <div>
     <a-card :title="$t('{{block.title.i18nKey}}')">
-      {{#if searchable}}
-      <a-row>
-        <a-col>
-          <a-form
-            ref="searchFormRef"
-            :model="tableSearch"
-            :auto-label-width="true"
-          >
-          {{#each searchers}}
-            <DullFormItem
-              v-model="tableSearch.{{name}}"
-              :meta="searchMetadata.{{name}}"
-            />
-          {{/each}}
-            <a-form-item>
-              <a-space>
-                <a-button type="primary" @click="onTableSearch" :loading="searching">
-                  <template #icon>
-                    <icon-search />
-                  </template>
-                  \{{ $t('table.actions.search') }}
-                </a-button>
-                <a-button @click="onTableResetSearch">
-                  <template #icon>
-                    <icon-refresh />
-                  </template>
-                  \{{ $t('table.actions.resetSearch') }}
-                </a-button>
-              </a-space>
-            </a-form-item>
-          </a-form>
-        </a-col>
-      </a-row>
-      {{/if}}
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
@@ -57,6 +23,13 @@
           style="display: flex; align-items: center; justify-content: end"
           :span="12"
         >
+          {{#if searchable}}
+          <a-tooltip :content="$t('table.actions.search')">
+            <div class="action-icon" @click="handleSearchModalVisible"
+              ><icon-find-replace size="18"
+            /></div>
+          </a-tooltip>
+          {{/if}}
           <a-tooltip :content="$t('table.actions.refresh')">
             <div class="action-icon" @click="onTableRefresh"
               ><icon-refresh size="18"
@@ -160,6 +133,33 @@
         <!-- eslint-enable -->
       </a-table>
     </a-card>
+
+    {{#if searchable}}
+    <a-modal
+      v-model:visible="searchModalVisible"
+      :okText="$t('table.actions.search')"
+      @ok="handleSearchModalOk"
+      @cancel="handleSearchModalCancel"
+    >
+      <template #title>
+        \{{ $t('{{block.title.i18nKey}}') }}
+        -
+        \{{ $t('table.actions.search') }}
+      </template>
+      <a-form
+        ref="searchFormRef"
+        :model="tableSearch"
+        :auto-label-width="true"
+      >
+      {{#each searchers}}
+        <DullFormItem
+          v-model="tableSearch.{{name}}"
+          :meta="searchMetadata.{{name}}"
+        />
+      {{/each}}
+      </a-form>
+    </a-modal>
+    {{/if}}
   </div>
 </template>
 
@@ -402,25 +402,23 @@
 
 {{#if searchable}}
   // table -- search
-  const { loading: searching, setLoading: setSearching } = useLoading(false);
-  const onTableSearch = async () => {
-    setSearching(true);
-    try {
-      const req = omitBy({
-        search: apiSearch(tableSearch),
-        {{#if sortable}}
-        sorter: apiSorter(tableSorter),
-        {{/if}}
-        pagination: apiPagination(baseTablePagination),
-      }, v => v == null) as ListRequest;
-      await fetchStore(req);
-    } finally {
-      setSearching(false);
-    }
+  const searchModalVisible = ref(false);
+  const handleSearchModalVisible = () => {
+    searchModalVisible.value = true;
   };
-  const onTableResetSearch = async () => {
-    searchFormRef.value?.resetFields();
-    await onTableSearch();
+  const handleSearchModalOk = () => {
+    searchModalVisible.value = false;
+    const req = omitBy({
+      search: apiSearch(tableSearch),
+      {{#if sortable}}
+      sorter: apiSorter(tableSorter),
+      {{/if}}
+      pagination: apiPagination(baseTablePagination),
+    }, v => v == null) as ListRequest;
+    fetchStore(req);
+  };
+  const handleSearchModalCancel = () => {
+    searchModalVisible.value = false;
   };
 
 {{/if}}
@@ -462,5 +460,12 @@
   .action-icon {
     margin-left: 12px;
     cursor: pointer;
+  }
+  .arco-modal {
+    .arco-form {
+      .arco-form-item:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 </style>

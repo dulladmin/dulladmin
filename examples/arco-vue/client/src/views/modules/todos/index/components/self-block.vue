@@ -3,40 +3,6 @@
 <template>
   <div>
     <a-card :title="$t('todos--index.self-block.title')">
-      <a-row>
-        <a-col>
-          <a-form
-            ref="searchFormRef"
-            :model="tableSearch"
-            :auto-label-width="true"
-          >
-            <DullFormItem
-              v-model="tableSearch.userId_eq"
-              :meta="searchMetadata.userId_eq"
-            />
-            <DullFormItem
-              v-model="tableSearch.completed_eq"
-              :meta="searchMetadata.completed_eq"
-            />
-            <a-form-item>
-              <a-space>
-                <a-button type="primary" @click="onTableSearch" :loading="searching">
-                  <template #icon>
-                    <icon-search />
-                  </template>
-                  {{ $t('table.actions.search') }}
-                </a-button>
-                <a-button @click="onTableResetSearch">
-                  <template #icon>
-                    <icon-refresh />
-                  </template>
-                  {{ $t('table.actions.resetSearch') }}
-                </a-button>
-              </a-space>
-            </a-form-item>
-          </a-form>
-        </a-col>
-      </a-row>
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
@@ -55,6 +21,11 @@
           style="display: flex; align-items: center; justify-content: end"
           :span="12"
         >
+          <a-tooltip :content="$t('table.actions.search')">
+            <div class="action-icon" @click="handleSearchModalVisible"
+              ><icon-find-replace size="18"
+            /></div>
+          </a-tooltip>
           <a-tooltip :content="$t('table.actions.refresh')">
             <div class="action-icon" @click="onTableRefresh"
               ><icon-refresh size="18"
@@ -139,6 +110,33 @@
         <!-- eslint-enable -->
       </a-table>
     </a-card>
+
+    <a-modal
+      v-model:visible="searchModalVisible"
+      :okText="$t('table.actions.search')"
+      @ok="handleSearchModalOk"
+      @cancel="handleSearchModalCancel"
+    >
+      <template #title>
+        {{ $t('todos--index.self-block.title') }}
+        -
+        {{ $t('table.actions.search') }}
+      </template>
+      <a-form
+        ref="searchFormRef"
+        :model="tableSearch"
+        :auto-label-width="true"
+      >
+        <DullFormItem
+          v-model="tableSearch.userId_eq"
+          :meta="searchMetadata.userId_eq"
+        />
+        <DullFormItem
+          v-model="tableSearch.completed_eq"
+          :meta="searchMetadata.completed_eq"
+        />
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -390,7 +388,19 @@
   };
   const onTableResetSearch = async () => {
     searchFormRef.value?.resetFields();
-    await onTableSearch();
+  };
+
+  // table -- search modal
+  const searchModalVisible = ref(false);
+  const handleSearchModalVisible = () => {
+    searchModalVisible.value = true;
+  };
+  const handleSearchModalOk = () => {
+    searchModalVisible.value = false;
+    onTableSearch();
+  };
+  const handleSearchModalCancel = () => {
+    searchModalVisible.value = false;
   };
 
   // table - sorterChange
@@ -423,5 +433,12 @@
   .action-icon {
     margin-left: 12px;
     cursor: pointer;
+  }
+  .arco-modal {
+    .arco-form {
+      :deep(.arco-form-item:last-child) {
+        margin-bottom: 0;
+      }
+    }
   }
 </style>

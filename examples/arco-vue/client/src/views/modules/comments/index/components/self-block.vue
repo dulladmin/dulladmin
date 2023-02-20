@@ -94,6 +94,7 @@
         <!-- eslint-enable -->
       </a-table>
     </a-card>
+
   </div>
 </template>
 
@@ -318,5 +319,12 @@
   .action-icon {
     margin-left: 12px;
     cursor: pointer;
+  }
+  .arco-modal {
+    .arco-form {
+      :deep(.arco-form-item:last-child) {
+        margin-bottom: 0;
+      }
+    }
   }
 </style>
