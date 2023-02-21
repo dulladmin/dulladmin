@@ -28,9 +28,11 @@
         >
           {{#if searchable}}
           <a-tooltip :content="$t('table.actions.search')">
-            <div class="action-icon" @click="handleSearchModalVisible"
-              ><icon-find-replace size="18"
-            /></div>
+            <div class="action-icon" @click="handleSearchModalVisible">
+              <a-badge :count="apiSearched" dot :dotStyle="{ width: '8px', height: '8px' }" color="arcoblue">
+                <icon-find-replace size="18"/>
+              </a-badge>
+            </div>
           </a-tooltip>
           {{/if}}
           <a-tooltip :content="$t('table.actions.refresh')">
@@ -259,11 +261,14 @@
   const tableSearch = reactive({
     ...baseTableSearch,
   });
+  const apiSearched = ref(0);
   const apiSearch = (search: Search): any => {
     const o = omitBy(search, (v, k) => {
       if (searchMetadata[k].optionals) return v == null || v === '';
       return v == null || v === '' || v === false;
     });
+
+    apiSearched.value = isEmpty(o) ? 0 : 1;
     return isEmpty(o) ? null : o;
   };
 
