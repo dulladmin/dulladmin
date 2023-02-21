@@ -35,21 +35,8 @@
             <router-view v-slot="{ Component, route }">
               <transition name="fade" mode="out-in" appear>
                 <keep-alive :include="cachedTabs" :exclude="cachedDisabledTabs">
-                  <component
-                    v-if="useKeepAlive(route)"
-                    :is="Component"
-                    :key="route.fullPath"
-                  />
+                  <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
-              </transition>
-            </router-view>
-            <router-view v-slot="{ Component, route }">
-              <transition name="fade" mode="out-in" appear>
-                <component
-                  v-if="!useKeepAlive(route)"
-                  :is="Component"
-                  :key="route.fullPath"
-                />
               </transition>
             </router-view>
           </a-layout-content>
@@ -92,12 +79,6 @@
   const cachedDisabledTabs = computed(() => {
     return Array.from(appStore.cachedDisabledTabs);
   });
-  const useKeepAlive = (route: RouteLocationNormalized) => {
-    return (
-      cachedTabs.value.includes(route.name as string) &&
-      !cachedDisabledTabs.value.includes(route.name as string)
-    );
-  };
 
   // content area
   const contentPaddingStyle = computed(() => {
