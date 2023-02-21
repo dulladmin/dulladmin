@@ -108,6 +108,12 @@
       </a-table>
     </a-card>
 
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+        v-permission="['admin', ]"
+      />
+    </div>
+
     <a-modal
       v-model:visible="searchModalVisible"
       :okText="$t('table.actions.search')"
@@ -137,7 +143,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch, onMounted } from 'vue';
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
@@ -146,7 +152,7 @@
   import { useLoading } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: true };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
   type Search = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -221,6 +227,7 @@
     return isEmpty(o) ? null : o;
   };
 
+
   // pagination
   const baseTablePagination: Pagination = {
     pageSize: 20,
@@ -240,31 +247,49 @@
   };
 
   // table - columns initialize
+  const tableColumnsWithConfiguration = ref<Record<string, Column>>({
+    id: {
+      renderable: true,
+    },
+    name: {
+      renderable: true,
+    },
+    role: {
+      renderable: true,
+    },
+    tableOperationsColumn: {
+      renderable: true,
+    },
+  });
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
-  const tableColumns = computed<Column[]>(() => [
-    {
-      title: t('administrators--index.self-block.model.attributes.id'),
-      dataIndex: 'id',
-      slotName: 'id',
-    },
-    {
-      title: t('administrators--index.self-block.model.attributes.name'),
-      dataIndex: 'name',
-      slotName: 'name',
-    },
-    {
-      title: t('administrators--index.self-block.model.attributes.role'),
-      dataIndex: 'role',
-      slotName: 'role',
-    },
-    {
-      title: t('table.columns.operations'),
-      dataIndex: 'tableOperationsColumn',
-      slotName: 'tableOperationsColumn',
-      width: 180,
-    },
-  ]);
+  const tableColumns = computed<Column[]>(() => {
+    return ([
+      {
+        title: t('administrators--index.self-block.model.attributes.id'),
+        dataIndex: 'id',
+        slotName: 'id',
+      },
+      {
+        title: t('administrators--index.self-block.model.attributes.name'),
+        dataIndex: 'name',
+        slotName: 'name',
+      },
+      {
+        title: t('administrators--index.self-block.model.attributes.role'),
+        dataIndex: 'role',
+        slotName: 'role',
+      },
+      {
+        title: t('table.columns.operations'),
+        dataIndex: 'tableOperationsColumn',
+        slotName: 'tableOperationsColumn',
+        width: 180,
+      },
+    ] as Column[]).filter((item) => {
+      return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
+    });
+  });
   watch(
     () => tableColumns.value,
     (val) => {
@@ -357,6 +382,7 @@
     searchModalVisible.value = false;
   };
 
+
   // table - actions
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
@@ -364,6 +390,15 @@
 
   // table - init
   onTableRefresh();
+
+  // table - lifecycle
+  const tableOperationsColumnRenderableRef = ref();
+  onMounted(() => {
+    const el = tableOperationsColumnRenderableRef.value as any;
+    if (el.children.length === 0) {
+      tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+  });
 </script>
 
 <style lang="less" scoped>

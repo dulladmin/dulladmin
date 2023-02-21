@@ -95,11 +95,14 @@
       </a-table>
     </a-card>
 
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+    </div>
+
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch, onMounted } from 'vue';
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
@@ -108,7 +111,7 @@
   import { useLoading } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: true };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -144,6 +147,7 @@
     },
   };
 
+
   // sorter
   const baseTableSorter: Sorter = {
     name: '',
@@ -176,45 +180,69 @@
   };
 
   // table - columns initialize
+  const tableColumnsWithConfiguration = ref<Record<string, Column>>({
+    id: {
+      renderable: true,
+    },
+    albumId: {
+      renderable: true,
+    },
+    title: {
+      renderable: true,
+    },
+    url: {
+      renderable: true,
+    },
+    thumbnailUrl: {
+      renderable: true,
+    },
+    tableOperationsColumn: {
+      renderable: true,
+    },
+  });
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
-  const tableColumns = computed<Column[]>(() => [
-    {
-      title: t('photos--index.self-block.model.attributes.id'),
-      dataIndex: 'id',
-      slotName: 'id',
-      sortable: {
-        sortDirections: ['ascend', 'descend', ],
-        sorter: true,
+  const tableColumns = computed<Column[]>(() => {
+    return ([
+      {
+        title: t('photos--index.self-block.model.attributes.id'),
+        dataIndex: 'id',
+        slotName: 'id',
+        sortable: {
+          sortDirections: ['ascend', 'descend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('photos--index.self-block.model.attributes.albumId'),
-      dataIndex: 'albumId',
-      slotName: 'albumId',
-    },
-    {
-      title: t('photos--index.self-block.model.attributes.title'),
-      dataIndex: 'title',
-      slotName: 'title',
-    },
-    {
-      title: t('photos--index.self-block.model.attributes.url'),
-      dataIndex: 'url',
-      slotName: 'url',
-    },
-    {
-      title: t('photos--index.self-block.model.attributes.thumbnailUrl'),
-      dataIndex: 'thumbnailUrl',
-      slotName: 'thumbnailUrl',
-    },
-    {
-      title: t('table.columns.operations'),
-      dataIndex: 'tableOperationsColumn',
-      slotName: 'tableOperationsColumn',
-      width: 180,
-    },
-  ]);
+      {
+        title: t('photos--index.self-block.model.attributes.albumId'),
+        dataIndex: 'albumId',
+        slotName: 'albumId',
+      },
+      {
+        title: t('photos--index.self-block.model.attributes.title'),
+        dataIndex: 'title',
+        slotName: 'title',
+      },
+      {
+        title: t('photos--index.self-block.model.attributes.url'),
+        dataIndex: 'url',
+        slotName: 'url',
+      },
+      {
+        title: t('photos--index.self-block.model.attributes.thumbnailUrl'),
+        dataIndex: 'thumbnailUrl',
+        slotName: 'thumbnailUrl',
+      },
+      {
+        title: t('table.columns.operations'),
+        dataIndex: 'tableOperationsColumn',
+        slotName: 'tableOperationsColumn',
+        width: 180,
+      },
+    ] as Column[]).filter((item) => {
+      return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
+    });
+  });
   watch(
     () => tableColumns.value,
     (val) => {
@@ -290,6 +318,7 @@
     await fetchStore(req);
   };
 
+
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
     if (direction) {
@@ -313,6 +342,15 @@
 
   // table - init
   onTableRefresh();
+
+  // table - lifecycle
+  const tableOperationsColumnRenderableRef = ref();
+  onMounted(() => {
+    const el = tableOperationsColumnRenderableRef.value as any;
+    if (el.children.length === 0) {
+      tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+  });
 </script>
 
 <style lang="less" scoped>

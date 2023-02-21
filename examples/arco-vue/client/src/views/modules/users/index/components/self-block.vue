@@ -120,6 +120,9 @@
       </a-table>
     </a-card>
 
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+    </div>
+
     <a-modal
       v-model:visible="searchModalVisible"
       :okText="$t('table.actions.search')"
@@ -149,7 +152,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch, onMounted } from 'vue';
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
@@ -158,7 +161,7 @@
   import { useLoading } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: true };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
   type Search = Record<string, any>;
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
@@ -298,72 +301,105 @@
   };
 
   // table - columns initialize
+  const tableColumnsWithConfiguration = ref<Record<string, Column>>({
+    id: {
+      renderable: true,
+    },
+    name: {
+      renderable: true,
+    },
+    username: {
+      renderable: true,
+    },
+    email: {
+      renderable: true,
+    },
+    address: {
+      renderable: true,
+    },
+    phone: {
+      renderable: true,
+    },
+    website: {
+      renderable: true,
+    },
+    company: {
+      renderable: true,
+    },
+    tableOperationsColumn: {
+      renderable: true,
+    },
+  });
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
-  const tableColumns = computed<Column[]>(() => [
-    {
-      title: t('users--index.self-block.model.attributes.id'),
-      dataIndex: 'id',
-      slotName: 'id',
-      sortable: {
-        sortDirections: ['descend', 'ascend', ],
-        sorter: true,
+  const tableColumns = computed<Column[]>(() => {
+    return ([
+      {
+        title: t('users--index.self-block.model.attributes.id'),
+        dataIndex: 'id',
+        slotName: 'id',
+        sortable: {
+          sortDirections: ['descend', 'ascend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('users--index.self-block.model.attributes.name'),
-      dataIndex: 'name',
-      slotName: 'name',
-      sortable: {
-        sortDirections: ['descend', ],
-        sorter: true,
+      {
+        title: t('users--index.self-block.model.attributes.name'),
+        dataIndex: 'name',
+        slotName: 'name',
+        sortable: {
+          sortDirections: ['descend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('users--index.self-block.model.attributes.username'),
-      dataIndex: 'username',
-      slotName: 'username',
-      sortable: {
-        sortDirections: ['ascend', 'descend', ],
-        sorter: true,
+      {
+        title: t('users--index.self-block.model.attributes.username'),
+        dataIndex: 'username',
+        slotName: 'username',
+        sortable: {
+          sortDirections: ['ascend', 'descend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('users--index.self-block.model.attributes.email'),
-      dataIndex: 'email',
-      slotName: 'email',
-      sortable: {
-        sortDirections: ['ascend', ],
-        sorter: true,
+      {
+        title: t('users--index.self-block.model.attributes.email'),
+        dataIndex: 'email',
+        slotName: 'email',
+        sortable: {
+          sortDirections: ['ascend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('users--index.self-block.model.attributes.address'),
-      dataIndex: 'address',
-      slotName: 'address',
-    },
-    {
-      title: t('users--index.self-block.model.attributes.phone'),
-      dataIndex: 'phone',
-      slotName: 'phone',
-    },
-    {
-      title: t('users--index.self-block.model.attributes.website'),
-      dataIndex: 'website',
-      slotName: 'website',
-    },
-    {
-      title: t('users--index.self-block.model.attributes.company'),
-      dataIndex: 'company',
-      slotName: 'company',
-    },
-    {
-      title: t('table.columns.operations'),
-      dataIndex: 'tableOperationsColumn',
-      slotName: 'tableOperationsColumn',
-      width: 180,
-    },
-  ]);
+      {
+        title: t('users--index.self-block.model.attributes.address'),
+        dataIndex: 'address',
+        slotName: 'address',
+      },
+      {
+        title: t('users--index.self-block.model.attributes.phone'),
+        dataIndex: 'phone',
+        slotName: 'phone',
+      },
+      {
+        title: t('users--index.self-block.model.attributes.website'),
+        dataIndex: 'website',
+        slotName: 'website',
+      },
+      {
+        title: t('users--index.self-block.model.attributes.company'),
+        dataIndex: 'company',
+        slotName: 'company',
+      },
+      {
+        title: t('table.columns.operations'),
+        dataIndex: 'tableOperationsColumn',
+        slotName: 'tableOperationsColumn',
+        width: 180,
+      },
+    ] as Column[]).filter((item) => {
+      return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
+    });
+  });
   watch(
     () => tableColumns.value,
     (val) => {
@@ -483,6 +519,15 @@
 
   // table - init
   onTableRefresh();
+
+  // table - lifecycle
+  const tableOperationsColumnRenderableRef = ref();
+  onMounted(() => {
+    const el = tableOperationsColumnRenderableRef.value as any;
+    if (el.children.length === 0) {
+      tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+  });
 </script>
 
 <style lang="less" scoped>

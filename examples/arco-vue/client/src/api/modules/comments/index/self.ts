@@ -15,6 +15,7 @@ export interface Model {
   body?: string;
 }
 
+
 /* GET /comments/index/self */
 export interface ListRequest {
   sorter?: Sorter;

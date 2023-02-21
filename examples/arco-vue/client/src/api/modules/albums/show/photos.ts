@@ -13,6 +13,7 @@ export interface Model {
   thumbnailUrl?: string;
 }
 
+
 /* GET /albums/${id}/show/photos */
 export interface ListRequest {
   pagination: Pagination;

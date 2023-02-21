@@ -145,6 +145,23 @@
       </a-table>
     </a-card>
 
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      {{#if mainBlockActions.show}}
+      <span
+        {{#if mainBlockActions.show.authority}}
+        v-permission="[{{#each mainBlockActions.show.authority}}'{{this}}', {{/each}}]"
+        {{/if}}
+      />
+      {{/if}}
+      {{#if mainBlockActions.edit}}
+      <span
+        {{#if mainBlockActions.edit.authority}}
+        v-permission="[{{#each mainBlockActions.edit.authority}}'{{this}}', {{/each}}]"
+        {{/if}}
+      />
+      {{/if}}
+    </div>
+
     {{#if searchable}}
     <a-modal
       v-model:visible="searchModalVisible"
@@ -174,7 +191,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch, onMounted } from 'vue';
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
@@ -183,7 +200,7 @@
   import { useLoading } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: true };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
   {{#if searchable}}
   type Search = Record<string, any>;
   {{/if}}
@@ -268,8 +285,8 @@
     apiSearched.value = isEmpty(o) ? 0 : 1;
     return isEmpty(o) ? null : o;
   };
-
 {{/if}}
+
 {{#if sortable}}
   // sorter
   const baseTableSorter: Sorter = {
@@ -283,8 +300,8 @@
     if (sorter.name === '') return null;
     return { name: sorter.name, direction: sorter.direction };
   };
-
 {{/if}}
+
   // pagination
   const baseTablePagination: Pagination = {
     pageSize: 20,
@@ -304,29 +321,43 @@
   };
 
   // table - columns initialize
-  const tableColumnsWithShow = ref<Column[]>([]);
-  const tableColumnsShow = ref<Column[]>([]);
-  const tableColumns = computed<Column[]>(() => [
+  const tableColumnsWithConfiguration = ref<Record<string, Column>>({
   {{#each model.attributes}}
-    {
-      title: t('{{i18nKey}}'),
-      dataIndex: '{{name}}',
-      slotName: '{{name}}',
-      {{#if sorter}}
-      sortable: {
-        sortDirections: [{{#each sorter.directions}}'{{this}}', {{/each}}],
-        sorter: true,
-      },
-      {{/if}}
+    {{name}}: {
+      renderable: true,
     },
   {{/each}}
-    {
-      title: t('table.columns.operations'),
-      dataIndex: 'tableOperationsColumn',
-      slotName: 'tableOperationsColumn',
-      width: 180,
+    tableOperationsColumn: {
+      renderable: true,
     },
-  ]);
+  });
+  const tableColumnsWithShow = ref<Column[]>([]);
+  const tableColumnsShow = ref<Column[]>([]);
+  const tableColumns = computed<Column[]>(() => {
+    return ([
+    {{#each model.attributes}}
+      {
+        title: t('{{i18nKey}}'),
+        dataIndex: '{{name}}',
+        slotName: '{{name}}',
+        {{#if sorter}}
+        sortable: {
+          sortDirections: [{{#each sorter.directions}}'{{this}}', {{/each}}],
+          sorter: true,
+        },
+        {{/if}}
+      },
+    {{/each}}
+      {
+        title: t('table.columns.operations'),
+        dataIndex: 'tableOperationsColumn',
+        slotName: 'tableOperationsColumn',
+        width: 180,
+      },
+    ] as Column[]).filter((item) => {
+      return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
+    });
+  });
   watch(
     () => tableColumns.value,
     (val) => {
@@ -432,8 +463,8 @@
   const handleSearchModalCancel = () => {
     searchModalVisible.value = false;
   };
-
 {{/if}}
+
 {{#if sortable}}
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
@@ -453,19 +484,24 @@
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
-
 {{/if}}
-{{#if mainBlockActions}}
+
   // table - actions
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
-{{/if}}
-
-{{#if no-newline}}  {{^}}  {{/if~}}
 
   // table - init
   onTableRefresh();
+
+  // table - lifecycle
+  const tableOperationsColumnRenderableRef = ref();
+  onMounted(() => {
+    const el = tableOperationsColumnRenderableRef.value as any;
+    if (el.children.length === 0) {
+      tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+  });
 </script>
 
 <style lang="less" scoped>

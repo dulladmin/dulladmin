@@ -15,6 +15,7 @@ export interface Model {
   thumbnailUrl?: string;
 }
 
+
 /* GET /photos/index/self */
 export interface ListRequest {
   sorter?: Sorter;

@@ -113,6 +113,11 @@
       </a-table>
     </a-card>
 
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
+    </div>
+
     <a-modal
       v-model:visible="searchModalVisible"
       :okText="$t('table.actions.search')"
@@ -142,7 +147,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, reactive, ref, watch } from 'vue';
+  import { computed, reactive, ref, watch, onMounted } from 'vue';
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
@@ -151,7 +156,7 @@
   import { useLoading } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: true };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
   type Search = Record<string, any>;
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
@@ -263,40 +268,61 @@
   };
 
   // table - columns initialize
+  const tableColumnsWithConfiguration = ref<Record<string, Column>>({
+    id: {
+      renderable: true,
+    },
+    userId: {
+      renderable: true,
+    },
+    title: {
+      renderable: true,
+    },
+    completed: {
+      renderable: true,
+    },
+    tableOperationsColumn: {
+      renderable: true,
+    },
+  });
   const tableColumnsWithShow = ref<Column[]>([]);
   const tableColumnsShow = ref<Column[]>([]);
-  const tableColumns = computed<Column[]>(() => [
-    {
-      title: t('todos--index.self-block.model.attributes.id'),
-      dataIndex: 'id',
-      slotName: 'id',
-      sortable: {
-        sortDirections: ['ascend', 'descend', ],
-        sorter: true,
+  const tableColumns = computed<Column[]>(() => {
+    return ([
+      {
+        title: t('todos--index.self-block.model.attributes.id'),
+        dataIndex: 'id',
+        slotName: 'id',
+        sortable: {
+          sortDirections: ['ascend', 'descend', ],
+          sorter: true,
+        },
       },
-    },
-    {
-      title: t('todos--index.self-block.model.attributes.userId'),
-      dataIndex: 'userId',
-      slotName: 'userId',
-    },
-    {
-      title: t('todos--index.self-block.model.attributes.title'),
-      dataIndex: 'title',
-      slotName: 'title',
-    },
-    {
-      title: t('todos--index.self-block.model.attributes.completed'),
-      dataIndex: 'completed',
-      slotName: 'completed',
-    },
-    {
-      title: t('table.columns.operations'),
-      dataIndex: 'tableOperationsColumn',
-      slotName: 'tableOperationsColumn',
-      width: 180,
-    },
-  ]);
+      {
+        title: t('todos--index.self-block.model.attributes.userId'),
+        dataIndex: 'userId',
+        slotName: 'userId',
+      },
+      {
+        title: t('todos--index.self-block.model.attributes.title'),
+        dataIndex: 'title',
+        slotName: 'title',
+      },
+      {
+        title: t('todos--index.self-block.model.attributes.completed'),
+        dataIndex: 'completed',
+        slotName: 'completed',
+      },
+      {
+        title: t('table.columns.operations'),
+        dataIndex: 'tableOperationsColumn',
+        slotName: 'tableOperationsColumn',
+        width: 180,
+      },
+    ] as Column[]).filter((item) => {
+      return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
+    });
+  });
   watch(
     () => tableColumns.value,
     (val) => {
@@ -416,6 +442,15 @@
 
   // table - init
   onTableRefresh();
+
+  // table - lifecycle
+  const tableOperationsColumnRenderableRef = ref();
+  onMounted(() => {
+    const el = tableOperationsColumnRenderableRef.value as any;
+    if (el.children.length === 0) {
+      tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+  });
 </script>
 
 <style lang="less" scoped>
