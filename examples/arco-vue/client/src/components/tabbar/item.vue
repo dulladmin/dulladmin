@@ -154,6 +154,7 @@
   .tabbar-item-link {
     color: var(--color-text-2);
     text-decoration: none;
+    padding-right: 4px;
   }
 
   .item-link-activated {

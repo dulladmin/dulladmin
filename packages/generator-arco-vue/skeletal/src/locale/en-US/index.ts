@@ -34,6 +34,7 @@ export default {
   // components - table
   'table.actions.search': 'Search',
   'table.actions.resetSearch': 'Reset',
+  'table.actions.clearSearch': 'Clear Search',
   'table.actions.columnSetting': 'Column setting',
   'table.actions.refresh': 'Refresh',
   'table.actions.new': 'New',

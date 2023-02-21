@@ -4,10 +4,13 @@
   <div>
     <a-card :title="$t('posts--index.self-block.title')">
       <a-row style="margin-bottom: 16px">
+        <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
           </a-space>
         </a-col>
+
+        <!-- Table Search/Refresh/ColumnsSetting -->
         <a-col
           style="display: flex; align-items: center; justify-content: end"
           :span="12"
@@ -47,6 +50,8 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
+      <!-- Table -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -81,6 +86,7 @@
           />
         </template>
         <!-- eslint-disable vue/no-unused-vars -->
+        <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
           </a-space>
@@ -89,6 +95,7 @@
       </a-table>
     </a-card>
 
+    <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
     </div>
 
@@ -317,7 +324,7 @@
     await fetchStore(req);
   };
 
-  // table - actions
+  // table - operations
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };

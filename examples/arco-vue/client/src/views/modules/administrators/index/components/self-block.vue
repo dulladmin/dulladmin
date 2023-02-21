@@ -4,6 +4,7 @@
   <div>
     <a-card :title="$t('administrators--index.self-block.title')">
       <a-row style="margin-bottom: 16px">
+        <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
             <a-button
@@ -18,13 +19,38 @@
             </a-button>
           </a-space>
         </a-col>
+
+        <!-- Table Search/Refresh/ColumnsSetting -->
         <a-col
           style="display: flex; align-items: center; justify-content: end"
           :span="12"
         >
+          <a-space>
+            <a-tag
+              v-for="(value, name) in tableSearchCondition"
+              :key="name"
+              :visible="!!value"
+              color="arcoblue"
+              size="small"
+              closable
+              @close="handleSearchConditionClose(name)"
+            >
+              {{ t(searchMetadata[name]['i18nKey']) }} "{{ value }}"
+            </a-tag>
+            <div v-show="tableSearchConditionCount" @click="handleSearchConditionClose('')">
+              <a-tag color="orangered" size="small">
+                {{ t('table.actions.clearSearch') }}
+              </a-tag>
+            </div>
+          </a-space>
           <a-tooltip :content="$t('table.actions.search')">
             <div class="action-icon" @click="handleSearchModalVisible">
-              <a-badge :count="apiSearched" dot :dotStyle="{ width: '8px', height: '8px' }" color="arcoblue">
+              <a-badge
+                color="arcoblue"
+                dot
+                :dotStyle="{ width: '8px', height: '8px' }"
+                :count="tableSearchConditionCount"
+              >
                 <icon-find-replace size="18"/>
               </a-badge>
             </div>
@@ -64,6 +90,8 @@
           </a-tooltip>
         </a-col>
       </a-row>
+
+      <!-- Table -->
       <a-table
         row-key="id"
         :loading="loading"
@@ -91,6 +119,7 @@
           />
         </template>
         <!-- eslint-disable vue/no-unused-vars -->
+        <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
             <a-button
@@ -108,16 +137,18 @@
       </a-table>
     </a-card>
 
+    <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
       <span
         v-permission="['admin', ]"
       />
     </div>
 
+    <!-- Table Search -->
     <a-modal
       v-model:visible="searchModalVisible"
       :okText="$t('table.actions.search')"
-      @ok="handleSearchModalOk"
+      :on-before-ok="handleSearchModalBeforeOk"
       @cancel="handleSearchModalCancel"
     >
       <template #title>
@@ -126,15 +157,15 @@
         {{ $t('table.actions.search') }}
       </template>
       <a-form
-        :model="tableSearch"
+        :model="tableSearchForm"
         :auto-label-width="true"
       >
         <DullFormItem
-          v-model="tableSearch.id_eq"
+          v-model="tableSearchForm.id_eq"
           :meta="searchMetadata.id_eq"
         />
         <DullFormItem
-          v-model="tableSearch.role_eq"
+          v-model="tableSearchForm.role_eq"
           :meta="searchMetadata.role_eq"
         />
       </a-form>
@@ -216,14 +247,20 @@
   const tableSearch = reactive({
     ...baseTableSearch,
   });
-  const apiSearched = ref(0);
+  const tableSearchForm = reactive({
+    ...tableSearch,
+  });
+  const tableSearchCondition = reactive({
+    ...tableSearch,
+  });
+  const tableSearchConditionCount = ref(0);
   const apiSearch = (search: Search): any => {
     const o = omitBy(search, (v, k) => {
       if (searchMetadata[k].optionals) return v == null || v === '';
       return v == null || v === '' || v === false;
     });
-
-    apiSearched.value = isEmpty(o) ? 0 : 1;
+    Object.assign(tableSearchCondition, cloneDeep(baseTableSearch), cloneDeep(o));
+    tableSearchConditionCount.value = Object.keys(o).length
     return isEmpty(o) ? null : o;
   };
 
@@ -365,25 +402,42 @@
     await fetchStore(req);
   };
 
-  // table -- search
-  const searchModalVisible = ref(false);
-  const handleSearchModalVisible = () => {
-    searchModalVisible.value = true;
-  };
-  const handleSearchModalOk = () => {
-    searchModalVisible.value = false;
+  // table - search
+  const onTableSearch = async () => {
     const req = omitBy({
       search: apiSearch(tableSearch),
       pagination: apiPagination(baseTablePagination),
     }, v => v == null) as ListRequest;
-    fetchStore(req);
+    await fetchStore(req);
+  };
+
+  // table - search condition
+  const handleSearchConditionClose = async(name: string) => {
+    if (name === '') {
+      Object.assign(tableSearch, cloneDeep(baseTableSearch));
+    } else {
+      tableSearch[name] = null;
+    }
+    await onTableSearch();
+  };
+
+  // table - search modal
+  const searchModalVisible = ref(false);
+  const handleSearchModalVisible = () => {
+    Object.assign(tableSearchForm, cloneDeep(tableSearch));
+    searchModalVisible.value = true;
+  };
+  const handleSearchModalBeforeOk = async () => {
+    Object.assign(tableSearch, cloneDeep(tableSearchForm));
+    await onTableSearch();
+    searchModalVisible.value = false;
   };
   const handleSearchModalCancel = () => {
     searchModalVisible.value = false;
   };
 
 
-  // table - actions
+  // table - operations
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };

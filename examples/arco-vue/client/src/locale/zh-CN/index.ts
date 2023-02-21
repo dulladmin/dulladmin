@@ -34,6 +34,7 @@ export default {
   // components - table
   'table.actions.search': '搜索',
   'table.actions.resetSearch': '重置',
+  'table.actions.clearSearch': '清空搜索选项',
   'table.actions.columnSetting': '列设置',
   'table.actions.refresh': '刷新',
   'table.actions.new': '新建',

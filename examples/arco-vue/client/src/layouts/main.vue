@@ -32,8 +32,8 @@
           <a-layout-content>
             <TabBar />
             <Breadcrumb />
-            <transition name="fade" mode="out-in" appear>
-              <router-view v-slot="{ Component, route }">
+            <router-view v-slot="{ Component, route }">
+              <transition name="fade" mode="out-in" appear>
                 <keep-alive :include="cachedTabs" :exclude="cachedDisabledTabs">
                   <component
                     v-if="useKeepAlive(route)"
@@ -41,17 +41,17 @@
                     :key="route.fullPath"
                   />
                 </keep-alive>
-              </router-view>
-            </transition>
-            <transition name="fade" mode="out-in" appear>
-              <router-view v-slot="{ Component, route }">
+              </transition>
+            </router-view>
+            <router-view v-slot="{ Component, route }">
+              <transition name="fade" mode="out-in" appear>
                 <component
                   v-if="!useKeepAlive(route)"
                   :is="Component"
                   :key="route.fullPath"
                 />
-              </router-view>
-            </transition>
+              </transition>
+            </router-view>
           </a-layout-content>
           <a-layout-footer>
             <Footer />
