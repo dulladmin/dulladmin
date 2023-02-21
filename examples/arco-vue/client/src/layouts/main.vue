@@ -32,13 +32,26 @@
           <a-layout-content>
             <TabBar />
             <Breadcrumb />
-            <router-view v-slot="{ Component, route }">
-              <transition name="fade" mode="out-in" appear>
+            <transition name="fade" mode="out-in" appear>
+              <router-view v-slot="{ Component, route }">
                 <keep-alive :include="cachedTabs" :exclude="cachedDisabledTabs">
-                  <component :is="Component" :key="route.fullPath" />
+                  <component
+                    v-if="useKeepAlive(route)"
+                    :is="Component"
+                    :key="route.fullPath"
+                  />
                 </keep-alive>
-              </transition>
-            </router-view>
+              </router-view>
+            </transition>
+            <transition name="fade" mode="out-in" appear>
+              <router-view v-slot="{ Component, route }">
+                <component
+                  v-if="!useKeepAlive(route)"
+                  :is="Component"
+                  :key="route.fullPath"
+                />
+              </router-view>
+            </transition>
           </a-layout-content>
           <a-layout-footer>
             <Footer />
@@ -51,6 +64,7 @@
 
 <script lang="ts" setup>
   import { ref, computed, provide } from 'vue';
+  import type { RouteLocationNormalized } from 'vue-router';
   import { Breadcrumb, Footer, Menu, NavBar, TabBar } from '@/components';
   import { useResponsive } from '@/hooks';
   import { useAppStore } from '@/store';
@@ -78,6 +92,12 @@
   const cachedDisabledTabs = computed(() => {
     return Array.from(appStore.cachedDisabledTabs);
   });
+  const useKeepAlive = (route: RouteLocationNormalized) => {
+    return (
+      cachedTabs.value.includes(route.name as string) &&
+      !cachedDisabledTabs.value.includes(route.name as string)
+    );
+  };
 
   // content area
   const contentPaddingStyle = computed(() => {
