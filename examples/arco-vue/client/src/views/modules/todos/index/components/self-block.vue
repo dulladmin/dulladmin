@@ -125,7 +125,6 @@
         {{ $t('table.actions.search') }}
       </template>
       <a-form
-        ref="searchFormRef"
         :model="tableSearch"
         :auto-label-width="true"
       >
@@ -147,7 +146,6 @@
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/todos/index/self';
   import { useLoading } from '@/hooks';
@@ -195,7 +193,6 @@
   };
 
   // search
-  const searchFormRef = ref<FormInstance>();
   const searchMetadata: { [key: string]: any } = {
     userId_eq: {
       name: 'userId_eq',
@@ -297,6 +294,7 @@
       title: t('table.columns.operations'),
       dataIndex: 'tableOperationsColumn',
       slotName: 'tableOperationsColumn',
+      width: 180,
     },
   ]);
   watch(

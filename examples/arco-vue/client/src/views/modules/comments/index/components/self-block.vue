@@ -103,7 +103,6 @@
   import { useRouter, useRoute, RouteLocationRaw } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/comments/index/self';
   import { useLoading } from '@/hooks';
@@ -213,6 +212,7 @@
       title: t('table.columns.operations'),
       dataIndex: 'tableOperationsColumn',
       slotName: 'tableOperationsColumn',
+      width: 180,
     },
   ]);
   watch(
