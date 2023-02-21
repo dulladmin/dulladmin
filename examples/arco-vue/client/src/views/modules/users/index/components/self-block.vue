@@ -25,7 +25,8 @@
               closable
               @close="handleSearchConditionClose(name as string)"
             >
-              {{ t(searchMetadata[name]['i18nKey']) }} "{{ value }}"
+              {{ t(searchMetadata[name]['i18nKey']) }}
+              "{{ searchMetadata[name].optionals?.[value] ? t(searchMetadata[name].optionals[value]['i18nKey']) : value }}"
             </a-tag>
             <div
               style="cursor: pointer"
