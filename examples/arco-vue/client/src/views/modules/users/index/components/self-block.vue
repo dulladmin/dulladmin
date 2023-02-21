@@ -23,11 +23,15 @@
               color="arcoblue"
               size="small"
               closable
-              @close="handleSearchConditionClose(name)"
+              @close="handleSearchConditionClose(name as string)"
             >
               {{ t(searchMetadata[name]['i18nKey']) }} "{{ value }}"
             </a-tag>
-            <div v-show="tableSearchConditionCount" @click="handleSearchConditionClose('')">
+            <div
+              style="cursor: pointer"
+              v-show="tableSearchConditionCount"
+              @click="handleSearchConditionClose('')"
+            >
               <a-tag color="orangered" size="small">
                 {{ t('table.actions.clearSearch') }}
               </a-tag>
@@ -155,7 +159,7 @@
 
     <!-- Table Search -->
     <a-modal
-      class="search-modal"
+      class="dulladmin-table-block-search-modal"
       v-model:visible="searchModalVisible"
       :okText="$t('table.actions.search')"
       :on-before-ok="handleSearchModalBeforeOk"
