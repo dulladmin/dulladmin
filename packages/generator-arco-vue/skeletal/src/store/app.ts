@@ -46,6 +46,7 @@ const useAppStore = defineStore('app', () => {
     return tabs.value[tabIndex] ?? { name: '$app' };
   };
   const newTabOpenPosition = ref<number | null>(null);
+  const newTabOpenParams = ref<Record<string, any>>({});
   const addTab = (to: RouteLocationNormalized) => {
     if (to.matched[0].name === '$app') {
       if (to.name === '$app') return;
@@ -156,6 +157,9 @@ const useAppStore = defineStore('app', () => {
   const setNewTabOpenPosition = (position: number) => {
     newTabOpenPosition.value = position;
   };
+  const setNewTabOpenParams = (params: Record<string, any>) => {
+    newTabOpenParams.value = params;
+  };
   watch(
     () => tabs.value,
     (val) => {
@@ -193,6 +197,8 @@ const useAppStore = defineStore('app', () => {
     removeAllTabs,
     removeCurrentActiveTab,
     setNewTabOpenPosition,
+    setNewTabOpenParams,
+    newTabOpenParams,
   };
 });
 

@@ -13,12 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { useScrollBehavior } from '@/hooks';
+  import { useTabbableView } from '@/hooks';
 {{#each blocks}}
   import {{componentName}} from '{{componentImportPath}}';
 {{/each}}
 
-  useScrollBehavior();
+  useTabbableView({
+    name: '{{name}}',
+  });
 </script>
 
 <script lang="ts">

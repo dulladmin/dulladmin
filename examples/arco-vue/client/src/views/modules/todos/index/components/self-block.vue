@@ -190,7 +190,7 @@
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/todos/index/self';
-  import { useLoading } from '@/hooks';
+  import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean };
@@ -499,10 +499,7 @@
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
-  // table - init
-  onTableRefresh();
-
-  // table - lifecycle
+  // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
@@ -510,4 +507,13 @@
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
   });
+
+  // table - tabbable
+  useTabbableViewBlock({
+    viewName: 'TodosIndex',
+    refreshFn: onTableRefresh,
+  });
+
+  // table - init
+  onTableRefresh();
 </script>

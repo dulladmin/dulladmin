@@ -69,7 +69,7 @@
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
   import { Model, get } from '@/api/modules/albums/show/self';
-  import { useLoading } from '@/hooks';
+  import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
   type Desc = DescData & { dataIndex: string };
@@ -115,6 +115,17 @@
     }
   };
 
+  // descriptions - refresh
+  const onDescriptionsRefresh = async () => {
+    await fetchStore();
+  };
+
+  // descriptions - tabbable
+  useTabbableViewBlock({
+    viewName: 'AlbumsShow',
+    refreshFn: onDescriptionsRefresh,
+  });
+
   // descriptions - init
-  fetchStore();
+  onDescriptionsRefresh();
 </script>

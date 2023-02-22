@@ -2,7 +2,7 @@ import useLoading from './loading';
 import useLocale from './locale';
 import usePermission from './permission';
 import useResponsive from './responsive';
-import useScrollBehavior from './scroll-behavior';
+import { useTabbableView, useTabbableViewBlock } from './tabbable';
 import useUser from './user';
 
 export {
@@ -10,6 +10,7 @@ export {
   useLocale,
   usePermission,
   useResponsive,
-  useScrollBehavior,
+  useTabbableView,
+  useTabbableViewBlock,
   useUser,
 };

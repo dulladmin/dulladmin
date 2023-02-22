@@ -39,7 +39,7 @@
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
   import { Model, UpdateRequest, get, update } from '@/api/modules/administrators/new/self';
-  import { useLoading } from '@/hooks';
+  import { useLoading, useTabbableViewBlock } from '@/hooks';
   import { useAppStore } from '@/store';
 
   // i18n
@@ -113,6 +113,7 @@
       const { back } = route.query;
       if (back) {
         appStore.removeCurrentActiveTab();
+        appStore.setNewTabOpenParams({ refresh: true });
         router.replace({ path: back as string });
       }
     } finally {
@@ -120,6 +121,17 @@
     }
   };
 
+  // form - refresh
+  const onFormRefresh = async () => {
+    await fetchStore();
+  };
+
+  // form - tabbable
+  useTabbableViewBlock({
+    viewName: 'AdministratorsNew',
+    refreshFn: onFormRefresh,
+  });
+
   // form - init
-  fetchStore();
+  onFormRefresh();
 </script>

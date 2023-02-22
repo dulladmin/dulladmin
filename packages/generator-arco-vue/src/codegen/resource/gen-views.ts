@@ -58,6 +58,7 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 }
 
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
+  const _view = extractViewInfo(resource, view)
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
@@ -83,22 +84,24 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { block: _block, model, sortable, searchers, searchable, mainBlockActions }
+    { view: _view, block: _block, model, sortable, searchers, searchable, mainBlockActions }
   )
 }
 
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
+  const _view = extractViewInfo(resource, view)
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs',
-    { block: _block, model }
+    { view: _view, block: _block, model }
   )
 }
 
 function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
+  const _view = extractViewInfo(resource, view)
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
@@ -110,6 +113,6 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
-    { block: _block, model, mainBlock }
+    { view: _view, block: _block, model, mainBlock }
   )
 }

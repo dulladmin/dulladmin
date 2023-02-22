@@ -11,10 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-  import { useScrollBehavior } from '@/hooks';
+  import { useTabbableView } from '@/hooks';
   import SelfBlock from '@/views/modules/administrators/index/components/self-block.vue';
 
-  useScrollBehavior();
+  useTabbableView({
+    name: 'AdministratorsIndex',
+  });
 </script>
 
 <script lang="ts">
