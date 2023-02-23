@@ -69,6 +69,10 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const searchers = extractBlockSearcherInfo(resource, view, block)
   const searchable = searchers.length !== 0
 
+  const pagination = {
+    per: block.pagination?.per
+  }
+
   const resourceActions: Record<string, any> = {}
   if (view.type === ViewType.Index && block.relType === BlockRelationshipType.Self) {
     resource.views.forEach((view) => {
@@ -83,7 +87,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { view: _view, block: _block, model, sortable, searchers, searchable, resourceActions }
+    { view: _view, block: _block, model, sortable, searchers, searchable, pagination, resourceActions }
   )
 }
 

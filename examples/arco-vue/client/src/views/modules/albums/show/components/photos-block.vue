@@ -146,7 +146,7 @@
 
   // pagination
   const baseTablePagination: Pagination = {
-    pageSize: 20,
+    pageSize: 10,
     current: 1,
     total: null,
     showTotal: true,

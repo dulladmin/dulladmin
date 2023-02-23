@@ -347,7 +347,11 @@
 
   // pagination
   const baseTablePagination: Pagination = {
+    {{#if pagination.per }}
+    pageSize: {{ pagination.per }},
+    {{else}}
     pageSize: 20,
+    {{/if}}
     current: 1,
     total: null,
     showTotal: true,

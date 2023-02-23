@@ -25,3 +25,5 @@ views:
             - { name: 'title'       , type: 'string' }
             - { name: 'url'         , type: 'string' }
             - { name: 'thumbnailUrl', type: 'string' }
+          pagination:
+            per: 10
