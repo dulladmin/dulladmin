@@ -18,7 +18,10 @@ export function toJsonType(valueType: ScalarValueType | ObjectValueType): string
     case ScalarValueType.Bool:
       return 'boolean'
     case ScalarValueType.String:
+      return 'string'
     case ScalarValueType.Datetime:
+      return 'string'
+    case ScalarValueType.Image:
       return 'string'
     case ObjectValueType.Object:
       return 'object'

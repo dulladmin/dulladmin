@@ -14,6 +14,7 @@ export enum ValueType {
   Bool = 'bool',
   String = 'string',
   Datetime = 'datetime',
+  Image = 'image',
   Object = 'object',
 }
 
@@ -42,6 +43,8 @@ export function val2str(
     case ValueType.String:
       return String(value);
     case ValueType.Datetime:
+      return String(value);
+    case ValueType.Image:
       return String(value);
     case ValueType.Object:
     default:
@@ -76,6 +79,8 @@ export function str2val(
     case ValueType.String:
       return String(value);
     case ValueType.Datetime:
+      return String(value);
+    case ValueType.Image:
       return String(value);
     case ValueType.Object:
     default:

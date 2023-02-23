@@ -145,11 +145,11 @@
       i18nKey: 'photos--index.self-block.model.attributes.title',
     },
     url: {
-      type: 'string',
+      type: 'image',
       i18nKey: 'photos--index.self-block.model.attributes.url',
     },
     thumbnailUrl: {
-      type: 'string',
+      type: 'image',
       i18nKey: 'photos--index.self-block.model.attributes.thumbnailUrl',
     },
   };

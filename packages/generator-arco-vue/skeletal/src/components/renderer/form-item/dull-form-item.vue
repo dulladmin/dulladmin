@@ -1,5 +1,9 @@
 <template>
-  <a-form-item v-show="!meta.hidden" :field="meta.name" :label="$t(meta.i18nKey)">
+  <a-form-item
+    v-show="!meta.hidden"
+    :field="meta.name"
+    :label="$t(meta.i18nKey)"
+  >
     <renderFn />
   </a-form-item>
 </template>
@@ -74,6 +78,8 @@
       case ValueType.String:
         return <a-input v-model={modelValue.value} />;
       case ValueType.Datetime:
+        return <a-input v-model={modelValue.value} />;
+      case ValueType.Image:
         return <a-input v-model={modelValue.value} />;
       case ValueType.Object:
       default:

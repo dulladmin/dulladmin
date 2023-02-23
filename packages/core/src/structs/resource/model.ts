@@ -16,7 +16,8 @@ enum ScalarValueType {
   String = 'string',
 
   // Extended
-  Datetime = 'datetime' // A `string` representing the datetime, formatted according to ISO8601
+  Datetime = 'datetime', // A `string` representing the datetime, formatted according to ISO8601
+  Image = 'image' // A `string` representing the image
 }
 
 enum ObjectValueType {
