@@ -247,13 +247,9 @@
     column: Column,
     index: number
   ) => {
-    if (checked) {
-      tableColumnsShow.value.splice(index, 0, column);
-    } else {
-      tableColumnsShow.value = tableColumnsShow.value.filter(
-        (item) => item.dataIndex !== column.dataIndex
-      );
-    }
+    tableColumnsShow.value = tableColumnsWithShow.value.filter(
+      (item) => item.show
+    );
   };
 
   // table - store
