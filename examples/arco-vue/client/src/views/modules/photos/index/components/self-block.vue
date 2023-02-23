@@ -219,26 +219,31 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.albumId'),
         dataIndex: 'albumId',
         slotName: 'albumId',
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.url'),
         dataIndex: 'url',
         slotName: 'url',
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.thumbnailUrl'),
         dataIndex: 'thumbnailUrl',
         slotName: 'thumbnailUrl',
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -255,9 +260,11 @@
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
       tableColumnsWithShow.value.forEach((item) => {
-        item.show = true;
+        item.show = !item.hidden;
       });
-      tableColumnsShow.value = cloneDeep(tableColumnsWithShow.value);
+      tableColumnsShow.value = tableColumnsWithShow.value.filter(
+        (item) => item.show
+      );
     },
     { deep: true, immediate: true }
   );

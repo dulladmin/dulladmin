@@ -46,6 +46,8 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
                   }
                 })
               },
+        hidden: attr.hidden ?? false,
+        disabled: attr.disabled ?? false,
         i18nKey: `${i18nKeyPrefix}.${attr.name}`,
         i18nValue: toI18nMessage(attr.name)
       }

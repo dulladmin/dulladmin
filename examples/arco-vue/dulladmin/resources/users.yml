@@ -18,10 +18,10 @@ views:
             - { name: 'name'    , type: 'string' }
             - { name: 'username', type: 'string' }
             - { name: 'email'   , type: 'string' }
-            - { name: 'address' , type: 'object', attributes: *_items_address }
+            - { name: 'address' , type: 'object', attributes: *_items_address, hidden: true }
             - { name: 'phone'   , type: 'string' }
             - { name: 'website' , type: 'string' }
-            - { name: 'company' , type: 'object', attributes: *_items_company }
+            - { name: 'company' , type: 'object', attributes: *_items_company, hidden: true }
           sorters:
             - { name: 'id'      , directions: ['descend', 'ascend'] }
             - { name: 'name'    , directions: ['descend']           }

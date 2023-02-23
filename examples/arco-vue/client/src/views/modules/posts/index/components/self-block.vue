@@ -206,21 +206,25 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.userId'),
         dataIndex: 'userId',
         slotName: 'userId',
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.body'),
         dataIndex: 'body',
         slotName: 'body',
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -237,9 +241,11 @@
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
       tableColumnsWithShow.value.forEach((item) => {
-        item.show = true;
+        item.show = !item.hidden;
       });
-      tableColumnsShow.value = cloneDeep(tableColumnsWithShow.value);
+      tableColumnsShow.value = tableColumnsWithShow.value.filter(
+        (item) => item.show
+      );
     },
     { deep: true, immediate: true }
   );

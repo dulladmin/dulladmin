@@ -385,6 +385,7 @@
           sortDirections: ['descend', 'ascend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.name'),
@@ -394,6 +395,7 @@
           sortDirections: ['descend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.username'),
@@ -403,6 +405,7 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.email'),
@@ -412,26 +415,31 @@
           sortDirections: ['ascend', ],
           sorter: true,
         },
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.address'),
         dataIndex: 'address',
         slotName: 'address',
+        hidden: true,
       },
       {
         title: t('users--index.self-block.model.attributes.phone'),
         dataIndex: 'phone',
         slotName: 'phone',
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.website'),
         dataIndex: 'website',
         slotName: 'website',
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.company'),
         dataIndex: 'company',
         slotName: 'company',
+        hidden: true,
       },
       {
         title: t('table.columns.operations'),
@@ -448,9 +456,11 @@
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
       tableColumnsWithShow.value.forEach((item) => {
-        item.show = true;
+        item.show = !item.hidden;
       });
-      tableColumnsShow.value = cloneDeep(tableColumnsWithShow.value);
+      tableColumnsShow.value = tableColumnsWithShow.value.filter(
+        (item) => item.show
+      );
     },
     { deep: true, immediate: true }
   );
