@@ -266,7 +266,7 @@ function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
 }
 
 function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
-  const allowedFiledNames = ['name', 'type', 'optionals', 'attributes']
+  const allowedFiledNames = ['name', 'type', 'optionals', 'attributes', 'hidden', 'disabled']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
@@ -300,7 +300,10 @@ function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelA
     object = parseObject(attributes!, attributesXPath)
   }
 
-  return new ModelAttribute(name!, type as ValueType, optionals, collection, object)
+  const hidden = doc.hidden ?? null
+  const disabled = doc.disabled ?? null
+
+  return new ModelAttribute(name!, type as ValueType, optionals, collection, object, hidden, disabled)
 }
 
 function parseObject(doc: YamlModelAttributeObjectAttributeType[], xpath: string): ObjectValue {

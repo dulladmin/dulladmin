@@ -63,18 +63,25 @@ class ModelAttribute {
   collection: boolean
   object: ObjectValue | null
 
+  hidden: boolean | null
+  disabled: boolean | null
+
   constructor(
     name: string,
     type: ValueType,
     optionals: Array<string | number | boolean> | null,
     collection: boolean,
-    object: ObjectValue | null
+    object: ObjectValue | null,
+    hidden: boolean | null,
+    disabled: boolean | null
   ) {
     this.name = name
     this.type = type
     this.optionals = optionals
     this.collection = collection
     this.object = object
+    this.hidden = hidden
+    this.disabled = disabled
   }
 
   toString(): string {
