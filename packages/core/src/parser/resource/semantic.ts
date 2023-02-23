@@ -29,6 +29,12 @@ class Context {
 
 function semanticAnalysisResource(resource: Resource): void {
   resource.views.forEach((view) => {
+    if (resource.singular) {
+      if (view.type === ViewType.Index) {
+        throw Error(`${resource.toString()} is a singular resource, can not have IndexView`)
+      }
+    }
+
     const ctx = new Context(resource, view)
     semanticAnalysisView(view, ctx)
   })
@@ -48,9 +54,6 @@ function semanticAnalysisView(view: View, ctx: Context): void {
 
   switch (view.type) {
     case ViewType.Index:
-      if (ctx.resource.singular) {
-        throw Error(`${ctx.resource.toString()} is a singular resource, can not have IndexView`)
-      }
       if (selfBlocks[0].type !== BlockType.TableBlock) {
         throw Error(`${view.toString()}'s self-relaltionship Block must be a TableBlock`)
       }
@@ -61,10 +64,6 @@ function semanticAnalysisView(view: View, ctx: Context): void {
       }
       break
     case ViewType.New:
-      if (selfBlocks[0].type !== BlockType.FormBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
-      }
-      break
     case ViewType.Edit:
       if (selfBlocks[0].type !== BlockType.FormBlock) {
         throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
