@@ -53,6 +53,8 @@
   {{#each model.attributes}}
     {{#if object.attributes}}
     {{name}}: {
+      type: '{{type}}',
+      hidden: {{hidden}},
       {{#each object.attributes}}
       {{name}}: {
         type: '{{type}}',

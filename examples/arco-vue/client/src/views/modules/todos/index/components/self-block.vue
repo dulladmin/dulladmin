@@ -210,18 +210,22 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
+      hidden: false,
       i18nKey: 'todos--index.self-block.model.attributes.id',
     },
     userId: {
       type: 'string',
+      hidden: false,
       i18nKey: 'todos--index.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
+      hidden: false,
       i18nKey: 'todos--index.self-block.model.attributes.title',
     },
     completed: {
       type: 'bool',
+      hidden: false,
       i18nKey: 'todos--index.self-block.model.attributes.completed',
       optionals: {
         true: {

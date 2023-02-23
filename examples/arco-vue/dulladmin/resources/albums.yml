@@ -23,7 +23,7 @@ views:
           items:
             - { name: 'id'          , type: 'string' }
             - { name: 'title'       , type: 'string' }
-            - { name: 'url'         , type: 'string' }
-            - { name: 'thumbnailUrl', type: 'string' }
+            - { name: 'url'         , type: 'image'  }
+            - { name: 'thumbnailUrl', type: 'image'  }
           pagination:
             per: 10

@@ -205,14 +205,17 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
+      hidden: false,
       i18nKey: 'administrators--index.self-block.model.attributes.id',
     },
     name: {
       type: 'string',
+      hidden: false,
       i18nKey: 'administrators--index.self-block.model.attributes.name',
     },
     role: {
       type: 'string',
+      hidden: false,
       i18nKey: 'administrators--index.self-block.model.attributes.role',
       optionals: {
         admin: {

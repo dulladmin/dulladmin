@@ -37,15 +37,17 @@
       case ValueType.Fixed64:
       case ValueType.Sfixed32:
       case ValueType.Sfixed64:
-        return <div>{ data.value }</div>;
+        return <div>{data.value}</div>;
       case ValueType.Bool:
-        return <div>{ data.value }</div>;
+        return <div>{data.value}</div>;
       case ValueType.String:
-        return <div>{ data.value }</div>;
+        return <div>{data.value}</div>;
       case ValueType.Datetime:
-        return <div>{ data.value }</div>;
+        return <div>{data.value}</div>;
       case ValueType.Image:
-        return <a-image src={ data.value } width="100" height="100" fit="contain"/>;
+        return (
+          <a-image src={data.value} width="80" height="80" fit="contain" />
+        );
       case ValueType.Object:
       default:
         throw new Error(`Unknown value type \`${props.meta.type}\``);
