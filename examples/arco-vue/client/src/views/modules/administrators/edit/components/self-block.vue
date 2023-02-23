@@ -54,10 +54,12 @@
   const modelMetadata: { [key: string]: any } = {
     name: {
       type: 'string',
+      hidden: false,
       i18nKey: 'administrators--edit.self-block.model.attributes.name',
     },
     role: {
       type: 'string',
+      hidden: false,
       i18nKey: 'administrators--edit.self-block.model.attributes.role',
       optionals: {
         admin: {

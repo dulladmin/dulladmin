@@ -14,15 +14,18 @@ views:
             - { name: 'userId'   , predicate: 'eq' }
             - { name: 'completed', predicate: 'eq' }
 
-  _from_items: &_form_items
-    - { name: 'userId'   , type: 'string' }
-    - { name: 'title'    , type: 'string' }
-    - { name: 'completed', type: 'bool'   }
   new:
     blocks:
       - form:
-          items: *_form_items
+          items:
+            - { name: 'userId'   , type: 'string' }
+            - { name: 'title'    , type: 'string' }
+            - { name: 'completed', type: 'bool'   }
+
   edit:
     blocks:
       - form:
-          items: *_form_items
+          items:
+            - { name: 'userId'     , type: 'string' }
+            - { name: 'title'      , type: 'string', hidden: true }
+            - { name: 'completed'  , type: 'bool'   }

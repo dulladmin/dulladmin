@@ -1,5 +1,5 @@
 <template>
-  <a-form-item :field="meta.name" :label="$t(meta.i18nKey)">
+  <a-form-item v-show="!meta.hidden" :field="meta.name" :label="$t(meta.i18nKey)">
     <renderFn />
   </a-form-item>
 </template>

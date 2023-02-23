@@ -12,6 +12,7 @@ const i18n = (() => {
   if (locale == null) locale = 'en-US';
 
   return _createI18n({
+    legacy: false,
     locale,
     fallbackLocale: 'en-US',
     allowComposition: true,

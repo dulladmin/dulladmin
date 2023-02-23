@@ -58,14 +58,17 @@
   const modelMetadata: { [key: string]: any } = {
     userId: {
       type: 'string',
+      hidden: false,
       i18nKey: 'todos--edit.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
+      hidden: true,
       i18nKey: 'todos--edit.self-block.model.attributes.title',
     },
     completed: {
       type: 'bool',
+      hidden: false,
       i18nKey: 'todos--edit.self-block.model.attributes.completed',
     },
   };

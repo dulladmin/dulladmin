@@ -12,14 +12,16 @@ views:
             - { name: 'id'  , predicate: 'eq' }
             - { name: 'role', predicate: 'eq' }
 
-  _from_items: &_form_items
-    - { name: 'name' , type: 'string' }
-    - { name: 'role' , type: 'string', optionals: ["admin", "user"] }
   new:
     blocks:
       - form:
-          items: *_form_items
+          items:
+            - { name: 'name' , type: 'string' }
+            - { name: 'role' , type: 'string', optionals: ["admin", "user"] }
+
   edit:
     blocks:
       - form:
-          items: *_form_items
+          items:
+            - { name: 'name' , type: 'string' }
+            - { name: 'role' , type: 'string', optionals: ["admin", "user"] }
