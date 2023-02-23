@@ -32,6 +32,7 @@ export interface YamlBlockTableType {
   items?: YamlModelAttributeType[]
   sorters?: YamlBlockTableSorterType[]
   searchers?: YamlBlockTableSearcherType[]
+  pagination?: YamlBlockTablePaginationType
 }
 
 export interface YamlBlockTableSorterType {
@@ -44,6 +45,10 @@ export interface YamlBlockTableSearcherType {
   predicate?: string
   type?: string
   optionals?: Array<string | number | boolean>
+}
+
+export interface YamlBlockTablePaginationType {
+  per?: number
 }
 
 export interface YamlBlockDescriptionsType {

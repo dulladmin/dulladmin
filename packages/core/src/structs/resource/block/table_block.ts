@@ -52,6 +52,14 @@ class TableBlockSorter {
   }
 }
 
+class TableBlockPagination {
+  per: number | null
+
+  constructor(per: number | null) {
+    this.per = per
+  }
+}
+
 /*
  * Render the data into a Table, e.g.
  *
@@ -125,13 +133,17 @@ class TableBlock {
   // Searcher
   searchers: TableBlockSearcher[]
 
+  // Pagination
+  pagination: TableBlockPagination | null
+
   constructor(
     relType: BlockRelationshipType,
     relName: string,
     authority: string[] | null,
     model: Model,
     sorters: TableBlockSorter[],
-    searchers: TableBlockSearcher[]
+    searchers: TableBlockSearcher[],
+    pagination: TableBlockPagination | null
   ) {
     this.type = BlockType.TableBlock
     this.relType = relType
@@ -140,6 +152,7 @@ class TableBlock {
     this.model = model
     this.sorters = sorters
     this.searchers = searchers
+    this.pagination = pagination
     this.collection = true
   }
 
@@ -148,5 +161,12 @@ class TableBlock {
   }
 }
 
-export { TableBlockSearcherPredicate, TableBlockSearcher, TableBlockSorterDirection, TableBlockSorter, TableBlock }
+export {
+  TableBlockSearcherPredicate,
+  TableBlockSearcher,
+  TableBlockSorterDirection,
+  TableBlockSorter,
+  TableBlockPagination,
+  TableBlock
+}
 export default TableBlock

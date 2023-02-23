@@ -8,6 +8,7 @@ import {
   TableBlockSorterDirection,
   TableBlockSearcher,
   TableBlockSearcherPredicate,
+  TableBlockPagination,
   DescriptionsBlock,
   FormBlock,
   Block,
@@ -142,7 +143,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
   const { relType, relName, authority } = attrs
   const table = doc.table ?? {}
 
-  const allowedFiledNames = ['items', 'sorters', 'searchers']
+  const allowedFiledNames = ['items', 'sorters', 'searchers', 'pagination']
   assertFieldNames(table, allowedFiledNames, xpath + '/table')
 
   const model = table.items
@@ -167,7 +168,14 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
     parsedSearchers = searchers.map((item, idx) => parseTableBlockSearcher(item, searchersXPath + `[${idx}]`))
   }
 
-  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters, parsedSearchers)
+  let parsedPagination: TableBlockPagination | null = null
+  const pagination = table.pagination
+  if (pagination != null) {
+    const per = pagination.per ?? null
+    parsedPagination = new TableBlockPagination(per)
+  }
+
+  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters, parsedSearchers, parsedPagination)
 }
 
 function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): TableBlockSorter {
