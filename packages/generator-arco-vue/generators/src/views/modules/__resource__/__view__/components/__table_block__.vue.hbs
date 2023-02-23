@@ -7,13 +7,13 @@
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
-            {{#if mainBlockActions.new }}
+            {{#if resourceActions.new }}
             <a-button
-              {{#if mainBlockActions.new.authority}}
-              v-permission="[{{#each mainBlockActions.new.authority}}'{{this}}', {{/each}}]"
+              {{#if resourceActions.new.authority}}
+              v-permission="[{{#each resourceActions.new.authority}}'{{this}}', {{/each}}]"
               {{/if}}
               type="primary"
-              @click="goto({ name: '{{ mainBlockActions.new.name }}' })"
+              @click="goto({ name: '{{ resourceActions.new.name }}' })"
             >
               <template #icon>
                 <icon-plus />
@@ -147,28 +147,28 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
-            {{#if mainBlockActions.show }}
+            {{#if resourceActions.show }}
             <a-button
-              {{#if mainBlockActions.show.authority}}
-              v-permission="[{{#each mainBlockActions.show.authority}}'{{this}}', {{/each}}]"
+              {{#if resourceActions.show.authority}}
+              v-permission="[{{#each resourceActions.show.authority}}'{{this}}', {{/each}}]"
               {{/if}}
               type="outline"
               status="success"
               size="small"
-              @click="goto({ name: '{{ mainBlockActions.show.name }}', params: { id: record.id } })"
+              @click="goto({ name: '{{ resourceActions.show.name }}', params: { id: record.id } })"
             >
               \{{ $t('table.actions.show') }}
             </a-button>
             {{/if}}
-            {{#if mainBlockActions.edit }}
+            {{#if resourceActions.edit }}
             <a-button
-              {{#if mainBlockActions.edit.authority}}
-              v-permission="[{{#each mainBlockActions.edit.authority}}'{{this}}', {{/each}}]"
+              {{#if resourceActions.edit.authority}}
+              v-permission="[{{#each resourceActions.edit.authority}}'{{this}}', {{/each}}]"
               {{/if}}
               type="outline"
               status="warning"
               size="small"
-              @click="goto({ name: '{{ mainBlockActions.edit.name }}', params: { id: record.id } })"
+              @click="goto({ name: '{{ resourceActions.edit.name }}', params: { id: record.id } })"
             >
               \{{ $t('table.actions.edit') }}
             </a-button>
@@ -181,17 +181,17 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
-      {{#if mainBlockActions.show}}
+      {{#if resourceActions.show}}
       <span
-        {{#if mainBlockActions.show.authority}}
-        v-permission="[{{#each mainBlockActions.show.authority}}'{{this}}', {{/each}}]"
+        {{#if resourceActions.show.authority}}
+        v-permission="[{{#each resourceActions.show.authority}}'{{this}}', {{/each}}]"
         {{/if}}
       />
       {{/if}}
-      {{#if mainBlockActions.edit}}
+      {{#if resourceActions.edit}}
       <span
-        {{#if mainBlockActions.edit.authority}}
-        v-permission="[{{#each mainBlockActions.edit.authority}}'{{this}}', {{/each}}]"
+        {{#if resourceActions.edit.authority}}
+        v-permission="[{{#each resourceActions.edit.authority}}'{{this}}', {{/each}}]"
         {{/if}}
       />
       {{/if}}

@@ -69,12 +69,11 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const searchers = extractBlockSearcherInfo(resource, view, block)
   const searchable = searchers.length !== 0
 
-  // main TableBlock in IndexView
-  const mainBlockActions: Record<string, any> = {}
-  if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
+  const resourceActions: Record<string, any> = {}
+  if (view.type === ViewType.Index && block.relType === BlockRelationshipType.Self) {
     resource.views.forEach((view) => {
       const _view = extractViewInfo(resource, view)
-      mainBlockActions[view.type] = {
+      resourceActions[view.type] = {
         authority: view.authority ?? resource.authority,
         name: _view.name
       }
@@ -84,7 +83,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { view: _view, block: _block, model, sortable, searchers, searchable, mainBlockActions }
+    { view: _view, block: _block, model, sortable, searchers, searchable, resourceActions }
   )
 }
 
@@ -105,14 +104,9 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  // main FormBlock in IndexView
-  const mainBlock =
-    (block.relType === BlockRelationshipType.Self || view.type === ViewType.New) &&
-    (block.relType === BlockRelationshipType.Self || view.type === ViewType.Edit)
-
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
-    { view: _view, block: _block, model, mainBlock }
+    { view: _view, block: _block, model }
   )
 }
