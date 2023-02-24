@@ -12,35 +12,33 @@ _items_company: &_items_company
 name: 'users'
 views:
   index:
-    blocks:
-      - table:
-          items:
-            - { name: 'id'      , type: 'int64'  }
-            - { name: 'name'    , type: 'string' }
-            - { name: 'username', type: 'string' }
-            - { name: 'email'   , type: 'string' }
-            - { name: 'address' , type: 'object', attributes: *_items_address, hidden: true }
-            - { name: 'phone'   , type: 'string' }
-            - { name: 'website' , type: 'string' }
-            - { name: 'company' , type: 'object', attributes: *_items_company, hidden: true }
-          sorters:
-            - { name: 'id'      , directions: ['descend', 'ascend'] }
-            - { name: 'name'    , directions: ['descend']           }
-            - { name: 'username', directions: ['ascend', 'descend'] }
-            - { name: 'email'   , directions: ['ascend']            }
-          searchers:
-            - { name: 'id'  , predicate: 'eq'   }
-            - { name: 'name', predicate: 'cont' }
+    table:
+      items:
+        - { name: 'id'      , type: 'int64'  }
+        - { name: 'name'    , type: 'string' }
+        - { name: 'username', type: 'string' }
+        - { name: 'email'   , type: 'string' }
+        - { name: 'address' , type: 'object', attributes: *_items_address, hidden: true }
+        - { name: 'phone'   , type: 'string' }
+        - { name: 'website' , type: 'string' }
+        - { name: 'company' , type: 'object', attributes: *_items_company, hidden: true }
+      sorters:
+        - { name: 'id'      , directions: ['descend', 'ascend'] }
+        - { name: 'name'    , directions: ['descend']           }
+        - { name: 'username', directions: ['ascend', 'descend'] }
+        - { name: 'email'   , directions: ['ascend']            }
+      searchers:
+        - { name: 'id'  , predicate: 'eq'   }
+        - { name: 'name', predicate: 'cont' }
 
   show:
-    blocks:
-      - descriptions:
-          items:
-            - { name: 'id'      , type: 'int64'  }
-            - { name: 'name'    , type: 'string' }
-            - { name: 'username', type: 'string' }
-            - { name: 'email'   , type: 'string' }
-            - { name: 'address' , type: 'object', attributes: *_items_address }
-            - { name: 'phone'   , type: 'string' }
-            - { name: 'website' , type: 'string' }
-            - { name: 'company' , type: 'object', attributes: *_items_company }
+    descriptions:
+      items:
+        - { name: 'id'      , type: 'int64'  }
+        - { name: 'name'    , type: 'string' }
+        - { name: 'username', type: 'string' }
+        - { name: 'email'   , type: 'string' }
+        - { name: 'address' , type: 'object', attributes: *_items_address }
+        - { name: 'phone'   , type: 'string' }
+        - { name: 'website' , type: 'string' }
+        - { name: 'company' , type: 'object', attributes: *_items_company }

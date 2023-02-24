@@ -126,12 +126,14 @@
 
       Message.success(t('form.actions.save.success'));
 
+      {{#if resourceActions.back }}
       const { back } = route.query;
       if (back) {
         appStore.removeCurrentActiveTab();
         appStore.setNewTabOpenParams({ refresh: true });
         router.replace({ path: back as string });
       }
+      {{/if}}
     } finally {
       setSaving(false);
     }

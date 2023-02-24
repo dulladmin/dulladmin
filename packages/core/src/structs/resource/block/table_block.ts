@@ -69,13 +69,11 @@ class TableBlockPagination {
  *  name: "users"
  *  views:
  *    index:
- *      blocks:
- *        - relationship: 'self'
- *          table:
- *            items:
- *              - { name: "id", type: "string" }
- *              - { name: "name", type: "string" }
- *              - { name: "email", type: "string" }
+ *      table:
+ *        items:
+ *          - { name: "id", type: "string" }
+ *          - { name: "name", type: "string" }
+ *          - { name: "email", type: "string" }
  *  ```
  *
  * Virtual DOM (route: `/users.html`):
@@ -113,7 +111,7 @@ class TableBlockPagination {
  * }
  * ```
  *
- * Note the item's id is required, and must be a `string` type.
+ * Note the item's id is required.
  */
 class TableBlock {
   type: BlockType

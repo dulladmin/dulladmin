@@ -10,13 +10,10 @@ import { BlockType, BlockRelationshipType } from './base'
  *  name: "users"
  *  views:
  *    show:
- *      blocks:
- *        - relationship: 'self'
- *          descriptions:
- *            items:
- *              - { name: "id", type: "string" }
- *              - { name: "name", type: "string" }
- *              - { name: "email", type: "string" }
+ *      descriptions:
+ *        items:
+ *          - { name: "name", type: "string" }
+ *          - { name: "email", type: "string" }
  *  ```
  *
  * Virtual DOM (route: `/users/1.html`):
@@ -24,10 +21,6 @@ import { BlockType, BlockRelationshipType } from './base'
  *  ```html
  *  <body>
  *    <table>
- *      <tr>
- *        <td>ID</td>
- *        <td>1</td>
- *      </tr>
  *      <tr>
  *        <td>Name</td>
  *        <td>John Doe</td>
@@ -48,7 +41,6 @@ import { BlockType, BlockRelationshipType } from './base'
  *  "msg": "ok",
  *  "data": {
  *    "model": {
- *      "id": "1",
  *      "name": "John Doe",
  *      "email": "johndoe@example.com"
  *    }

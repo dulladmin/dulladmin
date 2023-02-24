@@ -10,12 +10,10 @@ import { BlockType, BlockRelationshipType } from './base'
  *  name: "users"
  *  views:
  *    new:
- *      blocks:
- *        - relationship: 'self'
- *          form:
- *            items:
- *              - { name: "name", type: "string" }
- *              - { name: "email", type: "string" }
+ *      form:
+ *        items:
+ *          - { name: "name", type: "string" }
+ *          - { name: "email", type: "string" }
  *  ```
  *
  * Virtual DOM (route: `/users/new.html`):
