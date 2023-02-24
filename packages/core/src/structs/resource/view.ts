@@ -4,7 +4,8 @@ enum ViewType {
   Index = 'index',
   Show = 'show',
   New = 'new',
-  Edit = 'edit'
+  Edit = 'edit',
+  Delete = 'delete'
 }
 
 class View {

@@ -12,6 +12,7 @@ export interface YamlViewsType {
   show?: YamlViewType
   new?: YamlViewType
   edit?: YamlViewType
+  delete?: YamlViewType
 }
 
 export interface YamlViewType {

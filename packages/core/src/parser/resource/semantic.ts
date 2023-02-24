@@ -65,6 +65,7 @@ function semanticAnalysisView(view: View, ctx: Context): void {
       break
     case ViewType.New:
     case ViewType.Edit:
+    case ViewType.Delete:
       if (selfBlocks[0].type !== BlockType.FormBlock) {
         throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
       }

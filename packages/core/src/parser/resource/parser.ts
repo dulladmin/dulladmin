@@ -74,7 +74,7 @@ function parseResource(doc: YamlResourceType): Resource {
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
-  const allowedFiledNames = ['index', 'show', 'new', 'edit']
+  const allowedFiledNames = ['index', 'show', 'new', 'edit', 'delete']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const views = []
@@ -82,6 +82,7 @@ function parseViews(doc: YamlViewsType, xpath: string): View[] {
   if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', ViewType.Show))
   if (doc.new != null) views.push(parseView(doc.new, xpath + '/new', ViewType.New))
   if (doc.edit != null) views.push(parseView(doc.edit, xpath + '/edit', ViewType.Edit))
+  if (doc.delete != null) views.push(parseView(doc.delete, xpath + '/delete', ViewType.Delete))
   return views
 }
 
