@@ -134,27 +134,22 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
-      hidden: false,
       i18nKey: 'photos--index.self-block.model.attributes.id',
     },
     albumId: {
       type: 'string',
-      hidden: false,
       i18nKey: 'photos--index.self-block.model.attributes.albumId',
     },
     title: {
       type: 'string',
-      hidden: false,
       i18nKey: 'photos--index.self-block.model.attributes.title',
     },
     url: {
       type: 'image',
-      hidden: false,
       i18nKey: 'photos--index.self-block.model.attributes.url',
     },
     thumbnailUrl: {
       type: 'image',
-      hidden: false,
       i18nKey: 'photos--index.self-block.model.attributes.thumbnailUrl',
     },
   };

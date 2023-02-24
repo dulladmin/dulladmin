@@ -260,7 +260,6 @@
     {{#if object.attributes}}
     {{name}}: {
       type: '{{type}}',
-      hidden: {{hidden}},
       {{#each object.attributes}}
       {{name}}: {
         type: '{{type}}',
@@ -271,7 +270,6 @@
     {{else}}
     {{name}}: {
       type: '{{type}}',
-      hidden: {{hidden}},
       i18nKey: '{{i18nKey}}',
       {{#if optionals}}
       optionals: {

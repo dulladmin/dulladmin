@@ -128,22 +128,18 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
-      hidden: false,
       i18nKey: 'posts--index.self-block.model.attributes.id',
     },
     userId: {
       type: 'string',
-      hidden: false,
       i18nKey: 'posts--index.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
-      hidden: false,
       i18nKey: 'posts--index.self-block.model.attributes.title',
     },
     body: {
       type: 'string',
-      hidden: false,
       i18nKey: 'posts--index.self-block.model.attributes.body',
     },
   };

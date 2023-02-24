@@ -215,27 +215,22 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.id',
     },
     name: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.name',
     },
     username: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.username',
     },
     email: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.email',
     },
     address: {
       type: 'object',
-      hidden: true,
       street: {
         type: 'string',
         i18nKey: 'users--index.self-block.model.attributes.address.street',
@@ -259,17 +254,14 @@
     },
     phone: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.phone',
     },
     website: {
       type: 'string',
-      hidden: false,
       i18nKey: 'users--index.self-block.model.attributes.website',
     },
     company: {
       type: 'object',
-      hidden: true,
       name: {
         type: 'string',
         i18nKey: 'users--index.self-block.model.attributes.company.name',

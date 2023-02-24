@@ -132,17 +132,14 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
-      hidden: false,
       i18nKey: 'albums--index.self-block.model.attributes.id',
     },
     userId: {
       type: 'string',
-      hidden: false,
       i18nKey: 'albums--index.self-block.model.attributes.userId',
     },
     title: {
       type: 'string',
-      hidden: false,
       i18nKey: 'albums--index.self-block.model.attributes.title',
     },
   };

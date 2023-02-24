@@ -134,27 +134,22 @@
   const modelMetadata: { [key: string]: any } = {
     id: {
       type: 'string',
-      hidden: false,
       i18nKey: 'comments--index.self-block.model.attributes.id',
     },
     postId: {
       type: 'string',
-      hidden: false,
       i18nKey: 'comments--index.self-block.model.attributes.postId',
     },
     name: {
       type: 'string',
-      hidden: false,
       i18nKey: 'comments--index.self-block.model.attributes.name',
     },
     email: {
       type: 'string',
-      hidden: false,
       i18nKey: 'comments--index.self-block.model.attributes.email',
     },
     body: {
       type: 'string',
-      hidden: false,
       i18nKey: 'comments--index.self-block.model.attributes.body',
     },
   };

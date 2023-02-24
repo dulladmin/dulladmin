@@ -2,6 +2,7 @@ import {
   Resource,
   ViewType,
   View,
+  BlockType,
   BlockRelationshipType,
   TableBlock,
   TableBlockSorter,
@@ -150,7 +151,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
   const modelXPath = xpath + '/table/items'
   assertNotNull(model, modelXPath)
   assertIsArray(model, modelXPath)
-  const parsedModel = parseModel(model!, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath, BlockType.TableBlock)
 
   let parsedSorters: TableBlockSorter[] = []
   const sorters = table.sorters
@@ -239,7 +240,7 @@ function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record
   const modelXPath = xpath + '/descriptions/items'
   assertNotNull(model, modelXPath)
   assertIsArray(model, modelXPath)
-  const parsedModel = parseModel(model!, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath, BlockType.DescriptionsBlock)
 
   return new DescriptionsBlock(relType, relName, authority, parsedModel)
 }
@@ -255,18 +256,31 @@ function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string,
   const modelXPath = xpath + '/form/items'
   assertNotNull(model, modelXPath)
   assertIsArray(model, modelXPath)
-  const parsedModel = parseModel(model!, modelXPath)
+  const parsedModel = parseModel(model!, modelXPath, BlockType.FormBlock)
 
   return new FormBlock(relType, relName, authority, parsedModel)
 }
 
-function parseModel(doc: YamlModelAttributeType[], xpath: string): Model {
-  const parsedAttributes = doc.map((item, idx) => parseModelAttribute(item, xpath + `[${idx}]`))
+function parseModel(doc: YamlModelAttributeType[], xpath: string, blockType: BlockType): Model {
+  const parsedAttributes = doc.map((item, idx) => parseModelAttribute(item, xpath + `[${idx}]`, blockType))
   return new Model(parsedAttributes)
 }
 
-function parseModelAttribute(doc: YamlModelAttributeType, xpath: string): ModelAttribute {
-  const allowedFiledNames = ['name', 'type', 'optionals', 'attributes', 'hidden', 'disabled']
+function parseModelAttribute(doc: YamlModelAttributeType, xpath: string, blockType: BlockType): ModelAttribute {
+  const allowedFiledNames = ['name', 'type', 'optionals', 'attributes']
+  switch (blockType) {
+    case BlockType.TableBlock:
+      allowedFiledNames.push('hidden')
+      break
+    case BlockType.DescriptionsBlock:
+      break
+    case BlockType.FormBlock:
+      allowedFiledNames.push('hidden')
+      allowedFiledNames.push('disabled')
+      break
+    default:
+      Error('Unreachable')
+  }
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
