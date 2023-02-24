@@ -16,20 +16,40 @@
     meta: Record<string, any>;
   }>();
 
+  const COLORS = [
+    'red',
+    'orangered',
+    'orange',
+    'gold',
+    'lime',
+    'green',
+    'cyan',
+    'blue',
+    'arcoblue',
+    'purple',
+    'pinkpurple',
+    'magenta',
+  ];
   const renderFn = () => {
     if (props.meta.optionals) {
       let value: string | null = null;
-      if (props.meta.optionals?.[props.data]) {
+      if (props.meta.optionals[props.data]) {
         value = t(props.meta.optionals[props.data].i18nKey);
       } else {
         value = props.data.toString();
       }
+      let colorIndex = -1;
+      let color = 'gray';
       switch (props.meta.type as ValueType) {
         case ValueType.Bool:
-          return <a-tag color={props.data ? 'green' : 'orange'}>{value}</a-tag>;
+          color = props.data ? 'green' : 'orange'
+          break;
         default:
-          return <div>{value}</div>;
+          colorIndex = Object.keys(props.meta.optionals).indexOf(props.data)
+          color = colorIndex === -1 ? 'gray' : COLORS[colorIndex % COLORS.length]
+          break;
       }
+      return <a-tag color={color}>{value}</a-tag>;
     }
 
     switch (props.meta.type as ValueType) {
