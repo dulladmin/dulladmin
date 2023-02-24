@@ -39,7 +39,9 @@
       case ValueType.Sfixed64:
         return <div>{data.value}</div>;
       case ValueType.Bool:
-        return <div>{data.value}</div>;
+        return (
+          <a-tag color={props.data ? 'green' : 'orange'}>{data.value}</a-tag>
+        );
       case ValueType.String:
         return <div>{data.value}</div>;
       case ValueType.Datetime:
