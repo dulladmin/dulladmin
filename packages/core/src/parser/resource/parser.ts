@@ -86,7 +86,7 @@ function parseViews(doc: YamlViewsType, xpath: string): View[] {
 }
 
 function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
-  const allowedFiledNames = ['authority', 'blocks']
+  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const authority = doc.authority ?? null
@@ -98,11 +98,28 @@ function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
     })
   }
 
-  const blocks = doc.blocks
-  const blocksXPath = xpath + '/blocks'
-  assertNotNull(blocks, blocksXPath)
-  assertIsArray(blocks, blocksXPath)
-  const parsedBlocks = blocks!.map((block, idx) => parseBlock(block, blocksXPath + `[${idx}]`))
+  const parsedBlocks: Block[] = []
+  if (doc.blocks != null) {
+    const blocks = doc.blocks
+    const blocksXPath = xpath + '/blocks'
+    assertNotNull(blocks, blocksXPath)
+    assertIsArray(blocks, blocksXPath)
+    blocks.forEach((block, idx) => {
+      parsedBlocks.push(parseBlock(block, blocksXPath + `[${idx}]`))
+    })
+  }
+  if (doc.table != null) {
+    const block: YamlBlockType = { table: doc.table }
+    parsedBlocks.push(parseBlock(block, xpath + '/table'))
+  }
+  if (doc.descriptions != null) {
+    const block: YamlBlockType = { descriptions: doc.descriptions }
+    parsedBlocks.push(parseBlock(block, xpath + '/descriptions'))
+  }
+  if (doc.form != null) {
+    const block: YamlBlockType = { form: doc.form }
+    parsedBlocks.push(parseBlock(block, xpath + '/form'))
+  }
 
   return new View(viewType, authority, parsedBlocks)
 }

@@ -1,13 +1,12 @@
 name: 'albums'
 views:
   index:
-    blocks:
-      - table:
-          items:
-            - { name: 'id'    , type: 'int64'  }
-            - { name: 'userId', type: 'int64'  }
-            - { name: 'title' , type: 'string' }
-          sorters:
+    table:
+      items:
+        - { name: 'id'    , type: 'int64'  }
+        - { name: 'userId', type: 'int64'  }
+        - { name: 'title' , type: 'string' }
+      sorters:
             - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:

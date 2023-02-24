@@ -1,23 +1,20 @@
 name: 'comments'
 views:
   index:
-    blocks:
-      - table:
-          items:
-            - { name: 'id'    , type: 'int64'  }
-            - { name: 'postId', type: 'int64'  }
-            - { name: 'name'  , type: 'string' }
-            - { name: 'email' , type: 'string' }
-            - { name: 'body'  , type: 'string' }
-          sorters:
-            - { name: 'id', directions: ['ascend', 'descend'] }
+    table:
+      items:
+        - { name: 'id'    , type: 'int64'  }
+        - { name: 'postId', type: 'int64'  }
+        - { name: 'name'  , type: 'string' }
+        - { name: 'email' , type: 'string' }
+        - { name: 'body'  , type: 'string' }
+      sorters:
+        - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
-    blocks:
-      - descriptions:
-          items:
-            - { name: 'postId', type: 'int64'  }
-            - { name: 'name'  , type: 'string' }
-            - { name: 'email' , type: 'string' }
-            - { name: 'body'  , type: 'string' }
-
+    descriptions:
+      items:
+        - { name: 'postId', type: 'int64'  }
+        - { name: 'name'  , type: 'string' }
+        - { name: 'email' , type: 'string' }
+        - { name: 'body'  , type: 'string' }

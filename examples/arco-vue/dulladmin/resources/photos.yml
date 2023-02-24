@@ -1,22 +1,20 @@
 name: 'photos'
 views:
   index:
-    blocks:
-      - table:
-          items:
-            - { name: 'id'          , type: 'int64'  }
-            - { name: 'albumId'     , type: 'int64'  }
-            - { name: 'title'       , type: 'string' }
-            - { name: 'url'         , type: 'image'  }
-            - { name: 'thumbnailUrl', type: 'image'  }
-          sorters:
-            - { name: 'id', directions: ['ascend', 'descend'] }
+    table:
+      items:
+        - { name: 'id'          , type: 'int64'  }
+        - { name: 'albumId'     , type: 'int64'  }
+        - { name: 'title'       , type: 'string' }
+        - { name: 'url'         , type: 'image'  }
+        - { name: 'thumbnailUrl', type: 'image'  }
+      sorters:
+        - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
-    blocks:
-      - descriptions:
-          items:
-            - { name: 'albumId'     , type: 'int64'  }
-            - { name: 'title'       , type: 'string' }
-            - { name: 'url'         , type: 'image'  }
-            - { name: 'thumbnailUrl', type: 'image'  }
+    descriptions:
+      items:
+        - { name: 'albumId'     , type: 'int64'  }
+        - { name: 'title'       , type: 'string' }
+        - { name: 'url'         , type: 'image'  }
+        - { name: 'thumbnailUrl', type: 'image'  }

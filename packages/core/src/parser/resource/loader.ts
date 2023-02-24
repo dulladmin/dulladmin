@@ -17,6 +17,9 @@ export interface YamlViewsType {
 export interface YamlViewType {
   authority?: string[]
   blocks?: YamlBlockType[]
+  table?: YamlBlockTableType
+  descriptions?: YamlBlockDescriptionsType
+  form?: YamlBlockFormType
 }
 
 export interface YamlBlockType {
