@@ -1,7 +1,7 @@
 {
   "name": "@dulladmin/generator-arco-vue",
   "version": "0.1.1",
-  "description": "",
+  "description": "DullAdmin is a specification for building admin panel.",
   "author": "DullAdmin Team",
   "license": "GPL-3.0-only",
   "repository": {

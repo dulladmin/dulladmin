@@ -1,6 +1,9 @@
 {
   "private": true,
   "name": "dulladmin-arco-design-pro",
+  "description": "DullAdmin + Arco Design Pro",
+  "author": "DullAdmin Team",
+  "license": "GPL-3.0-only",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",

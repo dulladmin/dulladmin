@@ -1,6 +1,9 @@
 {
   "private": true,
   "name": "example-dulladmin-arco-design-pro",
+  "description": "Example built with DullAdmin + Arco Design Pro",
+  "author": "DullAdmin Team",
+  "license": "GPL-3.0-only",
   "scripts": {},
   "dependencies": {
     "@dulladmin/cli": "file:../../packages/cli",
