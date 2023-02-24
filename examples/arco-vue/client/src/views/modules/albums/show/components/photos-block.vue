@@ -188,25 +188,25 @@
         title: t('albums--show.photos-block.model.attributes.id'),
         dataIndex: 'id',
         slotName: 'id',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.url'),
         dataIndex: 'url',
         slotName: 'url',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.thumbnailUrl'),
         dataIndex: 'thumbnailUrl',
         slotName: 'thumbnailUrl',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('table.columns.operations'),
@@ -222,9 +222,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

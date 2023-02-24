@@ -46,7 +46,6 @@ export function val2str(
       return String(value);
     case ValueType.Image:
       return String(value);
-    case ValueType.Object:
     default:
       throw new Error(`Unknown value type \`${metadata.type}\``);
   }
@@ -82,7 +81,6 @@ export function str2val(
       return String(value);
     case ValueType.Image:
       return String(value);
-    case ValueType.Object:
     default:
       throw new Error(`Unknown value type \`${metadata.type}\``);
   }

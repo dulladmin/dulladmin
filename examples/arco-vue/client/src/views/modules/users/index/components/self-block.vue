@@ -387,7 +387,7 @@
           sortDirections: ['descend', 'ascend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.name'),
@@ -397,7 +397,7 @@
           sortDirections: ['descend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.username'),
@@ -407,7 +407,7 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.email'),
@@ -417,31 +417,31 @@
           sortDirections: ['ascend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.address'),
         dataIndex: 'address',
         slotName: 'address',
-        hidden: true,
+        show: !true,
       },
       {
         title: t('users--index.self-block.model.attributes.phone'),
         dataIndex: 'phone',
         slotName: 'phone',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.website'),
         dataIndex: 'website',
         slotName: 'website',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('users--index.self-block.model.attributes.company'),
         dataIndex: 'company',
         slotName: 'company',
-        hidden: true,
+        show: !true,
       },
       {
         title: t('table.columns.operations'),
@@ -457,9 +457,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

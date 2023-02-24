@@ -219,31 +219,31 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('comments--index.self-block.model.attributes.postId'),
         dataIndex: 'postId',
         slotName: 'postId',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('comments--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('comments--index.self-block.model.attributes.email'),
         dataIndex: 'email',
         slotName: 'email',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('comments--index.self-block.model.attributes.body'),
         dataIndex: 'body',
         slotName: 'body',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('table.columns.operations'),
@@ -259,9 +259,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

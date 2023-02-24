@@ -219,31 +219,31 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        hidden: false,
+        show: !false,
       },
       {
         title: t('photos--index.self-block.model.attributes.albumId'),
         dataIndex: 'albumId',
         slotName: 'albumId',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('photos--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('photos--index.self-block.model.attributes.url'),
         dataIndex: 'url',
         slotName: 'url',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('photos--index.self-block.model.attributes.thumbnailUrl'),
         dataIndex: 'thumbnailUrl',
         slotName: 'thumbnailUrl',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('table.columns.operations'),
@@ -259,9 +259,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

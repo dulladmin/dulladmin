@@ -81,7 +81,6 @@
         return <a-input v-model={modelValue.value} />;
       case ValueType.Image:
         return <a-input v-model={modelValue.value} />;
-      case ValueType.Object:
       default:
         throw new Error(`Unknown value type \`${props.meta.type}\``);
     }

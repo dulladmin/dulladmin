@@ -312,19 +312,19 @@
         title: t('administrators--index.self-block.model.attributes.id'),
         dataIndex: 'id',
         slotName: 'id',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.role'),
         dataIndex: 'role',
         slotName: 'role',
-        hidden: false,
+        show: !false,
       },
       {
         title: t('table.columns.operations'),
@@ -340,9 +340,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

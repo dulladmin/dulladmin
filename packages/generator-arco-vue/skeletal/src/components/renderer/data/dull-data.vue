@@ -16,14 +16,22 @@
     meta: Record<string, any>;
   }>();
 
-  const data = computed(() => {
-    if (props.meta.optionals?.[props.data]) {
-      return t(props.meta.optionals[props.data].i18nKey);
-    }
-    return props.data;
-  });
-
   const renderFn = () => {
+    if (props.meta.optionals) {
+      let value: string | null = null;
+      if (props.meta.optionals?.[props.data]) {
+        value = t(props.meta.optionals[props.data].i18nKey);
+      } else {
+        value = props.data.toString();
+      }
+      switch (props.meta.type as ValueType) {
+        case ValueType.Bool:
+          return <a-tag color={props.data ? 'green' : 'orange'}>{value}</a-tag>;
+        default:
+          return <div>{value}</div>;
+      }
+    }
+
     switch (props.meta.type as ValueType) {
       case ValueType.Double:
       case ValueType.Float:
@@ -37,20 +45,21 @@
       case ValueType.Fixed64:
       case ValueType.Sfixed32:
       case ValueType.Sfixed64:
-        return <div>{data.value}</div>;
+        return <div>{props.data}</div>;
       case ValueType.Bool:
         return (
-          <a-tag color={props.data ? 'green' : 'orange'}>{data.value}</a-tag>
+          <a-tag color={props.data ? 'green' : 'orange'}>
+            {props.data.toString()}
+          </a-tag>
         );
       case ValueType.String:
-        return <div>{data.value}</div>;
+        return <div>{props.data}</div>;
       case ValueType.Datetime:
-        return <div>{data.value}</div>;
+        return <div>{props.data}</div>;
       case ValueType.Image:
         return (
-          <a-image src={data.value} width="80" height="80" fit="contain" />
+          <a-image src={props.data} width="80" height="80" fit="contain" />
         );
-      case ValueType.Object:
       default:
         throw new Error(`Unknown value type \`${props.meta.type}\``);
     }

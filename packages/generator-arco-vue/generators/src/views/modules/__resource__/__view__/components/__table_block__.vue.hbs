@@ -394,7 +394,7 @@
           sorter: true,
         },
         {{/if}}
-        hidden: {{hidden}},
+        show: !{{hidden}},
       },
     {{/each}}
       {
@@ -411,9 +411,6 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
-      tableColumnsWithShow.value.forEach((item) => {
-        item.show = !item.hidden;
-      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );
