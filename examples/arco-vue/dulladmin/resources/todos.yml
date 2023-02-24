@@ -4,8 +4,8 @@ views:
     blocks:
       - table:
           items:
-            - { name: 'id'       , type: 'string' }
-            - { name: 'userId'   , type: 'string' }
+            - { name: 'id'       , type: 'int64'  }
+            - { name: 'userId'   , type: 'int64'  }
             - { name: 'title'    , type: 'string' }
             - { name: 'completed', type: 'bool'  , optionals: [true, false] }
           sorters:
@@ -14,11 +14,19 @@ views:
             - { name: 'userId'   , predicate: 'eq' }
             - { name: 'completed', predicate: 'eq' }
 
+  show:
+    blocks:
+      - descriptions:
+          items:
+            - { name: 'userId'   , type: 'int64'  }
+            - { name: 'title'    , type: 'string' }
+            - { name: 'completed', type: 'bool'  , optionals: [true, false] }
+
   new:
     blocks:
       - form:
           items:
-            - { name: 'userId'   , type: 'string' }
+            - { name: 'userId'   , type: 'int64'  }
             - { name: 'title'    , type: 'string' }
             - { name: 'completed', type: 'bool'   }
 
@@ -26,6 +34,6 @@ views:
     blocks:
       - form:
           items:
-            - { name: 'userId'     , type: 'string' }
+            - { name: 'userId'     , type: 'int64' }
             - { name: 'title'      , type: 'string', hidden: true }
-            - { name: 'completed'  , type: 'bool'   }
+            - { name: 'completed'  , type: 'bool'  }

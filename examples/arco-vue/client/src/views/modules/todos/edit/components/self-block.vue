@@ -57,7 +57,7 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     userId: {
-      type: 'string',
+      type: 'int64',
       hidden: false,
       i18nKey: 'todos--edit.self-block.model.attributes.userId',
     },

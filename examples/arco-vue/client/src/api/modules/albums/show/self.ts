@@ -4,8 +4,7 @@ import axios from 'axios';
 
 /* Model */
 export interface Model {
-  id?: string;
-  userId?: string;
+  userId?: number;
   title?: string;
 }
 

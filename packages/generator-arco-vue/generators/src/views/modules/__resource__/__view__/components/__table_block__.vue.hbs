@@ -237,7 +237,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   {{#if searchable}}
   type Search = Record<string, any>;
   {{/if}}
@@ -394,7 +394,7 @@
           sorter: true,
         },
         {{/if}}
-        show: !{{hidden}},
+        hidden: {{hidden}},
       },
     {{/each}}
       {
@@ -411,6 +411,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

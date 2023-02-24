@@ -71,6 +71,11 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/users/:id/show/self', async (req, res) => {
+    const collection = usersDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
 
   app.get('/albums/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(albumsDB.data);
@@ -98,6 +103,11 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/photos/:id/show/self', async (req, res) => {
+    const collection = photosDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
 
   app.get('/posts/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(postsDB.data);
@@ -105,6 +115,11 @@ export async function enhance(app) {
     collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
+  });
+  app.get('/posts/:id/show/self', async (req, res) => {
+    const collection = postsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
   });
 
   app.get('/comments/index/self', async (req, res) => {
@@ -114,6 +129,11 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/comments/:id/show/self', async (req, res) => {
+    const collection = commentsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
+  });
 
   app.get('/todos/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(todosDB.data);
@@ -121,6 +141,11 @@ export async function enhance(app) {
     collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
+  });
+  app.get('/todos/:id/show/self', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
   });
   app.get('/todos/new/self', async (_req, res) => {
     const model = { userId: '', title: '', completed: false };
@@ -150,6 +175,11 @@ export async function enhance(app) {
     collection = makeSorter(collection, req.query.sorter);
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
+  });
+  app.get('/administrators/:id/show/self', async (req, res) => {
+    const collection = administratorsDB.data;
+    const model = collection.find((item) => item.id == req.params.id);
+    res.send(buildSuccessResponse({ model }));
   });
   app.get('/administrators/new/self', async (_req, res) => {
     const model = { name: '', role: 'user' };

@@ -6,7 +6,6 @@
   "albums--index.self-block.model.attributes.title": "Title",
   "albums--show.title": "Albums Show",
   "albums--show.self-block.title": "Albums Descriptions",
-  "albums--show.self-block.model.attributes.id": "Id",
   "albums--show.self-block.model.attributes.userId": "User Id",
   "albums--show.self-block.model.attributes.title": "Title",
   "albums--show.photos-block.title": "Photos Table",

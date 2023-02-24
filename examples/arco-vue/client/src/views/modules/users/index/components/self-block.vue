@@ -148,6 +148,14 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: 'UsersShow', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
           </a-space>
         </template>
         <!-- eslint-enable -->
@@ -156,6 +164,8 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
     </div>
 
     <!-- Table Search -->
@@ -198,7 +208,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Search = Record<string, any>;
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
@@ -214,7 +224,7 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'users--index.self-block.model.attributes.id',
     },
     name: {
@@ -281,7 +291,7 @@
   const searchMetadata: { [key: string]: any } = {
     id_eq: {
       name: 'id_eq',
-      type: 'string',
+      type: 'int64',
       i18nKey: 'users--index.self-block.searchers.id_eq',
     },
     name_cont: {
@@ -387,7 +397,7 @@
           sortDirections: ['descend', 'ascend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.name'),
@@ -397,7 +407,7 @@
           sortDirections: ['descend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.username'),
@@ -407,7 +417,7 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.email'),
@@ -417,31 +427,31 @@
           sortDirections: ['ascend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.address'),
         dataIndex: 'address',
         slotName: 'address',
-        show: !true,
+        hidden: true,
       },
       {
         title: t('users--index.self-block.model.attributes.phone'),
         dataIndex: 'phone',
         slotName: 'phone',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.website'),
         dataIndex: 'website',
         slotName: 'website',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.company'),
         dataIndex: 'company',
         slotName: 'company',
-        show: !true,
+        hidden: true,
       },
       {
         title: t('table.columns.operations'),
@@ -457,6 +467,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

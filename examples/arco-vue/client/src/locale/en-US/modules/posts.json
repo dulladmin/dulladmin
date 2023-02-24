@@ -4,5 +4,10 @@
   "posts--index.self-block.model.attributes.id": "Id",
   "posts--index.self-block.model.attributes.userId": "User Id",
   "posts--index.self-block.model.attributes.title": "Title",
-  "posts--index.self-block.model.attributes.body": "Body"
+  "posts--index.self-block.model.attributes.body": "Body",
+  "posts--show.title": "Posts Show",
+  "posts--show.self-block.title": "Posts Descriptions",
+  "posts--show.self-block.model.attributes.userId": "User Id",
+  "posts--show.self-block.model.attributes.title": "Title",
+  "posts--show.self-block.model.attributes.body": "Body"
 }

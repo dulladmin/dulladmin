@@ -95,6 +95,14 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: 'PhotosShow', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
           </a-space>
         </template>
         <!-- eslint-enable -->
@@ -103,6 +111,8 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
     </div>
 
   </div>
@@ -118,7 +128,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -133,11 +143,11 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'photos--index.self-block.model.attributes.id',
     },
     albumId: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'photos--index.self-block.model.attributes.albumId',
     },
     title: {
@@ -219,31 +229,31 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.albumId'),
         dataIndex: 'albumId',
         slotName: 'albumId',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.url'),
         dataIndex: 'url',
         slotName: 'url',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('photos--index.self-block.model.attributes.thumbnailUrl'),
         dataIndex: 'thumbnailUrl',
         slotName: 'thumbnailUrl',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -259,6 +269,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

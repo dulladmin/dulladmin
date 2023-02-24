@@ -7,7 +7,7 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
+  id?: number;
   title?: string;
   url?: string;
   thumbnailUrl?: string;

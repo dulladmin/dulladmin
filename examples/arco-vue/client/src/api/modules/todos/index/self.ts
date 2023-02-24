@@ -8,15 +8,15 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
-  userId?: string;
+  id?: number;
+  userId?: number;
   title?: string;
   completed?: boolean;
 }
 
 /* Search */
 interface Search {
-  userId_eq?: string;
+  userId_eq?: number;
   completed_eq?: boolean;
 }
 

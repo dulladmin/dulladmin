@@ -8,8 +8,8 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
-  albumId?: string;
+  id?: number;
+  albumId?: number;
   title?: string;
   url?: string;
   thumbnailUrl?: string;

@@ -7,14 +7,14 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
+  id?: number;
   name?: string;
   role?: string;
 }
 
 /* Search */
 interface Search {
-  id_eq?: string;
+  id_eq?: number;
   role_eq?: string;
 }
 

@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
       title: 'users--index.title',
     },
   },
+  {
+    name: 'UsersShow',
+    path: 'users/:id',
+    component: () => import('@/views/modules/users/show/index.vue'),
+    meta: {
+      nameComponents: ['Users', 'Show', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'users--show.title',
+    },
+  },
 ];
 
 export default routes;

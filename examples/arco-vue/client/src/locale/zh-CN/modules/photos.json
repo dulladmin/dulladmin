@@ -5,5 +5,11 @@
   "photos--index.self-block.model.attributes.albumId": "所属相册",
   "photos--index.self-block.model.attributes.title": "标题",
   "photos--index.self-block.model.attributes.url": "网址",
-  "photos--index.self-block.model.attributes.thumbnailUrl": "缩略图网址"
+  "photos--index.self-block.model.attributes.thumbnailUrl": "缩略图网址",
+  "photos--show.title": "相片详情",
+  "photos--show.self-block.title": "相片详情",
+  "photos--show.self-block.model.attributes.albumId": "所属相册",
+  "photos--show.self-block.model.attributes.title": "标题",
+  "photos--show.self-block.model.attributes.url": "网址",
+  "photos--show.self-block.model.attributes.thumbnailUrl": "缩略图网址"
 }

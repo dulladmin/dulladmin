@@ -14,21 +14,6 @@
                   <td
                     class="arco-descriptions-item-label arco-descriptions-item-label-block"
                   >
-                    {{ $t('albums--show.self-block.model.attributes.id') }}
-                  </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
-                    <DullData
-                      :data="store.id"
-                      :meta="modelMetadata['id']"
-                    />
-                  </td>
-                </tr>
-                <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
                     {{ $t('albums--show.self-block.model.attributes.userId') }}
                   </td>
                   <td
@@ -80,12 +65,8 @@
 
   // model
   const modelMetadata: { [key: string]: any } = {
-    id: {
-      type: 'string',
-      i18nKey: 'albums--show.self-block.model.attributes.id',
-    },
     userId: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'albums--show.self-block.model.attributes.userId',
     },
     title: {
@@ -97,7 +78,6 @@
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
   const store = ref<Model>({
-    id: undefined,
     userId: undefined,
     title: undefined,
   });

@@ -5,5 +5,11 @@
   "comments--index.self-block.model.attributes.postId": "Post Id",
   "comments--index.self-block.model.attributes.name": "Name",
   "comments--index.self-block.model.attributes.email": "Email",
-  "comments--index.self-block.model.attributes.body": "Body"
+  "comments--index.self-block.model.attributes.body": "Body",
+  "comments--show.title": "Comments Show",
+  "comments--show.self-block.title": "Comments Descriptions",
+  "comments--show.self-block.model.attributes.postId": "Post Id",
+  "comments--show.self-block.model.attributes.name": "Name",
+  "comments--show.self-block.model.attributes.email": "Email",
+  "comments--show.self-block.model.attributes.body": "Body"
 }

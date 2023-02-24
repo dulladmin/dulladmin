@@ -5,5 +5,11 @@
   "photos--index.self-block.model.attributes.albumId": "Album Id",
   "photos--index.self-block.model.attributes.title": "Title",
   "photos--index.self-block.model.attributes.url": "Url",
-  "photos--index.self-block.model.attributes.thumbnailUrl": "Thumbnail Url"
+  "photos--index.self-block.model.attributes.thumbnailUrl": "Thumbnail Url",
+  "photos--show.title": "Photos Show",
+  "photos--show.self-block.title": "Photos Descriptions",
+  "photos--show.self-block.model.attributes.albumId": "Album Id",
+  "photos--show.self-block.model.attributes.title": "Title",
+  "photos--show.self-block.model.attributes.url": "Url",
+  "photos--show.self-block.model.attributes.thumbnailUrl": "Thumbnail Url"
 }

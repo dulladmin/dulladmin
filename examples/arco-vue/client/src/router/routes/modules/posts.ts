@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
       title: 'posts--index.title',
     },
   },
+  {
+    name: 'PostsShow',
+    path: 'posts/:id',
+    component: () => import('@/views/modules/posts/show/index.vue'),
+    meta: {
+      nameComponents: ['Posts', 'Show', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'posts--show.title',
+    },
+  },
 ];
 
 export default routes;

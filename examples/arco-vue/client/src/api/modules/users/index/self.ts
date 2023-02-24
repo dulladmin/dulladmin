@@ -8,7 +8,7 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
+  id?: number;
   name?: string;
   username?: string;
   email?: string;
@@ -30,7 +30,7 @@ export interface Model {
 
 /* Search */
 interface Search {
-  id_eq?: string;
+  id_eq?: number;
   name_cont?: string;
 }
 

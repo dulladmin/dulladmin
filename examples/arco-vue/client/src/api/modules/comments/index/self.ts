@@ -8,8 +8,8 @@ import {
 
 /* Model */
 export interface Model {
-  id?: string;
-  postId?: string;
+  id?: number;
+  postId?: number;
   name?: string;
   email?: string;
   body?: string;

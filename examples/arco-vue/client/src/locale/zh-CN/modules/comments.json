@@ -5,5 +5,11 @@
   "comments--index.self-block.model.attributes.postId": "所属帖子",
   "comments--index.self-block.model.attributes.name": "标题",
   "comments--index.self-block.model.attributes.email": "邮箱",
-  "comments--index.self-block.model.attributes.body": "内容"
+  "comments--index.self-block.model.attributes.body": "内容",
+  "comments--show.title": "评论详情",
+  "comments--show.self-block.title": "评论详情",
+  "comments--show.self-block.model.attributes.postId": "所属帖子",
+  "comments--show.self-block.model.attributes.name": "标题",
+  "comments--show.self-block.model.attributes.email": "邮箱",
+  "comments--show.self-block.model.attributes.body": "内容"
 }

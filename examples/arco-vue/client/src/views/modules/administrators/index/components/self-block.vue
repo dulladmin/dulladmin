@@ -130,6 +130,15 @@
             <a-button
               v-permission="['admin', ]"
               type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: 'AdministratorsShow', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
+            <a-button
+              v-permission="['admin', ]"
+              type="outline"
               status="warning"
               size="small"
               @click="goto({ name: 'AdministratorsEdit', params: { id: record.id } })"
@@ -144,6 +153,9 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+        v-permission="['admin', ]"
+      />
       <span
         v-permission="['admin', ]"
       />
@@ -189,7 +201,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Search = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -204,7 +216,7 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'administrators--index.self-block.model.attributes.id',
     },
     name: {
@@ -229,7 +241,7 @@
   const searchMetadata: { [key: string]: any } = {
     id_eq: {
       name: 'id_eq',
-      type: 'string',
+      type: 'int64',
       i18nKey: 'administrators--index.self-block.searchers.id_eq',
     },
     role_eq: {
@@ -312,19 +324,19 @@
         title: t('administrators--index.self-block.model.attributes.id'),
         dataIndex: 'id',
         slotName: 'id',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.role'),
         dataIndex: 'role',
         slotName: 'role',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -340,6 +352,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

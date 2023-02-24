@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
       title: 'comments--index.title',
     },
   },
+  {
+    name: 'CommentsShow',
+    path: 'comments/:id',
+    component: () => import('@/views/modules/comments/show/index.vue'),
+    meta: {
+      nameComponents: ['Comments', 'Show', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'comments--show.title',
+    },
+  },
 ];
 
 export default routes;

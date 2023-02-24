@@ -111,7 +111,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Pagination = Record<string, any>;
 
   // i18n
@@ -125,7 +125,7 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'albums--show.photos-block.model.attributes.id',
     },
     title: {
@@ -188,25 +188,25 @@
         title: t('albums--show.photos-block.model.attributes.id'),
         dataIndex: 'id',
         slotName: 'id',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.url'),
         dataIndex: 'url',
         slotName: 'url',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('albums--show.photos-block.model.attributes.thumbnailUrl'),
         dataIndex: 'thumbnailUrl',
         slotName: 'thumbnailUrl',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -222,6 +222,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

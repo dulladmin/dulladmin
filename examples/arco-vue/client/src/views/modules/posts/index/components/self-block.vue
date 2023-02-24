@@ -89,6 +89,14 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: 'PostsShow', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
           </a-space>
         </template>
         <!-- eslint-enable -->
@@ -97,6 +105,8 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
     </div>
 
   </div>
@@ -112,7 +122,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -127,11 +137,11 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'posts--index.self-block.model.attributes.id',
     },
     userId: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'posts--index.self-block.model.attributes.userId',
     },
     title: {
@@ -206,25 +216,25 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.userId'),
         dataIndex: 'userId',
         slotName: 'userId',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('posts--index.self-block.model.attributes.body'),
         dataIndex: 'body',
         slotName: 'body',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -240,6 +250,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

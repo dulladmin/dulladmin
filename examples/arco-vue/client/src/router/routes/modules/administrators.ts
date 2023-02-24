@@ -15,6 +15,17 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'AdministratorsShow',
+    path: 'administrators/:id',
+    component: () => import('@/views/modules/administrators/show/index.vue'),
+    meta: {
+      nameComponents: ['Administrators', 'Show', ],
+      authority: ['admin', ],
+      cache: false,
+      title: 'administrators--show.title',
+    },
+  },
+  {
     name: 'AdministratorsNew',
     path: 'administrators/new',
     component: () => import('@/views/modules/administrators/new/index.vue'),

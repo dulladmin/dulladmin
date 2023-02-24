@@ -4,7 +4,7 @@ import axios from 'axios';
 
 /* Model */
 export interface Model {
-  userId?: string;
+  userId?: number;
   title?: string;
   completed?: boolean;
 }

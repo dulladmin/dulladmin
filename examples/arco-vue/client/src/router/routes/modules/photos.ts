@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
       title: 'photos--index.title',
     },
   },
+  {
+    name: 'PhotosShow',
+    path: 'photos/:id',
+    component: () => import('@/views/modules/photos/show/index.vue'),
+    meta: {
+      nameComponents: ['Photos', 'Show', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'photos--show.title',
+    },
+  },
 ];
 
 export default routes;

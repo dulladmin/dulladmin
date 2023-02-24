@@ -4,8 +4,8 @@ views:
     blocks:
       - table:
           items:
-            - { name: 'id'    , type: 'string' }
-            - { name: 'userId', type: 'string' }
+            - { name: 'id'    , type: 'int64'  }
+            - { name: 'userId', type: 'int64'  }
             - { name: 'title' , type: 'string' }
           sorters:
             - { name: 'id', directions: ['ascend', 'descend'] }
@@ -14,14 +14,13 @@ views:
     blocks:
       - descriptions:
           items:
-            - { name: 'id'    , type: 'string' }
-            - { name: 'userId', type: 'string' }
+            - { name: 'userId', type: 'int64'  }
             - { name: 'title' , type: 'string' }
       - relationship: 'embeds_many'
         name: 'photos'
         table:
           items:
-            - { name: 'id'          , type: 'string' }
+            - { name: 'id'          , type: 'int64'  }
             - { name: 'title'       , type: 'string' }
             - { name: 'url'         , type: 'image'  }
             - { name: 'thumbnailUrl', type: 'image'  }

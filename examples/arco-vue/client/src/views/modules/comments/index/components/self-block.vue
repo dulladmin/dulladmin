@@ -95,6 +95,14 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="goto({ name: 'CommentsShow', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
           </a-space>
         </template>
         <!-- eslint-enable -->
@@ -103,6 +111,8 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
     </div>
 
   </div>
@@ -118,7 +128,7 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types
-  type Column = TableColumnData & { show?: boolean, renderable?: boolean };
+  type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
   type Sorter = Record<string, any>;
   type Pagination = Record<string, any>;
 
@@ -133,11 +143,11 @@
   // model
   const modelMetadata: { [key: string]: any } = {
     id: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'comments--index.self-block.model.attributes.id',
     },
     postId: {
-      type: 'string',
+      type: 'int64',
       i18nKey: 'comments--index.self-block.model.attributes.postId',
     },
     name: {
@@ -219,31 +229,31 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
-        show: !false,
+        hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.postId'),
         dataIndex: 'postId',
         slotName: 'postId',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.email'),
         dataIndex: 'email',
         slotName: 'email',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.body'),
         dataIndex: 'body',
         slotName: 'body',
-        show: !false,
+        hidden: false,
       },
       {
         title: t('table.columns.operations'),
@@ -259,6 +269,9 @@
     () => tableColumns.value,
     (val) => {
       tableColumnsWithShow.value = cloneDeep(val);
+      tableColumnsWithShow.value.forEach((item) => {
+        item.show = !item.hidden;
+      });
       tableColumnsShow.value = tableColumnsWithShow.value.filter(
         (item) => item.show
       );

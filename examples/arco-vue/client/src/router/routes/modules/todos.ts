@@ -15,6 +15,17 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'TodosShow',
+    path: 'todos/:id',
+    component: () => import('@/views/modules/todos/show/index.vue'),
+    meta: {
+      nameComponents: ['Todos', 'Show', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'todos--show.title',
+    },
+  },
+  {
     name: 'TodosNew',
     path: 'todos/new',
     component: () => import('@/views/modules/todos/new/index.vue'),

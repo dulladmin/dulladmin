@@ -36,17 +36,18 @@
       if (props.meta.optionals[props.data]) {
         value = t(props.meta.optionals[props.data].i18nKey);
       } else {
-        value = props.data.toString();
+        value = String(props.data);
       }
       let colorIndex = -1;
       let color = 'gray';
       switch (props.meta.type as ValueType) {
         case ValueType.Bool:
-          color = props.data ? 'green' : 'orange'
+          color = props.data ? 'green' : 'orange';
           break;
         default:
-          colorIndex = Object.keys(props.meta.optionals).indexOf(props.data)
-          color = colorIndex === -1 ? 'gray' : COLORS[colorIndex % COLORS.length]
+          colorIndex = Object.keys(props.meta.optionals).indexOf(props.data);
+          color =
+            colorIndex === -1 ? 'gray' : COLORS[colorIndex % COLORS.length];
           break;
       }
       return <a-tag color={color}>{value}</a-tag>;
@@ -69,7 +70,7 @@
       case ValueType.Bool:
         return (
           <a-tag color={props.data ? 'green' : 'orange'}>
-            {props.data.toString()}
+            {String(props.data)}
           </a-tag>
         );
       case ValueType.String:
