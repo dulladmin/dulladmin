@@ -47,6 +47,17 @@ const routes: RouteRecordRaw[] = [
       title: 'todos--edit.title',
     },
   },
+  {
+    name: 'TodosDelete',
+    path: 'todos/:id/delete',
+    component: () => import('@/views/modules/todos/delete/index.vue'),
+    meta: {
+      nameComponents: ['Todos', 'Delete', ],
+      authority: ['*', ],
+      cache: false,
+      title: 'todos--delete.title',
+    },
+  },
 ];
 
 export default routes;

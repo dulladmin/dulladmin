@@ -28,3 +28,7 @@ views:
       items:
         - { name: 'name' , type: 'string' }
         - { name: 'role' , type: 'string', optionals: ["admin", "user"] }
+
+  delete:
+    form:
+      items: []

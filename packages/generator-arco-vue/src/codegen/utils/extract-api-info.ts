@@ -14,6 +14,7 @@ export function extractApiInfo(resource: Resource, view: View, block: Block): Re
       break
     case ViewType.Show:
     case ViewType.Edit:
+    case ViewType.Delete:
       url = resource.singular
         ? `/${resourceName}/${viewName}/${blockName}`
         : `/${resourceName}/\${id}/${viewName}/${blockName}`

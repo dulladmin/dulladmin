@@ -27,5 +27,7 @@
   "administrators--edit.self-block.model.attributes.name": "Name",
   "administrators--edit.self-block.model.attributes.role": "Role",
   "administrators--edit.self-block.model.attributes.role.optionals.admin": "Admin",
-  "administrators--edit.self-block.model.attributes.role.optionals.user": "User"
+  "administrators--edit.self-block.model.attributes.role.optionals.user": "User",
+  "administrators--delete.title": "Administrators Delete",
+  "administrators--delete.self-block.title": "Administrators Form"
 }

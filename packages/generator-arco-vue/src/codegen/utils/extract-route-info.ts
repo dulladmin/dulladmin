@@ -25,6 +25,9 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
     case ViewType.Edit:
       path = resource.singular ? `${resourceName}/edit` : `${resourceName}/:id/edit`
       break
+    case ViewType.Delete:
+      path = resource.singular ? `${resourceName}/delete` : `${resourceName}/:id/delete`
+      break
   }
 
   return {

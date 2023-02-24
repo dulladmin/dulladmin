@@ -47,6 +47,17 @@ const routes: RouteRecordRaw[] = [
       title: 'administrators--edit.title',
     },
   },
+  {
+    name: 'AdministratorsDelete',
+    path: 'administrators/:id/delete',
+    component: () => import('@/views/modules/administrators/delete/index.vue'),
+    meta: {
+      nameComponents: ['Administrators', 'Delete', ],
+      authority: ['admin', ],
+      cache: false,
+      title: 'administrators--delete.title',
+    },
+  },
 ];
 
 export default routes;

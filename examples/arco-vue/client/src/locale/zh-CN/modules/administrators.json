@@ -27,5 +27,7 @@
   "administrators--edit.self-block.model.attributes.name": "名称",
   "administrators--edit.self-block.model.attributes.role": "角色",
   "administrators--edit.self-block.model.attributes.role.optionals.admin": "超级管理员",
-  "administrators--edit.self-block.model.attributes.role.optionals.user": "普通管理员"
+  "administrators--edit.self-block.model.attributes.role.optionals.user": "普通管理员",
+  "administrators--delete.title": "删除管理员",
+  "administrators--delete.self-block.title": "删除管理员"
 }

@@ -33,3 +33,7 @@ views:
         - { name: 'userId'     , type: 'int64' }
         - { name: 'title'      , type: 'string', hidden: true }
         - { name: 'completed'  , type: 'bool'  }
+
+  delete:
+    form:
+      items: []

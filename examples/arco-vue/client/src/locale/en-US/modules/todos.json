@@ -27,5 +27,7 @@
   "todos--edit.self-block.title": "Todos Form",
   "todos--edit.self-block.model.attributes.userId": "User Id",
   "todos--edit.self-block.model.attributes.title": "Title",
-  "todos--edit.self-block.model.attributes.completed": "Completed"
+  "todos--edit.self-block.model.attributes.completed": "Completed",
+  "todos--delete.title": "Todos Delete",
+  "todos--delete.self-block.title": "Todos Form"
 }

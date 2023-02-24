@@ -168,6 +168,15 @@ export async function enhance(app) {
     Object.assign(model, { ...req.body.model });
     res.send(buildSuccessResponse({ model }));
   });
+  app.get('/todos/:id/delete/self', async (req, res) => {
+    const collection = todosDB.data;
+    const index = collection.findIndex((item) => item.id == req.params.id);
+    collection.splice(index, 1);
+    res.send(buildSuccessResponse({ model: {} }));
+  });
+  app.put('/todos/:id/delete/self', async (_req, res) => {
+    res.send(buildSuccessResponse({ model: {} }));
+  });
 
   app.get('/administrators/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(administratorsDB.data);
@@ -201,5 +210,14 @@ export async function enhance(app) {
     const model = collection.find((item) => item.id == req.params.id);
     Object.assign(model, { ...req.body.model });
     res.send(buildSuccessResponse({ model }));
+  });
+  app.get('/administrators/:id/delete/self', async (req, res) => {
+    const collection = administratorsDB.data;
+    const index = collection.findIndex((item) => item.id == req.params.id);
+    collection.splice(index, 1);
+    res.send(buildSuccessResponse({ model: {} }));
+  });
+  app.put('/administrators/:id/delete/self', async (_req, res) => {
+    res.send(buildSuccessResponse({ model: {} }));
   });
 }

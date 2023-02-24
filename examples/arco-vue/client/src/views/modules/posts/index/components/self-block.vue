@@ -85,7 +85,6 @@
             :meta="modelMetadata[column.dataIndex]"
           />
         </template>
-        <!-- eslint-disable vue/no-unused-vars -->
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
@@ -99,7 +98,6 @@
             </a-button>
           </a-space>
         </template>
-        <!-- eslint-enable -->
       </a-table>
     </a-card>
 

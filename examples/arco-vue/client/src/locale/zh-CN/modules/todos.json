@@ -27,5 +27,7 @@
   "todos--edit.self-block.title": "编辑待办",
   "todos--edit.self-block.model.attributes.userId": "所属用户",
   "todos--edit.self-block.model.attributes.title": "标题",
-  "todos--edit.self-block.model.attributes.completed": "是否完成"
+  "todos--edit.self-block.model.attributes.completed": "是否完成",
+  "todos--delete.title": "删除待办",
+  "todos--delete.self-block.title": "删除待办"
 }
