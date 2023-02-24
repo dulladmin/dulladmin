@@ -529,6 +529,7 @@
   const onTableSearch = async () => {
     const req = omitBy({
       search: apiSearch(tableSearch),
+      sorter: apiSorter(tableSorter),
       pagination: apiPagination(baseTablePagination),
     }, v => v == null) as ListRequest;
     await fetchStore(req);
