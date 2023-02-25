@@ -108,14 +108,15 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  const resourceActions: Record<string, any> = {}
+  const form: Record<string, any> = { allowBackOnSave: false, defaultActionName: 'save' }
   if (block.relType === BlockRelationshipType.Self) {
-    resourceActions.back = {}
+    form.allowBackOnSave = true
+    form.defaultActionName = view.type
   }
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
-    { view: _view, block: _block, model, resourceActions }
+    { view: _view, block: _block, model, form }
   )
 }

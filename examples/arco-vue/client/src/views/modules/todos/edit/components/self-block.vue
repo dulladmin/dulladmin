@@ -26,7 +26,7 @@
                 <template #icon>
                   <icon-save />
                 </template>
-                {{ $t('form.actions.save') }}
+                {{ $t('form.actions.edit') }}
               </a-button>
             </a-space>
           </a-form-item>
@@ -112,7 +112,7 @@
         store.value = model;
       }
 
-      Message.success(t('form.actions.save.success'));
+      Message.success(t('form.actions.edit.success'));
 
       const { back } = route.query;
       if (back) {

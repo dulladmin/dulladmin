@@ -44,6 +44,12 @@ export default {
   'table.columns.operations': 'Operations',
 
   // components - form
+  'form.actions.new': 'Create',
+  'form.actions.new.success': 'Create success',
+  'form.actions.edit': 'Update',
+  'form.actions.edit.success': 'Update success',
+  'form.actions.delete': 'Delete',
+  'form.actions.delete.success': 'Delete success',
   'form.actions.save': 'Save',
   'form.actions.save.success': 'Save success',
 

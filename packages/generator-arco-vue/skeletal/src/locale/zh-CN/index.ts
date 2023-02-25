@@ -44,6 +44,12 @@ export default {
   'table.columns.operations': '操作',
 
   // components - form
+  'form.actions.new': '创建',
+  'form.actions.new.success': '创建成功',
+  'form.actions.edit': '更新',
+  'form.actions.edit.success': '更新成功',
+  'form.actions.delete': '删除',
+  'form.actions.delete.success': '删除成功',
   'form.actions.save': '保存',
   'form.actions.save.success': '保存成功',
 
