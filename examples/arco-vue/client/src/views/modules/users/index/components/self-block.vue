@@ -455,7 +455,7 @@
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 180,
+        width: 160,
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;

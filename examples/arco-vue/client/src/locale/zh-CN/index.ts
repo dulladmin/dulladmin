@@ -40,6 +40,7 @@ export default {
   'table.actions.new': '新建',
   'table.actions.show': '查看',
   'table.actions.edit': '编辑',
+  'table.actions.delete': '删除',
   'table.columns.operations': '操作',
 
   // components - form

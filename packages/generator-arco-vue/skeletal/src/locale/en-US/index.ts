@@ -40,6 +40,7 @@ export default {
   'table.actions.new': 'New',
   'table.actions.show': 'View',
   'table.actions.edit': 'Edit',
+  'table.actions.delete': 'Delete',
   'table.columns.operations': 'Operations',
 
   // components - form

@@ -148,6 +148,14 @@
             >
               {{ $t('table.actions.edit') }}
             </a-button>
+            <a-button
+              type="outline"
+              status="danger"
+              size="small"
+              @click="goto({ name: 'TodosDelete', params: { id: record.id } })"
+            >
+              {{ $t('table.actions.delete') }}
+            </a-button>
           </a-space>
         </template>
       </a-table>
@@ -155,6 +163,8 @@
 
     <!-- Table Model Operations -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span
+      />
       <span
       />
       <span
@@ -372,7 +382,7 @@
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 180,
+        width: 160,
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;

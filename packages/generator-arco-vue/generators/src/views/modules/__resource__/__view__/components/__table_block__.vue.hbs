@@ -172,6 +172,19 @@
               \{{ $t('table.actions.edit') }}
             </a-button>
             {{/if}}
+            {{#if resourceActions.delete }}
+            <a-button
+              {{#if resourceActions.delete.authority}}
+              v-permission="[{{#each resourceActions.delete.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
+              type="outline"
+              status="danger"
+              size="small"
+              @click="goto({ name: '{{ resourceActions.delete.name }}', params: { id: record.id } })"
+            >
+              \{{ $t('table.actions.delete') }}
+            </a-button>
+            {{/if}}
           </a-space>
         </template>
       </a-table>
@@ -190,6 +203,13 @@
       <span
         {{#if resourceActions.edit.authority}}
         v-permission="[{{#each resourceActions.edit.authority}}'{{this}}', {{/each}}]"
+        {{/if}}
+      />
+      {{/if}}
+      {{#if resourceActions.delete}}
+      <span
+        {{#if resourceActions.delete.authority}}
+        v-permission="[{{#each resourceActions.delete.authority}}'{{this}}', {{/each}}]"
         {{/if}}
       />
       {{/if}}
@@ -399,7 +419,7 @@
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 180,
+        width: 160,
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
