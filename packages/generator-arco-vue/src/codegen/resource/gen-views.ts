@@ -79,7 +79,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     resource.views.forEach((view) => {
       const _view = extractViewInfo(resource, view)
       resourceActions[view.type] = {
-        authority: view.authority ?? resource.authority,
+        authority: _view.authority,
         name: _view.name
       }
     })

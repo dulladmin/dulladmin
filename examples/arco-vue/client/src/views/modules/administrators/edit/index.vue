@@ -4,7 +4,11 @@
   <div class="dulladmin-view">
     <a-grid :cols="24" :row-gap="16">
       <a-grid-item :span="24">
-        <SelfBlock />
+        <div
+          v-permission="['admin', ]"
+        >
+          <SelfBlock />
+        </div>
       </a-grid-item>
     </a-grid>
   </div>

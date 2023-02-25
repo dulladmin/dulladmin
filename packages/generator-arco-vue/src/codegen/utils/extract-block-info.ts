@@ -11,6 +11,7 @@ export function extractBlockInfo(resource: Resource, view: View, block: Block): 
     componentName: `${toCamelize(block.relName)}Block`,
     componentImportPath: `@/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`,
     apiImportPath: `@/api/modules/${resourceName}/${viewName}/${blockName}`,
+    authority: block.authority ?? view.authority ?? resource.authority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
       i18nValue: `${toI18nMessage(
