@@ -2,15 +2,15 @@
 
 import axios from 'axios';
 
-/* Model */
-export interface Model {
+/* FormModel */
+export interface FormModel {
   name?: string;
   role?: string;
 }
 
 /* GET /administrators/new/self */
 export interface GetResponse {
-  model: Model;
+  form: FormModel;
 }
 export function get(id: string) {
   return axios.get<GetResponse>(`/administrators/new/self`);
@@ -18,10 +18,10 @@ export function get(id: string) {
 
 /* PUT /administrators/new/self */
 export interface UpdateRequest {
-  model: Model;
+  form: FormModel;
 }
 export interface UpdateResponse {
-  model: Model;
+  form: FormModel;
 }
 export function update(id: string, req: UpdateRequest) {
   return axios.put<UpdateResponse>(`/administrators/new/self`, req);

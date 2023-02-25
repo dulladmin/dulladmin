@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 
-/* Model */
-export interface Model {
+/* FormModel */
+export interface FormModel {
   userId?: number;
   title?: string;
   completed?: boolean;
@@ -11,7 +11,7 @@ export interface Model {
 
 /* GET /todos/new/self */
 export interface GetResponse {
-  model: Model;
+  form: FormModel;
 }
 export function get(id: string) {
   return axios.get<GetResponse>(`/todos/new/self`);
@@ -19,10 +19,10 @@ export function get(id: string) {
 
 /* PUT /todos/new/self */
 export interface UpdateRequest {
-  model: Model;
+  form: FormModel;
 }
 export interface UpdateResponse {
-  model: Model;
+  form: FormModel;
 }
 export function update(id: string, req: UpdateRequest) {
   return axios.put<UpdateResponse>(`/todos/new/self`, req);

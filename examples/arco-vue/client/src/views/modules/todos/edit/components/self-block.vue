@@ -88,7 +88,7 @@
     setLoading(true);
     try {
       const { data } = await get(id);
-      const { model } = data;
+      const { form: model } = data;
 
       if (model) {
         store.value = model;
@@ -110,7 +110,7 @@
         }),
       } as UpdateRequest;
       const { data } = await update(id, req);
-      const { model } = data;
+      const { form: model } = data;
 
       if (model) {
         store.value = model;

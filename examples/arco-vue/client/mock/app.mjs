@@ -149,33 +149,33 @@ export async function enhance(app) {
   });
   app.get('/todos/new/self', async (_req, res) => {
     const model = { userId: '', title: '', completed: false };
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.put('/todos/new/self', async (req, res) => {
     const collection = todosDB.data;
     const model = { ...req.body.model, id: collection.length + 1 };
     collection.push(model);
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/todos/:id/edit/self', async (req, res) => {
     const collection = todosDB.data;
     const model = collection.find((item) => item.id == req.params.id);
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.put('/todos/:id/edit/self', async (req, res) => {
     const collection = todosDB.data;
     const model = collection.find((item) => item.id == req.params.id);
     Object.assign(model, { ...req.body.model });
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/todos/:id/delete/self', async (req, res) => {
     const collection = todosDB.data;
     const index = collection.findIndex((item) => item.id == req.params.id);
     collection.splice(index, 1);
-    res.send(buildSuccessResponse({ model: {} }));
+    res.send(buildSuccessResponse({ form: {} }));
   });
   app.put('/todos/:id/delete/self', async (_req, res) => {
-    res.send(buildSuccessResponse({ model: {} }));
+    res.send(buildSuccessResponse({ form: {} }));
   });
 
   app.get('/administrators/index/self', async (req, res) => {
@@ -192,32 +192,32 @@ export async function enhance(app) {
   });
   app.get('/administrators/new/self', async (_req, res) => {
     const model = { name: '', role: 'user' };
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.put('/administrators/new/self', async (req, res) => {
     const collection = administratorsDB.data;
     const model = { ...req.body.model, id: collection.length + 1 };
     collection.push(model);
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/administrators/:id/edit/self', async (req, res) => {
     const collection = administratorsDB.data;
     const model = collection.find((item) => item.id == req.params.id);
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.put('/administrators/:id/edit/self', async (req, res) => {
     const collection = administratorsDB.data;
     const model = collection.find((item) => item.id == req.params.id);
     Object.assign(model, { ...req.body.model });
-    res.send(buildSuccessResponse({ model }));
+    res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/administrators/:id/delete/self', async (req, res) => {
     const collection = administratorsDB.data;
     const index = collection.findIndex((item) => item.id == req.params.id);
     collection.splice(index, 1);
-    res.send(buildSuccessResponse({ model: {} }));
+    res.send(buildSuccessResponse({ form: {} }));
   });
   app.put('/administrators/:id/delete/self', async (_req, res) => {
-    res.send(buildSuccessResponse({ model: {} }));
+    res.send(buildSuccessResponse({ form: {} }));
   });
 }
