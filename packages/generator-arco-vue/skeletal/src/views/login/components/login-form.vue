@@ -113,7 +113,11 @@
 <style lang="less" scoped>
   .login-form {
     &-wrapper {
-      width: 320px;
+      width: 400px;
+      padding: 60px 40px;
+      background: var(--color-bg-1);
+      border-radius: 4px;
+      box-shadow: 0 4px 8px 0 rgb(0 0 0 / 5%);
     }
 
     &-title {
@@ -122,6 +126,7 @@
       font-size: 24px;
       line-height: 32px;
       text-align: center;
+      margin-bottom: 4px;
     }
 
     &-sub-title {
