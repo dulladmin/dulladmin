@@ -73,8 +73,9 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     per: block.pagination?.per
   }
 
+  // self Table in IndexView
   const resourceActions: Record<string, any> = {}
-  if (view.type === ViewType.Index && block.relType === BlockRelationshipType.Self) {
+  if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
     resource.views.forEach((view) => {
       const _view = extractViewInfo(resource, view)
       resourceActions[view.type] = {
@@ -108,8 +109,12 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
+  // self Form in NewView/EditView/DelteView
   const form: Record<string, any> = { actionName: 'save' }
-  if (block.relType === BlockRelationshipType.Self) {
+  if (
+    block.relType === BlockRelationshipType.Self &&
+    (view.type === ViewType.New || view.type === ViewType.Edit || view.type === ViewType.Delete)
+  ) {
     form.actionName = view.type
     form.allowBackOnSave = true
     form.isDanger = view.type === ViewType.Delete

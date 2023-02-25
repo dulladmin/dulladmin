@@ -35,5 +35,6 @@ views:
         - { name: 'completed'  , type: 'bool'  }
 
   delete:
+    authority: ['admin']
     form:
       items: []

@@ -53,7 +53,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/modules/todos/delete/index.vue'),
     meta: {
       nameComponents: ['Todos', 'Delete', ],
-      authority: ['*', ],
+      authority: ['admin', ],
       cache: false,
       title: 'todos--delete.title',
     },

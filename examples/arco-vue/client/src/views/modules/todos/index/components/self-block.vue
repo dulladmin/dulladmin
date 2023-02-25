@@ -149,6 +149,7 @@
               {{ $t('table.actions.edit') }}
             </a-button>
             <a-button
+              v-permission="['admin', ]"
               type="outline"
               status="danger"
               size="small"
@@ -168,6 +169,7 @@
       <span
       />
       <span
+        v-permission="['admin', ]"
       />
     </div>
 
