@@ -1,7 +1,7 @@
 {
-  "site.name": "DullAdmin",
-  "site.description": "a specification for building admin panel",
-  "site.author": "DullAdmin Team",
-  "site.author.url": "https://github.com/dulladmin",
+  "site.name": "WCMS",
+  "site.description": "Web Content Management System",
+  "site.author": "WCMS Dev Team",
+  "site.author.url": "/",
   "site.creationDate": "2023-02-19T11:08:14.347Z"
 }
