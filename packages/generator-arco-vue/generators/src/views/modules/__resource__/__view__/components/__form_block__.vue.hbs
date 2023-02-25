@@ -16,11 +16,18 @@
         {{/each}}
           <a-form-item>
             <a-space>
-              <a-button type="primary" @click="onFormSave" :loading="saving">
+              <a-button
+                type="primary"
+                {{#if form.isDanger}}
+                status="danger"
+                {{/if}}
+                :loading="saving"
+                @click="onFormSave"
+              >
                 <template #icon>
                   <icon-save />
                 </template>
-                \{{ $t('form.actions.{{form.defaultActionName}}') }}
+                \{{ $t('form.actions.{{form.actionName}}') }}
               </a-button>
             </a-space>
           </a-form-item>
@@ -124,7 +131,7 @@
         store.value = model;
       }
 
-      Message.success(t('form.actions.{{form.defaultActionName}}.success'));
+      Message.success(t('form.actions.{{form.actionName}}.success'));
 
       {{#if form.allowBackOnSave }}
       const { back } = route.query;

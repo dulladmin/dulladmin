@@ -18,7 +18,11 @@
           />
           <a-form-item>
             <a-space>
-              <a-button type="primary" @click="onFormSave" :loading="saving">
+              <a-button
+                type="primary"
+                :loading="saving"
+                @click="onFormSave"
+              >
                 <template #icon>
                   <icon-save />
                 </template>

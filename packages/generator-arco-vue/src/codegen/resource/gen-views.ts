@@ -108,10 +108,11 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _block = extractBlockInfo(resource, view, block)
   const model = extractModelInfo(resource, view, block)
 
-  const form: Record<string, any> = { allowBackOnSave: false, defaultActionName: 'save' }
+  const form: Record<string, any> = { actionName: 'save' }
   if (block.relType === BlockRelationshipType.Self) {
+    form.actionName = view.type
     form.allowBackOnSave = true
-    form.defaultActionName = view.type
+    form.isDanger = view.type === ViewType.Delete
   }
 
   return handlebarsFile(

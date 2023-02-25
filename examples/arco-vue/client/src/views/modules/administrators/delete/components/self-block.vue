@@ -10,7 +10,12 @@
         >
           <a-form-item>
             <a-space>
-              <a-button type="primary" @click="onFormSave" :loading="saving">
+              <a-button
+                type="primary"
+                status="danger"
+                :loading="saving"
+                @click="onFormSave"
+              >
                 <template #icon>
                   <icon-save />
                 </template>
