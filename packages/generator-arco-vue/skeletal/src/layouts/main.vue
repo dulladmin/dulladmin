@@ -13,6 +13,8 @@
           :width="menuWidth"
           :style="{ paddingTop: '60px' }"
           :hide-trigger="true"
+          :collapsible="true"
+          :collapsed="appStore.menuCollapse"
         >
           <div class="menu-wrapper">
             <Menu />
