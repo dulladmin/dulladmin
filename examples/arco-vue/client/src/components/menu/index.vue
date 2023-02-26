@@ -1,15 +1,5 @@
 <template>
-  <a-menu
-    v-model:collapsed="collapsed"
-    v-model:selected-keys="selectedKey"
-    style="height: 100%; width: 100%"
-    :show-collapse-button="showCollapseButton"
-    :auto-open-selected="true"
-    :auto-open="true"
-    :mode="mode"
-  >
-    <renderFn />
-  </a-menu>
+  <renderFn />
 </template>
 
 <script lang="tsx" setup>
@@ -105,7 +95,19 @@
         );
       });
     };
-    return travel(appMenu.value);
+    return (
+      <a-menu
+        v-model:collapsed={collapsed.value}
+        v-model:selected-keys={selectedKey.value}
+        style="width: 100%; height: 100%;"
+        show-collapse-button={showCollapseButton.value}
+        auto-open-selected={true}
+        auto-open={true}
+        mode={mode.value}
+      >
+        {travel(appMenu.value)}
+      </a-menu>
+    );
   };
 </script>
 
