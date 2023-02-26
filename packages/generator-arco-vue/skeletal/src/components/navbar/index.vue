@@ -15,7 +15,9 @@
         />
       </a-space>
     </div>
-    <div class="center-side"> </div>
+    <div class="center-side">
+      <Menu v-if="appStore.topMenu" />
+    </div>
     <ul class="right-side">
       <li>
         <a-tooltip :content="$t('navbar.language')">
@@ -126,6 +128,7 @@
   import { LOCALE_OPTIONS } from '@/locale';
   import { useAppStore, useUserStore } from '@/store';
   import { setWindowTitle } from '@/utils/window';
+  import Menu from '../menu/index.vue';
 
   const appStore = useAppStore();
   const userStore = useUserStore();

@@ -2,6 +2,7 @@ import { computed, ref, watch } from 'vue';
 import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
+import config from '@/config';
 
 export type Tab = RouteLocationNormalized;
 
@@ -36,6 +37,12 @@ const useAppStore = defineStore('app', () => {
   const changeMenuCollapse = (collapse: boolean) => {
     menuCollapse.value = collapse;
   };
+
+  // topMenu
+  const cfgTopMenu = ref<boolean>(config['app.topMenu'] ?? false);
+  const topMenu = computed((): boolean => {
+    return !isMobile.value && cfgTopMenu.value;
+  });
 
   // tabbar
   const cachedDisabledTabs = ref<Set<string>>(new Set());
@@ -184,6 +191,8 @@ const useAppStore = defineStore('app', () => {
 
     menuCollapse,
     changeMenuCollapse,
+
+    topMenu,
 
     cachedDisabledTabs,
     cachedTabs,

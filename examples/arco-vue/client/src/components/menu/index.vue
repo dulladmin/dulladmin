@@ -6,6 +6,7 @@
     :show-collapse-button="showCollapseButton"
     :auto-open-selected="true"
     :auto-open="true"
+    :mode="mode"
   >
     <renderFn />
   </a-menu>
@@ -30,10 +31,19 @@
   const appStore = useAppStore();
   const userStore = useUserStore();
 
+  // mode
+  const mode = computed(() => (appStore.topMenu ? 'horizontal' : 'vertical'));
+
   // collapsed
   const collapsed = computed({
-    get: () => (appStore.isMobile ? false : appStore.menuCollapse),
-    set: (value: boolean) => appStore.changeMenuCollapse(value),
+    get: () => {
+      return appStore.topMenu || appStore.isMobile
+        ? false
+        : appStore.menuCollapse;
+    },
+    set: (value: boolean) => {
+      return appStore.changeMenuCollapse(value);
+    },
   });
   const showCollapseButton = computed(() => !appStore.isMobile);
 

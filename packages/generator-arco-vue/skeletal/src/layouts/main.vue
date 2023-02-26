@@ -6,6 +6,7 @@
     <a-layout>
       <a-layout>
         <a-layout-sider
+          v-if="renderMenu"
           v-show="!menuHidden"
           class="layout-sider"
           breakpoint="xl"
@@ -60,6 +61,7 @@
   useResponsive(true);
 
   // menu in sider
+  const renderMenu = computed(() => !appStore.topMenu);
   const menuHidden = computed(() => appStore.isMobile);
   const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220));
 
@@ -83,9 +85,10 @@
   // content area
   const contentPaddingStyle = computed(() => {
     const paddingTop = { paddingTop: '60px' };
-    const paddingLeft = menuHidden.value
-      ? {}
-      : { paddingLeft: `${menuWidth.value}px` };
+    const paddingLeft =
+      renderMenu.value && !menuHidden.value
+        ? { paddingLeft: `${menuWidth.value}px` }
+        : {};
     return { ...paddingTop, ...paddingLeft };
   });
 </script>

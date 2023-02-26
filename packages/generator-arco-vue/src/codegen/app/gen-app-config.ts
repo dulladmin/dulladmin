@@ -7,8 +7,9 @@ export function genAppConfig(): GeneratedFile[] {
 }
 
 export function genAppConfig_config(): GeneratedFile {
-  const data: Record<string, string> = {}
+  const data: Record<string, any> = {}
   data['app.creationDate'] = new Date().toISOString()
+  data['app.topMenu'] = false
 
   const outfilePath = 'src/config/config.json'
   const outfileContent = JSON.stringify(data, null, 2)
