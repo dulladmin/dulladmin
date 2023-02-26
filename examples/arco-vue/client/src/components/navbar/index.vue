@@ -2,6 +2,7 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
+        <img class="logo" src="/logo.png" />
         <a-typography-title
           :style="{ margin: 0, fontSize: '18px' }"
           :heading="5"
@@ -192,6 +193,11 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
+
+    .logo {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   .center-side {
