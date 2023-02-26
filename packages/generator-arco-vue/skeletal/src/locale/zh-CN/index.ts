@@ -3,9 +3,6 @@ import { formatModules, i18nFooterCopyrightDate } from '../base';
 const modules = import.meta.glob('./modules/*.json', { eager: true });
 const i18nMessages: Record<string, string> = formatModules(modules, {});
 
-const creationDate = i18nMessages['site.creationDate'];
-const footerCopyrightDate = i18nFooterCopyrightDate(creationDate) as string;
-
 export default {
   // components - navbar
   'navbar.language': '语言',
@@ -28,7 +25,7 @@ export default {
 
   // components - footer
   'footer.copyright': '版权所有',
-  'footer.copyright.date': footerCopyrightDate,
+  'footer.copyright.date': i18nFooterCopyrightDate(),
   'footer.allRightsReserved': '保留所有权利',
 
   // components - table

@@ -1,3 +1,5 @@
+import config from '@/config';
+
 export function formatModules(_modules: any, result: Record<string, string>) {
   Object.keys(_modules).forEach((key) => {
     const defaultModule = _modules[key].default;
@@ -7,14 +9,9 @@ export function formatModules(_modules: any, result: Record<string, string>) {
   return result;
 }
 
-export function i18nFooterCopyrightDate(
-  siteCreationDateStr: string | null
-): string | null {
-  if (siteCreationDateStr) {
-    const siteCreationDate = new Date(siteCreationDateStr);
-    const sinceYear = siteCreationDate.getFullYear().toString();
-    const nowYear = new Date().getFullYear().toString();
-    return sinceYear === nowYear ? sinceYear : `${sinceYear}-${nowYear}`;
-  }
-  return null;
+export function i18nFooterCopyrightDate(): string {
+  const creationDate = new Date(config['app.creationDate']);
+  const sinceYear = creationDate.getFullYear().toString();
+  const nowYear = new Date().getFullYear().toString();
+  return sinceYear === nowYear ? sinceYear : `${sinceYear}-${nowYear}`;
 }
