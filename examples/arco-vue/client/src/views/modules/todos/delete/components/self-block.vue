@@ -81,7 +81,7 @@
         }),
       } as UpdateRequest;
       const { data } = await update(id, req);
-      const { form: form } = data;
+      const { form } = data;
 
       if (form) {
         store.value = form;
