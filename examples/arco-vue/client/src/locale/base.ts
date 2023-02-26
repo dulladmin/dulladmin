@@ -10,7 +10,9 @@ export function formatModules(_modules: any, result: Record<string, string>) {
 }
 
 export function i18nFooterCopyrightDate(): string {
-  const creationDate = new Date(config['app.creationDate']);
+  const creationDate = config['app.creationDate']
+    ? new Date(config['app.creationDate'])
+    : new Date();
   const sinceYear = creationDate.getFullYear().toString();
   const nowYear = new Date().getFullYear().toString();
   return sinceYear === nowYear ? sinceYear : `${sinceYear}-${nowYear}`;

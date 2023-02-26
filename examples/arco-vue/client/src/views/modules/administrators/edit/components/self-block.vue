@@ -42,7 +42,7 @@
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
-  import { Model, UpdateRequest, get, update } from '@/api/modules/administrators/edit/self';
+  import { FormModel, UpdateRequest, get, update } from '@/api/modules/administrators/edit/self';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import { useAppStore } from '@/store';
 
@@ -78,7 +78,7 @@
 
   // form - store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({
+  const store = ref<FormModel>({
     name: undefined,
     role: undefined,
   });
@@ -86,10 +86,10 @@
     setLoading(true);
     try {
       const { data } = await get(id);
-      const { form: model } = data;
+      const { form } = data;
 
-      if (model) {
-        store.value = model;
+      if (form) {
+        store.value = form;
       }
     } finally {
       setLoading(false);
@@ -103,15 +103,15 @@
     setSaving(true);
     try {
       const req = {
-        model: omitBy(store.value, (v) => {
+        form: omitBy(store.value, (v) => {
           return v == null
         }),
       } as UpdateRequest;
       const { data } = await update(id, req);
-      const { form: model } = data;
+      const { form: form } = data;
 
-      if (model) {
-        store.value = model;
+      if (form) {
+        store.value = form;
       }
 
       Message.success(t('form.actions.edit.success'));
