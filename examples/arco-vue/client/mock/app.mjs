@@ -153,7 +153,7 @@ export async function enhance(app) {
   });
   app.put('/todos/new/self', async (req, res) => {
     const collection = todosDB.data;
-    const model = { ...req.body.model, id: collection.length + 1 };
+    const model = { ...req.body.form, id: collection.length + 1 };
     collection.push(model);
     res.send(buildSuccessResponse({ form: model }));
   });
@@ -165,7 +165,7 @@ export async function enhance(app) {
   app.put('/todos/:id/edit/self', async (req, res) => {
     const collection = todosDB.data;
     const model = collection.find((item) => item.id == req.params.id);
-    Object.assign(model, { ...req.body.model });
+    Object.assign(model, { ...req.body.form });
     res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/todos/:id/delete/self', async (req, res) => {
@@ -196,7 +196,7 @@ export async function enhance(app) {
   });
   app.put('/administrators/new/self', async (req, res) => {
     const collection = administratorsDB.data;
-    const model = { ...req.body.model, id: collection.length + 1 };
+    const model = { ...req.body.form, id: collection.length + 1 };
     collection.push(model);
     res.send(buildSuccessResponse({ form: model }));
   });
@@ -208,7 +208,7 @@ export async function enhance(app) {
   app.put('/administrators/:id/edit/self', async (req, res) => {
     const collection = administratorsDB.data;
     const model = collection.find((item) => item.id == req.params.id);
-    Object.assign(model, { ...req.body.model });
+    Object.assign(model, { ...req.body.form });
     res.send(buildSuccessResponse({ form: model }));
   });
   app.get('/administrators/:id/delete/self', async (req, res) => {
