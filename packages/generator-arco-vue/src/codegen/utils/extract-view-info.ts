@@ -8,7 +8,7 @@ export function extractViewInfo(resource: Resource, view: View): Record<string, 
 
   return {
     name: `${toCamelize(resourceName)}${toCamelize(viewName)}`,
-    authority: view.authority ?? resource.authority,
+    authority: view.inheritedAuthority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
       i18nValue: `${toI18nMessage(resourceName)} ${toI18nMessage(viewName)}`

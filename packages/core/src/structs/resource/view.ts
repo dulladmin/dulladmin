@@ -13,10 +13,13 @@ class View {
   authority: string[] | null
   blocks: Block[]
 
+  inheritedAuthority: string[] | null
+
   constructor(type: ViewType, authority: string[] | null, blocks: Block[]) {
     this.type = type
     this.authority = authority
     this.blocks = blocks
+    this.inheritedAuthority = null
   }
 
   toString(): string {

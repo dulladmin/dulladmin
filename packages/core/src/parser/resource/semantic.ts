@@ -41,6 +41,8 @@ function semanticAnalysisResource(resource: Resource): void {
 }
 
 function semanticAnalysisView(view: View, ctx: Context): void {
+  view.inheritedAuthority = ctx.resource.authority ?? view.authority
+
   const blockNames = view.blocks.map((block) => block.relName)
   const dupBlockNames = blockNames.filter((name, index) => blockNames.indexOf(name) !== index)
   if (dupBlockNames.length !== 0) {
@@ -93,6 +95,7 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
 }
 
 function semanticAnalysisTableBlock(block: TableBlock, ctx: Context): void {
+  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx)
   semanticAnalysisTableSorter(block.sorters, ctx)
   semanticAnalysisTableSearcher(block.searchers, ctx)
@@ -142,10 +145,12 @@ function semanticAnalysisTableSearcher(searchers: TableBlockSearcher[], ctx: Con
 }
 
 function semanticAnalysisDescriptionsBlock(block: DescriptionsBlock, ctx: Context): void {
+  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx)
 }
 
 function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
+  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx)
 }
 

@@ -67,6 +67,9 @@ class FormBlock {
   model: Model
   collection: boolean
 
+  // Inherited Property
+  inheritedAuthority: string[] | null
+
   constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
     this.type = BlockType.FormBlock
     this.relType = relType
@@ -74,6 +77,7 @@ class FormBlock {
     this.authority = authority
     this.model = model
     this.collection = false
+    this.inheritedAuthority = null
   }
 
   toString(): string {

@@ -65,9 +65,12 @@ class TableBlockOperation {
   authority: string[] | null
   dialog: Dialog
 
+  inheritedAuthority: string[] | null
+
   constructor(authority: string[] | null, dialog: Dialog) {
     this.authority = authority
     this.dialog = dialog
+    this.inheritedAuthority = null
   }
 }
 
@@ -136,6 +139,9 @@ class TableBlock {
   model: Model
   collection: boolean
 
+  // Inherited Property
+  inheritedAuthority: string[] | null
+
   // Sorter
   sorters: TableBlockSorter[]
 
@@ -168,6 +174,7 @@ class TableBlock {
     this.pagination = pagination
     this.operations = operations
     this.collection = true
+    this.inheritedAuthority = null
   }
 
   toString(): string {

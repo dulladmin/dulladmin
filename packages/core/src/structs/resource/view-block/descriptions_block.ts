@@ -60,6 +60,9 @@ class DescriptionsBlock {
   model: Model
   collection: boolean
 
+  // Inherited Property
+  inheritedAuthority: string[] | null
+
   constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
     this.type = BlockType.DescriptionsBlock
     this.relType = relType
@@ -67,6 +70,7 @@ class DescriptionsBlock {
     this.authority = authority
     this.model = model
     this.collection = false
+    this.inheritedAuthority = null
   }
 
   toString(): string {

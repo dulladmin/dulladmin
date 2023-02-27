@@ -36,7 +36,7 @@ export function extractRouteInfo(resource: Resource, view: View): Record<string,
     title: _view.title,
     viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
     viewName: [toCamelize(resourceName), toCamelize(viewName)],
-    authority: view.authority ?? resource.authority ?? ['*'],
+    authority: view.inheritedAuthority ?? ['*'],
     cache
   }
 }
