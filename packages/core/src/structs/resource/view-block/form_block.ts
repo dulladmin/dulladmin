@@ -44,7 +44,7 @@ import { BlockType, BlockRelationshipType } from './base'
  *  "code": 0,
  *  "msg": "ok",
  *  "data": {
- *    "model": {
+ *    "form": {
  *      "name": "John Doe",
  *      "email": "johndoe@example.com"
  *    }

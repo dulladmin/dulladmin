@@ -1,4 +1,6 @@
 export * from './resource'
 export * from './view'
-export * from './block'
+export * from './view-block'
+export * from './dialog'
+export * from './dialog-block'
 export * from './model'

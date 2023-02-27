@@ -1,4 +1,4 @@
-import Block from './block'
+import Block from './view-block'
 
 enum ViewType {
   Index = 'index',
