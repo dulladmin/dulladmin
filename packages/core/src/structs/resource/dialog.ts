@@ -9,12 +9,10 @@ enum DialogType {
 
 class Dialog {
   type: DialogType
-  authority: string[] | null
   block: DialogBlock
 
-  constructor(type: DialogType, authority: string[] | null, block: DialogBlock) {
+  constructor(type: DialogType, block: DialogBlock) {
     this.type = type
-    this.authority = authority
     this.block = block
   }
 

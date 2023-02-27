@@ -1,3 +1,4 @@
+import { Dialog } from '../dialog'
 import { ScalarValueType, Model } from '../model'
 import { BlockType, BlockRelationshipType } from './base'
 
@@ -57,6 +58,16 @@ class TableBlockPagination {
 
   constructor(per: number | null) {
     this.per = per
+  }
+}
+
+class TableBlockOperation {
+  authority: string[] | null
+  dialog: Dialog
+
+  constructor(authority: string[] | null, dialog: Dialog) {
+    this.authority = authority
+    this.dialog = dialog
   }
 }
 
@@ -134,6 +145,9 @@ class TableBlock {
   // Pagination
   pagination: TableBlockPagination | null
 
+  // Operations
+  operations: TableBlockOperation[]
+
   constructor(
     relType: BlockRelationshipType,
     relName: string,
@@ -141,7 +155,8 @@ class TableBlock {
     model: Model,
     sorters: TableBlockSorter[],
     searchers: TableBlockSearcher[],
-    pagination: TableBlockPagination | null
+    pagination: TableBlockPagination | null,
+    operations: TableBlockOperation[]
   ) {
     this.type = BlockType.TableBlock
     this.relType = relType
@@ -151,6 +166,7 @@ class TableBlock {
     this.sorters = sorters
     this.searchers = searchers
     this.pagination = pagination
+    this.operations = operations
     this.collection = true
   }
 

@@ -194,7 +194,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
     parsedPagination = new TableBlockPagination(per)
   }
 
-  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters, parsedSearchers, parsedPagination)
+  return new TableBlock(relType, relName, authority, parsedModel, parsedSorters, parsedSearchers, parsedPagination, [])
 }
 
 function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): TableBlockSorter {
