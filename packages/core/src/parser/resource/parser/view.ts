@@ -8,23 +8,35 @@ import {
   TableBlockSearcher,
   TableBlockSearcherPredicate,
   TableBlockPagination,
+  TableBlockOperationType,
   TableBlockOperation,
   DescriptionsBlock,
   FormBlock,
   Block,
+  Dialog,
   ScalarValueType
 } from '../../../structs'
 import {
   assertFieldNames,
   assertNotNull,
   assertIsArray,
+  assertIsObject,
   assertIsString,
   assertIsBlockRelationshipType,
   assertIsTableBlockSorterDirection,
   assertIsTableBlockSearcherPredicate,
   assertIsDullAdminScalarValueType
 } from '../../assert'
-import { YamlViewType, YamlBlockType, YamlBlockTableSorterType, YamlBlockTableSearcherType } from '../loader'
+import {
+  YamlViewType,
+  YamlBlockType,
+  YamlBlockTableSorterType,
+  YamlBlockTableSearcherType,
+  YamlBlockTableOperationsType,
+  YamlBlockTableOperationType,
+  YamlDialogType
+} from '../loader'
+import { parseDialog } from './dialog'
 import { parseModel } from './model'
 
 export function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
@@ -52,15 +64,15 @@ export function parseView(doc: YamlViewType, xpath: string, viewType: ViewType):
   }
   if (doc.table != null) {
     const block: YamlBlockType = { table: doc.table }
-    parsedBlocks.push(parseBlock(block, xpath + '/table'))
+    parsedBlocks.push(parseBlock(block, xpath))
   }
   if (doc.descriptions != null) {
     const block: YamlBlockType = { descriptions: doc.descriptions }
-    parsedBlocks.push(parseBlock(block, xpath + '/descriptions'))
+    parsedBlocks.push(parseBlock(block, xpath))
   }
   if (doc.form != null) {
     const block: YamlBlockType = { form: doc.form }
-    parsedBlocks.push(parseBlock(block, xpath + '/form'))
+    parsedBlocks.push(parseBlock(block, xpath))
   }
 
   return new View(viewType, authority, parsedBlocks)
@@ -96,7 +108,7 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.table != null) return parseTableBlock(doc, xpath, attrs)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath, attrs)
   if (doc.form != null) return parseFormBlock(doc, xpath, attrs)
-  throw new Error(`BlockType is required in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
+  throw new Error(`Block is required in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
 }
 
 function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): TableBlock {
@@ -139,7 +151,10 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
   const operations = table.operations
   const operationsXPath = xpath + '/table/operations'
   if (operations != null) {
-    assertIsArray(operations, operationsXPath)
+    assertIsObject(operations, operationsXPath)
+    parseTableBlockOperations(table.operations!, operationsXPath).forEach((item) => {
+      parsedOperations.push(item)
+    })
   }
 
   return new TableBlock(
@@ -202,6 +217,59 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
   }
 
   return new TableBlockSearcher(name!, predicate, type, optionals)
+}
+
+function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
+  const allowedFiledNames = ['show', 'new', 'edit', 'delete']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
+  const operations = []
+  if (doc.show != null) {
+    operations.push(parseTableBlockOperation(doc.show, xpath + '/show', TableBlockOperationType.Show))
+  }
+  if (doc.new != null) {
+    operations.push(parseTableBlockOperation(doc.new, xpath + '/new', TableBlockOperationType.New))
+  }
+  if (doc.edit != null) {
+    operations.push(parseTableBlockOperation(doc.edit, xpath + '/edit', TableBlockOperationType.Edit))
+  }
+  if (doc.delete != null) {
+    operations.push(parseTableBlockOperation(doc.delete, xpath + '/delete', TableBlockOperationType.Delete))
+  }
+  return operations
+}
+
+function parseTableBlockOperation(
+  doc: YamlBlockTableOperationType,
+  xpath: string,
+  type: TableBlockOperationType
+): TableBlockOperation {
+  const allowedFiledNames = ['authority', 'dialog', 'descriptions', 'form']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
+  const authority = doc.authority ?? null
+  const authorityXPath = xpath + '/authority'
+  if (authority != null) {
+    assertIsArray(authority, authorityXPath)
+    authority.forEach((item, idx) => {
+      assertIsString(item, authorityXPath + `[${idx}]`)
+    })
+  }
+
+  let parsedDialog: Dialog | null = null
+  if (doc.dialog != null) {
+    parsedDialog = parseDialog(doc.dialog, xpath + '/dialog')
+  } else if (doc.descriptions != null) {
+    const dialog: YamlDialogType = { name: type, descriptions: doc.descriptions }
+    parsedDialog = parseDialog(dialog, xpath)
+  } else if (doc.form != null) {
+    const dialog: YamlDialogType = { name: type, form: doc.form }
+    parsedDialog = parseDialog(dialog, xpath)
+  } else {
+    throw new Error(`Dialog is required in \`${xpath}\`, must be one of ["descriptions", "form"]`)
+  }
+
+  return new TableBlockOperation(type, authority, parsedDialog)
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {

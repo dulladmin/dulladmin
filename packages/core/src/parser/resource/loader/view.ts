@@ -1,3 +1,4 @@
+import { YamlDialogType, YamlDialogDescriptionsType, YamlDialogFormType } from './dialog'
 import { YamlModelAttributeType } from './model'
 
 export interface YamlViewType {
@@ -22,7 +23,7 @@ export interface YamlBlockTableType {
   sorters?: YamlBlockTableSorterType[]
   searchers?: YamlBlockTableSearcherType[]
   pagination?: YamlBlockTablePaginationType
-  operations?: any[]
+  operations?: YamlBlockTableOperationsType
 }
 
 export interface YamlBlockTableSorterType {
@@ -39,6 +40,20 @@ export interface YamlBlockTableSearcherType {
 
 export interface YamlBlockTablePaginationType {
   per?: number
+}
+
+export interface YamlBlockTableOperationsType {
+  show?: YamlBlockTableOperationType
+  new?: YamlBlockTableOperationType
+  edit?: YamlBlockTableOperationType
+  delete?: YamlBlockTableOperationType
+}
+
+export interface YamlBlockTableOperationType {
+  authority?: string[]
+  dialog?: YamlDialogType
+  descriptions?: YamlDialogDescriptionsType
+  form?: YamlDialogFormType
 }
 
 export interface YamlBlockDescriptionsType {

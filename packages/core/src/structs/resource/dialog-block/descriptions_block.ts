@@ -51,22 +51,18 @@ import { DialogBlockType } from './base'
 class DialogDescriptionsBlock {
   type: DialogBlockType
 
-  // Data Source
-  relName: string
-
   // Data Structuring
   model: Model
   collection: boolean
 
-  constructor(relName: string, model: Model) {
+  constructor(model: Model) {
     this.type = DialogBlockType.DescriptionsBlock
     this.model = model
-    this.relName = relName
     this.collection = false
   }
 
   toString(): string {
-    return `#<DialogDescriptionsBlock @name="${this.relName}">`
+    return '#<DialogDescriptionsBlock>'
   }
 }
 

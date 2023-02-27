@@ -61,13 +61,22 @@ class TableBlockPagination {
   }
 }
 
+enum TableBlockOperationType {
+  Show = 'show',
+  New = 'new',
+  Edit = 'edit',
+  Delete = 'delete'
+}
+
 class TableBlockOperation {
+  type: TableBlockOperationType
   authority: string[] | null
   dialog: Dialog
 
   inheritedAuthority: string[] | null
 
-  constructor(authority: string[] | null, dialog: Dialog) {
+  constructor(type: TableBlockOperationType, authority: string[] | null, dialog: Dialog) {
+    this.type = type
     this.authority = authority
     this.dialog = dialog
     this.inheritedAuthority = null
@@ -188,6 +197,7 @@ export {
   TableBlockSorterDirection,
   TableBlockSorter,
   TableBlockPagination,
+  TableBlockOperationType,
   TableBlockOperation,
   TableBlock
 }

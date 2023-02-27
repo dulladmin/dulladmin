@@ -1,27 +1,18 @@
 import DialogBlock from './dialog-block'
 
-enum DialogType {
-  Show = 'show',
-  New = 'new',
-  Edit = 'edit',
-  Delete = 'delete'
-}
-
 class Dialog {
-  type: DialogType
+  name: string
   block: DialogBlock
 
-  constructor(type: DialogType, block: DialogBlock) {
-    this.type = type
+  constructor(name: string, block: DialogBlock) {
+    this.name = name
     this.block = block
   }
 
   toString(): string {
-    let klass = `${this.type}Dialog`
-    klass = klass.charAt(0).toUpperCase() + klass.slice(1)
-    return `#<${klass}>`
+    return `#<Dialog @name="${this.name}">`
   }
 }
 
-export { DialogType, Dialog }
+export { Dialog }
 export default Dialog
