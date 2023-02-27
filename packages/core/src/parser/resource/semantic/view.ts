@@ -1,5 +1,4 @@
 import {
-  Resource,
   ViewType,
   View,
   BlockType,
@@ -9,38 +8,13 @@ import {
   TableBlockSearcher,
   DescriptionsBlock,
   FormBlock,
-  Block,
-  ModelAttribute,
-  Model
-} from '../../structs'
-import { isDullAdminScalarValueType, isDullAdminObjectValueType } from '../assert'
+  Block
+} from '../../../structs'
+import { isDullAdminScalarValueType } from '../../assert'
+import { Context } from './base'
+import { semanticAnalysisModel } from './model'
 
-class Context {
-  resource: Resource
-  view: View
-  block: Block | null
-
-  constructor(resource: Resource, view: View) {
-    this.resource = resource
-    this.view = view
-    this.block = null
-  }
-}
-
-function semanticAnalysisResource(resource: Resource): void {
-  resource.views.forEach((view) => {
-    if (resource.singular) {
-      if (view.type === ViewType.Index) {
-        throw Error(`${resource.toString()} is a singular resource, can not have IndexView`)
-      }
-    }
-
-    const ctx = new Context(resource, view)
-    semanticAnalysisView(view, ctx)
-  })
-}
-
-function semanticAnalysisView(view: View, ctx: Context): void {
+export function semanticAnalysisView(view: View, ctx: Context): void {
   view.inheritedAuthority = ctx.resource.authority ?? view.authority
 
   const blockNames = view.blocks.map((block) => block.relName)
@@ -153,34 +127,3 @@ function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx)
 }
-
-function semanticAnalysisModel(model: Model, ctx: Context): void {
-  const block = ctx.block as Block
-
-  const attrNames = model.attributes.map((attr) => attr.name)
-  const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
-  if (dupAttrNames.length !== 0) {
-    throw Error(`${block.toString()}'s items can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
-  }
-
-  model.attributes.forEach((attribute) => {
-    semanticAnalysisModelAttribute(attribute, ctx)
-  })
-}
-
-function semanticAnalysisModelAttribute(attribute: ModelAttribute, _ctx: Context): void {
-  if (isDullAdminObjectValueType(attribute.type)) {
-    if (attribute.optionals != null) {
-      throw Error(`${attribute.toString()} can not have \`optionals\` when using object value type`)
-    }
-
-    const object = attribute.object!
-    const attrNames = object.attributes.map((attr) => attr.name)
-    const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
-    if (dupAttrNames.length !== 0) {
-      throw Error(`${attribute.toString()}'s attributes can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
-    }
-  }
-}
-
-export { semanticAnalysisResource }

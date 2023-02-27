@@ -188,6 +188,7 @@ export {
   TableBlockSorterDirection,
   TableBlockSorter,
   TableBlockPagination,
+  TableBlockOperation,
   TableBlock
 }
 export default TableBlock

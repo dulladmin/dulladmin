@@ -1,0 +1,1 @@
+export { semanticAnalysisResource } from './resource'
