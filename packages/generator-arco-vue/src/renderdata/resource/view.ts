@@ -1,11 +1,26 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, ViewType, View } from '@dulladmin/core'
-import { toCamelize, toPath } from '../../naming'
-import { extractViewInfo } from './extract-view-info'
+import { toCamelize, toI18nMessage, toPath } from '../../naming'
 
-export function extractRouteInfo(resource: Resource, view: View): Record<string, any> {
+export function renderData_View(resource: Resource, view: View): Record<string, any> {
   const resourceName = toPath(resource.name)
   const viewName = toPath(view.type)
-  const _view = extractViewInfo(resource, view)
+  const i18nKeyPrefix = `${resourceName}--${viewName}`
+
+  return {
+    name: `${toCamelize(resourceName)}${toCamelize(viewName)}`,
+    authority: view.inheritedAuthority,
+    title: {
+      i18nKey: `${i18nKeyPrefix}.title`,
+      i18nValue: `${toI18nMessage(resourceName)} ${toI18nMessage(viewName)}`
+    }
+  }
+}
+
+export function renderData_ViewRoute(resource: Resource, view: View): Record<string, any> {
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const _view = renderData_View(resource, view)
 
   let path = ''
   let cache = false

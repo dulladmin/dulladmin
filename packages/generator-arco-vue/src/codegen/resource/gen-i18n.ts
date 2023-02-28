@@ -2,7 +2,13 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractBlockInfo, extractBlockSearcherInfo, extractModelInfo, extractViewInfo, i18nFile } from '../utils'
+import {
+  renderData_View,
+  renderData_TableBlock,
+  renderData_DescriptionsBlock,
+  renderData_FormBlock
+} from '../../renderdata'
+import { i18nFile } from '../base'
 
 export function genI18n(resource: Resource): GeneratedFile[] {
   return genI18n_Resource(resource)
@@ -16,7 +22,7 @@ function genI18n_Resource(resource: Resource): GeneratedFile[] {
 }
 
 function genI18n_View(resource: Resource, view: View): Record<string, string> {
-  const _view = extractViewInfo(resource, view)
+  const _view = renderData_View(resource, view)
   const viewMessages = {
     [_view.title.i18nKey]: _view.title.i18nValue
   }
@@ -40,41 +46,39 @@ function genI18n_Block(resource: Resource, view: View, block: Block): Record<str
 }
 
 function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): Record<string, string> {
-  const _block = extractBlockInfo(resource, view, block)
+  const _block = renderData_TableBlock(resource, view, block)
   const blockMessages = {
     [_block.title.i18nKey]: _block.title.i18nValue
   }
 
-  const searchers = extractBlockSearcherInfo(resource, view, block)
-  searchers.forEach((searcher: Record<string, any>) => {
+  _block.searchers.forEach((searcher: Record<string, any>) => {
     blockMessages[searcher.i18nKey] = searcher.i18nValue
     searcher.optionals?.forEach((opt: Record<string, any>) => (blockMessages[opt.i18nKey] = opt.i18nValue))
   })
 
-  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
+  return { ...blockMessages, ...genI18n_Model(_block.model) }
 }
 
 function genI18n_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): Record<string, string> {
-  const _block = extractBlockInfo(resource, view, block)
+  const _block = renderData_DescriptionsBlock(resource, view, block)
   const blockMessages = {
     [_block.title.i18nKey]: _block.title.i18nValue
   }
 
-  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
+  return { ...blockMessages, ...genI18n_Model(_block.model) }
 }
 
 function genI18n_FormBlock(resource: Resource, view: View, block: FormBlock): Record<string, string> {
-  const _block = extractBlockInfo(resource, view, block)
+  const _block = renderData_FormBlock(resource, view, block)
   const blockMessages = {
     [_block.title.i18nKey]: _block.title.i18nValue
   }
 
-  return { ...blockMessages, ...genI18n_Model(resource, view, block) }
+  return { ...blockMessages, ...genI18n_Model(_block.model) }
 }
 
-function genI18n_Model(resource: Resource, view: View, block: Block): Record<string, string> {
+function genI18n_Model(model: Record<string, any>): Record<string, string> {
   const messages: Record<string, string> = {}
-  const model = extractModelInfo(resource, view, block)
   model.attributes.forEach((attr: Record<string, any>) => {
     messages[attr.i18nKey] = attr.i18nValue
     attr.optionals?.forEach((opt: Record<string, any>) => (messages[opt.i18nKey] = opt.i18nValue))

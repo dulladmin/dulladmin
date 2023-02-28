@@ -2,7 +2,7 @@
 
 <template>
   <div class="dulladmin-form-block">
-    <a-card :title="$t('{{block.title.i18nKey}}')">
+    <a-card :title="$t('{{title.i18nKey}}')">
       <a-spin style="display: block" :loading="loading">
         <a-form
           :model="store"
@@ -18,7 +18,7 @@
             <a-space>
               <a-button
                 type="primary"
-                {{#if form.isDanger}}
+                {{#if formOptions.isDanger}}
                 status="danger"
                 {{/if}}
                 :loading="saving"
@@ -27,7 +27,7 @@
                 <template #icon>
                   <icon-save />
                 </template>
-                \{{ $t('form.actions.{{form.actionName}}') }}
+                \{{ $t('form.actions.{{formOptions.actionName}}') }}
               </a-button>
             </a-space>
           </a-form-item>
@@ -43,7 +43,7 @@
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
-  import { FormModel, UpdateRequest, get, update } from '{{ block.apiImportPath }}';
+  import { FormModel, UpdateRequest, get, update } from '{{ apiImportPath }}';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import { useAppStore } from '@/store';
 
@@ -131,9 +131,9 @@
         store.value = form;
       }
 
-      Message.success(t('form.actions.{{form.actionName}}.success'));
+      Message.success(t('form.actions.{{formOptions.actionName}}.success'));
 
-      {{#if form.allowBackOnSave }}
+      {{#if formOptions.allowBackOnSave }}
       const { back } = route.query;
       if (back) {
         appStore.removeCurrentActiveTab();

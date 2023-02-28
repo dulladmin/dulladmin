@@ -2,7 +2,8 @@
 import { AppMenuItemType, AppMenu, AppSubMenu, AppMenuItem, Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toDasherize, toI18nMessage, toPath } from '../../naming'
-import { extractRouteInfo, handlebarsFile, i18nFile } from '../utils'
+import { renderData_ViewRoute } from '../../renderdata'
+import { handlebarsFile, i18nFile } from '../base'
 
 export function genAppMenu(appMenu: AppMenu | null, resources: Resource[]): GeneratedFile[] {
   const menu = appMenu != null ? genAppMenu_menu(appMenu, resources) : genAppMenu_defaultMenu(resources)
@@ -61,7 +62,7 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
   if (view == null) return null
 
   return {
-    ...extractRouteInfo(resource, view),
+    ...renderData_ViewRoute(resource, view),
     icon: toDasherize(menuItem.icon)
   }
 }
@@ -74,7 +75,7 @@ function genAppMenu_defaultMenu(resources: Resource[]): Record<string, any> {
     if (view == null) return
 
     items.push({
-      ...extractRouteInfo(resource, view)
+      ...renderData_ViewRoute(resource, view)
     })
   })
 

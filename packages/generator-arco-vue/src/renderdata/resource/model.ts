@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, View, Block } from '@dulladmin/core'
 import { toI18nMessage, toPath } from '../../naming'
-import { toJsonType } from './base'
+import { toJsonType } from '../base'
 
-export function extractModelInfo(resource: Resource, view: View, block: Block): Record<string, any> {
+export function renderData_Model(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourceName = toPath(resource.name)
   const viewName = toPath(view.type)
   const blockName = toPath(block.relName)
@@ -53,11 +54,4 @@ export function extractModelInfo(resource: Resource, view: View, block: Block): 
       }
     })
   }
-}
-
-export function enhanceModelInfoWithSorter(model: Record<string, any>, sorters: Record<string, any>): void {
-  model.attributes.forEach((attr: Record<string, any>) => {
-    const sorter = sorters.find((sorter: Record<string, any>) => sorter.name === attr.name)
-    if (sorter != null) attr.sorter = { directions: sorter.directions }
-  })
 }

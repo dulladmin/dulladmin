@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import Handlebars from 'handlebars'
 import type { GeneratedFile } from '@dulladmin/core'
-import { generatorsDir } from '../../files'
+import { generatorsDir } from '../files'
 
 export function handlebarsFile(outfilePath: string, templatePath: string, view: Record<string, any>): GeneratedFile {
   const infilePath = path.join(generatorsDir, templatePath)

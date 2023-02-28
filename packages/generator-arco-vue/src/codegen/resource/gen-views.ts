@@ -13,14 +13,13 @@ import {
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
 import {
-  extractBlockInfo,
-  extractBlockSorterInfo,
-  extractBlockSearcherInfo,
-  extractModelInfo,
-  extractViewInfo,
-  enhanceModelInfoWithSorter,
-  handlebarsFile
-} from '../utils'
+  renderData_View,
+  renderData_Block,
+  renderData_TableBlock,
+  renderData_DescriptionsBlock,
+  renderData_FormBlock
+} from '../../renderdata'
+import { handlebarsFile } from '../base'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
@@ -35,8 +34,8 @@ function genViews_View(resource: Resource, view: View): GeneratedFile[] {
     .map((block) => genViews_Block(resource, view, block))
     .reduce<GeneratedFile[]>((a, v) => [...a, v], [])
 
-  const _view = extractViewInfo(resource, view)
-  const blocks = view.blocks.map((block) => extractBlockInfo(resource, view, block))
+  const _view = renderData_View(resource, view)
+  const blocks = view.blocks.map((block) => renderData_Block(resource, view, block))
   const viewOutfile = handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/index.vue`,
     'src/views/modules/__resource__/__view__/index.vue.hbs',
@@ -58,26 +57,14 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 }
 
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const _view = extractViewInfo(resource, view)
-  const _block = extractBlockInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
-
-  const sorters = extractBlockSorterInfo(resource, view, block)
-  const sortable = sorters.length !== 0
-  enhanceModelInfoWithSorter(model, sorters)
-
-  const searchers = extractBlockSearcherInfo(resource, view, block)
-  const searchable = searchers.length !== 0
-
-  const pagination = {
-    per: block.pagination?.per
-  }
+  const _view = renderData_View(resource, view)
+  const _block = renderData_TableBlock(resource, view, block)
 
   // self Table in IndexView
   const resourceActions: Record<string, any> = {}
   if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
     resource.views.forEach((view) => {
-      const _view = extractViewInfo(resource, view)
+      const _view = renderData_View(resource, view)
       resourceActions[view.type] = {
         authority: _view.authority,
         name: _view.name
@@ -88,41 +75,39 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { view: _view, block: _block, model, sortable, searchers, searchable, pagination, resourceActions }
+    { ..._block, view: _view, resourceActions }
   )
 }
 
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
-  const _view = extractViewInfo(resource, view)
-  const _block = extractBlockInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
+  const _view = renderData_View(resource, view)
+  const _block = renderData_DescriptionsBlock(resource, view, block)
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs',
-    { view: _view, block: _block, model }
+    { ..._block, view: _view }
   )
 }
 
 function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
-  const _view = extractViewInfo(resource, view)
-  const _block = extractBlockInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
+  const _view = renderData_View(resource, view)
+  const _block = renderData_FormBlock(resource, view, block)
 
   // self Form in NewView/EditView/DelteView
-  const form: Record<string, any> = { actionName: 'save' }
+  const formOptions: Record<string, any> = { actionName: 'save' }
   if (
     block.relType === BlockRelationshipType.Self &&
     (view.type === ViewType.New || view.type === ViewType.Edit || view.type === ViewType.Delete)
   ) {
-    form.actionName = view.type
-    form.allowBackOnSave = true
-    form.isDanger = view.type === ViewType.Delete
+    formOptions.actionName = view.type
+    formOptions.allowBackOnSave = true
+    formOptions.isDanger = view.type === ViewType.Delete
   }
 
   return handlebarsFile(
     `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
-    { view: _view, block: _block, model, form }
+    { ..._block, view: _view, formOptions }
   )
 }

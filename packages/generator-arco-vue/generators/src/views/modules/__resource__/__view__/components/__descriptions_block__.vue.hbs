@@ -2,7 +2,7 @@
 
 <template>
   <div class="dulladmin-descriptions-block">
-    <a-card :title="$t('{{block.title.i18nKey}}')">
+    <a-card :title="$t('{{title.i18nKey}}')">
       <a-spin style="display: block" :loading="loading">
         <div
           class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border"
@@ -61,7 +61,7 @@
   import { computed, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-  import { Model, get } from '{{ block.apiImportPath }}';
+  import { Model, get } from '{{ apiImportPath }}';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types

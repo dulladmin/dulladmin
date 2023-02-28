@@ -2,7 +2,7 @@
 
 <template>
   <div class="dulladmin-table-block">
-    <a-card :title="$t('{{block.title.i18nKey}}')">
+    <a-card :title="$t('{{title.i18nKey}}')">
       <a-row style="margin-bottom: 16px">
         <!-- Table Collection Operations -->
         <a-col :span="12">
@@ -225,7 +225,7 @@
       @cancel="handleSearchModalCancel"
     >
       <template #title>
-        \{{ $t('{{block.title.i18nKey}}') }}
+        \{{ $t('{{title.i18nKey}}') }}
         -
         \{{ $t('table.actions.search') }}
       </template>
@@ -251,7 +251,7 @@
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { Model, ListRequest, list } from '{{ block.apiImportPath }}';
+  import { Model, ListRequest, list } from '{{ apiImportPath }}';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types

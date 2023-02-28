@@ -1,10 +1,11 @@
 import { Resource } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import { extractRouteInfo, handlebarsFile } from '../utils'
+import { renderData_ViewRoute } from '../../renderdata'
+import { handlebarsFile } from '../base'
 
 export function genRoutes(resource: Resource): GeneratedFile[] {
-  const routes = resource.views.map((view) => extractRouteInfo(resource, view))
+  const routes = resource.views.map((view) => renderData_ViewRoute(resource, view))
 
   return [
     handlebarsFile(

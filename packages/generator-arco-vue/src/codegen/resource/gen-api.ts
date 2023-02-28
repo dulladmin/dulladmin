@@ -2,14 +2,8 @@
 import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
-import {
-  extractApiInfo,
-  extractBlockSorterInfo,
-  extractBlockSearcherInfo,
-  extractModelInfo,
-  enhanceModelInfoWithSorter,
-  handlebarsFile
-} from '../utils'
+import { renderData_TableBlock, renderData_DescriptionsBlock, renderData_FormBlock } from '../../renderdata'
+import { handlebarsFile } from '../base'
 
 export function genAPI(resource: Resource): GeneratedFile[] {
   return genAPI_Resource(resource)
@@ -37,41 +31,28 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 }
 
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const api = extractApiInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
-
-  const sorters = extractBlockSorterInfo(resource, view, block)
-  const sortable = sorters.length !== 0
-  enhanceModelInfoWithSorter(model, sorters)
-
-  const searchers = extractBlockSearcherInfo(resource, view, block)
-  const searchable = searchers.length !== 0
-
+  const _block = renderData_TableBlock(resource, view, block)
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
-    { api, model, sortable, searchers, searchable }
+    { ..._block }
   )
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
-  const api = extractApiInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
-
+  const _block = renderData_DescriptionsBlock(resource, view, block)
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
-    { api, model }
+    { ..._block }
   )
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
-  const api = extractApiInfo(resource, view, block)
-  const model = extractModelInfo(resource, view, block)
-
+  const _block = renderData_FormBlock(resource, view, block)
   return handlebarsFile(
     `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
     'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
-    { api, model }
+    { ..._block }
   )
 }

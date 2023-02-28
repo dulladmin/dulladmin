@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { GeneratedFile } from '@dulladmin/core'
-import { i18nFile } from '../utils'
+import { i18nFile } from '../base'
 
 export function genAppConfig(): GeneratedFile[] {
   return [genAppConfig_config(), ...genAppConfig_i18n()]
