@@ -6,12 +6,14 @@ import {
   TableBlock,
   TableBlockSorter,
   TableBlockSearcher,
+  TableBlockOperation,
   DescriptionsBlock,
   FormBlock,
   Block
 } from '../../../structs'
 import { isDullAdminScalarValueType } from '../../assert'
 import { Context } from './base'
+import { semanticAnalysisDialog } from './dialog'
 import { semanticAnalysisModel } from './model'
 
 export function semanticAnalysisView(view: View, ctx: Context): void {
@@ -70,9 +72,10 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
 
 function semanticAnalysisTableBlock(block: TableBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
-  semanticAnalysisModel(block.model, ctx)
+  semanticAnalysisModel(block.model, ctx, block)
   semanticAnalysisTableSorter(block.sorters, ctx)
   semanticAnalysisTableSearcher(block.searchers, ctx)
+  semanticAnalysisTableOperations(block.operations, ctx)
 }
 
 function semanticAnalysisTableSorter(sorters: TableBlockSorter[], ctx: Context): void {
@@ -118,12 +121,21 @@ function semanticAnalysisTableSearcher(searchers: TableBlockSearcher[], ctx: Con
   })
 }
 
+function semanticAnalysisTableOperations(operations: TableBlockOperation[], ctx: Context): void {
+  const block = ctx.block as TableBlock
+
+  operations.forEach((operation) => {
+    operation.inheritedAuthority = block.inheritedAuthority ?? operation.authority
+    semanticAnalysisDialog(operation.dialog, ctx)
+  })
+}
+
 function semanticAnalysisDescriptionsBlock(block: DescriptionsBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
-  semanticAnalysisModel(block.model, ctx)
+  semanticAnalysisModel(block.model, ctx, block)
 }
 
 function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
-  semanticAnalysisModel(block.model, ctx)
+  semanticAnalysisModel(block.model, ctx, block)
 }

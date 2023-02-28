@@ -52,7 +52,7 @@ import { DialogBlockType } from './base'
  * }
  * ```
  *
- * In EditDialogView, data receive from `GET /.../.../:id/edit.json`,
+ * In EditDialog, data receive from `GET /.../.../:id/edit.json`,
  * and send to `PUT /.../.../:id/edit.json`.
  */
 class DialogFormBlock {

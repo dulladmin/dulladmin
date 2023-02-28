@@ -1,14 +1,12 @@
-import { Block, ModelAttribute, Model } from '../../../structs'
+import { Block, DialogBlock, ModelAttribute, Model } from '../../../structs'
 import { isDullAdminObjectValueType } from '../../assert'
 import { Context } from './base'
 
-export function semanticAnalysisModel(model: Model, ctx: Context): void {
-  const block = ctx.block as Block
-
+export function semanticAnalysisModel(model: Model, ctx: Context, container: Block | DialogBlock): void {
   const attrNames = model.attributes.map((attr) => attr.name)
   const dupAttrNames = attrNames.filter((name, index) => attrNames.indexOf(name) !== index)
   if (dupAttrNames.length !== 0) {
-    throw Error(`${block.toString()}'s items can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
+    throw Error(`${container.toString()}'s items can not have duplicate name: ${JSON.stringify(dupAttrNames)}`)
   }
 
   model.attributes.forEach((attribute) => {
