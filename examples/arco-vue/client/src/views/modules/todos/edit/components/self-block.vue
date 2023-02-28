@@ -46,7 +46,7 @@
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
-  import { FormModel, UpdateRequest, get, update } from '@/api/modules/todos/edit/self';
+  import { FormModel, UpdateRequest, get, update } from '@/api/modules/todos/edit/self-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import { useAppStore } from '@/store';
 

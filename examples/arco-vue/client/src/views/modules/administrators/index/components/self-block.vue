@@ -207,7 +207,7 @@
   import { useI18n } from 'vue-i18n';
   import { cloneDeep, omitBy, isEmpty } from 'lodash';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { Model, ListRequest, list } from '@/api/modules/administrators/index/self';
+  import { Model, ListRequest, list } from '@/api/modules/administrators/index/self-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types

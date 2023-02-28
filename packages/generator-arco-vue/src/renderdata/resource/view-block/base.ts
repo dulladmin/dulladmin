@@ -27,7 +27,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
     componentName: `${toCamelize(block.relName)}Block`,
     componentImportPath: `@/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`,
     api,
-    apiImportPath: `@/api/modules/${resourceName}/${viewName}/${blockName}`,
+    apiImportPath: `@/api/modules/${resourceName}/${viewName}/${blockName}-block`,
     authority: block.inheritedAuthority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,

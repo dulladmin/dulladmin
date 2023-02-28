@@ -83,7 +83,7 @@
   import { computed, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-  import { Model, get } from '@/api/modules/comments/show/self';
+  import { Model, get } from '@/api/modules/comments/show/self-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // types

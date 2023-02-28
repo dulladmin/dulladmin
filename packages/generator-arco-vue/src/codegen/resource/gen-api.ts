@@ -33,7 +33,7 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
   const _block = renderData_TableBlock(resource, view, block)
   return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
     { ..._block }
   )
@@ -42,7 +42,7 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
   const _block = renderData_DescriptionsBlock(resource, view, block)
   return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
     'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
     { ..._block }
   )
@@ -51,7 +51,7 @@ function genAPI_DescriptionsBlock(resource: Resource, view: View, block: Descrip
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
   const _block = renderData_FormBlock(resource, view, block)
   return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}.ts`,
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
     'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
     { ..._block }
   )
