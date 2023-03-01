@@ -27,10 +27,10 @@ export function renderData_TableBlock(resource: Resource, view: View, block: Tab
 }
 
 function renderData_TableBlockSearchers(resource: Resource, view: View, block: TableBlock): Record<string, any> {
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const blockName = toPath(block.relName)
-  const i18nKeyPrefix = `${resourceName}--${viewName}.${blockName}-block.searchers`
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.searchers`
 
   return block.searchers.map((searcher) => {
     const name = `${searcher.name}_${searcher.predicate}`
@@ -82,9 +82,9 @@ function renderData_TableBlockPagination(_resource: Resource, _view: View, block
 function renderData_TableBlockOperations(resource: Resource, view: View, block: TableBlock): Record<string, any> {
   const operations: Record<string, any> = {}
   block.operations.forEach((operation) => {
-    operations[operation.type] = {
+    operations[operation.name] = {
       authority: operation.inheritedAuthority,
-      name: operation.type,
+      name: operation.name,
       dialog: renderData_Dialog(resource, view, block, operation.dialog)
     }
   })

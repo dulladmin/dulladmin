@@ -8,7 +8,6 @@ const routes: RouteRecordRaw[] = [
     path: 'administrators',
     component: () => import('@/views/modules/administrators/index/index.vue'),
     meta: {
-      nameComponents: ['Administrators', 'Index', ],
       authority: ['admin', ],
       cache: true,
       title: 'administrators--index.title',
@@ -19,7 +18,6 @@ const routes: RouteRecordRaw[] = [
     path: 'administrators/:id',
     component: () => import('@/views/modules/administrators/show/index.vue'),
     meta: {
-      nameComponents: ['Administrators', 'Show', ],
       authority: ['admin', ],
       cache: false,
       title: 'administrators--show.title',
@@ -30,7 +28,6 @@ const routes: RouteRecordRaw[] = [
     path: 'administrators/new',
     component: () => import('@/views/modules/administrators/new/index.vue'),
     meta: {
-      nameComponents: ['Administrators', 'New', ],
       authority: ['admin', ],
       cache: false,
       title: 'administrators--new.title',
@@ -41,7 +38,6 @@ const routes: RouteRecordRaw[] = [
     path: 'administrators/:id/edit',
     component: () => import('@/views/modules/administrators/edit/index.vue'),
     meta: {
-      nameComponents: ['Administrators', 'Edit', ],
       authority: ['admin', ],
       cache: false,
       title: 'administrators--edit.title',
@@ -52,7 +48,6 @@ const routes: RouteRecordRaw[] = [
     path: 'administrators/:id/delete',
     component: () => import('@/views/modules/administrators/delete/index.vue'),
     meta: {
-      nameComponents: ['Administrators', 'Delete', ],
       authority: ['admin', ],
       cache: false,
       title: 'administrators--delete.title',

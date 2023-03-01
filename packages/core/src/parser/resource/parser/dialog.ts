@@ -32,7 +32,7 @@ function parseDescriptionsDialog(doc: YamlDialogType, xpath: string, attrs: Reco
   const parsedModel = parseModel(model!, modelXPath, { descriptions: true })
   const parsedDialogBlock = new DialogDescriptionsBlock(parsedModel)
 
-  return new Dialog(name, parsedDialogBlock)
+  return new Dialog(name, parsedDialogBlock, null)
 }
 
 function parseFormDialog(doc: YamlDialogType, xpath: string, attrs: Record<string, any>): Dialog {
@@ -49,5 +49,5 @@ function parseFormDialog(doc: YamlDialogType, xpath: string, attrs: Record<strin
   const parsedModel = parseModel(model!, modelXPath, { form: true })
   const parsedDialogBlock = new DialogFormBlock(parsedModel)
 
-  return new Dialog(name, parsedDialogBlock)
+  return new Dialog(name, parsedDialogBlock, null)
 }

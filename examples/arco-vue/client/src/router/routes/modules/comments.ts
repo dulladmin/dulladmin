@@ -8,7 +8,6 @@ const routes: RouteRecordRaw[] = [
     path: 'comments',
     component: () => import('@/views/modules/comments/index/index.vue'),
     meta: {
-      nameComponents: ['Comments', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'comments--index.title',
@@ -19,7 +18,6 @@ const routes: RouteRecordRaw[] = [
     path: 'comments/:id',
     component: () => import('@/views/modules/comments/show/index.vue'),
     meta: {
-      nameComponents: ['Comments', 'Show', ],
       authority: ['*', ],
       cache: false,
       title: 'comments--show.title',

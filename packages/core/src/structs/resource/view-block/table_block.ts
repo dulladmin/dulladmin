@@ -61,25 +61,22 @@ class TableBlockPagination {
   }
 }
 
-enum TableBlockOperationType {
-  Show = 'show',
-  New = 'new',
-  Edit = 'edit',
-  Delete = 'delete'
-}
-
 class TableBlockOperation {
-  type: TableBlockOperationType
+  name: string
   authority: string[] | null
   dialog: Dialog
 
   inheritedAuthority: string[] | null
 
-  constructor(type: TableBlockOperationType, authority: string[] | null, dialog: Dialog) {
-    this.type = type
+  constructor(name: string, authority: string[] | null, dialog: Dialog) {
+    this.name = name
     this.authority = authority
     this.dialog = dialog
     this.inheritedAuthority = null
+  }
+
+  toString(): string {
+    return `#<TableBlockOperation @name="${this.name}">`
   }
 }
 
@@ -94,7 +91,7 @@ class TableBlockOperation {
  *    index:
  *      table:
  *        items:
- *          - { name: "id", type: "string" }
+ *          - { name: "id", type: "int64" }
  *          - { name: "name", type: "string" }
  *          - { name: "email", type: "string" }
  *  ```
@@ -126,7 +123,7 @@ class TableBlockOperation {
  *  "msg": "ok",
  *  "data": {
  *    "collection": [{
- *      "id": "1",
+ *      "id": 1,
  *      "name": "John Doe",
  *      "email": "johndoe@example.com"
  *    }]
@@ -148,9 +145,6 @@ class TableBlock {
   model: Model
   collection: boolean
 
-  // Inherited Property
-  inheritedAuthority: string[] | null
-
   // Sorter
   sorters: TableBlockSorter[]
 
@@ -162,6 +156,9 @@ class TableBlock {
 
   // Operations
   operations: TableBlockOperation[]
+
+  // Inherited Property
+  inheritedAuthority: string[] | null
 
   constructor(
     relType: BlockRelationshipType,
@@ -197,7 +194,6 @@ export {
   TableBlockSorterDirection,
   TableBlockSorter,
   TableBlockPagination,
-  TableBlockOperationType,
   TableBlockOperation,
   TableBlock
 }

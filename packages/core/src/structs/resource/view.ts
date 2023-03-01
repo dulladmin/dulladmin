@@ -1,33 +1,43 @@
 import Block from './view-block'
 
-enum ViewType {
-  Index = 'index',
-  Show = 'show',
-  New = 'new',
-  Edit = 'edit',
-  Delete = 'delete'
+enum ViewPathScope {
+  Collection = 'collection',
+  Member = 'member'
 }
 
 class View {
-  type: ViewType
+  name: string
   authority: string[] | null
   blocks: Block[]
+  pathScope: ViewPathScope
 
   inheritedAuthority: string[] | null
 
-  constructor(type: ViewType, authority: string[] | null, blocks: Block[]) {
-    this.type = type
+  constructor(name: string, authority: string[] | null, blocks: Block[], pathScope: ViewPathScope | null) {
+    this.name = name
     this.authority = authority
     this.blocks = blocks
+    this.pathScope = pathScope ?? this._pathScope(this.name)
     this.inheritedAuthority = null
   }
 
   toString(): string {
-    let klass = `${this.type}View`
-    klass = klass.charAt(0).toUpperCase() + klass.slice(1)
-    return `#<${klass}>`
+    return `#<View @name="${this.name}">`
+  }
+
+  _pathScope(name: string): ViewPathScope {
+    switch (name) {
+      case 'index':
+      case 'new':
+        return ViewPathScope.Collection
+      case 'show':
+      case 'edit':
+      case 'delete':
+      default:
+        return ViewPathScope.Member
+    }
   }
 }
 
-export { ViewType, View }
+export { ViewPathScope, View }
 export default View

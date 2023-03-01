@@ -1,5 +1,4 @@
 import {
-  ViewType,
   View,
   BlockType,
   BlockRelationshipType,
@@ -28,26 +27,6 @@ export function semanticAnalysisView(view: View, ctx: Context): void {
   const selfBlocks = view.blocks.filter((block) => block.relType === BlockRelationshipType.Self)
   if (selfBlocks.length !== 1) {
     throw Error(`${view.toString()} must have a self-relationship Block`)
-  }
-
-  switch (view.type) {
-    case ViewType.Index:
-      if (selfBlocks[0].type !== BlockType.TableBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship Block must be a TableBlock`)
-      }
-      break
-    case ViewType.Show:
-      if (selfBlocks[0].type !== BlockType.DescriptionsBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship Block must be a DescriptionsBlock`)
-      }
-      break
-    case ViewType.New:
-    case ViewType.Edit:
-    case ViewType.Delete:
-      if (selfBlocks[0].type !== BlockType.FormBlock) {
-        throw Error(`${view.toString()}'s self-relaltionship Block must be a FormBlock`)
-      }
-      break
   }
 
   view.blocks.forEach((block) => {

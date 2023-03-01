@@ -64,8 +64,8 @@ class ModelAttribute {
   collection: boolean
   object: ObjectValue | null
 
-  hidden: boolean | null
-  disabled: boolean | null
+  hidden: boolean
+  disabled: boolean
 
   constructor(
     name: string,
@@ -81,8 +81,8 @@ class ModelAttribute {
     this.optionals = optionals
     this.collection = collection
     this.object = object
-    this.hidden = hidden
-    this.disabled = disabled
+    this.hidden = hidden ?? false
+    this.disabled = disabled ?? false
   }
 
   toString(): string {

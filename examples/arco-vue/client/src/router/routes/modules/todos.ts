@@ -8,7 +8,6 @@ const routes: RouteRecordRaw[] = [
     path: 'todos',
     component: () => import('@/views/modules/todos/index/index.vue'),
     meta: {
-      nameComponents: ['Todos', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'todos--index.title',
@@ -19,7 +18,6 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/:id',
     component: () => import('@/views/modules/todos/show/index.vue'),
     meta: {
-      nameComponents: ['Todos', 'Show', ],
       authority: ['*', ],
       cache: false,
       title: 'todos--show.title',
@@ -30,7 +28,6 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/new',
     component: () => import('@/views/modules/todos/new/index.vue'),
     meta: {
-      nameComponents: ['Todos', 'New', ],
       authority: ['*', ],
       cache: false,
       title: 'todos--new.title',
@@ -41,7 +38,6 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/:id/edit',
     component: () => import('@/views/modules/todos/edit/index.vue'),
     meta: {
-      nameComponents: ['Todos', 'Edit', ],
       authority: ['*', ],
       cache: false,
       title: 'todos--edit.title',
@@ -52,7 +48,6 @@ const routes: RouteRecordRaw[] = [
     path: 'todos/:id/delete',
     component: () => import('@/views/modules/todos/delete/index.vue'),
     meta: {
-      nameComponents: ['Todos', 'Delete', ],
       authority: ['admin', ],
       cache: false,
       title: 'todos--delete.title',

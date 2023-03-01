@@ -53,7 +53,7 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
 
   const _block = renderData_TableBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
     { ..._block }
   )
@@ -65,7 +65,7 @@ function genAPI_DescriptionsBlock(resource: Resource, view: View, block: Descrip
   const _block = renderData_DescriptionsBlock(resource, view, block)
   return [
     handlebarsFile(
-      `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
+      `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
       'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
       { ..._block }
     )
@@ -76,7 +76,7 @@ function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): Gen
   const _block = renderData_FormBlock(resource, view, block)
   return [
     handlebarsFile(
-      `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block.ts`,
+      `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
       'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
       { ..._block }
     )
@@ -95,7 +95,7 @@ function genAPI_Dialog(resource: Resource, view: View, block: Block, dialog: Dia
 function genAPI_DescriptionsDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
   return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block-${toPath(
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block-${toPath(
       dialog.name
     )}-dialog.ts`,
     'src/api/modules/__resource__/__view__/dialog/__descriptions_dialog__.ts.hbs',
@@ -106,7 +106,7 @@ function genAPI_DescriptionsDialog(resource: Resource, view: View, block: Block,
 function genAPI_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
   return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.type)}/${toPath(block.relName)}-block-${toPath(
+    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block-${toPath(
       dialog.name
     )}-dialog.ts`,
     'src/api/modules/__resource__/__view__/dialog/__form_dialog__.ts.hbs',

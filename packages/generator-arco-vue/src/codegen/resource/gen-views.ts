@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   Resource,
-  ViewType,
   View,
   BlockType,
   BlockRelationshipType,
@@ -37,7 +36,7 @@ function genViews_View(resource: Resource, view: View): GeneratedFile[] {
   const _view = renderData_View(resource, view)
   const blocks = view.blocks.map((block) => renderData_Block(resource, view, block))
   const viewOutfile = handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/index.vue`,
+    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/index.vue`,
     'src/views/modules/__resource__/__view__/index.vue.hbs',
     { ..._view, blocks }
   )
@@ -62,10 +61,10 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
 
   // self Table in IndexView
   const resourceActions: Record<string, any> = {}
-  if (block.relType === BlockRelationshipType.Self && view.type === ViewType.Index) {
+  if (block.relType === BlockRelationshipType.Self && view.name === 'index') {
     resource.views.forEach((view) => {
       const _view = renderData_View(resource, view)
-      resourceActions[view.type] = {
+      resourceActions[view.name] = {
         authority: _view.authority,
         name: _view.name
       }
@@ -73,7 +72,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   }
 
   return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
+    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
     { ..._block, view: _view, resourceActions }
   )
@@ -84,7 +83,7 @@ function genViews_DescriptionsBlock(resource: Resource, view: View, block: Descr
   const _block = renderData_DescriptionsBlock(resource, view, block)
 
   return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
+    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs',
     { ..._block, view: _view }
   )
@@ -94,19 +93,18 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const _view = renderData_View(resource, view)
   const _block = renderData_FormBlock(resource, view, block)
 
-  // self Form in NewView/EditView/DelteView
+  // self Form in NewView/EditView/DeleteView
   const formOptions: Record<string, any> = { actionName: 'save' }
-  if (
-    block.relType === BlockRelationshipType.Self &&
-    (view.type === ViewType.New || view.type === ViewType.Edit || view.type === ViewType.Delete)
-  ) {
-    formOptions.actionName = view.type
+  if (block.relType === BlockRelationshipType.Self) {
     formOptions.allowBackOnSave = true
-    formOptions.isDanger = view.type === ViewType.Delete
+    if (view.name === 'new' || view.name === 'edit' || view.name === 'delete') {
+      formOptions.actionName = view.name
+      formOptions.isDanger = view.name === 'delete'
+    }
   }
 
   return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.type)}/components/${toPath(block.relName)}-block.vue`,
+    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
     { ..._block, view: _view, formOptions }
   )

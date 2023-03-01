@@ -4,10 +4,10 @@ import { toI18nMessage, toPath } from '../../naming'
 import { toJsonType } from '../base'
 
 export function renderData_Model(resource: Resource, view: View, block: Block): Record<string, any> {
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const blockName = toPath(block.relName)
-  const i18nKeyPrefix = `${resourceName}--${viewName}.${blockName}-block.model.attributes`
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.model.attributes`
 
   return {
     attributes: block.model.attributes.map((attr) => {

@@ -1,47 +1,60 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, ViewType, View } from '@dulladmin/core'
+import { Resource, ViewPathScope, View } from '@dulladmin/core'
 import { toCamelize, toI18nMessage, toPath } from '../../naming'
 
 export function renderData_View(resource: Resource, view: View): Record<string, any> {
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
-  const i18nKeyPrefix = `${resourceName}--${viewName}`
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const i18nKeyPrefix = `${resourcePath}--${viewPath}`
 
   return {
-    name: `${toCamelize(resourceName)}${toCamelize(viewName)}`,
+    name: `${toCamelize(resourcePath)}${toCamelize(viewPath)}`,
     authority: view.inheritedAuthority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
-      i18nValue: `${toI18nMessage(resourceName)} ${toI18nMessage(viewName)}`
+      i18nValue: `${toI18nMessage(resourcePath)} ${toI18nMessage(viewPath)}`
     }
   }
 }
 
 export function renderData_ViewRoute(resource: Resource, view: View): Record<string, any> {
-  const resourceName = toPath(resource.name)
-  const viewName = toPath(view.type)
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
   const _view = renderData_View(resource, view)
 
   let path = ''
   let cache = false
-  switch (view.type) {
-    case ViewType.Index:
+  switch (view.name) {
+    case 'index':
       if (resource.singular) throw Error('Unreachable')
-      path = `${resourceName}`
+      path = `${resourcePath}`
       cache = true
       break
-    case ViewType.Show:
-      path = resource.singular ? `${resourceName}` : `${resourceName}/:id`
-      cache = resource.singular
+    case 'new':
+      path = `${resourcePath}/new`
       break
-    case ViewType.New:
-      path = `${resourceName}/new`
+    case 'show':
+      if (resource.singular) {
+        path = `${resourcePath}`
+        cache = true
+      } else {
+        path = `${resourcePath}/:id`
+      }
       break
-    case ViewType.Edit:
-      path = resource.singular ? `${resourceName}/edit` : `${resourceName}/:id/edit`
+    case 'edit':
+    case 'delete':
+      if (resource.singular) {
+        path = `${resourcePath}/${viewPath}`
+      } else {
+        path = `${resourcePath}/:id/${viewPath}`
+      }
       break
-    case ViewType.Delete:
-      path = resource.singular ? `${resourceName}/delete` : `${resourceName}/:id/delete`
+    default:
+      if (resource.singular || view.pathScope === ViewPathScope.Collection) {
+        path = `${resourcePath}/${viewPath}`
+      } else {
+        path = `${resourcePath}/:id/${viewPath}`
+      }
       break
   }
 
@@ -49,8 +62,8 @@ export function renderData_ViewRoute(resource: Resource, view: View): Record<str
     name: _view.name,
     path,
     title: _view.title,
-    viewImportPath: `@/views/modules/${resourceName}/${viewName}/index.vue`,
-    viewName: [toCamelize(resourceName), toCamelize(viewName)],
+    viewImportPath: `@/views/modules/${resourcePath}/${viewPath}/index.vue`,
+    viewPath: [toCamelize(resourcePath), toCamelize(viewPath)],
     authority: view.inheritedAuthority ?? ['*'],
     cache
   }

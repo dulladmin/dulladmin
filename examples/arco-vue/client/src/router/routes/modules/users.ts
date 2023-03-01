@@ -8,7 +8,6 @@ const routes: RouteRecordRaw[] = [
     path: 'users',
     component: () => import('@/views/modules/users/index/index.vue'),
     meta: {
-      nameComponents: ['Users', 'Index', ],
       authority: ['*', ],
       cache: true,
       title: 'users--index.title',
@@ -19,7 +18,6 @@ const routes: RouteRecordRaw[] = [
     path: 'users/:id',
     component: () => import('@/views/modules/users/show/index.vue'),
     meta: {
-      nameComponents: ['Users', 'Show', ],
       authority: ['*', ],
       cache: false,
       title: 'users--show.title',

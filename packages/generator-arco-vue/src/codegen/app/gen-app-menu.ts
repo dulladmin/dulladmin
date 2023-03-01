@@ -58,7 +58,7 @@ function genAppMenu_menuItem(menuItem: AppMenuItem, resources: Resource[]): Reco
   const resource = resources.find((resource) => resource.name === menuItem.resource)
   if (resource == null) return null
 
-  const view = resource.views.find((view) => view.type === menuItem.view) ?? resource.views[0]
+  const view = resource.views.find((view) => view.name === menuItem.view) ?? resource.views[0]
   if (view == null) return null
 
   return {

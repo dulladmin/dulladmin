@@ -1,4 +1,4 @@
-import { Resource, ViewType, View } from '../../../structs'
+import { Resource, View } from '../../../structs'
 import { assertFieldNames, assertNotNull, assertIsArray, assertIsObject, assertIsString } from '../../assert'
 import { YamlResourceType, YamlViewsType } from '../loader'
 import { parseView } from './view'
@@ -37,10 +37,10 @@ function parseViews(doc: YamlViewsType, xpath: string): View[] {
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const views = []
-  if (doc.index != null) views.push(parseView(doc.index, xpath + '/index', ViewType.Index))
-  if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', ViewType.Show))
-  if (doc.new != null) views.push(parseView(doc.new, xpath + '/new', ViewType.New))
-  if (doc.edit != null) views.push(parseView(doc.edit, xpath + '/edit', ViewType.Edit))
-  if (doc.delete != null) views.push(parseView(doc.delete, xpath + '/delete', ViewType.Delete))
+  if (doc.index != null) views.push(parseView(doc.index, xpath + '/index', { name: 'index' }))
+  if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', { name: 'show' }))
+  if (doc.new != null) views.push(parseView(doc.new, xpath + '/new', { name: 'new' }))
+  if (doc.edit != null) views.push(parseView(doc.edit, xpath + '/edit', { name: 'edit' }))
+  if (doc.delete != null) views.push(parseView(doc.delete, xpath + '/delete', { name: 'delete' }))
   return views
 }

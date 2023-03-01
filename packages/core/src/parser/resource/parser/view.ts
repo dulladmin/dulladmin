@@ -1,5 +1,4 @@
 import {
-  ViewType,
   View,
   BlockRelationshipType,
   TableBlock,
@@ -8,7 +7,6 @@ import {
   TableBlockSearcher,
   TableBlockSearcherPredicate,
   TableBlockPagination,
-  TableBlockOperationType,
   TableBlockOperation,
   DescriptionsBlock,
   FormBlock,
@@ -39,7 +37,9 @@ import {
 import { parseDialog } from './dialog'
 import { parseModel } from './model'
 
-export function parseView(doc: YamlViewType, xpath: string, viewType: ViewType): View {
+export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string, any>): View {
+  const { name } = attrs
+
   const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
@@ -75,7 +75,7 @@ export function parseView(doc: YamlViewType, xpath: string, viewType: ViewType):
     parsedBlocks.push(parseBlock(block, xpath))
   }
 
-  return new View(viewType, authority, parsedBlocks)
+  return new View(name, authority, parsedBlocks, null)
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
@@ -225,16 +225,16 @@ function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: str
 
   const operations = []
   if (doc.show != null) {
-    operations.push(parseTableBlockOperation(doc.show, xpath + '/show', TableBlockOperationType.Show))
+    operations.push(parseTableBlockOperation(doc.show, xpath + '/show', { name: 'show' }))
   }
   if (doc.new != null) {
-    operations.push(parseTableBlockOperation(doc.new, xpath + '/new', TableBlockOperationType.New))
+    operations.push(parseTableBlockOperation(doc.new, xpath + '/new', { name: 'new' }))
   }
   if (doc.edit != null) {
-    operations.push(parseTableBlockOperation(doc.edit, xpath + '/edit', TableBlockOperationType.Edit))
+    operations.push(parseTableBlockOperation(doc.edit, xpath + '/edit', { name: 'edit' }))
   }
   if (doc.delete != null) {
-    operations.push(parseTableBlockOperation(doc.delete, xpath + '/delete', TableBlockOperationType.Delete))
+    operations.push(parseTableBlockOperation(doc.delete, xpath + '/delete', { name: 'delete' }))
   }
   return operations
 }
@@ -242,8 +242,10 @@ function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: str
 function parseTableBlockOperation(
   doc: YamlBlockTableOperationType,
   xpath: string,
-  type: TableBlockOperationType
+  attrs: Record<string, any>
 ): TableBlockOperation {
+  const { name } = attrs
+
   const allowedFiledNames = ['authority', 'dialog', 'descriptions', 'form']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
@@ -260,16 +262,16 @@ function parseTableBlockOperation(
   if (doc.dialog != null) {
     parsedDialog = parseDialog(doc.dialog, xpath + '/dialog')
   } else if (doc.descriptions != null) {
-    const dialog: YamlDialogType = { name: type, descriptions: doc.descriptions }
+    const dialog: YamlDialogType = { name, descriptions: doc.descriptions }
     parsedDialog = parseDialog(dialog, xpath)
   } else if (doc.form != null) {
-    const dialog: YamlDialogType = { name: type, form: doc.form }
+    const dialog: YamlDialogType = { name, form: doc.form }
     parsedDialog = parseDialog(dialog, xpath)
   } else {
     throw new Error(`Dialog is required in \`${xpath}\`, must be one of ["descriptions", "form"]`)
   }
 
-  return new TableBlockOperation(type, authority, parsedDialog)
+  return new TableBlockOperation(name, authority, parsedDialog)
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {
