@@ -7,26 +7,12 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   const viewName = toPath(view.type)
   const blockName = toPath(block.relName)
   const i18nKeyPrefix = `${resourceName}--${viewName}.${blockName}-block`
-
-  const api = { url: '' }
-  switch (view.type) {
-    case ViewType.Index:
-    case ViewType.New:
-      api.url = `/${resourceName}/${viewName}/${blockName}`
-      break
-    case ViewType.Show:
-    case ViewType.Edit:
-    case ViewType.Delete:
-      api.url = resource.singular
-        ? `/${resourceName}/${viewName}/${blockName}`
-        : `/${resourceName}/\${id}/${viewName}/${blockName}`
-      break
-  }
+  const url = renderData_BlockApiEndpoint(resource, view, block)
 
   return {
     componentName: `${toCamelize(block.relName)}Block`,
     componentImportPath: `@/views/modules/${resourceName}/${viewName}/components/${blockName}-block.vue`,
-    api,
+    api: { url },
     apiImportPath: `@/api/modules/${resourceName}/${viewName}/${blockName}-block`,
     authority: block.inheritedAuthority,
     title: {
@@ -35,5 +21,23 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
         block.relType === BlockRelationshipType.Self ? resource.name : block.relName
       )} ${toI18nMessage(block.type)}`
     }
+  }
+}
+
+export function renderData_BlockApiEndpoint(resource: Resource, view: View, block: Block): string {
+  const resourceName = toPath(resource.name)
+  const viewName = toPath(view.type)
+  const blockName = toPath(block.relName)
+
+  switch (view.type) {
+    case ViewType.Index:
+    case ViewType.New:
+      return `/${resourceName}/${viewName}/${blockName}`
+    case ViewType.Show:
+    case ViewType.Edit:
+    case ViewType.Delete:
+      return resource.singular
+        ? `/${resourceName}/${viewName}/${blockName}`
+        : `/${resourceName}/\${id}/${viewName}/${blockName}`
   }
 }
