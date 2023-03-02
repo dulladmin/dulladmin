@@ -12,5 +12,8 @@
   "albums--show.photos-block.model.attributes.id": "Id",
   "albums--show.photos-block.model.attributes.title": "Title",
   "albums--show.photos-block.model.attributes.url": "Url",
-  "albums--show.photos-block.model.attributes.thumbnailUrl": "Thumbnail Url"
+  "albums--show.photos-block.model.attributes.thumbnailUrl": "Thumbnail Url",
+  "albums--show.photos-block.show-dialog.model.attributes.title": "Title",
+  "albums--show.photos-block.show-dialog.model.attributes.url": "Url",
+  "albums--show.photos-block.show-dialog.model.attributes.thumbnailUrl": "Thumbnail Url"
 }

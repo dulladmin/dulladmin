@@ -160,11 +160,12 @@ function genView_DescriptionsDialog(resource: Resource, view: View, block: Block
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
 
+  const _block = renderData_Block(resource, view, block)
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
-    { ..._dialog }
+    { ..._dialog, block: _block }
   )
 
   return dialogOutfile
@@ -176,11 +177,12 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
 
+  const _block = renderData_Block(resource, view, block)
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
-    { ..._dialog }
+    { ..._dialog, block: _block }
   )
 
   return dialogOutfile

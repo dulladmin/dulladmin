@@ -12,5 +12,8 @@
   "albums--show.photos-block.model.attributes.id": "编号",
   "albums--show.photos-block.model.attributes.title": "标题",
   "albums--show.photos-block.model.attributes.url": "网址",
-  "albums--show.photos-block.model.attributes.thumbnailUrl": "缩略图网址"
+  "albums--show.photos-block.model.attributes.thumbnailUrl": "缩略图网址",
+  "albums--show.photos-block.show-dialog.model.attributes.title": "标题",
+  "albums--show.photos-block.show-dialog.model.attributes.url": "网址",
+  "albums--show.photos-block.show-dialog.model.attributes.thumbnailUrl": "缩略图网址"
 }

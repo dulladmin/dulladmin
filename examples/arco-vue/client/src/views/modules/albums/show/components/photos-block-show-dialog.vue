@@ -7,6 +7,11 @@
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
   >
+    <template #title>
+      {{ $t('albums--show.photos-block.title') }}
+      -
+      {{ $t('table.actions.show') }}
+    </template>
     <div>
       <a-spin style="display: block" :loading="loading">
         <div

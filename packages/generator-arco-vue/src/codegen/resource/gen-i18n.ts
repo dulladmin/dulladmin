@@ -1,12 +1,24 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, View, BlockType, Block, TableBlock, DescriptionsBlock, FormBlock } from '@dulladmin/core'
+import {
+  Resource,
+  View,
+  BlockType,
+  Block,
+  TableBlock,
+  DescriptionsBlock,
+  FormBlock,
+  DialogBlockType,
+  Dialog
+} from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
 import {
   renderData_View,
   renderData_TableBlock,
   renderData_DescriptionsBlock,
-  renderData_FormBlock
+  renderData_FormBlock,
+  renderData_DescriptionsDialog,
+  renderData_FormDialog
 } from '../../renderdata'
 import { i18nFile } from '../base'
 
@@ -56,7 +68,11 @@ function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): 
     searcher.optionals?.forEach((opt: Record<string, any>) => (blockMessages[opt.i18nKey] = opt.i18nValue))
   })
 
-  return { ...blockMessages, ...genI18n_Model(_block.model) }
+  const dialogMessages = block.operations
+    .map((operation) => genI18n_Dialog(resource, view, block, operation.dialog))
+    .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
+
+  return { ...blockMessages, ...genI18n_Model(_block.model), ...dialogMessages }
 }
 
 function genI18n_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): Record<string, string> {
@@ -75,6 +91,30 @@ function genI18n_FormBlock(resource: Resource, view: View, block: FormBlock): Re
   }
 
   return { ...blockMessages, ...genI18n_Model(_block.model) }
+}
+
+function genI18n_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): Record<string, string> {
+  switch (dialog.block.type) {
+    case DialogBlockType.DescriptionsBlock:
+      return genI18n_DescriptionsDialog(resource, view, block, dialog)
+    case DialogBlockType.FormBlock:
+      return genI18n_FormDialog(resource, view, block, dialog)
+  }
+}
+
+function genI18n_DescriptionsDialog(
+  resource: Resource,
+  view: View,
+  block: Block,
+  dialog: Dialog
+): Record<string, string> {
+  const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
+  return { ...genI18n_Model(_dialog.model) }
+}
+
+function genI18n_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): Record<string, string> {
+  const _dialog = renderData_FormDialog(resource, view, block, dialog)
+  return { ...genI18n_Model(_dialog.model) }
 }
 
 function genI18n_Model(model: Record<string, any>): Record<string, string> {
