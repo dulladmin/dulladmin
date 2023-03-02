@@ -4,8 +4,10 @@
   <a-modal
     class="dulladmin-descriptions-dialog"
     v-model:visible="visible"
-    :on-before-ok="handleModalBeforeOk"
+    hide-cancel
+    @ok="handleModalOk"
     @cancel="handleModalCancel"
+    @close="handleModalClose"
   >
     <template #title>
       {{ $t('albums--show.photos-block.title') }}
@@ -84,7 +86,7 @@
   // props
   const props = defineProps<{
     visible: boolean;
-    id: string;
+    id: string | number;
   }>();
   const emits = defineEmits<{
     (e: 'update:visible', newValue: boolean): void;
@@ -113,12 +115,17 @@
     },
   };
 
-  // descriptions - store
-  const { loading, setLoading } = useLoading(true);
-  const store = ref<Model>({
+  // descriptions - model
+  const baseModel: Model = {
     title: undefined,
     url: undefined,
     thumbnailUrl: undefined,
+  };
+
+  // descriptions - store
+  const { loading, setLoading } = useLoading(true);
+  const store = ref<Model>({
+    ...baseModel
   });
   const fetchStore = async () => {
     setLoading(true);
@@ -152,7 +159,7 @@
   );
 
   // modal - ok
-  const handleModalBeforeOk = async () => {
+  const handleModalOk = () => {
     visible.value = false;
     emits('update:visible', false);
   };
@@ -161,5 +168,12 @@
   const handleModalCancel = () => {
     visible.value = false;
     emits('update:visible', false);
+  };
+
+  // modal - close
+  const handleModalClose = () => {
+    store.value = {
+      ...baseModel
+    };
   };
 </script>
