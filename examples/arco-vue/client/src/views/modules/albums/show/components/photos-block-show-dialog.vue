@@ -130,7 +130,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id, props.id);
+      const { data } = await get(id, props.id as string);
       const { model } = data;
 
       if (model) {
