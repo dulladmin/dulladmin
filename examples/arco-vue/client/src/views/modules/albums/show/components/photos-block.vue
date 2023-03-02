@@ -87,15 +87,30 @@
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
+            <a-button
+              type="outline"
+              status="success"
+              size="small"
+              @click="handleTableOperationPhotosBlockShowDialogVisible({ id: record.id })"
+            >
+              {{ $t('table.actions.show') }}
+            </a-button>
           </a-space>
         </template>
       </a-table>
     </a-card>
 
-    <!-- Table Model Operations -->
+
+    <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span />
     </div>
 
+    <!-- Table Collection/Model Operations - show -->
+    <PhotosBlockShowDialog
+      v-model:visible="tableOperationPhotosBlockShowDialogVisible"
+      :id="selectedRecordID"
+    />
   </div>
 </template>
 
@@ -107,6 +122,7 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/albums/show/photos-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
+  import PhotosBlockShowDialog from '@/views/modules/albums/show/components/photos-block-show-dialog.vue'
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
@@ -290,9 +306,7 @@
 
 
   // table - operations
-  const goto = (_route: Record<string, any>) => {
-    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
-  };
+  const selectedRecordID = ref<string>('');
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
@@ -302,6 +316,18 @@
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
   });
+
+  // table - operations - goto
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
+  };
+
+  // table - operations - show
+  const tableOperationPhotosBlockShowDialogVisible = ref(false);
+  const handleTableOperationPhotosBlockShowDialogVisible = (options: Record<string, any>) => {
+    selectedRecordID.value = options.id
+    tableOperationPhotosBlockShowDialogVisible.value = true;
+  };
 
   // table - tabbable
   useTabbableViewBlock({

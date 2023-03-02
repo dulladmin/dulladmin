@@ -95,10 +95,10 @@
       </a-table>
     </a-card>
 
-    <!-- Table Model Operations -->
+
+    <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
-      <span
-      />
+      <span />
     </div>
 
   </div>
@@ -316,9 +316,7 @@
   };
 
   // table - operations
-  const goto = (_route: Record<string, any>) => {
-    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
-  };
+  const selectedRecordID = ref<string>('');
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
@@ -328,6 +326,11 @@
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
   });
+
+  // table - operations - goto
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
+  };
 
   // table - tabbable
   useTabbableViewBlock({

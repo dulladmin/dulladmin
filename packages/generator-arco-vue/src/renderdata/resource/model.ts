@@ -1,16 +1,34 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, View, Block } from '@dulladmin/core'
+import { Resource, View, Block, Dialog, Model } from '@dulladmin/core'
 import { toI18nMessage, toPath } from '../../naming'
 import { toJsonType } from '../base'
 
-export function renderData_Model(resource: Resource, view: View, block: Block): Record<string, any> {
+export function renderData_Model_Block(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
   const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.model.attributes`
+  return renderData_Model(block.model, { i18nKeyPrefix })
+}
 
+export function renderData_Model_Dialog(
+  resource: Resource,
+  view: View,
+  block: Block,
+  dialog: Dialog
+): Record<string, any> {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const dialogPath = toPath(dialog.name)
+  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog.model.attributes`
+  return renderData_Model(dialog.block.model, { i18nKeyPrefix })
+}
+
+function renderData_Model(model: Model, attrs: Record<string, any>): Record<string, any> {
+  const i18nKeyPrefix: string = attrs.i18nKeyPrefix
   return {
-    attributes: block.model.attributes.map((attr) => {
+    attributes: model.attributes.map((attr) => {
       return {
         name: attr.name,
         type: attr.type,

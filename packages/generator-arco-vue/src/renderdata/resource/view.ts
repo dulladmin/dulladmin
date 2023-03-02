@@ -10,6 +10,7 @@ export function renderData_View(resource: Resource, view: View): Record<string, 
   return {
     name: `${toCamelize(resourcePath)}${toCamelize(viewPath)}`,
     authority: view.inheritedAuthority,
+    isMemberAction: view.pathScope === ViewPathScope.Member,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
       i18nValue: `${toI18nMessage(resourcePath)} ${toI18nMessage(viewPath)}`

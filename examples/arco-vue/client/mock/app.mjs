@@ -95,6 +95,11 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/albums/:id/show/photos/:subid/show', async (req, res) => {
+    const collection = photosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    res.send(buildSuccessResponse({ model }));
+  });
 
   app.get('/photos/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(photosDB.data);

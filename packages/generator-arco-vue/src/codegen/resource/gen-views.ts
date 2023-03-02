@@ -7,7 +7,9 @@ import {
   Block,
   TableBlock,
   DescriptionsBlock,
-  FormBlock
+  FormBlock,
+  DialogBlockType,
+  Dialog
 } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
@@ -16,7 +18,9 @@ import {
   renderData_Block,
   renderData_TableBlock,
   renderData_DescriptionsBlock,
-  renderData_FormBlock
+  renderData_FormBlock,
+  renderData_DescriptionsDialog,
+  renderData_FormDialog
 } from '../../renderdata'
 import { handlebarsFile } from '../base'
 
@@ -69,8 +73,9 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     resource.views.forEach((view) => {
       const _view = renderData_View(resource, view)
       resourceActions[view.name] = {
+        name: _view.name,
         authority: _view.authority,
-        name: _view.name
+        isMemberAction: _view.isMemberAction
       }
     })
   }
@@ -83,7 +88,11 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     { ..._block, view: _view, resourceActions }
   )
 
-  return [blockOutfile]
+  const dialogOutfiles = block.operations.map((operation) => {
+    return genView_Dialog(resource, view, block, operation.dialog)
+  })
+
+  return [blockOutfile, ...dialogOutfiles]
 }
 
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile[] {
@@ -134,4 +143,45 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   )
 
   return [blockOutfile]
+}
+
+function genView_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+  switch (dialog.block.type) {
+    case DialogBlockType.DescriptionsBlock:
+      return genView_DescriptionsDialog(resource, view, block, dialog)
+    case DialogBlockType.FormBlock:
+      return genView_FormDialog(resource, view, block, dialog)
+  }
+}
+
+function genView_DescriptionsDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const dialogPath = toPath(dialog.name)
+
+  const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
+  const dialogOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
+    'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
+    { ..._dialog }
+  )
+
+  return dialogOutfile
+}
+
+function genView_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const dialogPath = toPath(dialog.name)
+
+  const _dialog = renderData_FormDialog(resource, view, block, dialog)
+  const dialogOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
+    'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
+    { ..._dialog }
+  )
+
+  return dialogOutfile
 }

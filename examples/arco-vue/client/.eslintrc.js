@@ -46,10 +46,10 @@ module.exports = {
     'vue/singleline-html-element-content-newline': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-empty-function': 1,
-    '@typescript-eslint/no-empty-interface': 1,
+    '@typescript-eslint/no-empty-interface': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-shadow': 2,
-    '@typescript-eslint/no-unused-vars': 1,
+    '@typescript-eslint/no-unused-vars': 0,
     'import/extensions': [
       2,
       'ignorePackages',

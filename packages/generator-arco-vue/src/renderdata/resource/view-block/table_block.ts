@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, View, TableBlock } from '@dulladmin/core'
+import { Resource, View, TableBlock, DialogPathScope } from '@dulladmin/core'
 import { toI18nMessage, toPath } from '../../../naming'
 import { toJsonType } from '../../base'
 import { renderData_Dialog } from '../dialog'
-import { renderData_Model } from '../model'
+import { renderData_Model_Block } from '../model'
 import { renderData_Block } from './base'
 
 export function renderData_TableBlock(resource: Resource, view: View, block: TableBlock): Record<string, any> {
   const _block = renderData_Block(resource, view, block)
-  const model = renderData_Model(resource, view, block)
+  const model = renderData_Model_Block(resource, view, block)
 
   const searchers = renderData_TableBlockSearchers(resource, view, block)
   const searchable = searchers.length !== 0
@@ -83,8 +83,9 @@ function renderData_TableBlockOperations(resource: Resource, view: View, block: 
   const operations: Record<string, any> = {}
   block.operations.forEach((operation) => {
     operations[operation.name] = {
-      authority: operation.inheritedAuthority,
       name: operation.name,
+      authority: operation.inheritedAuthority,
+      isMemberAction: operation.dialog.pathScope === DialogPathScope.Member,
       dialog: renderData_Dialog(resource, view, block, operation.dialog)
     }
   })

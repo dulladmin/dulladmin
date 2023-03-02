@@ -3,7 +3,6 @@ import {
   provide,
   ref,
   watch,
-  onUnmounted,
   onActivated,
   onDeactivated,
   Ref,

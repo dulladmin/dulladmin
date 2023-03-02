@@ -21,6 +21,20 @@
               \{{ $t('table.actions.new') }}
             </a-button>
             {{/if}}
+            {{#if operations.new }}
+            <a-button
+              {{#if operations.new.authority}}
+              v-permission="[{{#each operations.new.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
+              type="primary"
+              @click="handleTableOperation{{operations.new.dialog.componentName}}Visible({})"
+            >
+              <template #icon>
+                <icon-plus />
+              </template>
+              \{{ $t('table.actions.new') }}
+            </a-button>
+            {{/if}}
           </a-space>
         </a-col>
 
@@ -159,6 +173,19 @@
               \{{ $t('table.actions.show') }}
             </a-button>
             {{/if}}
+            {{#if operations.show }}
+            <a-button
+              {{#if operations.show.authority}}
+              v-permission="[{{#each operations.show.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
+              type="outline"
+              status="success"
+              size="small"
+              @click="handleTableOperation{{operations.show.dialog.componentName}}Visible({ id: record.id })"
+            >
+              \{{ $t('table.actions.show') }}
+            </a-button>
+            {{/if}}
             {{#if resourceActions.edit }}
             <a-button
               {{#if resourceActions.edit.authority}}
@@ -168,6 +195,19 @@
               status="warning"
               size="small"
               @click="goto({ name: '{{ resourceActions.edit.name }}', params: { id: record.id } })"
+            >
+              \{{ $t('table.actions.edit') }}
+            </a-button>
+            {{/if}}
+            {{#if operations.edit }}
+            <a-button
+              {{#if operations.edit.authority}}
+              v-permission="[{{#each operations.edit.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
+              type="outline"
+              status="warning"
+              size="small"
+              @click="handleTableOperation{{operations.edit.dialog.componentName}}Visible({ id: record.id })"
             >
               \{{ $t('table.actions.edit') }}
             </a-button>
@@ -185,35 +225,23 @@
               \{{ $t('table.actions.delete') }}
             </a-button>
             {{/if}}
+            {{#if operations.delete }}
+            <a-button
+              {{#if operations.delete.authority}}
+              v-permission="[{{#each operations.delete.authority}}'{{this}}', {{/each}}]"
+              {{/if}}
+              type="outline"
+              status="danger"
+              size="small"
+              @click="handleTableOperation{{operations.delete.dialog.componentName}}Visible({ id: record.id })"
+            >
+              \{{ $t('table.actions.edit') }}
+            </a-button>
+            {{/if}}
           </a-space>
         </template>
       </a-table>
     </a-card>
-
-    <!-- Table Model Operations -->
-    <div v-show="false" ref="tableOperationsColumnRenderableRef">
-      {{#if resourceActions.show}}
-      <span
-        {{#if resourceActions.show.authority}}
-        v-permission="[{{#each resourceActions.show.authority}}'{{this}}', {{/each}}]"
-        {{/if}}
-      />
-      {{/if}}
-      {{#if resourceActions.edit}}
-      <span
-        {{#if resourceActions.edit.authority}}
-        v-permission="[{{#each resourceActions.edit.authority}}'{{this}}', {{/each}}]"
-        {{/if}}
-      />
-      {{/if}}
-      {{#if resourceActions.delete}}
-      <span
-        {{#if resourceActions.delete.authority}}
-        v-permission="[{{#each resourceActions.delete.authority}}'{{this}}', {{/each}}]"
-        {{/if}}
-      />
-      {{/if}}
-    </div>
 
     {{#if searchable}}
     <!-- Table Search -->
@@ -242,6 +270,28 @@
       </a-form>
     </a-modal>
     {{/if}}
+
+    <!-- Table Model Operations UI indicator -->
+    <div v-show="false" ref="tableOperationsColumnRenderableRef">
+    {{#each resourceActions}}
+      {{#if isMemberAction}}
+      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
+      {{/if}}
+    {{/each}}
+    {{#each operations}}
+      {{#if isMemberAction}}
+      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
+      {{/if}}
+    {{/each}}
+    </div>
+
+    {{#each operations}}
+    <!-- Table Collection/Model Operations - {{name}} -->
+    <{{dialog.componentName}}
+      v-model:visible="tableOperation{{dialog.componentName}}Visible"
+      :id="selectedRecordID"
+    />
+    {{/each}}
   </div>
 </template>
 
@@ -253,6 +303,9 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '{{ apiImportPath }}';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
+{{#each operations}}
+  import {{dialog.componentName}} from '{{dialog.componentImportPath}}'
+{{/each}}
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
@@ -569,9 +622,7 @@
 {{/if}}
 
   // table - operations
-  const goto = (_route: Record<string, any>) => {
-    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
-  };
+  const selectedRecordID = ref<string>('');
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
@@ -581,6 +632,20 @@
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
   });
+
+  // table - operations - goto
+  const goto = (_route: Record<string, any>) => {
+    router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
+  };
+{{#each operations}}
+
+  // table - operations - {{name}}
+  const tableOperation{{dialog.componentName}}Visible = ref(false);
+  const handleTableOperation{{dialog.componentName}}Visible = (options: Record<string, any>) => {
+    selectedRecordID.value = options.id
+    tableOperation{{dialog.componentName}}Visible.value = true;
+  };
+{{/each}}
 
   // table - tabbable
   useTabbableViewBlock({
