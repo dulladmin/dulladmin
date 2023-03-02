@@ -29,22 +29,25 @@ function genViews_Resource(resource: Resource): GeneratedFile[] {
 }
 
 function genViews_View(resource: Resource, view: View): GeneratedFile[] {
-  const blockOutfiles = view.blocks
-    .map((block) => genViews_Block(resource, view, block))
-    .reduce<GeneratedFile[]>((a, v) => [...a, v], [])
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
 
   const _view = renderData_View(resource, view)
   const blocks = view.blocks.map((block) => renderData_Block(resource, view, block))
   const viewOutfile = handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/index.vue`,
+    `src/views/modules/${resourcePath}/${viewPath}/index.vue`,
     'src/views/modules/__resource__/__view__/index.vue.hbs',
     { ..._view, blocks }
   )
 
-  return [...blockOutfiles, viewOutfile]
+  const blockOutfiles = view.blocks
+    .map((block) => genViews_Block(resource, view, block))
+    .reduce<GeneratedFile[]>((a, v) => [...a, ...v], [])
+
+  return [viewOutfile, ...blockOutfiles]
 }
 
-function genViews_Block(resource: Resource, view: View, block: Block): GeneratedFile {
+function genViews_Block(resource: Resource, view: View, block: Block): GeneratedFile[] {
   switch (block.type) {
     case BlockType.TableBlock:
       return genViews_TableBlock(resource, view, block as TableBlock)
@@ -55,9 +58,10 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
   }
 }
 
-function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile {
-  const _view = renderData_View(resource, view)
-  const _block = renderData_TableBlock(resource, view, block)
+function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
 
   // self Table in IndexView
   const resourceActions: Record<string, any> = {}
@@ -71,41 +75,63 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     })
   }
 
-  return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
+  const _view = renderData_View(resource, view)
+  const _block = renderData_TableBlock(resource, view, block)
+  const blockOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
     { ..._block, view: _view, resourceActions }
   )
+
+  return [blockOutfile]
 }
 
-function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile {
+function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+
   const _view = renderData_View(resource, view)
   const _block = renderData_DescriptionsBlock(resource, view, block)
-
-  return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
+  const blockOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__descriptions_block__.vue.hbs',
     { ..._block, view: _view }
   )
+
+  return [blockOutfile]
 }
 
-function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile {
-  const _view = renderData_View(resource, view)
-  const _block = renderData_FormBlock(resource, view, block)
+function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
 
   // self Form in NewView/EditView/DeleteView
   const formOptions: Record<string, any> = { actionName: 'save' }
   if (block.relType === BlockRelationshipType.Self) {
     formOptions.allowBackOnSave = true
-    if (view.name === 'new' || view.name === 'edit' || view.name === 'delete') {
-      formOptions.actionName = view.name
-      formOptions.isDanger = view.name === 'delete'
+
+    const actionName = view.name.split('_')[0]
+    switch (actionName) {
+      case 'new':
+      case 'edit':
+      case 'delete':
+        formOptions.actionName = actionName
+        formOptions.isDanger = actionName === 'delete'
+        break
+      default:
+        break
     }
   }
 
-  return handlebarsFile(
-    `src/views/modules/${toPath(resource.name)}/${toPath(view.name)}/components/${toPath(block.relName)}-block.vue`,
+  const _view = renderData_View(resource, view)
+  const _block = renderData_FormBlock(resource, view, block)
+  const blockOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__form_block__.vue.hbs',
     { ..._block, view: _view, formOptions }
   )
+
+  return [blockOutfile]
 }

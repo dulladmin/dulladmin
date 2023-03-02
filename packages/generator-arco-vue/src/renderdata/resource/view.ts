@@ -26,9 +26,12 @@ export function renderData_ViewRoute(resource: Resource, view: View): Record<str
   let cache = false
   switch (view.name) {
     case 'index':
-      if (resource.singular) throw Error('Unreachable')
-      path = `${resourcePath}`
-      cache = true
+      if (resource.singular) {
+        throw Error('Unreachable')
+      } else {
+        path = `${resourcePath}`
+        cache = true
+      }
       break
     case 'new':
       path = `${resourcePath}/new`

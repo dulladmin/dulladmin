@@ -47,40 +47,52 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 }
 
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile[] {
-  const dialogOutfiles = block.operations.map((operation) => {
-    return genAPI_Dialog(resource, view, block, operation.dialog)
-  })
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
 
   const _block = renderData_TableBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
     'src/api/modules/__resource__/__view__/__table_block__.ts.hbs',
     { ..._block }
   )
 
-  return [...dialogOutfiles, blockOutfile]
+  const dialogOutfiles = block.operations.map((operation) => {
+    return genAPI_Dialog(resource, view, block, operation.dialog)
+  })
+
+  return [blockOutfile, ...dialogOutfiles]
 }
 
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+
   const _block = renderData_DescriptionsBlock(resource, view, block)
-  return [
-    handlebarsFile(
-      `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
-      'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
-      { ..._block }
-    )
-  ]
+  const blockOutfile = handlebarsFile(
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
+    'src/api/modules/__resource__/__view__/__descriptions_block__.ts.hbs',
+    { ..._block }
+  )
+
+  return [blockOutfile]
 }
 
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+
   const _block = renderData_FormBlock(resource, view, block)
-  return [
-    handlebarsFile(
-      `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block.ts`,
-      'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
-      { ..._block }
-    )
-  ]
+  const blockOutfile = handlebarsFile(
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
+    'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
+    { ..._block }
+  )
+
+  return [blockOutfile]
 }
 
 function genAPI_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
@@ -93,23 +105,33 @@ function genAPI_Dialog(resource: Resource, view: View, block: Block, dialog: Dia
 }
 
 function genAPI_DescriptionsDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const dialogPath = toPath(dialog.name)
+
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
-  return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block-${toPath(
-      dialog.name
-    )}-dialog.ts`,
+  const dialogOutfile = handlebarsFile(
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block-${dialogPath}-dialog.ts`,
     'src/api/modules/__resource__/__view__/dialog/__descriptions_dialog__.ts.hbs',
     { ..._dialog }
   )
+
+  return dialogOutfile
 }
 
 function genAPI_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const dialogPath = toPath(dialog.name)
+
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
-  return handlebarsFile(
-    `src/api/modules/${toPath(resource.name)}/${toPath(view.name)}/${toPath(block.relName)}-block-${toPath(
-      dialog.name
-    )}-dialog.ts`,
+  const dialogOutfile = handlebarsFile(
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block-${dialogPath}-dialog.ts`,
     'src/api/modules/__resource__/__view__/dialog/__form_dialog__.ts.hbs',
     { ..._dialog }
   )
+
+  return dialogOutfile
 }
