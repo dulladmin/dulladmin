@@ -104,6 +104,22 @@
             >
               {{ $t('table.actions.show') }}
             </a-button>
+            <a-button
+              type="outline"
+              status="warning"
+              size="small"
+              @click="handleTableOperationPhotosBlockEditDialogVisible({ id: record.id })"
+            >
+              {{ $t('table.actions.edit') }}
+            </a-button>
+            <a-button
+              type="outline"
+              status="danger"
+              size="small"
+              @click="handleTableOperationPhotosBlockDeleteDialogVisible({ id: record.id })"
+            >
+              {{ $t('table.actions.delete') }}
+            </a-button>
           </a-space>
         </template>
       </a-table>
@@ -112,6 +128,8 @@
 
     <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span />
+      <span />
       <span />
     </div>
 
@@ -123,6 +141,16 @@
     <!-- Table Collection/Model Operations - new -->
     <PhotosBlockNewDialog
       v-model:visible="tableOperationPhotosBlockNewDialogVisible"
+      :id="selectedRecordID"
+    />
+    <!-- Table Collection/Model Operations - edit -->
+    <PhotosBlockEditDialog
+      v-model:visible="tableOperationPhotosBlockEditDialogVisible"
+      :id="selectedRecordID"
+    />
+    <!-- Table Collection/Model Operations - delete -->
+    <PhotosBlockDeleteDialog
+      v-model:visible="tableOperationPhotosBlockDeleteDialogVisible"
       :id="selectedRecordID"
     />
   </div>
@@ -138,6 +166,8 @@
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import PhotosBlockShowDialog from '@/views/modules/albums/show/components/photos-block-show-dialog.vue'
   import PhotosBlockNewDialog from '@/views/modules/albums/show/components/photos-block-new-dialog.vue'
+  import PhotosBlockEditDialog from '@/views/modules/albums/show/components/photos-block-edit-dialog.vue'
+  import PhotosBlockDeleteDialog from '@/views/modules/albums/show/components/photos-block-delete-dialog.vue'
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
@@ -349,6 +379,20 @@
   const handleTableOperationPhotosBlockNewDialogVisible = (options: Record<string, any>) => {
     selectedRecordID.value = String(options.id)
     tableOperationPhotosBlockNewDialogVisible.value = true;
+  };
+
+  // table - operations - edit
+  const tableOperationPhotosBlockEditDialogVisible = ref(false);
+  const handleTableOperationPhotosBlockEditDialogVisible = (options: Record<string, any>) => {
+    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockEditDialogVisible.value = true;
+  };
+
+  // table - operations - delete
+  const tableOperationPhotosBlockDeleteDialogVisible = ref(false);
+  const handleTableOperationPhotosBlockDeleteDialogVisible = (options: Record<string, any>) => {
+    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockDeleteDialogVisible.value = true;
   };
 
   // table - tabbable

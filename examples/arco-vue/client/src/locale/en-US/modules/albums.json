@@ -16,5 +16,6 @@
   "albums--show.photos-block.show-dialog.model.attributes.title": "Title",
   "albums--show.photos-block.show-dialog.model.attributes.url": "Url",
   "albums--show.photos-block.show-dialog.model.attributes.thumbnailUrl": "Thumbnail Url",
-  "albums--show.photos-block.new-dialog.model.attributes.title": "Title"
+  "albums--show.photos-block.new-dialog.model.attributes.title": "Title",
+  "albums--show.photos-block.edit-dialog.model.attributes.title": "Title"
 }

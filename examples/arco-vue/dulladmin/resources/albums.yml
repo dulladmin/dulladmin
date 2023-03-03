@@ -35,4 +35,11 @@ views:
             new:
               form:
                 items:
-                  - { name: 'title'       , type: 'string' }
+                  - { name: 'title', type: 'string' }
+            edit:
+              form:
+                items:
+                  - { name: 'title', type: 'string' }
+            delete:
+              form:
+                items: []
