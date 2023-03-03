@@ -162,7 +162,7 @@
     <a-modal
       class="dulladmin-table-block-search-modal"
       v-model:visible="searchModalVisible"
-      :okText="$t('table.actions.search')"
+      :ok-text="$t('table.actions.search')"
       :on-before-ok="handleSearchModalBeforeOk"
       @cancel="handleSearchModalCancel"
     >

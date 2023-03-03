@@ -4,6 +4,10 @@
   <a-modal
     class="dulladmin-form-dialog"
     v-model:visible="visible"
+    :ok-text="$t('form.actions.{{formOptions.actionName}}')"
+    {{#if formOptions.isDanger}}
+    :ok-button-props="{status: 'danger'}"
+    {{/if}}
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
     @close="handleModalClose"
@@ -11,7 +15,7 @@
     <template #title>
       \{{ $t('{{block.title.i18nKey}}') }}
       -
-      \{{ $t('table.actions.show') }}
+      \{{ $t('table.actions.{{formOptions.actionName}}') }}
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
@@ -109,7 +113,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id);
+      const { data } = await get(id, props.id);
       const { form } = data;
 
       if (form) {

@@ -4,6 +4,7 @@
   <a-modal
     class="dulladmin-form-dialog"
     v-model:visible="visible"
+    :ok-text="$t('form.actions.edit')"
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
     @close="handleModalClose"
@@ -11,7 +12,7 @@
     <template #title>
       {{ $t('albums--show.photos-block.title') }}
       -
-      {{ $t('table.actions.show') }}
+      {{ $t('table.actions.edit') }}
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
@@ -77,7 +78,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id);
+      const { data } = await get(id, props.id);
       const { form } = data;
 
       if (form) {
@@ -105,7 +106,7 @@
         store.value = form;
       }
 
-      Message.success(t('form.actions..success'));
+      Message.success(t('form.actions.edit.success'));
     } finally {
       setSaving(false);
     }

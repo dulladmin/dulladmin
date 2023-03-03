@@ -125,10 +125,10 @@ export async function enhance(app) {
     Object.assign(model, { ...req.body.form });
     res.send(buildSuccessResponse({ form: model }));
   });
-  app.get('/albums/:id/show/photos/:subid/delete', async (req, res) => {
+  app.get('/albums/:id/show/photos/:subid/delete', async (_req, res) => {
     res.send(buildSuccessResponse({ form: {} }));
   });
-  app.put('/albums/:id/show/photos/:subid/delete', async (_req, res) => {
+  app.put('/albums/:id/show/photos/:subid/delete', async (req, res) => {
     const collection = photosDB.data;
     const index = collection.findIndex((item) => item.id == req.params.subid);
     collection.splice(index, 1);
@@ -207,10 +207,10 @@ export async function enhance(app) {
     Object.assign(model, { ...req.body.form });
     res.send(buildSuccessResponse({ form: model }));
   });
-  app.get('/todos/:id/delete/self', async (req, res) => {
+  app.get('/todos/:id/delete/self', async (_req, res) => {
     res.send(buildSuccessResponse({ form: {} }));
   });
-  app.put('/todos/:id/delete/self', async (_req, res) => {
+  app.put('/todos/:id/delete/self', async (req, res) => {
     const collection = todosDB.data;
     const index = collection.findIndex((item) => item.id == req.params.id);
     collection.splice(index, 1);
@@ -250,10 +250,10 @@ export async function enhance(app) {
     Object.assign(model, { ...req.body.form });
     res.send(buildSuccessResponse({ form: model }));
   });
-  app.get('/administrators/:id/delete/self', async (req, res) => {
+  app.get('/administrators/:id/delete/self', async (_req, res) => {
     res.send(buildSuccessResponse({ form: {} }));
   });
-  app.put('/administrators/:id/delete/self', async (_req, res) => {
+  app.put('/administrators/:id/delete/self', async (req, res) => {
     const collection = administratorsDB.data;
     const index = collection.findIndex((item) => item.id == req.params.id);
     collection.splice(index, 1);

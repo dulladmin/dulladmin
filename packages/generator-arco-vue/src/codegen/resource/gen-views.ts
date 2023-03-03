@@ -177,12 +177,26 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
 
+  // self Form in NewDialog/EditDialog/DeleteDialog
+  const formOptions: Record<string, any> = { actionName: 'save' }
+  const actionName = dialog.name.split('_')[0]
+  switch (actionName) {
+    case 'new':
+    case 'edit':
+    case 'delete':
+      formOptions.actionName = actionName
+      formOptions.isDanger = actionName === 'delete'
+      break
+    default:
+      break
+  }
+
   const _block = renderData_Block(resource, view, block)
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     'src/views/modules/__resource__/__view__/components/dialog/__form_dialog__.vue.hbs',
-    { ..._dialog, block: _block }
+    { ..._dialog, block: _block, formOptions }
   )
 
   return dialogOutfile
