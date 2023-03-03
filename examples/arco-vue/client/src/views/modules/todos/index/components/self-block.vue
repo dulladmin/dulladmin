@@ -164,8 +164,8 @@
 
     <!-- Table Search -->
     <a-modal
-      class="dulladmin-table-block-search-modal"
       v-model:visible="searchModalVisible"
+      class="dulladmin-table-block-search-modal"
       :ok-text="$t('table.actions.search')"
       :on-before-ok="handleSearchModalBeforeOk"
       @cancel="handleSearchModalCancel"
@@ -536,7 +536,6 @@
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
-
 
   // table - tabbable
   useTabbableViewBlock({

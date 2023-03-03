@@ -377,7 +377,6 @@
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
-
   // table - operations - show
   const tableOperationPhotosBlockShowDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockShowDialogVisible = ref(false);
@@ -386,13 +385,7 @@
     tableOperationPhotosBlockShowDialogVisible.value = true;
   };
   const handleTableOperationPhotosBlockShowDialogOkCallback = (options: Record<string, any>) => {
-    const { model } = options;
-    if (model) {
-      updateStore({ model });
-    } else {
-      onTableRefresh();
-    }
-  }
+  };
 
   // table - operations - new
   const tableOperationPhotosBlockNewDialogSelectedRecordID = ref<string>('');
@@ -408,7 +401,7 @@
     } else {
       onTableRefresh();
     }
-  }
+  };
 
   // table - operations - edit
   const tableOperationPhotosBlockEditDialogSelectedRecordID = ref<string>('');
@@ -424,7 +417,7 @@
     } else {
       onTableRefresh();
     }
-  }
+  };
 
   // table - operations - delete
   const tableOperationPhotosBlockDeleteDialogSelectedRecordID = ref<string>('');
@@ -440,7 +433,7 @@
     } else {
       onTableRefresh();
     }
-  }
+  };
 
   // table - tabbable
   useTabbableViewBlock({

@@ -376,7 +376,6 @@
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
-
   // table - tabbable
   useTabbableViewBlock({
     viewName: 'PhotosIndex',

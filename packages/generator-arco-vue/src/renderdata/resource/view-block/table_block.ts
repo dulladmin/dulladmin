@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, View, TableBlock, DialogPathScope } from '@dulladmin/core'
+import { Resource, View, TableBlock, DialogPathScope, DialogBlockType } from '@dulladmin/core'
 import { toI18nMessage, toPath } from '../../../naming'
 import { toJsonType } from '../../base'
 import { renderData_Dialog } from '../dialog'
@@ -86,7 +86,8 @@ function renderData_TableBlockOperations(resource: Resource, view: View, block: 
       name: operation.name,
       authority: operation.inheritedAuthority,
       isMemberAction: operation.dialog.pathScope === DialogPathScope.Member,
-      dialog: renderData_Dialog(resource, view, block, operation.dialog)
+      dialog: renderData_Dialog(resource, view, block, operation.dialog),
+      useFormDialog: operation.dialog.block.type === DialogBlockType.FormBlock
     }
   })
   return operations
