@@ -5,6 +5,11 @@ import { JSONFile } from 'lowdb/node';
 import lodash from 'lodash';
 import { buildSuccessResponse } from './utils.mjs';
 
+let id = 10000;
+function generateID() {
+  return id++;
+}
+
 async function loadDatabase(filename) {
   const __dirname = dirname(fileURLToPath(import.meta.url));
   const filepath = join(__dirname, filename);
@@ -103,7 +108,7 @@ export async function enhance(app) {
     const collection = photosDB.data;
     const model = {
       ...req.body.form,
-      id: collection.length + 1,
+      id: generateID(),
       albumId: req.params.id,
     };
     collection.push(model);
@@ -192,7 +197,7 @@ export async function enhance(app) {
   });
   app.put('/todos/new/self', async (req, res) => {
     const collection = todosDB.data;
-    const model = { ...req.body.form, id: collection.length + 1 };
+    const model = { ...req.body.form, id: generateID() };
     collection.push(model);
     res.send(buildSuccessResponse({ form: model }));
   });
@@ -235,7 +240,7 @@ export async function enhance(app) {
   });
   app.put('/administrators/new/self', async (req, res) => {
     const collection = administratorsDB.data;
-    const model = { ...req.body.form, id: collection.length + 1 };
+    const model = { ...req.body.form, id: generateID() };
     collection.push(model);
     res.send(buildSuccessResponse({ form: model }));
   });
