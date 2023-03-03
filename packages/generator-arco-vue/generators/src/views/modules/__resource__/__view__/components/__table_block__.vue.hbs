@@ -289,7 +289,8 @@
     <!-- Table Collection/Model Operations - {{name}} -->
     <{{dialog.componentName}}
       v-model:visible="tableOperation{{dialog.componentName}}Visible"
-      :id="selectedRecordID"
+      :id="tableOperation{{dialog.componentName}}SelectedRecordID"
+      :ok-callback="handleTableOperation{{dialog.componentName}}OkCallback"
     />
     {{/each}}
   </div>
@@ -529,6 +530,15 @@
       setLoading(false);
     }
   };
+  const updateStore = (data: Record<string, any>) => {
+    const { model } = data;
+    if (model) {
+      const foundIndex = store.value.findIndex((e) => String(e.id) === String(model.id));
+      if (foundIndex !== -1) {
+        store.value.splice(foundIndex, 1, model);
+      }
+    }
+  };
 
   // table - data
   const tableData = computed(() => store.value);
@@ -621,9 +631,6 @@
   };
 {{/if}}
 
-  // table - operations
-  const selectedRecordID = ref<string>('');
-
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
   onMounted(() => {
@@ -637,14 +644,24 @@
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
+
 {{#each operations}}
 
   // table - operations - {{name}}
+  const tableOperation{{dialog.componentName}}SelectedRecordID = ref<string>('');
   const tableOperation{{dialog.componentName}}Visible = ref(false);
   const handleTableOperation{{dialog.componentName}}Visible = (options: Record<string, any>) => {
-    selectedRecordID.value = String(options.id)
+    tableOperation{{dialog.componentName}}SelectedRecordID.value = String(options.id);
     tableOperation{{dialog.componentName}}Visible.value = true;
   };
+  const handleTableOperation{{dialog.componentName}}OkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  }
 {{/each}}
 
   // table - tabbable

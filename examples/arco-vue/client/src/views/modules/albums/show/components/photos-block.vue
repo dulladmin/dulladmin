@@ -136,22 +136,26 @@
     <!-- Table Collection/Model Operations - show -->
     <PhotosBlockShowDialog
       v-model:visible="tableOperationPhotosBlockShowDialogVisible"
-      :id="selectedRecordID"
+      :id="tableOperationPhotosBlockShowDialogSelectedRecordID"
+      :ok-callback="handleTableOperationPhotosBlockShowDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - new -->
     <PhotosBlockNewDialog
       v-model:visible="tableOperationPhotosBlockNewDialogVisible"
-      :id="selectedRecordID"
+      :id="tableOperationPhotosBlockNewDialogSelectedRecordID"
+      :ok-callback="handleTableOperationPhotosBlockNewDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - edit -->
     <PhotosBlockEditDialog
       v-model:visible="tableOperationPhotosBlockEditDialogVisible"
-      :id="selectedRecordID"
+      :id="tableOperationPhotosBlockEditDialogSelectedRecordID"
+      :ok-callback="handleTableOperationPhotosBlockEditDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - delete -->
     <PhotosBlockDeleteDialog
       v-model:visible="tableOperationPhotosBlockDeleteDialogVisible"
-      :id="selectedRecordID"
+      :id="tableOperationPhotosBlockDeleteDialogSelectedRecordID"
+      :ok-callback="handleTableOperationPhotosBlockDeleteDialogOkCallback"
     />
   </div>
 </template>
@@ -328,6 +332,15 @@
       setLoading(false);
     }
   };
+  const updateStore = (data: Record<string, any>) => {
+    const { model } = data;
+    if (model) {
+      const foundIndex = store.value.findIndex((e) => String(e.id) === String(model.id));
+      if (foundIndex !== -1) {
+        store.value.splice(foundIndex, 1, model);
+      }
+    }
+  };
 
   // table - data
   const tableData = computed(() => store.value);
@@ -350,9 +363,6 @@
 
 
 
-  // table - operations
-  const selectedRecordID = ref<string>('');
-
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
   onMounted(() => {
@@ -367,33 +377,70 @@
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
 
+
   // table - operations - show
+  const tableOperationPhotosBlockShowDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockShowDialogVisible = ref(false);
   const handleTableOperationPhotosBlockShowDialogVisible = (options: Record<string, any>) => {
-    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockShowDialogSelectedRecordID.value = String(options.id);
     tableOperationPhotosBlockShowDialogVisible.value = true;
   };
+  const handleTableOperationPhotosBlockShowDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  }
 
   // table - operations - new
+  const tableOperationPhotosBlockNewDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockNewDialogVisible = ref(false);
   const handleTableOperationPhotosBlockNewDialogVisible = (options: Record<string, any>) => {
-    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockNewDialogSelectedRecordID.value = String(options.id);
     tableOperationPhotosBlockNewDialogVisible.value = true;
   };
+  const handleTableOperationPhotosBlockNewDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  }
 
   // table - operations - edit
+  const tableOperationPhotosBlockEditDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockEditDialogVisible = ref(false);
   const handleTableOperationPhotosBlockEditDialogVisible = (options: Record<string, any>) => {
-    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockEditDialogSelectedRecordID.value = String(options.id);
     tableOperationPhotosBlockEditDialogVisible.value = true;
   };
+  const handleTableOperationPhotosBlockEditDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  }
 
   // table - operations - delete
+  const tableOperationPhotosBlockDeleteDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockDeleteDialogVisible = ref(false);
   const handleTableOperationPhotosBlockDeleteDialogVisible = (options: Record<string, any>) => {
-    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockDeleteDialogSelectedRecordID.value = String(options.id);
     tableOperationPhotosBlockDeleteDialogVisible.value = true;
   };
+  const handleTableOperationPhotosBlockDeleteDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  }
 
   // table - tabbable
   useTabbableViewBlock({

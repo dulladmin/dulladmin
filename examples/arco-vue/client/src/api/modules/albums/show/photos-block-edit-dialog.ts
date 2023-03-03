@@ -21,6 +21,7 @@ export interface UpdateRequest {
 }
 export interface UpdateResponse {
   form: FormModel;
+  model?: any;
 }
 export function update(id: string, subid: string, req: UpdateRequest) {
   return axios.put<UpdateResponse>(`/albums/${id}/show/photos/${subid}/edit`, req);

@@ -40,6 +40,7 @@
   const props = defineProps<{
     visible: boolean;
     id: string;
+    okCallback: (options: Record<string, any>) => void;
   }>();
   const emits = defineEmits<{
     (e: 'update:visible', newValue: boolean): void;
@@ -98,6 +99,9 @@
       }
 
       Message.success(t('form.actions.delete.success'));
+
+      const { model } = data;
+      props.okCallback({ model });
     } finally {
       setSaving(false);
     }

@@ -123,7 +123,7 @@ export async function enhance(app) {
     const collection = photosDB.data;
     const model = collection.find((item) => item.id == req.params.subid);
     Object.assign(model, { ...req.body.form });
-    res.send(buildSuccessResponse({ form: model }));
+    res.send(buildSuccessResponse({ form: model, model: model }));
   });
   app.get('/albums/:id/show/photos/:subid/delete', async (_req, res) => {
     res.send(buildSuccessResponse({ form: {} }));

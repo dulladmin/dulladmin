@@ -295,6 +295,15 @@
       setLoading(false);
     }
   };
+  const updateStore = (data: Record<string, any>) => {
+    const { model } = data;
+    if (model) {
+      const foundIndex = store.value.findIndex((e) => String(e.id) === String(model.id));
+      if (foundIndex !== -1) {
+        store.value.splice(foundIndex, 1, model);
+      }
+    }
+  };
 
   // table - data
   const tableData = computed(() => store.value);
@@ -334,9 +343,6 @@
     await fetchStore(req);
   };
 
-  // table - operations
-  const selectedRecordID = ref<string>('');
-
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
   onMounted(() => {
@@ -350,6 +356,7 @@
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
+
 
   // table - tabbable
   useTabbableViewBlock({
