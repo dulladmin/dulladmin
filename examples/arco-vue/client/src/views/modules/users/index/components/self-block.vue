@@ -29,8 +29,8 @@
               "{{ searchMetadata[name].optionals?.[value] ? t(searchMetadata[name].optionals[value]['i18nKey']) : value }}"
             </a-tag>
             <div
-              style="cursor: pointer"
               v-show="tableSearchConditionCount"
+              style="cursor: pointer"
               @click="handleSearchConditionClose('')"
             >
               <a-tag color="orangered" size="small">
@@ -43,7 +43,7 @@
               <a-badge
                 color="arcoblue"
                 dot
-                :dotStyle="{ width: '8px', height: '8px' }"
+                :dot-style="{ width: '8px', height: '8px' }"
                 :count="tableSearchConditionCount"
               >
                 <icon-find-replace size="18"/>

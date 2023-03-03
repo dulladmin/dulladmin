@@ -1,14 +1,14 @@
 <template>
   <div class="tabbar">
     <a-affix :offset-top="60">
-      <div class="tabbar-box" id="tabbar-box">
+      <div id="tabbar-box" class="tabbar-box">
         <div class="tabbar-scroll">
           <div class="tabbar-content">
             <TabBarItem
               v-for="(tab, index) in tabs"
               :key="tab.fullPath"
               :tab="tab"
-              :tabIndex="index"
+              :tab-index="index"
             />
           </div>
         </div>

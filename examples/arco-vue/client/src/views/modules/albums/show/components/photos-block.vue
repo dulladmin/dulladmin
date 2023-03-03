@@ -135,26 +135,26 @@
 
     <!-- Table Collection/Model Operations - show -->
     <PhotosBlockShowDialog
-      v-model:visible="tableOperationPhotosBlockShowDialogVisible"
       :id="tableOperationPhotosBlockShowDialogSelectedRecordID"
+      v-model:visible="tableOperationPhotosBlockShowDialogVisible"
       :ok-callback="handleTableOperationPhotosBlockShowDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - new -->
     <PhotosBlockNewDialog
-      v-model:visible="tableOperationPhotosBlockNewDialogVisible"
       :id="tableOperationPhotosBlockNewDialogSelectedRecordID"
+      v-model:visible="tableOperationPhotosBlockNewDialogVisible"
       :ok-callback="handleTableOperationPhotosBlockNewDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - edit -->
     <PhotosBlockEditDialog
-      v-model:visible="tableOperationPhotosBlockEditDialogVisible"
       :id="tableOperationPhotosBlockEditDialogSelectedRecordID"
+      v-model:visible="tableOperationPhotosBlockEditDialogVisible"
       :ok-callback="handleTableOperationPhotosBlockEditDialogOkCallback"
     />
     <!-- Table Collection/Model Operations - delete -->
     <PhotosBlockDeleteDialog
-      v-model:visible="tableOperationPhotosBlockDeleteDialogVisible"
       :id="tableOperationPhotosBlockDeleteDialogSelectedRecordID"
+      v-model:visible="tableOperationPhotosBlockDeleteDialogVisible"
       :ok-callback="handleTableOperationPhotosBlockDeleteDialogOkCallback"
     />
   </div>

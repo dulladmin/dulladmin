@@ -2,8 +2,8 @@
 
 <template>
   <a-modal
-    class="dulladmin-descriptions-dialog"
     v-model:visible="visible"
+    class="dulladmin-descriptions-dialog"
     hide-cancel
     @ok="handleModalOk"
     @cancel="handleModalCancel"

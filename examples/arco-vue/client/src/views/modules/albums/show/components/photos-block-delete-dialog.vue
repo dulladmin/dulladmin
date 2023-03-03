@@ -2,8 +2,8 @@
 
 <template>
   <a-modal
-    class="dulladmin-form-dialog"
     v-model:visible="visible"
+    class="dulladmin-form-dialog"
     :ok-text="$t('form.actions.delete')"
     :ok-button-props="{status: 'danger'}"
     :on-before-ok="handleModalBeforeOk"

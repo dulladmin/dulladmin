@@ -73,13 +73,13 @@
   const renderFn = () => {
     const travel = (_route: RouteRecordRaw[]) => {
       return _route.map((element) => {
-        const icon = element!.meta!.icon
-          ? () => h(compile(`<${element!.meta!.icon}/>`))
+        const icon = element?.meta?.icon
+          ? () => h(compile(`<${element?.meta?.icon}/>`))
           : null;
         return element.children ? (
           <a-sub-menu
             key={element.name}
-            title={t(element!.meta!.title!)}
+            title={t(element?.meta?.title)}
             v-slots={{ icon }}
           >
             {travel(element.children)}
@@ -90,7 +90,7 @@
             v-slots={{ icon }}
             onClick={() => goto(element)}
           >
-            {t(element!.meta!.title!)}
+            {t(element?.meta?.title)}
           </a-menu-item>
         );
       });
