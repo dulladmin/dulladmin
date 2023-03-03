@@ -642,7 +642,7 @@
   // table - operations - {{name}}
   const tableOperation{{dialog.componentName}}Visible = ref(false);
   const handleTableOperation{{dialog.componentName}}Visible = (options: Record<string, any>) => {
-    selectedRecordID.value = options.id
+    selectedRecordID.value = String(options.id)
     tableOperation{{dialog.componentName}}Visible.value = true;
   };
 {{/each}}

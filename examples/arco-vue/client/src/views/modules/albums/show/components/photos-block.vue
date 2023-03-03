@@ -7,6 +7,15 @@
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
+            <a-button
+              type="primary"
+              @click="handleTableOperationPhotosBlockNewDialogVisible({})"
+            >
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('table.actions.new') }}
+            </a-button>
           </a-space>
         </a-col>
 
@@ -111,6 +120,11 @@
       v-model:visible="tableOperationPhotosBlockShowDialogVisible"
       :id="selectedRecordID"
     />
+    <!-- Table Collection/Model Operations - new -->
+    <PhotosBlockNewDialog
+      v-model:visible="tableOperationPhotosBlockNewDialogVisible"
+      :id="selectedRecordID"
+    />
   </div>
 </template>
 
@@ -123,6 +137,7 @@
   import { Model, ListRequest, list } from '@/api/modules/albums/show/photos-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import PhotosBlockShowDialog from '@/views/modules/albums/show/components/photos-block-show-dialog.vue'
+  import PhotosBlockNewDialog from '@/views/modules/albums/show/components/photos-block-new-dialog.vue'
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
@@ -325,8 +340,15 @@
   // table - operations - show
   const tableOperationPhotosBlockShowDialogVisible = ref(false);
   const handleTableOperationPhotosBlockShowDialogVisible = (options: Record<string, any>) => {
-    selectedRecordID.value = options.id
+    selectedRecordID.value = String(options.id)
     tableOperationPhotosBlockShowDialogVisible.value = true;
+  };
+
+  // table - operations - new
+  const tableOperationPhotosBlockNewDialogVisible = ref(false);
+  const handleTableOperationPhotosBlockNewDialogVisible = (options: Record<string, any>) => {
+    selectedRecordID.value = String(options.id)
+    tableOperationPhotosBlockNewDialogVisible.value = true;
   };
 
   // table - tabbable

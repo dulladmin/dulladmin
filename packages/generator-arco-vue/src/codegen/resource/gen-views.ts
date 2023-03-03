@@ -181,7 +181,7 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
-    'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
+    'src/views/modules/__resource__/__view__/components/dialog/__form_dialog__.vue.hbs',
     { ..._dialog, block: _block }
   )
 

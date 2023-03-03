@@ -86,7 +86,7 @@
   // props
   const props = defineProps<{
     visible: boolean;
-    id: string | number;
+    id: string;
   }>();
   const emits = defineEmits<{
     (e: 'update:visible', newValue: boolean): void;
@@ -130,7 +130,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id, props.id as string);
+      const { data } = await get(id, props.id);
       const { model } = data;
 
       if (model) {

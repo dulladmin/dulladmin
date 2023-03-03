@@ -95,6 +95,16 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/albums/:id/show/photos/new', async (_req, res) => {
+    const model = { title: '' };
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/albums/:id/show/photos/new', async (req, res) => {
+    const collection = photosDB.data;
+    const model = { ...req.body.form, id: collection.length + 1, albumId: req.params.id };
+    collection.push(model);
+    res.send(buildSuccessResponse({ form: model }));
+  });
   app.get('/albums/:id/show/photos/:subid/show', async (req, res) => {
     const collection = photosDB.data;
     const model = collection.find((item) => item.id == req.params.subid);

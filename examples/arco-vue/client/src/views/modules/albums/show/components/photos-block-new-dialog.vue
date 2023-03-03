@@ -9,9 +9,9 @@
     @close="handleModalClose"
   >
     <template #title>
-      \{{ $t('{{block.title.i18nKey}}') }}
+      {{ $t('albums--show.photos-block.title') }}
       -
-      \{{ $t('table.actions.show') }}
+      {{ $t('table.actions.show') }}
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
@@ -19,12 +19,10 @@
           :model="store"
           :auto-label-width="true"
         >
-        {{#each model.attributes}}
           <DullFormItem
-            v-model="store.{{name}}"
-            :meta="modelMetadata.{{name}}"
+            v-model="store.title"
+            :meta="modelMetadata.title"
           />
-        {{/each}}
         </a-form>
       </a-spin>
     </div>
@@ -37,7 +35,7 @@
   import { useI18n } from 'vue-i18n';
   import { omitBy } from 'lodash';
   import { Message } from '@arco-design/web-vue';
-  import { FormModel, UpdateRequest, get, update } from '{{ apiImportPath }}';
+  import { FormModel, UpdateRequest, get, update } from '@/api/modules/albums/show/photos-block-new-dialog';
   import { useLoading } from '@/hooks';
 
   // props
@@ -59,46 +57,16 @@
 
   // model
   const modelMetadata: { [key: string]: any } = {
-  {{#each model.attributes}}
-    {{#if object.attributes}}
-    {{name}}: {
-      type: '{{type}}',
-      hidden: {{hidden}},
-      {{#each object.attributes}}
-      {{name}}: {
-        type: '{{type}}',
-        i18nKey: '{{i18nKey}}',
-      },
-      {{/each}}
+    title: {
+      type: 'string',
+      hidden: false,
+      i18nKey: 'albums--show.photos-block.new-dialog.model.attributes.title',
     },
-    {{else}}
-    {{name}}: {
-      type: '{{type}}',
-      hidden: {{hidden}},
-      i18nKey: '{{i18nKey}}',
-      {{#if optionals}}
-      optionals: {
-        {{#each optionals}}
-        {{name}}: {
-          i18nKey: '{{i18nKey}}',
-        },
-        {{/each}}
-      },
-      {{/if}}
-    },
-    {{/if}}
-  {{/each}}
   };
 
   // form - model
   const baseModel: FormModel = {
-  {{#each model.attributes}}
-    {{#if collection}}
-    {{name}}: [],
-    {{else}}
-    {{name}}: undefined,
-    {{/if}}
-  {{/each}}
+    title: undefined,
   };
 
   // form - store
@@ -137,7 +105,7 @@
         store.value = form;
       }
 
-      Message.success(t('form.actions.{{formOptions.actionName}}.success'));
+      Message.success(t('form.actions..success'));
     } finally {
       setSaving(false);
     }

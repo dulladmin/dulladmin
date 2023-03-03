@@ -7,7 +7,7 @@ views:
         - { name: 'userId', type: 'int64'  }
         - { name: 'title' , type: 'string' }
       sorters:
-            - { name: 'id', directions: ['ascend', 'descend'] }
+        - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
     blocks:
@@ -32,3 +32,7 @@ views:
                   - { name: 'title'       , type: 'string' }
                   - { name: 'url'         , type: 'image'  }
                   - { name: 'thumbnailUrl', type: 'image'  }
+            new:
+              form:
+                items:
+                  - { name: 'title'       , type: 'string' }
