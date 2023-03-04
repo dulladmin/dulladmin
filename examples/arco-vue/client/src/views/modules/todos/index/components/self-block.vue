@@ -165,7 +165,7 @@
     <!-- Table Search -->
     <a-modal
       v-model:visible="searchModalVisible"
-      class="dulladmin-table-block-search-modal"
+      class="dulladmin-form-dialog"
       :ok-text="$t('table.actions.search')"
       :on-before-ok="handleSearchModalBeforeOk"
       @cancel="handleSearchModalCancel"

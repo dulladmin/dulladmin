@@ -52,10 +52,12 @@
       const ancestors = findAppMenuItem(to);
       const item = ancestors[ancestors.length - 1];
       selectedKey.value = item ? [item.name as string] : [];
-      openKeys.value = uniq([
-        ...openKeys.value,
-        ...ancestors.map((_item) => _item.name as string),
-      ].filter((_item) => _item.startsWith('--')));
+      openKeys.value = uniq(
+        [
+          ...openKeys.value,
+          ...ancestors.map((_item) => _item.name as string),
+        ].filter((_item) => _item.startsWith('--'))
+      );
     } else {
       selectedKey.value = [];
     }
