@@ -7,6 +7,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
   import { useStorage } from '@vueuse/core';
+  import { uniq } from 'lodash';
   import { appMenu, findAppMenuItem } from '@/router/app-menu';
   import { useAppStore, useUserStore } from '@/store';
   import {
@@ -39,7 +40,7 @@
   const showCollapseButton = computed(() => !appStore.isMobile);
 
   // openKeys
-  const openKeys = useStorage<string[]>('app.menuOpenKeys', [], localStorage);
+  const openKeys = useStorage<string[]>('app.menuOpenKeys', [], sessionStorage);
 
   // selectedKey
   const selectedKey = ref<string[]>([]);
@@ -51,10 +52,10 @@
       const ancestors = findAppMenuItem(to);
       const item = ancestors[ancestors.length - 1];
       selectedKey.value = item ? [item.name as string] : [];
-      openKeys.value = [
+      openKeys.value = uniq([
         ...openKeys.value,
         ...ancestors.map((_item) => _item.name as string),
-      ];
+      ].filter((_item) => _item.startsWith('--')));
     } else {
       selectedKey.value = [];
     }
