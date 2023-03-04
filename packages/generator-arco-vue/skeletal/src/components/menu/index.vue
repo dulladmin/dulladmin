@@ -6,6 +6,7 @@
   import { compile, computed, h, ref, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter, RouteRecordRaw } from 'vue-router';
+  import { useStorage } from '@vueuse/core';
   import { appMenu, findAppMenuItem } from '@/router/app-menu';
   import { useAppStore, useUserStore } from '@/store';
   import {
@@ -37,6 +38,9 @@
   });
   const showCollapseButton = computed(() => !appStore.isMobile);
 
+  // openKeys
+  const openKeys = useStorage<string[]>('app.menuOpenKeys', [], localStorage);
+
   // selectedKey
   const selectedKey = ref<string[]>([]);
   const routeChangeHandler = (e: RouteChangeEvent) => {
@@ -47,6 +51,10 @@
       const ancestors = findAppMenuItem(to);
       const item = ancestors[ancestors.length - 1];
       selectedKey.value = item ? [item.name as string] : [];
+      openKeys.value = [
+        ...openKeys.value,
+        ...ancestors.map((_item) => _item.name as string),
+      ];
     } else {
       selectedKey.value = [];
     }
@@ -79,7 +87,7 @@
         return element.children ? (
           <a-sub-menu
             key={element.name}
-            title={t(element?.meta?.title)}
+            title={t(element?.meta?.title ?? '')}
             v-slots={{ icon }}
           >
             {travel(element.children)}
@@ -90,7 +98,7 @@
             v-slots={{ icon }}
             onClick={() => goto(element)}
           >
-            {t(element?.meta?.title)}
+            {t(element?.meta?.title ?? '')}
           </a-menu-item>
         );
       });
@@ -98,11 +106,10 @@
     return (
       <a-menu
         v-model:collapsed={collapsed.value}
+        v-model:open-keys={openKeys.value}
         v-model:selected-keys={selectedKey.value}
         style="width: 100%; height: 100%;"
         show-collapse-button={showCollapseButton.value}
-        auto-open-selected={true}
-        auto-open={true}
         mode={mode.value}
       >
         {travel(appMenu.value)}
