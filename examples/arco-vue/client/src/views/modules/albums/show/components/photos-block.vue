@@ -381,7 +381,7 @@
   const tableOperationPhotosBlockShowDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockShowDialogVisible = ref(false);
   const handleTableOperationPhotosBlockShowDialogVisible = (options: Record<string, any>) => {
-    tableOperationPhotosBlockShowDialogSelectedRecordID.value = String(options.id);
+    tableOperationPhotosBlockShowDialogSelectedRecordID.value = String(options.id ?? '');
     tableOperationPhotosBlockShowDialogVisible.value = true;
   };
   const handleTableOperationPhotosBlockShowDialogOkCallback = (options: Record<string, any>) => {
@@ -391,7 +391,7 @@
   const tableOperationPhotosBlockNewDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockNewDialogVisible = ref(false);
   const handleTableOperationPhotosBlockNewDialogVisible = (options: Record<string, any>) => {
-    tableOperationPhotosBlockNewDialogSelectedRecordID.value = String(options.id);
+    tableOperationPhotosBlockNewDialogSelectedRecordID.value = String(options.id ?? '');
     tableOperationPhotosBlockNewDialogVisible.value = true;
   };
   const handleTableOperationPhotosBlockNewDialogOkCallback = (options: Record<string, any>) => {
@@ -407,7 +407,7 @@
   const tableOperationPhotosBlockEditDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockEditDialogVisible = ref(false);
   const handleTableOperationPhotosBlockEditDialogVisible = (options: Record<string, any>) => {
-    tableOperationPhotosBlockEditDialogSelectedRecordID.value = String(options.id);
+    tableOperationPhotosBlockEditDialogSelectedRecordID.value = String(options.id ?? '');
     tableOperationPhotosBlockEditDialogVisible.value = true;
   };
   const handleTableOperationPhotosBlockEditDialogOkCallback = (options: Record<string, any>) => {
@@ -423,7 +423,7 @@
   const tableOperationPhotosBlockDeleteDialogSelectedRecordID = ref<string>('');
   const tableOperationPhotosBlockDeleteDialogVisible = ref(false);
   const handleTableOperationPhotosBlockDeleteDialogVisible = (options: Record<string, any>) => {
-    tableOperationPhotosBlockDeleteDialogSelectedRecordID.value = String(options.id);
+    tableOperationPhotosBlockDeleteDialogSelectedRecordID.value = String(options.id ?? '');
     tableOperationPhotosBlockDeleteDialogVisible.value = true;
   };
   const handleTableOperationPhotosBlockDeleteDialogOkCallback = (options: Record<string, any>) => {

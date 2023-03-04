@@ -6,7 +6,9 @@
     class="dulladmin-form-dialog"
     :ok-text="$t('form.actions.{{formOptions.actionName}}')"
     {{#if formOptions.isDanger}}
-    :ok-button-props="{status: 'danger'}"
+    :ok-button-props="{status: 'danger', disabled: loading}"
+    {{else}}
+    :ok-button-props="{disabled: loading}"
     {{/if}}
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
@@ -16,6 +18,7 @@
       \{{ $t('{{block.title.i18nKey}}') }}
       -
       \{{ $t('table.actions.{{formOptions.actionName}}') }}
+      <span v-if="props.id">&nbsp;# \{{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
@@ -30,6 +33,11 @@
           />
         {{/each}}
         </a-form>
+      {{#unless model.attributes}}
+        <a-alert {{#if formOptions.isDanger}}type="warning"{{/if}}>
+          \{{ $t('form.actions.{{formOptions.actionName}}.alert.message') }}
+        </a-alert>
+      {{/unless}}
       </a-spin>
     </div>
   </a-modal>
@@ -114,12 +122,16 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
+      {{#if formOptions.noGet}}
+      const _ = null;
+      {{else}}
       const { data } = await get(id, props.id);
       const { form } = data;
 
       if (form) {
         store.value = form;
       }
+      {{/if}}
     } finally {
       setLoading(false);
     }

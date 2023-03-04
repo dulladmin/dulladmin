@@ -9,6 +9,11 @@
           :auto-label-width="true"
         >
           <a-form-item>
+            <a-alert type="warning">
+              {{ $t('form.actions.delete.alert.message') }}
+            </a-alert>
+          </a-form-item>
+          <a-form-item>
             <a-space>
               <a-button
                 type="primary"
@@ -58,12 +63,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id);
-      const { form } = data;
-
-      if (form) {
-        store.value = form;
-      }
+      const _ = null;
     } finally {
       setLoading(false);
     }

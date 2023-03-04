@@ -13,6 +13,7 @@
       {{ $t('albums--show.photos-block.title') }}
       -
       {{ $t('table.actions.show') }}
+      <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">

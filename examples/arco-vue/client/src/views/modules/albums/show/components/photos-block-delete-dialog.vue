@@ -5,7 +5,7 @@
     v-model:visible="visible"
     class="dulladmin-form-dialog"
     :ok-text="$t('form.actions.delete')"
-    :ok-button-props="{status: 'danger'}"
+    :ok-button-props="{status: 'danger', disabled: loading}"
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
     @close="handleModalClose"
@@ -14,6 +14,7 @@
       {{ $t('albums--show.photos-block.title') }}
       -
       {{ $t('table.actions.delete') }}
+      <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
@@ -22,6 +23,9 @@
           :auto-label-width="true"
         >
         </a-form>
+        <a-alert type="warning">
+          {{ $t('form.actions.delete.alert.message') }}
+        </a-alert>
       </a-spin>
     </div>
   </a-modal>
@@ -70,12 +74,7 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
-      const { data } = await get(id, props.id);
-      const { form } = data;
-
-      if (form) {
-        store.value = form;
-      }
+      const _ = null;
     } finally {
       setLoading(false);
     }

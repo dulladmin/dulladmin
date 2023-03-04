@@ -117,7 +117,10 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const blockPath = toPath(block.relName)
 
   // self Form in NewView/EditView/DeleteView
-  const formOptions: Record<string, any> = { actionName: 'save' }
+  const formOptions: Record<string, any> = {
+    actionName: 'save',
+    noGet: block.model.attributes.length === 0
+  }
   if (block.relType === BlockRelationshipType.Self) {
     formOptions.allowBackOnSave = true
 
@@ -178,7 +181,10 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const dialogPath = toPath(dialog.name)
 
   // self Form in NewDialog/EditDialog/DeleteDialog
-  const formOptions: Record<string, any> = { actionName: 'save' }
+  const formOptions: Record<string, any> = {
+    actionName: 'save',
+    noGet: dialog.block.model.attributes.length === 0
+  }
   const actionName = dialog.name.split('_')[0]
   switch (actionName) {
     case 'new':

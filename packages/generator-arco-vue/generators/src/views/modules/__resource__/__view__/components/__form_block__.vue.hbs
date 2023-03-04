@@ -14,6 +14,13 @@
             :meta="modelMetadata.{{name}}"
           />
         {{/each}}
+        {{#unless model.attributes}}
+          <a-form-item>
+            <a-alert {{#if formOptions.isDanger}}type="warning"{{/if}}>
+              \{{ $t('form.actions.{{formOptions.actionName}}.alert.message') }}
+            </a-alert>
+          </a-form-item>
+        {{/unless}}
           <a-form-item>
             <a-space>
               <a-button
@@ -102,12 +109,16 @@
   const fetchStore = async () => {
     setLoading(true);
     try {
+      {{#if formOptions.noGet}}
+      const _ = null;
+      {{else}}
       const { data } = await get(id);
       const { form } = data;
 
       if (form) {
         store.value = form;
       }
+      {{/if}}
     } finally {
       setLoading(false);
     }

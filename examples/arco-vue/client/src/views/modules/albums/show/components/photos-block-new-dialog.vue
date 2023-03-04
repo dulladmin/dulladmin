@@ -5,6 +5,7 @@
     v-model:visible="visible"
     class="dulladmin-form-dialog"
     :ok-text="$t('form.actions.new')"
+    :ok-button-props="{disabled: loading}"
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
     @close="handleModalClose"
@@ -13,6 +14,7 @@
       {{ $t('albums--show.photos-block.title') }}
       -
       {{ $t('table.actions.new') }}
+      <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">

@@ -47,6 +47,8 @@ export default {
   'form.actions.edit.success': 'Update success',
   'form.actions.delete': 'Delete',
   'form.actions.delete.success': 'Delete success',
+  'form.actions.delete.alert.message':
+    'Are you sure you want to delete this record?',
   'form.actions.save': 'Save',
   'form.actions.save.success': 'Save success',
 

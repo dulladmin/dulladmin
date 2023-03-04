@@ -47,6 +47,7 @@ export default {
   'form.actions.edit.success': '更新成功',
   'form.actions.delete': '删除',
   'form.actions.delete.success': '删除成功',
+  'form.actions.delete.alert.message': '确认删除此记录？',
   'form.actions.save': '保存',
   'form.actions.save.success': '保存成功',
 
