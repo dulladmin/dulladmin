@@ -33,14 +33,19 @@ export function parseResource(doc: YamlResourceType): Resource {
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
-  const allowedFiledNames = ['index', 'show', 'new', 'edit', 'delete']
+  const allowedFiledNames = ['index', 'show', 'new', 'edit', 'delete', '~']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
-  const views = []
-  if (doc.index != null) views.push(parseView(doc.index, xpath + '/index', { name: 'index' }))
-  if (doc.show != null) views.push(parseView(doc.show, xpath + '/show', { name: 'show' }))
-  if (doc.new != null) views.push(parseView(doc.new, xpath + '/new', { name: 'new' }))
-  if (doc.edit != null) views.push(parseView(doc.edit, xpath + '/edit', { name: 'edit' }))
-  if (doc.delete != null) views.push(parseView(doc.delete, xpath + '/delete', { name: 'delete' }))
+  const views: View[] = []
+  Object.keys(doc).forEach((name) => {
+    if (name === 'index') views.push(parseView(doc.index!, xpath + '/index', { name }))
+    if (name === 'show') views.push(parseView(doc.show!, xpath + '/show', { name }))
+    if (name === 'new') views.push(parseView(doc.new!, xpath + '/new', { name }))
+    if (name === 'edit') views.push(parseView(doc.edit!, xpath + '/edit', { name }))
+    if (name === 'delete') views.push(parseView(doc.delete!, xpath + '/delete', { name }))
+
+    const _doc = doc[name as keyof typeof doc]!
+    if (name.startsWith('~')) views.push(parseView(_doc, xpath + `/${name}`, { name: name.slice(1) }))
+  })
   return views
 }

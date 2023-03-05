@@ -43,3 +43,11 @@ views:
             delete:
               form:
                 items: []
+
+  ~show_photos:
+    table:
+      items:
+        - { name: 'id'          , type: 'int64'  }
+        - { name: 'title'       , type: 'string' }
+        - { name: 'url'         , type: 'image'  }
+        - { name: 'thumbnailUrl', type: 'image'  }
