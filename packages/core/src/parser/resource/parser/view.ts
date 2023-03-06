@@ -220,22 +220,34 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 }
 
 function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
-  const allowedFiledNames = ['show', 'new', 'edit', 'delete']
+  const allowedFiledNames = ['show', 'new', 'edit', 'delete', '~']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
-  const operations = []
-  if (doc.show != null) {
-    operations.push(parseTableBlockOperation(doc.show, xpath + '/show', { name: 'show' }))
-  }
-  if (doc.new != null) {
-    operations.push(parseTableBlockOperation(doc.new, xpath + '/new', { name: 'new' }))
-  }
-  if (doc.edit != null) {
-    operations.push(parseTableBlockOperation(doc.edit, xpath + '/edit', { name: 'edit' }))
-  }
-  if (doc.delete != null) {
-    operations.push(parseTableBlockOperation(doc.delete, xpath + '/delete', { name: 'delete' }))
-  }
+  const operations: TableBlockOperation[] = []
+  Object.keys(doc).forEach((name) => {
+    if (name === 'show') {
+      const _op = parseTableBlockOperation(doc.show!, xpath + '/show', { name })
+      operations.push(_op)
+    }
+    if (name === 'new') {
+      const _op = parseTableBlockOperation(doc.new!, xpath + '/new', { name })
+      operations.push(_op)
+    }
+    if (name === 'edit') {
+      const _op = parseTableBlockOperation(doc.edit!, xpath + '/edit', { name })
+      operations.push(_op)
+    }
+    if (name === 'delete') {
+      const _op = parseTableBlockOperation(doc.delete!, xpath + '/delete', { name })
+      operations.push(_op)
+    }
+
+    const _doc = doc[name as keyof typeof doc]!
+    if (name.startsWith('~')) {
+      const _op = parseTableBlockOperation(_doc, `${xpath}/${name}`, { name: name.slice(1) })
+      operations.push(_op)
+    }
+  })
   return operations
 }
 
