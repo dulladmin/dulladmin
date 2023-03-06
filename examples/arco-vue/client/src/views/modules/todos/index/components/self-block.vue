@@ -20,10 +20,7 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col
-          style="display: flex; align-items: center; justify-content: end"
-          :span="12"
-        >
+        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
           <a-space>
             <a-tag
               v-for="(value, name) in tableSearchCondition"
@@ -60,29 +57,20 @@
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="onTableRefresh">
+              <icon-refresh size="18"/>
+            </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
               <div class="action-icon"><icon-settings size="18" /></div>
               <template #content>
                 <div>
-                  <div
-                    v-for="(item, index) in tableColumnsWithShow"
-                    :key="item.dataIndex"
-                  >
+                  <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
                     <div>
                       <a-checkbox
                         v-model="item.show"
-                        @change="
-                          handleTableColumnsShowChange(
-                            $event,
-                            item as TableColumnData,
-                            index
-                          )
-                        "
+                        @change="handleTableColumnsShowChange($event, item as TableColumnData, index)"
                       >
                         {{ item.title }}
                       </a-checkbox>
@@ -131,7 +119,7 @@
         </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
+          <a-space>
             <a-button
               type="outline"
               status="success"
@@ -157,8 +145,6 @@
             >
               {{ $t('table.actions.delete') }}
             </a-button>
-          </a-space>
-          <a-space>
             <a-button
               type="outline"
               size="small"
@@ -205,10 +191,7 @@
         -
         {{ $t('table.actions.search') }}
       </template>
-      <a-form
-        :model="tableSearchForm"
-        :auto-label-width="true"
-      >
+      <a-form :model="tableSearchForm" :auto-label-width="true">
         <DullFormItem
           v-model="tableSearchForm.userId_eq"
           :meta="searchMetadata.userId_eq"
@@ -225,10 +208,10 @@
       <span />
       <span />
       <span v-permission="['admin', ]"/>
-      <span  class="custom-action"/>
-      <span  class="custom-action"/>
-      <span  class="custom-action"/>
-      <span  class="custom-action"/>
+      <span />
+      <span />
+      <span />
+      <span />
     </div>
 
     <!-- Table Collection/Model Operations - show_title -->
@@ -237,18 +220,21 @@
       v-model:visible="tableOperationSelfBlockShowTitleDialogVisible"
       :ok-callback="handleTableOperationSelfBlockShowTitleDialogOkCallback"
     />
+
     <!-- Table Collection/Model Operations - edit_title -->
     <SelfBlockEditTitleDialog
       :id="tableOperationSelfBlockEditTitleDialogSelectedRecordID"
       v-model:visible="tableOperationSelfBlockEditTitleDialogVisible"
       :ok-callback="handleTableOperationSelfBlockEditTitleDialogOkCallback"
     />
+
     <!-- Table Collection/Model Operations - create_completed -->
     <SelfBlockCreateCompletedDialog
       :id="tableOperationSelfBlockCreateCompletedDialogSelectedRecordID"
       v-model:visible="tableOperationSelfBlockCreateCompletedDialogVisible"
       :ok-callback="handleTableOperationSelfBlockCreateCompletedDialogOkCallback"
     />
+
     <!-- Table Collection/Model Operations - delete_completed -->
     <SelfBlockDeleteCompletedDialog
       :id="tableOperationSelfBlockDeleteCompletedDialogSelectedRecordID"
@@ -587,10 +573,8 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
-  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
-    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }

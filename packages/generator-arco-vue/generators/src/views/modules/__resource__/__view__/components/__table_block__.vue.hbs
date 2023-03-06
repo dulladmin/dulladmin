@@ -39,11 +39,8 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col
-          style="display: flex; align-items: center; justify-content: end"
-          :span="12"
-        >
-          {{#if searchable}}
+        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
+        {{#if searchable}}
           <a-space>
             <a-tag
               v-for="(value, name) in tableSearchCondition"
@@ -79,31 +76,22 @@
               </a-badge>
             </div>
           </a-tooltip>
-          {{/if}}
+        {{/if}}
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="onTableRefresh">
+              <icon-refresh size="18"/>
+            </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
               <div class="action-icon"><icon-settings size="18" /></div>
               <template #content>
                 <div>
-                  <div
-                    v-for="(item, index) in tableColumnsWithShow"
-                    :key="item.dataIndex"
-                  >
+                  <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
                     <div>
                       <a-checkbox
                         v-model="item.show"
-                        @change="
-                          handleTableColumnsShowChange(
-                            $event,
-                            item as TableColumnData,
-                            index
-                          )
-                        "
+                        @change="handleTableColumnsShowChange($event, item as TableColumnData, index)"
                       >
                         \{{ item.title }}
                       </a-checkbox>
@@ -159,7 +147,7 @@
       {{/each}}
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
+          <a-space>
             {{#if resourceActions.show }}
             <a-button
               {{#if resourceActions.show.authority}}
@@ -238,9 +226,6 @@
               \{{ $t('table.actions.delete') }}
             </a-button>
             {{/if}}
-          </a-space>
-        {{#if customOperations}}
-          <a-space>
           {{#each customOperations}}
             {{#if isMemberAction}}
             <a-button
@@ -256,12 +241,11 @@
             {{/if}}
           {{/each}}
           </a-space>
-        {{/if}}
         </template>
       </a-table>
     </a-card>
+{{#if searchable}}
 
-    {{#if searchable}}
     <!-- Table Search -->
     <a-modal
       v-model:visible="searchModalVisible"
@@ -275,10 +259,7 @@
         -
         \{{ $t('table.actions.search') }}
       </template>
-      <a-form
-        :model="tableSearchForm"
-        :auto-label-width="true"
-      >
+      <a-form :model="tableSearchForm" :auto-label-width="true">
       {{#each searchers}}
         <DullFormItem
           v-model="tableSearchForm.{{name}}"
@@ -287,7 +268,7 @@
       {{/each}}
       </a-form>
     </a-modal>
-    {{/if}}
+{{/if}}
 
     <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
@@ -298,19 +279,19 @@
     {{/each}}
     {{#each operations}}
       {{#if isMemberAction}}
-      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}} class="custom-action"/>
+      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
       {{/if}}
     {{/each}}
     </div>
+{{#each operations}}
 
-    {{#each operations}}
     <!-- Table Collection/Model Operations - {{name}} -->
     <{{dialog.componentName}}
       :id="tableOperation{{dialog.componentName}}SelectedRecordID"
       v-model:visible="tableOperation{{dialog.componentName}}Visible"
       :ok-callback="handleTableOperation{{dialog.componentName}}OkCallback"
     />
-    {{/each}}
+{{/each}}
   </div>
 </template>
 
@@ -419,8 +400,8 @@
     tableSearchConditionCount.value = Object.keys(o).length
     return isEmpty(o) ? null : o;
   };
-{{/if}}
 
+{{/if}}
 {{#if sortable}}
   // sorter
   const baseTableSorter: Sorter = {
@@ -434,8 +415,8 @@
     if (sorter.name === '') return null;
     return { name: sorter.name, direction: sorter.direction };
   };
-{{/if}}
 
+{{/if}}
   // pagination
   const baseTablePagination: Pagination = {
     {{#if pagination.per }}
@@ -626,8 +607,8 @@
   const handleSearchModalCancel = () => {
     searchModalVisible.value = false;
   };
-{{/if}}
 
+{{/if}}
 {{#if sortable}}
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
@@ -647,14 +628,12 @@
     }, v => v == null) as ListRequest;
     await fetchStore(req);
   };
-{{/if}}
 
+{{/if}}
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
-  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
-    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
@@ -664,8 +643,8 @@
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
   };
-{{#each operations}}
 
+{{#each operations}}
   // table - operations - {{name}}
   const tableOperation{{dialog.componentName}}SelectedRecordID = ref<string>('');
   const tableOperation{{dialog.componentName}}Visible = ref(false);
@@ -683,8 +662,8 @@
     }
   {{/if}}
   };
-{{/each}}
 
+{{/each}}
   // table - tabbable
   useTabbableViewBlock({
     viewName: '{{view.name}}',

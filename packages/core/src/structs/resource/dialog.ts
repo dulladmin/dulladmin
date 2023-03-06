@@ -13,14 +13,14 @@ class Dialog {
   constructor(name: string, block: DialogBlock, pathScope: DialogPathScope | null) {
     this.name = name
     this.block = block
-    this.pathScope = pathScope ?? this._pathScope(this.name)
+    this.pathScope = pathScope ?? this._defaultPathScope(this.name)
   }
 
   toString(): string {
     return `#<Dialog @name="${this.name}">`
   }
 
-  _pathScope(name: string): DialogPathScope {
+  _defaultPathScope(name: string): DialogPathScope {
     switch (name) {
       case 'index':
       case 'new':

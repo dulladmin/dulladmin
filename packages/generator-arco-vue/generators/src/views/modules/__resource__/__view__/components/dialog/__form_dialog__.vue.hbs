@@ -5,11 +5,11 @@
     v-model:visible="visible"
     class="dulladmin-form-dialog"
     :ok-text="$t('form.actions.{{formOptions.actionName}}')"
-    {{#if formOptions.isDanger}}
+  {{#if formOptions.isDanger}}
     :ok-button-props="{status: 'danger', disabled: loading}"
-    {{else}}
+  {{else}}
     :ok-button-props="{disabled: loading}"
-    {{/if}}
+  {{/if}}
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
     @close="handleModalClose"
@@ -22,10 +22,7 @@
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
-        <a-form
-          :model="store"
-          :auto-label-width="true"
-        >
+        <a-form :model="store" :auto-label-width="true">
         {{#each model.attributes}}
           <DullFormItem
             v-model="store.{{name}}"

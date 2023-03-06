@@ -18,10 +18,7 @@
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
-        <a-form
-          :model="store"
-          :auto-label-width="true"
-        >
+        <a-form :model="store" :auto-label-width="true">
         </a-form>
         <a-alert >
           {{ $t('form.actions.save.alert.message') }}

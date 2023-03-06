@@ -15,7 +15,7 @@ export interface Model {
 }
 
 /* Search */
-interface Search {
+export interface Search {
   userId_eq?: number;
   completed_eq?: boolean;
 }

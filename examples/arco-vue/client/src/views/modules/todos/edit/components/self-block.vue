@@ -4,10 +4,7 @@
   <div>
     <a-card :title="$t('todos--edit.self-block.title')" class="dulladmin-form-block">
       <a-spin style="display: block" :loading="loading">
-        <a-form
-          :model="store"
-          :auto-label-width="true"
-        >
+        <a-form :model="store" :auto-label-width="true">
           <DullFormItem
             v-model="store.userId"
             :meta="modelMetadata.userId"

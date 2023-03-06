@@ -9,8 +9,8 @@ export interface YamlResourceType {
 
 export interface YamlViewsType {
   index?: YamlViewType
-  show?: YamlViewType
   new?: YamlViewType
+  show?: YamlViewType
   edit?: YamlViewType
   delete?: YamlViewType
 }

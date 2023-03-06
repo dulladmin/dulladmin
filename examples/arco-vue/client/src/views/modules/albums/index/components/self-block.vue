@@ -11,34 +11,22 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col
-          style="display: flex; align-items: center; justify-content: end"
-          :span="12"
-        >
+        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="onTableRefresh">
+              <icon-refresh size="18"/>
+            </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
               <div class="action-icon"><icon-settings size="18" /></div>
               <template #content>
                 <div>
-                  <div
-                    v-for="(item, index) in tableColumnsWithShow"
-                    :key="item.dataIndex"
-                  >
+                  <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
                     <div>
                       <a-checkbox
                         v-model="item.show"
-                        @change="
-                          handleTableColumnsShowChange(
-                            $event,
-                            item as TableColumnData,
-                            index
-                          )
-                        "
+                        @change="handleTableColumnsShowChange($event, item as TableColumnData, index)"
                       >
                         {{ item.title }}
                       </a-checkbox>
@@ -81,7 +69,7 @@
         </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
+          <a-space>
             <a-button
               type="outline"
               status="success"
@@ -95,12 +83,10 @@
       </a-table>
     </a-card>
 
-
     <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
       <span />
     </div>
-
   </div>
 </template>
 
@@ -141,7 +127,6 @@
       i18nKey: 'albums--index.self-block.model.attributes.title',
     },
   };
-
 
   // sorter
   const baseTableSorter: Sorter = {
@@ -307,7 +292,6 @@
     await fetchStore(req);
   };
 
-
   // table - sorterChange
   const onTableSorterChange = async (dataIndex: string, direction: string) => {
     if (direction) {
@@ -326,10 +310,8 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
-  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
-    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }

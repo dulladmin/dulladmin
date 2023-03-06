@@ -13,7 +13,7 @@ export interface Model {
 }
 
 /* Search */
-interface Search {
+export interface Search {
   id_eq?: number;
   role_eq?: string;
 }

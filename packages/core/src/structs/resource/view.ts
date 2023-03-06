@@ -17,7 +17,7 @@ class View {
     this.name = name
     this.authority = authority
     this.blocks = blocks
-    this.pathScope = pathScope ?? this._pathScope(this.name)
+    this.pathScope = pathScope ?? this._defaultPathScope(this.name)
     this.inheritedAuthority = null
   }
 
@@ -25,7 +25,7 @@ class View {
     return `#<View @name="${this.name}">`
   }
 
-  _pathScope(name: string): ViewPathScope {
+  _defaultPathScope(name: string): ViewPathScope {
     switch (name) {
       case 'index':
       case 'new':

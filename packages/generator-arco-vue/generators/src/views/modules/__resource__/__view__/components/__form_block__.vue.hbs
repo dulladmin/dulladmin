@@ -4,10 +4,7 @@
   <div>
     <a-card :title="$t('{{title.i18nKey}}')" class="dulladmin-form-block">
       <a-spin style="display: block" :loading="loading">
-        <a-form
-          :model="store"
-          :auto-label-width="true"
-        >
+        <a-form :model="store" :auto-label-width="true">
         {{#each model.attributes}}
           <DullFormItem
             v-model="store.{{name}}"
@@ -25,9 +22,9 @@
             <a-space>
               <a-button
                 type="primary"
-                {{#if formOptions.isDanger}}
+              {{#if formOptions.isDanger}}
                 status="danger"
-                {{/if}}
+              {{/if}}
                 :loading="saving"
                 @click="onFormSave"
               >

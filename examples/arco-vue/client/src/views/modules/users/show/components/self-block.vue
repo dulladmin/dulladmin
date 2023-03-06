@@ -4,21 +4,15 @@
   <div>
     <a-card :title="$t('users--show.self-block.title')" class="dulladmin-descriptions-block">
       <a-spin style="display: block" :loading="loading">
-        <div
-          class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border"
-        >
+        <div class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border">
           <div class="arco-descriptions-body">
             <table class="arco-descriptions-table">
               <tbody>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.id') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.id"
                       :meta="modelMetadata['id']"
@@ -26,14 +20,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.name') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.name"
                       :meta="modelMetadata['name']"
@@ -41,14 +31,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.username') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.username"
                       :meta="modelMetadata['username']"
@@ -56,14 +42,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.email') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.email"
                       :meta="modelMetadata['email']"
@@ -71,14 +53,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.address') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullDescriptions
                       :data="store.address"
                       :meta="modelMetadata['address']"
@@ -86,14 +64,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.phone') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.phone"
                       :meta="modelMetadata['phone']"
@@ -101,14 +75,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.website') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.website"
                       :meta="modelMetadata['website']"
@@ -116,14 +86,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.company') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullDescriptions
                       :data="store.company"
                       :meta="modelMetadata['company']"

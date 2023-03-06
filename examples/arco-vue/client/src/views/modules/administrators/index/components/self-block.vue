@@ -21,10 +21,7 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col
-          style="display: flex; align-items: center; justify-content: end"
-          :span="12"
-        >
+        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
           <a-space>
             <a-tag
               v-for="(value, name) in tableSearchCondition"
@@ -61,29 +58,20 @@
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh"
-              ><icon-refresh size="18"
-            /></div>
+            <div class="action-icon" @click="onTableRefresh">
+              <icon-refresh size="18"/>
+            </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
               <div class="action-icon"><icon-settings size="18" /></div>
               <template #content>
                 <div>
-                  <div
-                    v-for="(item, index) in tableColumnsWithShow"
-                    :key="item.dataIndex"
-                  >
+                  <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
                     <div>
                       <a-checkbox
                         v-model="item.show"
-                        @change="
-                          handleTableColumnsShowChange(
-                            $event,
-                            item as TableColumnData,
-                            index
-                          )
-                        "
+                        @change="handleTableColumnsShowChange($event, item as TableColumnData, index)"
                       >
                         {{ item.title }}
                       </a-checkbox>
@@ -125,7 +113,7 @@
         </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
+          <a-space>
             <a-button
               v-permission="['admin', ]"
               type="outline"
@@ -171,10 +159,7 @@
         -
         {{ $t('table.actions.search') }}
       </template>
-      <a-form
-        :model="tableSearchForm"
-        :auto-label-width="true"
-      >
+      <a-form :model="tableSearchForm" :auto-label-width="true">
         <DullFormItem
           v-model="tableSearchForm.id_eq"
           :meta="searchMetadata.id_eq"
@@ -192,7 +177,6 @@
       <span v-permission="['admin', ]"/>
       <span v-permission="['admin', ]"/>
     </div>
-
   </div>
 </template>
 
@@ -286,7 +270,6 @@
     tableSearchConditionCount.value = Object.keys(o).length
     return isEmpty(o) ? null : o;
   };
-
 
   // pagination
   const baseTablePagination: Pagination = {
@@ -469,13 +452,10 @@
     searchModalVisible.value = false;
   };
 
-
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
-  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
-    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }

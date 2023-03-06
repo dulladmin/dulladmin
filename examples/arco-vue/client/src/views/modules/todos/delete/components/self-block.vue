@@ -4,10 +4,7 @@
   <div>
     <a-card :title="$t('todos--delete.self-block.title')" class="dulladmin-form-block">
       <a-spin style="display: block" :loading="loading">
-        <a-form
-          :model="store"
-          :auto-label-width="true"
-        >
+        <a-form :model="store" :auto-label-width="true">
           <a-form-item>
             <a-alert type="warning">
               {{ $t('form.actions.delete.alert.message') }}

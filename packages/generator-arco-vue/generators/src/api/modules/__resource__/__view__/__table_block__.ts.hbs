@@ -25,13 +25,13 @@ export interface Model {
 
 {{#if searchable}}
 /* Search */
-interface Search {
+export interface Search {
   {{#each searchers}}
   {{name}}?: {{jsonType}};
   {{/each}}
 }
-{{/if}}
 
+{{/if}}
 /* GET {{api.url}} */
 export interface ListRequest {
   {{#if searchable}}

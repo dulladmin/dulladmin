@@ -3,7 +3,7 @@
 <template>
   <div class="dulladmin-view">
     <a-grid :cols="24" :row-gap="16">
-      {{#each blocks}}
+    {{#each blocks}}
       <a-grid-item :span="24">
         <div
           {{#if authority}}
@@ -13,7 +13,7 @@
           <{{componentName}} />
         </div>
       </a-grid-item>
-      {{/each}}
+    {{/each}}
     </a-grid>
   </div>
 </template>

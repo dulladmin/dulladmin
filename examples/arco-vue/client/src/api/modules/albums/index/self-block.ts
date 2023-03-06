@@ -13,7 +13,6 @@ export interface Model {
   title?: string;
 }
 
-
 /* GET /albums/index/self */
 export interface ListRequest {
   sorter?: Sorter;

@@ -43,8 +43,8 @@ export interface YamlBlockTablePaginationType {
 }
 
 export interface YamlBlockTableOperationsType {
-  show?: YamlBlockTableOperationType
   new?: YamlBlockTableOperationType
+  show?: YamlBlockTableOperationType
   edit?: YamlBlockTableOperationType
   delete?: YamlBlockTableOperationType
 }

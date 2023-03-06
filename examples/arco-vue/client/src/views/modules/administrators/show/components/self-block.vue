@@ -4,21 +4,15 @@
   <div>
     <a-card :title="$t('administrators--show.self-block.title')" class="dulladmin-descriptions-block">
       <a-spin style="display: block" :loading="loading">
-        <div
-          class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border"
-        >
+        <div class="arco-descriptions arco-descriptions-size-medium arco-descriptions-border">
           <div class="arco-descriptions-body">
             <table class="arco-descriptions-table">
               <tbody>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('administrators--show.self-block.model.attributes.name') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.name"
                       :meta="modelMetadata['name']"
@@ -26,14 +20,10 @@
                   </td>
                 </tr>
                 <tr class="arco-descriptions-row">
-                  <td
-                    class="arco-descriptions-item-label arco-descriptions-item-label-block"
-                  >
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('administrators--show.self-block.model.attributes.role') }}
                   </td>
-                  <td
-                    class="arco-descriptions-item-value arco-descriptions-item-value-block"
-                  >
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.role"
                       :meta="modelMetadata['role']"

@@ -220,17 +220,17 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 }
 
 function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
-  const allowedFiledNames = ['show', 'new', 'edit', 'delete', '~']
+  const allowedFiledNames = ['new', 'show', 'edit', 'delete', '~']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const operations: TableBlockOperation[] = []
   Object.keys(doc).forEach((name) => {
-    if (name === 'show') {
-      const _op = parseTableBlockOperation(doc.show!, xpath + '/show', { name })
-      operations.push(_op)
-    }
     if (name === 'new') {
       const _op = parseTableBlockOperation(doc.new!, xpath + '/new', { name })
+      operations.push(_op)
+    }
+    if (name === 'show') {
+      const _op = parseTableBlockOperation(doc.show!, xpath + '/show', { name })
       operations.push(_op)
     }
     if (name === 'edit') {
