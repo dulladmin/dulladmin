@@ -71,6 +71,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const resourceActions: Record<string, any> = {}
   if (block.relType === BlockRelationshipType.Self && view.name === 'index') {
     resource.views.forEach((view) => {
+      if (!['new', 'show', 'edit', 'delete'].includes(view.name)) return
       const _view = renderData_View(resource, view)
       resourceActions[view.name] = {
         name: _view.name,
@@ -116,7 +117,7 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
 
-  // self Form in NewView/EditView/DeleteView
+  // self Form in any View
   const formOptions: Record<string, any> = {
     actionName: 'save',
     noGet: block.model.attributes.length === 0

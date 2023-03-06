@@ -17,5 +17,16 @@
   "albums--show.photos-block.show-dialog.model.attributes.url": "Url",
   "albums--show.photos-block.show-dialog.model.attributes.thumbnailUrl": "Thumbnail Url",
   "albums--show.photos-block.new-dialog.model.attributes.title": "Title",
-  "albums--show.photos-block.edit-dialog.model.attributes.title": "Title"
+  "albums--show.photos-block.edit-dialog.model.attributes.title": "Title",
+  "albums--show-photos.title": "Albums Show Photos",
+  "albums--show-photos.self-block.title": "Show Photos Table",
+  "albums--show-photos.self-block.model.attributes.id": "Id",
+  "albums--show-photos.self-block.model.attributes.title": "Title",
+  "albums--show-photos.self-block.model.attributes.url": "Url",
+  "albums--show-photos.self-block.model.attributes.thumbnailUrl": "Thumbnail Url",
+  "albums--show-photos.self-block.show-dialog.model.attributes.title": "Title",
+  "albums--show-photos.self-block.show-dialog.model.attributes.url": "Url",
+  "albums--show-photos.self-block.show-dialog.model.attributes.thumbnailUrl": "Thumbnail Url",
+  "albums--show-photos.self-block.new-dialog.model.attributes.title": "Title",
+  "albums--show-photos.self-block.edit-dialog.model.attributes.title": "Title"
 }

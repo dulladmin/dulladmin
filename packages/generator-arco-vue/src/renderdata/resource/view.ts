@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, ViewPathScope, View } from '@dulladmin/core'
-import { toCamelize, toI18nMessage, toPath } from '../../naming'
+import { toCamelize, toUnderscore, toI18nMessage, toPath } from '../../naming'
 
 export function renderData_View(resource: Resource, view: View): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const i18nKeyPrefix = `${resourcePath}--${viewPath}`
 
+  const resourceName = toUnderscore(resource.name)
+  const viewName = toUnderscore(view.name)
+
   return {
-    name: `${toCamelize(resourcePath)}${toCamelize(viewPath)}`,
+    name: `${toCamelize(resourceName)}${toCamelize(viewName)}`,
     authority: view.inheritedAuthority,
     isMemberAction: view.pathScope === ViewPathScope.Member,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
-      i18nValue: `${toI18nMessage(resourcePath)} ${toI18nMessage(viewPath)}`
+      i18nValue: `${toI18nMessage(resourceName)} ${toI18nMessage(viewName)}`
     }
   }
 }

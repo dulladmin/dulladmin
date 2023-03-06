@@ -9,6 +9,14 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block`
   const url = renderData_BlockApiEndpoint(resource, view, block)
 
+  let resourceTitle = ''
+  if (block.relType === BlockRelationshipType.Self) {
+    const isResourceView = ['index', 'new', 'show', 'edit', 'delete'].includes(view.name)
+    resourceTitle = isResourceView ? resource.name : view.name
+  } else {
+    resourceTitle = block.relName
+  }
+
   return {
     componentName: `${toCamelize(block.relName)}Block`,
     componentImportPath: `@/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
@@ -17,9 +25,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
     authority: block.inheritedAuthority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
-      i18nValue: `${toI18nMessage(
-        block.relType === BlockRelationshipType.Self ? resource.name : block.relName
-      )} ${toI18nMessage(block.type)}`
+      i18nValue: `${toI18nMessage(resourceTitle)} ${toI18nMessage(block.type)}`
     }
   }
 }

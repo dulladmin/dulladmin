@@ -51,3 +51,23 @@ views:
         - { name: 'title'       , type: 'string' }
         - { name: 'url'         , type: 'image'  }
         - { name: 'thumbnailUrl', type: 'image'  }
+      pagination:
+        per: 10
+      operations:
+        show:
+          descriptions:
+            items:
+              - { name: 'title'       , type: 'string' }
+              - { name: 'url'         , type: 'image'  }
+              - { name: 'thumbnailUrl', type: 'image'  }
+        new:
+          form:
+            items:
+              - { name: 'title', type: 'string' }
+        edit:
+          form:
+            items:
+              - { name: 'title', type: 'string' }
+        delete:
+          form:
+            items: []
