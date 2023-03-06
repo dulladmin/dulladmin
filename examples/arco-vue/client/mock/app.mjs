@@ -139,6 +139,51 @@ export async function enhance(app) {
     collection.splice(index, 1);
     res.send(buildSuccessResponse({ form: {} }));
   });
+  app.get('/albums/:id/show-photos/self', async (req, res) => {
+    let collection = photosDB.data;
+    collection = collection.filter((item) => item.albumId == req.params.id);
+    const r = makePagination(collection, req.query.pagination);
+    res.send(buildSuccessResponse(r));
+  });
+  app.get('/albums/:id/show-photos/self/new', async (_req, res) => {
+    const model = { title: '' };
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/albums/:id/show-photos/self/new', async (req, res) => {
+    const collection = photosDB.data;
+    const model = {
+      ...req.body.form,
+      id: generateID(),
+      albumId: req.params.id,
+    };
+    collection.push(model);
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.get('/albums/:id/show-photos/self/:subid/show', async (req, res) => {
+    const collection = photosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.get('/albums/:id/show-photos/self/:subid/edit', async (req, res) => {
+    const collection = photosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/albums/:id/show-photos/self/:subid/edit', async (req, res) => {
+    const collection = photosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    Object.assign(model, { ...req.body.form });
+    res.send(buildSuccessResponse({ form: model, model: model }));
+  });
+  app.get('/albums/:id/show-photos/self/:subid/delete', async (_req, res) => {
+    res.send(buildSuccessResponse({ form: {} }));
+  });
+  app.put('/albums/:id/show-photos/self/:subid/delete', async (req, res) => {
+    const collection = photosDB.data;
+    const index = collection.findIndex((item) => item.id == req.params.subid);
+    collection.splice(index, 1);
+    res.send(buildSuccessResponse({ form: {} }));
+  });
 
   app.get('/photos/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(photosDB.data);
