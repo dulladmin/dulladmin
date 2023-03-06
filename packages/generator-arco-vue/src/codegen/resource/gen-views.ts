@@ -9,7 +9,8 @@ import {
   DescriptionsBlock,
   FormBlock,
   DialogBlockType,
-  Dialog
+  Dialog,
+  Model
 } from '@dulladmin/core'
 import type { GeneratedFile } from '@dulladmin/core'
 import { toPath } from '../../naming'
@@ -117,27 +118,12 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
 
-  // self Form in any View
-  const formOptions: Record<string, any> = {
-    actionName: 'save',
-    noGet: block.model.attributes.length === 0
-  }
-  if (block.relType === BlockRelationshipType.Self) {
-    formOptions.allowBackOnSave = true
+  // formOptions
+  const name = block.relType === BlockRelationshipType.Self ? view.name : block.relName
+  const formOptions = genView_buildFormOptions(name, block.model)
+  formOptions.allowBackOnSave = block.relType === BlockRelationshipType.Self
 
-    const actionName = view.name.split('_')[0]
-    switch (actionName) {
-      case 'new':
-      case 'edit':
-      case 'delete':
-        formOptions.actionName = actionName
-        formOptions.isDanger = actionName === 'delete'
-        break
-      default:
-        break
-    }
-  }
-
+  // outfile
   const _view = renderData_View(resource, view)
   const _block = renderData_FormBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
@@ -181,12 +167,28 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
 
-  // self Form in NewDialog/EditDialog/DeleteDialog
+  // formOptions
+  const name = dialog.name
+  const formOptions = genView_buildFormOptions(name, dialog.block.model)
+
+  // outfile
+  const _block = renderData_Block(resource, view, block)
+  const _dialog = renderData_FormDialog(resource, view, block, dialog)
+  const dialogOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
+    'src/views/modules/__resource__/__view__/components/dialog/__form_dialog__.vue.hbs',
+    { ..._dialog, block: _block, formOptions }
+  )
+
+  return dialogOutfile
+}
+
+function genView_buildFormOptions(name: string, model: Model): Record<string, any> {
   const formOptions: Record<string, any> = {
     actionName: 'save',
-    noGet: dialog.block.model.attributes.length === 0
+    noGet: model.attributes.length === 0
   }
-  const actionName = dialog.name.split('_')[0]
+  const actionName = name.split('_')[0]
   switch (actionName) {
     case 'new':
     case 'edit':
@@ -197,14 +199,5 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
     default:
       break
   }
-
-  const _block = renderData_Block(resource, view, block)
-  const _dialog = renderData_FormDialog(resource, view, block, dialog)
-  const dialogOutfile = handlebarsFile(
-    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
-    'src/views/modules/__resource__/__view__/components/dialog/__form_dialog__.vue.hbs',
-    { ..._dialog, block: _block, formOptions }
-  )
-
-  return dialogOutfile
+  return formOptions
 }
