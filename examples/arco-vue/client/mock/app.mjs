@@ -186,6 +186,34 @@ export async function enhance(app) {
     const r = makePagination(collection, req.query.pagination);
     res.send(buildSuccessResponse(r));
   });
+  app.get('/todos/index/self/:subid/show-title', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    res.send(buildSuccessResponse({ model }));
+  });
+  app.get('/todos/index/self/:subid/edit-title', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/todos/index/self/:subid/edit-title', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    Object.assign(model, { ...req.body.form });
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/todos/index/self/:subid/create-completed', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    Object.assign(model, { completed: true });
+    res.send(buildSuccessResponse({ form: model }));
+  });
+  app.put('/todos/index/self/:subid/delete-completed', async (req, res) => {
+    const collection = todosDB.data;
+    const model = collection.find((item) => item.id == req.params.subid);
+    Object.assign(model, { completed: false });
+    res.send(buildSuccessResponse({ form: model }));
+  });
   app.get('/todos/:id/show/self', async (req, res) => {
     const collection = todosDB.data;
     const model = collection.find((item) => item.id == req.params.id);

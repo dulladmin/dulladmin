@@ -93,7 +93,7 @@
         </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space>
+          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
             <a-button
               type="outline"
               status="success"
@@ -364,8 +364,10 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
+    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }

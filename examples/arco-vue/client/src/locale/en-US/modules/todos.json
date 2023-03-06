@@ -11,6 +11,8 @@
   "todos--index.self-block.model.attributes.completed": "Completed",
   "todos--index.self-block.model.attributes.completed.optionals.true": "True",
   "todos--index.self-block.model.attributes.completed.optionals.false": "False",
+  "todos--index.self-block.show-title-dialog.model.attributes.title": "Title",
+  "todos--index.self-block.edit-title-dialog.model.attributes.title": "Title",
   "todos--show.title": "Todos Show",
   "todos--show.self-block.title": "Todos Descriptions",
   "todos--show.self-block.model.attributes.userId": "User Id",

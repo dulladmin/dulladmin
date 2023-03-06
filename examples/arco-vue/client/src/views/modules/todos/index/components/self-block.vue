@@ -131,7 +131,7 @@
         </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space>
+          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
             <a-button
               type="outline"
               status="success"
@@ -158,6 +158,36 @@
               {{ $t('table.actions.delete') }}
             </a-button>
           </a-space>
+            <a-space>
+              <a-button
+                type="outline"
+                size="small"
+                @click="handleTableOperationSelfBlockShowTitleDialogVisible({ id: record.id })"
+              >
+                {{ $t('') }}
+              </a-button>
+              <a-button
+                type="outline"
+                size="small"
+                @click="handleTableOperationSelfBlockEditTitleDialogVisible({ id: record.id })"
+              >
+                {{ $t('') }}
+              </a-button>
+              <a-button
+                type="outline"
+                size="small"
+                @click="handleTableOperationSelfBlockCreateCompletedDialogVisible({ id: record.id })"
+              >
+                {{ $t('') }}
+              </a-button>
+              <a-button
+                type="outline"
+                size="small"
+                @click="handleTableOperationSelfBlockDeleteCompletedDialogVisible({ id: record.id })"
+              >
+                {{ $t('') }}
+              </a-button>
+            </a-space>
         </template>
       </a-table>
     </a-card>
@@ -195,8 +225,36 @@
       <span />
       <span />
       <span v-permission="['admin', ]"/>
+      <span  class="custom-action"/>
+      <span  class="custom-action"/>
+      <span  class="custom-action"/>
+      <span  class="custom-action"/>
     </div>
 
+    <!-- Table Collection/Model Operations - show_title -->
+    <SelfBlockShowTitleDialog
+      :id="tableOperationSelfBlockShowTitleDialogSelectedRecordID"
+      v-model:visible="tableOperationSelfBlockShowTitleDialogVisible"
+      :ok-callback="handleTableOperationSelfBlockShowTitleDialogOkCallback"
+    />
+    <!-- Table Collection/Model Operations - edit_title -->
+    <SelfBlockEditTitleDialog
+      :id="tableOperationSelfBlockEditTitleDialogSelectedRecordID"
+      v-model:visible="tableOperationSelfBlockEditTitleDialogVisible"
+      :ok-callback="handleTableOperationSelfBlockEditTitleDialogOkCallback"
+    />
+    <!-- Table Collection/Model Operations - create_completed -->
+    <SelfBlockCreateCompletedDialog
+      :id="tableOperationSelfBlockCreateCompletedDialogSelectedRecordID"
+      v-model:visible="tableOperationSelfBlockCreateCompletedDialogVisible"
+      :ok-callback="handleTableOperationSelfBlockCreateCompletedDialogOkCallback"
+    />
+    <!-- Table Collection/Model Operations - delete_completed -->
+    <SelfBlockDeleteCompletedDialog
+      :id="tableOperationSelfBlockDeleteCompletedDialogSelectedRecordID"
+      v-model:visible="tableOperationSelfBlockDeleteCompletedDialogVisible"
+      :ok-callback="handleTableOperationSelfBlockDeleteCompletedDialogOkCallback"
+    />
   </div>
 </template>
 
@@ -208,6 +266,10 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import { Model, ListRequest, list } from '@/api/modules/todos/index/self-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
+  import SelfBlockShowTitleDialog from '@/views/modules/todos/index/components/self-block-show-title-dialog.vue'
+  import SelfBlockEditTitleDialog from '@/views/modules/todos/index/components/self-block-edit-title-dialog.vue'
+  import SelfBlockCreateCompletedDialog from '@/views/modules/todos/index/components/self-block-create-completed-dialog.vue'
+  import SelfBlockDeleteCompletedDialog from '@/views/modules/todos/index/components/self-block-delete-completed-dialog.vue'
 
   // types
   type Column = TableColumnData & { show?: boolean, renderable?: boolean, hidden?: boolean };
@@ -525,8 +587,10 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
+    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }
@@ -535,6 +599,64 @@
   // table - operations - goto
   const goto = (_route: Record<string, any>) => {
     router.push({ name: _route.name, params: _route.params, query: { back: route.path } });
+  };
+
+  // table - operations - show_title
+  const tableOperationSelfBlockShowTitleDialogSelectedRecordID = ref<string>('');
+  const tableOperationSelfBlockShowTitleDialogVisible = ref(false);
+  const handleTableOperationSelfBlockShowTitleDialogVisible = (options: Record<string, any>) => {
+    tableOperationSelfBlockShowTitleDialogSelectedRecordID.value = String(options.id ?? '');
+    tableOperationSelfBlockShowTitleDialogVisible.value = true;
+  };
+  const handleTableOperationSelfBlockShowTitleDialogOkCallback = (options: Record<string, any>) => {
+  };
+
+  // table - operations - edit_title
+  const tableOperationSelfBlockEditTitleDialogSelectedRecordID = ref<string>('');
+  const tableOperationSelfBlockEditTitleDialogVisible = ref(false);
+  const handleTableOperationSelfBlockEditTitleDialogVisible = (options: Record<string, any>) => {
+    tableOperationSelfBlockEditTitleDialogSelectedRecordID.value = String(options.id ?? '');
+    tableOperationSelfBlockEditTitleDialogVisible.value = true;
+  };
+  const handleTableOperationSelfBlockEditTitleDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  };
+
+  // table - operations - create_completed
+  const tableOperationSelfBlockCreateCompletedDialogSelectedRecordID = ref<string>('');
+  const tableOperationSelfBlockCreateCompletedDialogVisible = ref(false);
+  const handleTableOperationSelfBlockCreateCompletedDialogVisible = (options: Record<string, any>) => {
+    tableOperationSelfBlockCreateCompletedDialogSelectedRecordID.value = String(options.id ?? '');
+    tableOperationSelfBlockCreateCompletedDialogVisible.value = true;
+  };
+  const handleTableOperationSelfBlockCreateCompletedDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
+  };
+
+  // table - operations - delete_completed
+  const tableOperationSelfBlockDeleteCompletedDialogSelectedRecordID = ref<string>('');
+  const tableOperationSelfBlockDeleteCompletedDialogVisible = ref(false);
+  const handleTableOperationSelfBlockDeleteCompletedDialogVisible = (options: Record<string, any>) => {
+    tableOperationSelfBlockDeleteCompletedDialogSelectedRecordID.value = String(options.id ?? '');
+    tableOperationSelfBlockDeleteCompletedDialogVisible.value = true;
+  };
+  const handleTableOperationSelfBlockDeleteCompletedDialogOkCallback = (options: Record<string, any>) => {
+    const { model } = options;
+    if (model) {
+      updateStore({ model });
+    } else {
+      onTableRefresh();
+    }
   };
 
   // table - tabbable

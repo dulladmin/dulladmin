@@ -11,6 +11,8 @@
   "todos--index.self-block.model.attributes.completed": "是否完成",
   "todos--index.self-block.model.attributes.completed.optionals.true": "是",
   "todos--index.self-block.model.attributes.completed.optionals.false": "否",
+  "todos--index.self-block.show-title-dialog.model.attributes.title": "标题",
+  "todos--index.self-block.edit-title-dialog.model.attributes.title": "标题",
   "todos--show.title": "待办详情",
   "todos--show.self-block.title": "待办详情",
   "todos--show.self-block.model.attributes.userId": "所属用户",

@@ -159,7 +159,7 @@
       {{/each}}
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
-          <a-space>
+          <a-space :style="{ 'margin-bottom': tableOperationsColumnCustomActionsCount ? '8px' : '0' }">
             {{#if resourceActions.show }}
             <a-button
               {{#if resourceActions.show.authority}}
@@ -239,6 +239,24 @@
             </a-button>
             {{/if}}
           </a-space>
+          {{#if customOperations}}
+            <a-space>
+            {{#each customOperations}}
+              {{#if isMemberAction}}
+              <a-button
+                {{#if authority}}
+                v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
+                {{/if}}
+                type="outline"
+                size="small"
+                @click="handleTableOperation{{dialog.componentName}}Visible({ id: record.id })"
+              >
+                \{{ $t('{{title.i18nKey}}') }}
+              </a-button>
+              {{/if}}
+            {{/each}}
+            </a-space>
+          {{/if}}
         </template>
       </a-table>
     </a-card>
@@ -280,7 +298,7 @@
     {{/each}}
     {{#each operations}}
       {{#if isMemberAction}}
-      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
+      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}} class="custom-action"/>
       {{/if}}
     {{/each}}
     </div>
@@ -633,8 +651,10 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnCustomActionsCount = ref(0);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
+    tableOperationsColumnCustomActionsCount.value = el.getElementsByClassName('custom-action').length;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
     }

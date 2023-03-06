@@ -82,14 +82,22 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     })
   }
 
+  // customOperations
   const _view = renderData_View(resource, view)
   const _block = renderData_TableBlock(resource, view, block)
+  const _customOperations: Array<Record<string, any>> = []
+  Object.values<Record<string, any>>(_block.operations).forEach((operation) => {
+    if (['new', 'show', 'edit', 'delete'].includes(operation.name)) return
+    _customOperations.push(operation)
+  })
+  _customOperations.sort((a, b) => a.order - b.order)
+
+  // outfile
   const blockOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { ..._block, view: _view, resourceActions }
+    { ..._block, view: _view, resourceActions, customOperations: _customOperations }
   )
-
   const dialogOutfiles = block.operations.map((operation) => {
     return genView_Dialog(resource, view, block, operation.dialog)
   })

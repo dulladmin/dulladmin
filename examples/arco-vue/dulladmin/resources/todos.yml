@@ -12,6 +12,21 @@ views:
       searchers:
         - { name: 'userId'   , predicate: 'eq' }
         - { name: 'completed', predicate: 'eq' }
+      operations:
+        ~show_title:
+          descriptions:
+            items:
+              - { name: 'title', type: 'string' }
+        ~edit_title:
+          form:
+            items:
+              - { name: 'title', type: 'string' }
+        ~create_completed:
+          form:
+            items: []
+        ~delete_completed:
+          form:
+            items: []
 
   show:
     descriptions:
