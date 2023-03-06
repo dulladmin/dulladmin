@@ -158,36 +158,36 @@
               {{ $t('table.actions.delete') }}
             </a-button>
           </a-space>
-            <a-space>
-              <a-button
-                type="outline"
-                size="small"
-                @click="handleTableOperationSelfBlockShowTitleDialogVisible({ id: record.id })"
-              >
-                {{ $t('') }}
-              </a-button>
-              <a-button
-                type="outline"
-                size="small"
-                @click="handleTableOperationSelfBlockEditTitleDialogVisible({ id: record.id })"
-              >
-                {{ $t('') }}
-              </a-button>
-              <a-button
-                type="outline"
-                size="small"
-                @click="handleTableOperationSelfBlockCreateCompletedDialogVisible({ id: record.id })"
-              >
-                {{ $t('') }}
-              </a-button>
-              <a-button
-                type="outline"
-                size="small"
-                @click="handleTableOperationSelfBlockDeleteCompletedDialogVisible({ id: record.id })"
-              >
-                {{ $t('') }}
-              </a-button>
-            </a-space>
+          <a-space>
+            <a-button
+              type="outline"
+              size="small"
+              @click="handleTableOperationSelfBlockShowTitleDialogVisible({ id: record.id })"
+            >
+              {{ $t('todos--index.self-block.actions.show-title') }}
+            </a-button>
+            <a-button
+              type="outline"
+              size="small"
+              @click="handleTableOperationSelfBlockEditTitleDialogVisible({ id: record.id })"
+            >
+              {{ $t('todos--index.self-block.actions.edit-title') }}
+            </a-button>
+            <a-button
+              type="outline"
+              size="small"
+              @click="handleTableOperationSelfBlockCreateCompletedDialogVisible({ id: record.id })"
+            >
+              {{ $t('todos--index.self-block.actions.create-completed') }}
+            </a-button>
+            <a-button
+              type="outline"
+              size="small"
+              @click="handleTableOperationSelfBlockDeleteCompletedDialogVisible({ id: record.id })"
+            >
+              {{ $t('todos--index.self-block.actions.delete-completed') }}
+            </a-button>
+          </a-space>
         </template>
       </a-table>
     </a-card>

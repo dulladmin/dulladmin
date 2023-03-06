@@ -68,6 +68,11 @@ function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): 
     searcher.optionals?.forEach((opt: Record<string, any>) => (blockMessages[opt.i18nKey] = opt.i18nValue))
   })
 
+  Object.values<Record<string, any>>(_block.operations).forEach((operation) => {
+    if (['index', 'new', 'show', 'edit', 'delete'].includes(operation.name)) return
+    blockMessages[operation.i18nKey] = operation.i18nValue
+  })
+
   const dialogMessages = block.operations
     .map((operation) => genI18n_Dialog(resource, view, block, operation.dialog))
     .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})

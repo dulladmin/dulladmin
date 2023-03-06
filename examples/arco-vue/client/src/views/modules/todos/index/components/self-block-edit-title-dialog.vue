@@ -4,7 +4,7 @@
   <a-modal
     v-model:visible="visible"
     class="dulladmin-form-dialog"
-    :ok-text="$t('form.actions.edit')"
+    :ok-text="$t('form.actions.save')"
     :ok-button-props="{disabled: loading}"
     :on-before-ok="handleModalBeforeOk"
     @cancel="handleModalCancel"
@@ -13,7 +13,7 @@
     <template #title>
       {{ $t('todos--index.self-block.title') }}
       -
-      {{ $t('table.actions.edit') }}
+      {{ $t('table.actions.save') }}
       <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
@@ -109,7 +109,7 @@
         store.value = form;
       }
 
-      Message.success(t('form.actions.edit.success'));
+      Message.success(t('form.actions.save.success'));
 
       const { model } = data;
       props.okCallback({ model });

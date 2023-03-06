@@ -239,24 +239,24 @@
             </a-button>
             {{/if}}
           </a-space>
-          {{#if customOperations}}
-            <a-space>
-            {{#each customOperations}}
-              {{#if isMemberAction}}
-              <a-button
-                {{#if authority}}
-                v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
-                {{/if}}
-                type="outline"
-                size="small"
-                @click="handleTableOperation{{dialog.componentName}}Visible({ id: record.id })"
-              >
-                \{{ $t('{{title.i18nKey}}') }}
-              </a-button>
+        {{#if customOperations}}
+          <a-space>
+          {{#each customOperations}}
+            {{#if isMemberAction}}
+            <a-button
+              {{#if authority}}
+              v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
               {{/if}}
-            {{/each}}
-            </a-space>
-          {{/if}}
+              type="outline"
+              size="small"
+              @click="handleTableOperation{{dialog.componentName}}Visible({ id: record.id })"
+            >
+              \{{ $t('{{i18nKey}}') }}
+            </a-button>
+            {{/if}}
+          {{/each}}
+          </a-space>
+        {{/if}}
         </template>
       </a-table>
     </a-card>

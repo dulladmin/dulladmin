@@ -80,6 +80,11 @@ function renderData_TableBlockPagination(_resource: Resource, _view: View, block
 }
 
 function renderData_TableBlockOperations(resource: Resource, view: View, block: TableBlock): Record<string, any> {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block`
+
   const operations: Record<string, any> = {}
   block.operations.forEach((operation) => {
     operations[operation.name] = {
@@ -87,7 +92,9 @@ function renderData_TableBlockOperations(resource: Resource, view: View, block: 
       authority: operation.inheritedAuthority,
       isMemberAction: operation.dialog.pathScope === DialogPathScope.Member,
       dialog: renderData_Dialog(resource, view, block, operation.dialog),
-      useFormDialog: operation.dialog.block.type === DialogBlockType.FormBlock
+      useFormDialog: operation.dialog.block.type === DialogBlockType.FormBlock,
+      i18nKey: `${i18nKeyPrefix}.actions.${toPath(operation.name)}`,
+      i18nValue: toI18nMessage(operation.name)
     }
   })
   return operations

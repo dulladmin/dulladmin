@@ -72,7 +72,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const resourceActions: Record<string, any> = {}
   if (block.relType === BlockRelationshipType.Self && view.name === 'index') {
     resource.views.forEach((view) => {
-      if (!['new', 'show', 'edit', 'delete'].includes(view.name)) return
+      if (!['index', 'new', 'show', 'edit', 'delete'].includes(view.name)) return
       const _view = renderData_View(resource, view)
       resourceActions[view.name] = {
         name: _view.name,
@@ -87,7 +87,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const _block = renderData_TableBlock(resource, view, block)
   const _customOperations: Array<Record<string, any>> = []
   Object.values<Record<string, any>>(_block.operations).forEach((operation) => {
-    if (['new', 'show', 'edit', 'delete'].includes(operation.name)) return
+    if (['index', 'new', 'show', 'edit', 'delete'].includes(operation.name)) return
     _customOperations.push(operation)
   })
   _customOperations.sort((a, b) => a.order - b.order)
@@ -196,13 +196,12 @@ function genView_buildFormOptions(name: string, model: Model): Record<string, an
     actionName: 'save',
     noGet: model.attributes.length === 0
   }
-  const actionName = name.split('_')[0]
-  switch (actionName) {
+  switch (name) {
     case 'new':
     case 'edit':
     case 'delete':
-      formOptions.actionName = actionName
-      formOptions.isDanger = actionName === 'delete'
+      formOptions.actionName = name
+      formOptions.isDanger = name === 'delete'
       break
     default:
       break
