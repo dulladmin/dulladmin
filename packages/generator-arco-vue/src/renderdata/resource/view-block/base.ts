@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, ViewPathScope, View, Block, BlockRelationshipType } from '@dulladmin/core'
-import { toCamelize, toI18nMessage, toPath } from '../../../naming'
+import { toCamelize, toUnderscore, toI18nMessage, toPath } from '../../../naming'
 
 export function renderData_Block(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourcePath = toPath(resource.name)
@@ -9,16 +9,20 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block`
   const url = renderData_BlockApiEndpoint(resource, view, block)
 
+  const resourceName = toUnderscore(resource.name)
+  const viewName = toUnderscore(view.name)
+  const blockName = toUnderscore(block.relName)
+
   let resourceTitle = ''
   if (block.relType === BlockRelationshipType.Self) {
     const isResourceView = ['index', 'new', 'show', 'edit', 'delete'].includes(view.name)
-    resourceTitle = isResourceView ? resource.name : view.name
+    resourceTitle = isResourceView ? resourceName : viewName
   } else {
-    resourceTitle = block.relName
+    resourceTitle = blockName
   }
 
   return {
-    componentName: `${toCamelize(block.relName)}Block`,
+    componentName: `${toCamelize(blockName)}Block`,
     componentImportPath: `@/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     api: { url },
     apiImportPath: `@/api/modules/${resourcePath}/${viewPath}/${blockPath}-block`,
