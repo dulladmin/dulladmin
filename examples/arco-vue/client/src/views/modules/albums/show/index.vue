@@ -4,14 +4,12 @@
   <div class="dulladmin-view">
     <a-grid :cols="24" :row-gap="16">
       <a-grid-item :span="24">
-        <div
-        >
+        <div>
           <SelfBlock />
         </div>
       </a-grid-item>
       <a-grid-item :span="24">
-        <div
-        >
+        <div>
           <PhotosBlock />
         </div>
       </a-grid-item>

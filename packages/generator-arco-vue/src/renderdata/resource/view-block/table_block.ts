@@ -30,7 +30,7 @@ function renderData_TableBlockSearchers(resource: Resource, view: View, block: T
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.searchers`
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.searchers`
 
   return block.searchers.map((searcher) => {
     const name = `${searcher.name}_${searcher.predicate}`
@@ -54,11 +54,11 @@ function renderData_TableBlockSearchers(resource: Resource, view: View, block: T
         const opt = String(rawOpt)
         return {
           name: opt,
-          i18nKey: `${i18nKeyPrefix}.${name}.optionals.${opt}`,
+          i18nKey: `${xpath}.${name}.optionals.${opt}`,
           i18nValue: toI18nMessage(opt)
         }
       }),
-      i18nKey: `${i18nKeyPrefix}.${name}`,
+      i18nKey: `${xpath}.${name}`,
       i18nValue: toI18nMessage(`${searcher.name} ${searcher.predicate}`)
     }
   })
@@ -83,7 +83,7 @@ function renderData_TableBlockOperations(resource: Resource, view: View, block: 
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block`
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.actions`
 
   const operations: Record<string, any> = {}
   block.operations.forEach((operation) => {
@@ -93,7 +93,7 @@ function renderData_TableBlockOperations(resource: Resource, view: View, block: 
       isMemberAction: operation.dialog.pathScope === DialogPathScope.Member,
       dialog: renderData_Dialog(resource, view, block, operation.dialog),
       useFormDialog: operation.dialog.block.type === DialogBlockType.FormBlock,
-      i18nKey: `${i18nKeyPrefix}.actions.${toPath(operation.name)}`,
+      i18nKey: `${xpath}.${toPath(operation.name)}`,
       i18nValue: toI18nMessage(operation.name)
     }
   })

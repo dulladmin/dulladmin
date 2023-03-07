@@ -7,8 +7,8 @@ export function renderData_Model_Block(resource: Resource, view: View, block: Bl
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.model.attributes`
-  return renderData_Model(block.model as Model, { i18nKeyPrefix })
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block`
+  return renderData_Model(block.model as Model, { xpath })
 }
 
 export function renderData_Model_Dialog(
@@ -21,12 +21,12 @@ export function renderData_Model_Dialog(
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog.model.attributes`
-  return renderData_Model(dialog.block.model, { i18nKeyPrefix })
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog`
+  return renderData_Model(dialog.block.model, { xpath })
 }
 
 function renderData_Model(model: Model, attrs: Record<string, any>): Record<string, any> {
-  const i18nKeyPrefix: string = attrs.i18nKeyPrefix
+  const xpath: string = `${attrs.xpath as string}.model.attributes`
   return {
     attributes: model.attributes.map((attr) => {
       return {
@@ -37,7 +37,7 @@ function renderData_Model(model: Model, attrs: Record<string, any>): Record<stri
           const opt = String(rawOpt)
           return {
             name: opt,
-            i18nKey: `${i18nKeyPrefix}.${attr.name}.optionals.${opt}`,
+            i18nKey: `${xpath}.${attr.name}.optionals.${opt}`,
             i18nValue: toI18nMessage(opt)
           }
         }),
@@ -55,19 +55,19 @@ function renderData_Model(model: Model, attrs: Record<string, any>): Record<stri
                       const opt = String(rawOpt)
                       return {
                         name: opt,
-                        i18nKey: `${i18nKeyPrefix}.${attr.name}.${objAttr.name}.optionals.${opt}`,
+                        i18nKey: `${xpath}.${attr.name}.${objAttr.name}.optionals.${opt}`,
                         i18nValue: toI18nMessage(opt)
                       }
                     }),
                     collection: objAttr.collection,
-                    i18nKey: `${i18nKeyPrefix}.${attr.name}.${objAttr.name}`,
+                    i18nKey: `${xpath}.${attr.name}.${objAttr.name}`,
                     i18nValue: toI18nMessage(objAttr.name)
                   }
                 })
               },
         hidden: attr.hidden ?? false,
         disabled: attr.disabled ?? false,
-        i18nKey: `${i18nKeyPrefix}.${attr.name}`,
+        i18nKey: `${xpath}.${attr.name}`,
         i18nValue: toI18nMessage(attr.name)
       }
     })

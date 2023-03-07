@@ -7,7 +7,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block`
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block`
   const url = renderData_BlockApiEndpoint(resource, view, block)
 
   const resourceName = toUnderscore(resource.name)
@@ -33,7 +33,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
     apiImportPath: `@/api/modules/${resourcePath}/${viewPath}/${blockPath}-block`,
     authority: block.inheritedAuthority,
     title: {
-      i18nKey: `${i18nKeyPrefix}.title`,
+      i18nKey: `${xpath}.title`,
       i18nValue: title
     }
   }

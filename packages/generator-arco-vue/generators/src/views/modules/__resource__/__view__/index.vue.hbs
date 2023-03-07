@@ -5,11 +5,7 @@
     <a-grid :cols="24" :row-gap="16">
     {{#each blocks}}
       <a-grid-item :span="24">
-        <div
-          {{#if authority}}
-          v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
-          {{/if}}
-        >
+        <div{{#if authority}} v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}>
           <{{componentName}} />
         </div>
       </a-grid-item>

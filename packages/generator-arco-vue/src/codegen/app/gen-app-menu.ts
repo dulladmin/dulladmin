@@ -40,14 +40,14 @@ function genAppMenu_menu(appMenu: AppMenu, resources: Resource[]): Record<string
 
 function genAppMenu_subMenu(subMenu: AppSubMenu, resources: Resource[]): Record<string, any> | null {
   const subMenuName = toPath(subMenu.name)
-  const i18nKeyPrefix = `menu.submenu.${subMenuName}`
+  const xpath = `menu.submenu.${subMenuName}`
 
   return {
     name: `--${subMenuName}`,
     path: `--${subMenuName}`,
     icon: toDasherize(subMenu.icon),
     title: {
-      i18nKey: `${i18nKeyPrefix}`,
+      i18nKey: `${xpath}`,
       i18nValue: `${toI18nMessage(subMenu.name)}`
     },
     children: subMenu.items.map((item) => genAppMenu_menuItem(item, resources)).filter(Boolean)

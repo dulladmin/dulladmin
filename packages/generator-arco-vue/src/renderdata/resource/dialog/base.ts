@@ -8,7 +8,7 @@ export function renderData_Dialog(resource: Resource, view: View, block: Block, 
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
-  const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog`
+  const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog`
 
   const blockName = toUnderscore(block.relName)
   const dialogName = toUnderscore(dialog.name)
@@ -22,7 +22,7 @@ export function renderData_Dialog(resource: Resource, view: View, block: Block, 
     api: { url },
     apiImportPath: `@/api/modules/${resourcePath}/${viewPath}/${blockPath}-block-${dialogPath}-dialog`,
     title: {
-      i18nKey: `${i18nKeyPrefix}.title`,
+      i18nKey: `${xpath}.title`,
       i18nValue: toI18nMessage(dialogName)
     }
   }
