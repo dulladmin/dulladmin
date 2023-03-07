@@ -60,12 +60,10 @@ class DialogFormBlock {
 
   // Data Structuring
   model: Model
-  collection: boolean
 
   constructor(model: Model) {
     this.type = DialogBlockType.FormBlock
     this.model = model
-    this.collection = false
   }
 
   toString(): string {

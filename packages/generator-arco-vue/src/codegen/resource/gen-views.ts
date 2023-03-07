@@ -60,6 +60,8 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
       return genViews_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
       return genViews_FormBlock(resource, view, block as FormBlock)
+    case BlockType.EChartsBlock:
+      return []
   }
 }
 

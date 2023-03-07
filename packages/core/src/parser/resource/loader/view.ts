@@ -7,6 +7,7 @@ export interface YamlViewType {
   table?: YamlBlockTableType
   descriptions?: YamlBlockDescriptionsType
   form?: YamlBlockFormType
+  echarts?: YamlBlockEChartsType
 }
 
 export interface YamlBlockType {
@@ -16,6 +17,7 @@ export interface YamlBlockType {
   table?: YamlBlockTableType
   descriptions?: YamlBlockDescriptionsType
   form?: YamlBlockFormType
+  echarts?: YamlBlockEChartsType
 }
 
 export interface YamlBlockTableType {
@@ -63,3 +65,6 @@ export interface YamlBlockDescriptionsType {
 export interface YamlBlockFormType {
   items?: YamlModelAttributeType[]
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface YamlBlockEChartsType {}

@@ -8,7 +8,7 @@ export function renderData_Model_Block(resource: Resource, view: View, block: Bl
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
   const i18nKeyPrefix = `${resourcePath}--${viewPath}.${blockPath}-block.model.attributes`
-  return renderData_Model(block.model, { i18nKeyPrefix })
+  return renderData_Model(block.model as Model, { i18nKeyPrefix })
 }
 
 export function renderData_Model_Dialog(

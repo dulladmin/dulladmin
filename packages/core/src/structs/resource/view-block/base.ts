@@ -1,7 +1,8 @@
 enum BlockType {
   TableBlock = 'table',
   DescriptionsBlock = 'descriptions',
-  FormBlock = 'form'
+  FormBlock = 'form',
+  EChartsBlock = 'echarts'
 }
 
 enum BlockRelationshipType {

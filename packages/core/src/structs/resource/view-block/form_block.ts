@@ -65,7 +65,6 @@ class FormBlock {
 
   // Data Structuring
   model: Model
-  collection: boolean
 
   // Inherited Property
   inheritedAuthority: string[] | null
@@ -76,7 +75,6 @@ class FormBlock {
     this.relName = relName
     this.authority = authority
     this.model = model
-    this.collection = false
     this.inheritedAuthority = null
   }
 

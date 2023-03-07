@@ -10,6 +10,7 @@ import {
   TableBlockOperation,
   DescriptionsBlock,
   FormBlock,
+  EChartsBlock,
   Block,
   Dialog,
   ScalarValueType
@@ -74,6 +75,10 @@ export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string
     const block: YamlBlockType = { form: doc.form }
     parsedBlocks.push(parseBlock(block, xpath))
   }
+  if (doc.echarts != null) {
+    const block: YamlBlockType = { echarts: doc.echarts }
+    parsedBlocks.push(parseBlock(block, xpath))
+  }
 
   return new View(name, authority, parsedBlocks, null)
 }
@@ -108,7 +113,8 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.table != null) return parseTableBlock(doc, xpath, attrs)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath, attrs)
   if (doc.form != null) return parseFormBlock(doc, xpath, attrs)
-  throw new Error(`Block is required in \`${xpath}\`, must be one of ["table", "descriptions", "form"]`)
+  if (doc.echarts != null) return parseEChartsBlock(doc, xpath, attrs)
+  throw new Error(`Block is required in \`${xpath}\`, must be one of ["table", "descriptions", "form", "echarts"]`)
 }
 
 function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): TableBlock {
@@ -302,4 +308,9 @@ function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string,
   const parsedModel = parseModel(model!, modelXPath, { form: true })
 
   return new FormBlock(relType, relName, authority, parsedModel)
+}
+
+function parseEChartsBlock(_doc: YamlBlockType, _xpath: string, attrs: Record<string, any>): EChartsBlock {
+  const { relType, relName, authority } = attrs
+  return new EChartsBlock(relType, relName, authority)
 }

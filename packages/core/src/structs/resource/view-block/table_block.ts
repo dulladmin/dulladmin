@@ -143,7 +143,6 @@ class TableBlock {
 
   // Data Structuring
   model: Model
-  collection: boolean
 
   // Sorter
   sorters: TableBlockSorter[]
@@ -179,7 +178,6 @@ class TableBlock {
     this.searchers = searchers
     this.pagination = pagination
     this.operations = operations
-    this.collection = true
     this.inheritedAuthority = null
   }
 

@@ -54,6 +54,8 @@ function genI18n_Block(resource: Resource, view: View, block: Block): Record<str
       return genI18n_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
       return genI18n_FormBlock(resource, view, block as FormBlock)
+    case BlockType.EChartsBlock:
+      return {}
   }
 }
 

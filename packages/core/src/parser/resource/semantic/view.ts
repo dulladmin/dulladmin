@@ -8,6 +8,7 @@ import {
   TableBlockOperation,
   DescriptionsBlock,
   FormBlock,
+  EChartsBlock,
   Block
 } from '../../../structs'
 import { isDullAdminScalarValueType } from '../../assert'
@@ -45,6 +46,9 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
       break
     case BlockType.FormBlock:
       semanticAnalysisFormBlock(block as FormBlock, ctx)
+      break
+    case BlockType.EChartsBlock:
+      semanticAnalysisEChartsBlock(block as EChartsBlock, ctx)
       break
   }
 }
@@ -117,4 +121,8 @@ function semanticAnalysisDescriptionsBlock(block: DescriptionsBlock, ctx: Contex
 function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx, block)
+}
+
+function semanticAnalysisEChartsBlock(block: EChartsBlock, ctx: Context): void {
+  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
 }

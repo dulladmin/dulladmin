@@ -53,12 +53,10 @@ class DialogDescriptionsBlock {
 
   // Data Structuring
   model: Model
-  collection: boolean
 
   constructor(model: Model) {
     this.type = DialogBlockType.DescriptionsBlock
     this.model = model
-    this.collection = false
   }
 
   toString(): string {

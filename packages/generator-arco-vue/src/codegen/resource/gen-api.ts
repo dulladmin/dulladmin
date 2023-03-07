@@ -43,6 +43,8 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
       return genAPI_DescriptionsBlock(resource, view, block as DescriptionsBlock)
     case BlockType.FormBlock:
       return genAPI_FormBlock(resource, view, block as FormBlock)
+    case BlockType.EChartsBlock:
+      return []
   }
 }
 
