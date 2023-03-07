@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Resource, ViewPathScope, View, Block, BlockRelationshipType } from '@dulladmin/core'
 import { toCamelize, toUnderscore, toI18nMessage, toPath } from '../../../naming'
+import { isResourceAction } from '../../base'
 
 export function renderData_Block(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourcePath = toPath(resource.name)
@@ -15,8 +16,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
 
   let resourceTitle = ''
   if (block.relType === BlockRelationshipType.Self) {
-    const isResourceView = ['index', 'new', 'show', 'edit', 'delete'].includes(view.name)
-    resourceTitle = isResourceView ? resourceName : viewName
+    resourceTitle = isResourceAction(view.name) ? resourceName : viewName
   } else {
     resourceTitle = blockName
   }

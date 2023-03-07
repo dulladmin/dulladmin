@@ -12,7 +12,7 @@
     <template #title>
       \{{ $t('{{block.title.i18nKey}}') }}
       -
-      \{{ $t('table.actions.show') }}
+      \{{ $t('{{title.i18nKey}}') }}
       <span v-if="props.id">&nbsp;# \{{ props.id }}</span>
     </template>
     <div>

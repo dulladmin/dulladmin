@@ -23,7 +23,7 @@ import {
   renderData_DescriptionsDialog,
   renderData_FormDialog
 } from '../../renderdata'
-import { handlebarsFile } from '../base'
+import { isResourceAction, handlebarsFile } from '../base'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
@@ -72,7 +72,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const resourceActions: Record<string, any> = {}
   if (block.relType === BlockRelationshipType.Self && view.name === 'index') {
     resource.views.forEach((view) => {
-      if (!['index', 'new', 'show', 'edit', 'delete'].includes(view.name)) return
+      if (!isResourceAction(view.name)) return
       const _view = renderData_View(resource, view)
       resourceActions[view.name] = {
         name: _view.name,
@@ -87,7 +87,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   const _block = renderData_TableBlock(resource, view, block)
   const _customOperations: Array<Record<string, any>> = []
   Object.values<Record<string, any>>(_block.operations).forEach((operation) => {
-    if (['index', 'new', 'show', 'edit', 'delete'].includes(operation.name)) return
+    if (isResourceAction(operation.name)) return
     _customOperations.push(operation)
   })
   _customOperations.sort((a, b) => a.order - b.order)
@@ -99,7 +99,9 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
     { ..._block, view: _view, resourceActions, customOperations: _customOperations }
   )
   const dialogOutfiles = block.operations.map((operation) => {
-    return genView_Dialog(resource, view, block, operation.dialog)
+    const attrs: Record<string, any> = {}
+    if (isResourceAction(operation.name)) attrs.title = { i18nKey: `table.actions.${operation.name}` }
+    return genView_Dialog(resource, view, block, operation.dialog, attrs)
   })
 
   return [blockOutfile, ...dialogOutfiles]
@@ -143,23 +145,39 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
   return [blockOutfile]
 }
 
-function genView_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+function genView_Dialog(
+  resource: Resource,
+  view: View,
+  block: Block,
+  dialog: Dialog,
+  attrs: Record<string, any>
+): GeneratedFile {
   switch (dialog.block.type) {
     case DialogBlockType.DescriptionsBlock:
-      return genView_DescriptionsDialog(resource, view, block, dialog)
+      return genView_DescriptionsDialog(resource, view, block, dialog, attrs)
     case DialogBlockType.FormBlock:
-      return genView_FormDialog(resource, view, block, dialog)
+      return genView_FormDialog(resource, view, block, dialog, attrs)
   }
 }
 
-function genView_DescriptionsDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+function genView_DescriptionsDialog(
+  resource: Resource,
+  view: View,
+  block: Block,
+  dialog: Dialog,
+  attrs: Record<string, any>
+): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
   const dialogPath = toPath(dialog.name)
 
+  // .
   const _block = renderData_Block(resource, view, block)
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
+  if (attrs.title != null) _dialog.title = attrs.title
+
+  // outfile
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     'src/views/modules/__resource__/__view__/components/dialog/__descriptions_dialog__.vue.hbs',
@@ -169,7 +187,13 @@ function genView_DescriptionsDialog(resource: Resource, view: View, block: Block
   return dialogOutfile
 }
 
-function genView_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
+function genView_FormDialog(
+  resource: Resource,
+  view: View,
+  block: Block,
+  dialog: Dialog,
+  attrs: Record<string, any>
+): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
   const blockPath = toPath(block.relName)
@@ -179,9 +203,12 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
   const name = dialog.name
   const formOptions = genView_buildFormOptions(name, dialog.block.model)
 
-  // outfile
+  // .
   const _block = renderData_Block(resource, view, block)
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
+  if (attrs.title != null) _dialog.title = attrs.title
+
+  // outfile
   const dialogOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     'src/views/modules/__resource__/__view__/components/dialog/__form_dialog__.vue.hbs',
@@ -192,19 +219,9 @@ function genView_FormDialog(resource: Resource, view: View, block: Block, dialog
 }
 
 function genView_buildFormOptions(name: string, model: Model): Record<string, any> {
-  const formOptions: Record<string, any> = {
-    actionName: 'save',
-    noGet: model.attributes.length === 0
+  return {
+    noGet: model.attributes.length === 0,
+    isDelete: name === 'delete',
+    actionName: isResourceAction(name) ? name : 'save'
   }
-  switch (name) {
-    case 'new':
-    case 'edit':
-    case 'delete':
-      formOptions.actionName = name
-      formOptions.isDanger = name === 'delete'
-      break
-    default:
-      break
-  }
-  return formOptions
 }

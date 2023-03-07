@@ -1,5 +1,9 @@
 import { ScalarValueType, ObjectValueType } from '@dulladmin/core'
 
+export function isResourceAction(name: string): boolean {
+  return ['index', 'new', 'show', 'edit', 'delete'].includes(name)
+}
+
 export function toJsonType(valueType: ScalarValueType | ObjectValueType): string {
   switch (valueType) {
     case ScalarValueType.Double:

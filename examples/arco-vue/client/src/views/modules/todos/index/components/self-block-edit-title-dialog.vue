@@ -13,7 +13,7 @@
     <template #title>
       {{ $t('todos--index.self-block.title') }}
       -
-      {{ $t('table.actions.save') }}
+      {{ $t('todos--index.self-block.edit-title-dialog.title') }}
       <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>

@@ -13,16 +13,13 @@
     <template #title>
       {{ $t('todos--index.self-block.title') }}
       -
-      {{ $t('table.actions.save') }}
+      {{ $t('todos--index.self-block.delete-completed-dialog.title') }}
       <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
         <a-form :model="store" :auto-label-width="true">
         </a-form>
-        <a-alert >
-          {{ $t('form.actions.save.alert.message') }}
-        </a-alert>
       </a-spin>
     </div>
   </a-modal>

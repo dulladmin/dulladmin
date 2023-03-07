@@ -20,7 +20,7 @@ import {
   renderData_DescriptionsDialog,
   renderData_FormDialog
 } from '../../renderdata'
-import { i18nFile } from '../base'
+import { isResourceAction, i18nFile } from '../base'
 
 export function genI18n(resource: Resource): GeneratedFile[] {
   return genI18n_Resource(resource)
@@ -69,7 +69,7 @@ function genI18n_TableBlock(resource: Resource, view: View, block: TableBlock): 
   })
 
   Object.values<Record<string, any>>(_block.operations).forEach((operation) => {
-    if (['index', 'new', 'show', 'edit', 'delete'].includes(operation.name)) return
+    if (isResourceAction(operation.name)) return
     blockMessages[operation.i18nKey] = operation.i18nValue
   })
 
@@ -114,12 +114,18 @@ function genI18n_DescriptionsDialog(
   dialog: Dialog
 ): Record<string, string> {
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
-  return { ...genI18n_Model(_dialog.model) }
+  const dialogMessages: Record<string, string> = {}
+  if (!isResourceAction(dialog.name)) dialogMessages[_dialog.title.i18nKey] = _dialog.title.i18nValue
+
+  return { ...dialogMessages, ...genI18n_Model(_dialog.model) }
 }
 
 function genI18n_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): Record<string, string> {
   const _dialog = renderData_FormDialog(resource, view, block, dialog)
-  return { ...genI18n_Model(_dialog.model) }
+  const dialogMessages: Record<string, string> = {}
+  if (!isResourceAction(dialog.name)) dialogMessages[_dialog.title.i18nKey] = _dialog.title.i18nValue
+
+  return { ...dialogMessages, ...genI18n_Model(_dialog.model) }
 }
 
 function genI18n_Model(model: Record<string, any>): Record<string, string> {

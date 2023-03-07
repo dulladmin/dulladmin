@@ -6,11 +6,6 @@
       <a-spin style="display: block" :loading="loading">
         <a-form :model="store" :auto-label-width="true">
           <a-form-item>
-            <a-alert type="warning">
-              {{ $t('form.actions.delete.alert.message') }}
-            </a-alert>
-          </a-form-item>
-          <a-form-item>
             <a-space>
               <a-button
                 type="primary"
