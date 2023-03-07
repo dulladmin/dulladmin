@@ -69,6 +69,18 @@ export async function enhance(app) {
   const todosDB = await loadDatabase('./db/todos.json');
   const administratorsDB = await loadDatabase('./db/administrators.json');
 
+  app.get('/dashboard/workplace/basic-line-chart', async (_req, res) => {
+    const chart = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: { type: 'value' },
+      series: [{ data: [150, 230, 224, 218, 135, 147, 260], type: 'line' }],
+    };
+    res.send(buildSuccessResponse({ chart }));
+  });
+
   app.get('/users/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(usersDB.data);
     collection = makeSearch(collection, req.query.search);

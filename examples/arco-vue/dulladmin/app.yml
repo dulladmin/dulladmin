@@ -1,5 +1,9 @@
 menu:
   items:
+    - name: 'dashboard'
+      icon: 'icon_dashboard'
+      items:
+        - { name: 'workplace' , icon: 'icon_bar_chart', view: 'dashboard#workplace' }
     - name: 'users_management'
       icon: 'icon_user_group'
       items:

@@ -1,4 +1,5 @@
 {
+  "menu.submenu.dashboard": "仪表盘",
   "menu.submenu.users-management": "用户管理",
   "menu.submenu.posts-management": "帖子管理",
   "menu.submenu.todos-management": "事项管理",

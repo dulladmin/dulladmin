@@ -1,7 +1,6 @@
 import {
   View,
   BlockType,
-  BlockRelationshipType,
   TableBlock,
   TableBlockSorter,
   TableBlockSearcher,
@@ -23,11 +22,6 @@ export function semanticAnalysisView(view: View, ctx: Context): void {
   const dupBlockNames = blockNames.filter((name, index) => blockNames.indexOf(name) !== index)
   if (dupBlockNames.length !== 0) {
     throw Error(`${view.toString()}'s blocks can not have duplicate name: ${JSON.stringify(dupBlockNames)}`)
-  }
-
-  const selfBlocks = view.blocks.filter((block) => block.relType === BlockRelationshipType.Self)
-  if (selfBlocks.length !== 1) {
-    throw Error(`${view.toString()} must have a self-relationship Block`)
   }
 
   view.blocks.forEach((block) => {

@@ -1,4 +1,5 @@
 {
+  "menu.submenu.dashboard": "Dashboard",
   "menu.submenu.users-management": "Users Management",
   "menu.submenu.posts-management": "Posts Management",
   "menu.submenu.todos-management": "Todos Management",

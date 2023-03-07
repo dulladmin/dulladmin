@@ -41,7 +41,7 @@ import { parseModel } from './model'
 export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string, any>): View {
   const { name } = attrs
 
-  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form']
+  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form', 'echarts']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const authority = doc.authority ?? null
@@ -87,7 +87,7 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.relationship == null) doc.relationship = 'self'
   if (doc.relationship === 'self' && doc.name == null) doc.name = 'self'
 
-  const allowedFiledNames = ['relationship', 'name', 'authority', 'table', 'descriptions', 'form']
+  const allowedFiledNames = ['relationship', 'name', 'authority', 'table', 'descriptions', 'form', 'echarts']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const relType = doc.relationship as BlockRelationshipType

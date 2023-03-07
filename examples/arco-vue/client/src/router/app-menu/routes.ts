@@ -4,6 +4,26 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const appMenuRoutes: RouteRecordRaw[] = [
   {
+    name: '--dashboard',
+    path: '--dashboard',
+    children: [
+      {
+        name: 'DashboardWorkplace',
+        path: 'dashboard/workplace',
+        component: () => import('@/views/modules/dashboard/workplace/index.vue'),
+        meta: {
+          authority: ['*', ],
+          icon: 'icon-bar-chart',
+          title: 'dashboard--workplace.title',
+        },
+      },
+    ],
+    meta: {
+      icon: 'icon-dashboard',
+      title: 'menu.submenu.dashboard',
+    },
+  },
+  {
     name: '--users-management',
     path: '--users-management',
     children: [

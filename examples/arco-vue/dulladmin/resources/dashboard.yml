@@ -1,0 +1,8 @@
+name: 'dashboard'
+singular: true
+views:
+  ~workplace:
+    blocks:
+      - relationship: 'embeds_one'
+        name: 'basic_line_chart'
+        echarts: {}

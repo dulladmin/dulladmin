@@ -7,6 +7,7 @@ import {
   TableBlock,
   DescriptionsBlock,
   FormBlock,
+  EChartsBlock,
   Dialog,
   DialogBlockType
 } from '@dulladmin/core'
@@ -16,6 +17,7 @@ import {
   renderData_TableBlock,
   renderData_DescriptionsBlock,
   renderData_FormBlock,
+  renderData_EChartsBlock,
   renderData_DescriptionsDialog,
   renderData_FormDialog
 } from '../../renderdata'
@@ -44,7 +46,7 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
     case BlockType.FormBlock:
       return genAPI_FormBlock(resource, view, block as FormBlock)
     case BlockType.EChartsBlock:
-      return []
+      return genAPI_EChartsBlock(resource, view, block as EChartsBlock)
   }
 }
 
@@ -91,6 +93,21 @@ function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): Gen
   const blockOutfile = handlebarsFile(
     `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
     'src/api/modules/__resource__/__view__/__form_block__.ts.hbs',
+    { ..._block }
+  )
+
+  return [blockOutfile]
+}
+
+function genAPI_EChartsBlock(resource: Resource, view: View, block: EChartsBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.relName)
+
+  const _block = renderData_EChartsBlock(resource, view, block)
+  const blockOutfile = handlebarsFile(
+    `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
+    'src/api/modules/__resource__/__view__/__echarts_block__.ts.hbs',
     { ..._block }
   )
 
