@@ -3,7 +3,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    class="dulladmin-form-dialog"
+    class="da-form-dialog {{componentNamePath}}"
     :ok-text="$t('form.actions.{{formOptions.actionName}}')"
   {{#if formOptions.isDelete}}
     :ok-button-props="{status: 'danger', disabled: loading}"

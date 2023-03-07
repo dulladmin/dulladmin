@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('users--index.self-block.title')" class="dulladmin-table-block">
+    <a-card :title="$t('users--index.self-block.title')" class="da-table-block dac-self-block">
       <a-row style="margin-bottom: 16px">
         <!-- Table Collection Operations -->
         <a-col :span="12">
@@ -151,7 +151,7 @@
     <!-- Table Search -->
     <a-modal
       v-model:visible="searchModalVisible"
-      class="dulladmin-form-dialog"
+      class="da-form-dialog"
       :ok-text="$t('table.actions.search')"
       :on-before-ok="handleSearchModalBeforeOk"
       @cancel="handleSearchModalCancel"

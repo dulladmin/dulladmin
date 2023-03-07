@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('{{title.i18nKey}}')" class="dulladmin-form-block">
+    <a-card :title="$t('{{title.i18nKey}}')" class="da-form-block {{componentNamePath}}">
       <a-spin style="display: block" :loading="loading">
         <a-form :model="store" :auto-label-width="true">
         {{#each model.attributes}}

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('{{title.i18nKey}}')" class="dulladmin-echarts-block">
+    <a-card :title="$t('{{title.i18nKey}}')" class="da-echarts-block {{componentNamePath}}">
       <a-spin style="display: block" :loading="loading">
         <Chart :option="store" />
       </a-spin>

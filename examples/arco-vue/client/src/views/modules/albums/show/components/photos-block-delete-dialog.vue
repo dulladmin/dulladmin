@@ -3,7 +3,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    class="dulladmin-form-dialog"
+    class="da-form-dialog dac-photos-block-delete-dialog"
     :ok-text="$t('form.actions.delete')"
     :ok-button-props="{status: 'danger', disabled: loading}"
     :on-before-ok="handleModalBeforeOk"

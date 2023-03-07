@@ -3,7 +3,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    class="dulladmin-form-dialog"
+    class="da-form-dialog dac-self-block-edit-dialog"
     :ok-text="$t('form.actions.edit')"
     :ok-button-props="{disabled: loading}"
     :on-before-ok="handleModalBeforeOk"

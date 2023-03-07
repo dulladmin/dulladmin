@@ -28,6 +28,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
 
   return {
     componentName: `${toCamelize(blockName)}Block`,
+    componentNamePath: `dac-${blockPath}-block`,
     componentImportPath: `@/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     api: { url },
     apiImportPath: `@/api/modules/${resourcePath}/${viewPath}/${blockPath}-block`,

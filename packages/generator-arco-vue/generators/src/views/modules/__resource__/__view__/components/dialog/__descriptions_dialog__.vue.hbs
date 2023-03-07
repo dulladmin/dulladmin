@@ -3,7 +3,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    class="dulladmin-descriptions-dialog"
+    class="da-descriptions-dialog {{componentNamePath}}"
     hide-cancel
     @ok="handleModalOk"
     @cancel="handleModalCancel"

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('albums--show.photos-block.title')" class="dulladmin-table-block">
+    <a-card :title="$t('albums--show.photos-block.title')" class="da-table-block dac-photos-block">
       <a-row style="margin-bottom: 16px">
         <!-- Table Collection Operations -->
         <a-col :span="12">

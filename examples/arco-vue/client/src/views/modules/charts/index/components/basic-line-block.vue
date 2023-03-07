@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('charts--index.basic-line-block.title')" class="dulladmin-echarts-block">
+    <a-card :title="$t('charts--index.basic-line-block.title')" class="da-echarts-block dac-basic-line-block">
       <a-spin style="display: block" :loading="loading">
         <Chart :option="store" />
       </a-spin>

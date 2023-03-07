@@ -18,6 +18,7 @@ export function renderData_Dialog(resource: Resource, view: View, block: Block, 
 
   return {
     componentName: `${toCamelize(blockName)}Block${toCamelize(dialogName)}Dialog`,
+    componentNamePath: `dac-${blockPath}-block-${dialogPath}-dialog`,
     componentImportPath: `@/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block-${dialogPath}-dialog.vue`,
     api: { url },
     apiImportPath: `@/api/modules/${resourcePath}/${viewPath}/${blockPath}-block-${dialogPath}-dialog`,

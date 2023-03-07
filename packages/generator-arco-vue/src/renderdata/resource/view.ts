@@ -12,6 +12,7 @@ export function renderData_View(resource: Resource, view: View): Record<string, 
 
   return {
     name: `${toCamelize(resourceName)}${toCamelize(viewName)}`,
+    namePath: `dac-${resourcePath}-${viewPath}-view`,
     authority: view.inheritedAuthority,
     isMemberAction: view.pathScope === ViewPathScope.Member,
     title: {

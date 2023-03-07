@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('administrators--delete.self-block.title')" class="dulladmin-form-block">
+    <a-card :title="$t('administrators--delete.self-block.title')" class="da-form-block dac-self-block">
       <a-spin style="display: block" :loading="loading">
         <a-form :model="store" :auto-label-width="true">
           <a-form-item>

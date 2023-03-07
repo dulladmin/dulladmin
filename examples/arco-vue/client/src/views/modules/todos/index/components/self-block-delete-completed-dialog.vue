@@ -3,7 +3,7 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    class="dulladmin-form-dialog"
+    class="da-form-dialog dac-self-block-delete-completed-dialog"
     :ok-text="$t('form.actions.save')"
     :ok-button-props="{disabled: loading}"
     :on-before-ok="handleModalBeforeOk"
