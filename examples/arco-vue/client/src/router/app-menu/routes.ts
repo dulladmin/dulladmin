@@ -8,13 +8,13 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--dashboard',
     children: [
       {
-        name: 'DashboardWorkplace',
-        path: 'dashboard/workplace',
-        component: () => import('@/views/modules/dashboard/workplace/index.vue'),
+        name: 'DashboardShow',
+        path: 'dashboard',
+        component: () => import('@/views/modules/dashboard/show/index.vue'),
         meta: {
           authority: ['*', ],
-          icon: 'icon-bar-chart',
-          title: 'dashboard--workplace.title',
+          icon: 'icon-dashboard',
+          title: 'dashboard--show.title',
         },
       },
     ],
@@ -131,6 +131,26 @@ const appMenuRoutes: RouteRecordRaw[] = [
     meta: {
       icon: 'icon-settings',
       title: 'menu.submenu.system-management',
+    },
+  },
+  {
+    name: '--examples',
+    path: '--examples',
+    children: [
+      {
+        name: 'ChartsIndex',
+        path: 'charts',
+        component: () => import('@/views/modules/charts/index/index.vue'),
+        meta: {
+          authority: ['*', ],
+          icon: 'icon-bar-chart',
+          title: 'charts--index.title',
+        },
+      },
+    ],
+    meta: {
+      icon: 'icon-mosaic',
+      title: 'menu.submenu.examples',
     },
   },
 ];

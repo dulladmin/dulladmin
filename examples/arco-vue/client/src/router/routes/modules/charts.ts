@@ -4,13 +4,13 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'DashboardShow',
-    path: 'dashboard',
-    component: () => import('@/views/modules/dashboard/show/index.vue'),
+    name: 'ChartsIndex',
+    path: 'charts',
+    component: () => import('@/views/modules/charts/index/index.vue'),
     meta: {
       authority: ['*', ],
       cache: true,
-      title: 'dashboard--show.title',
+      title: 'charts--index.title',
     },
   },
 ];

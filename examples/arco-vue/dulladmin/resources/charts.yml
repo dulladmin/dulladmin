@@ -1,0 +1,10 @@
+name: 'charts'
+views:
+  index:
+    blocks:
+      - relationship: 'embeds_one'
+        name: 'basic_line'
+        echarts: {}
+      - relationship: 'embeds_one'
+        name: 'stacked_line'
+        echarts: {}

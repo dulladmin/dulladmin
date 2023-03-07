@@ -3,7 +3,7 @@ menu:
     - name: 'dashboard'
       icon: 'icon_dashboard'
       items:
-        - { name: 'workplace' , icon: 'icon_bar_chart', view: 'dashboard#workplace' }
+        - { name: 'dashboard' , icon: 'icon_dashboard', view: 'dashboard#show' }
     - name: 'users_management'
       icon: 'icon_user_group'
       items:
@@ -23,3 +23,7 @@ menu:
       icon: 'icon_settings'
       items:
         - { name: 'administrators', icon: 'icon_user_group', view: 'administrators#index' }
+    - name: 'examples'
+      icon: 'icon_mosaic'
+      items:
+        - { name: 'charts' , icon: 'icon_bar_chart', view: 'charts#index' }

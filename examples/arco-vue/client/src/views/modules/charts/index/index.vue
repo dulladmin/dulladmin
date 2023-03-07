@@ -6,7 +6,13 @@
       <a-grid-item :span="24">
         <div
         >
-          <BasicLineChartBlock />
+          <BasicLineBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item :span="24">
+        <div
+        >
+          <StackedLineBlock />
         </div>
       </a-grid-item>
     </a-grid>
@@ -15,15 +21,16 @@
 
 <script lang="ts" setup>
   import { useTabbableView } from '@/hooks';
-  import BasicLineChartBlock from '@/views/modules/dashboard/workplace/components/basic-line-chart-block.vue';
+  import BasicLineBlock from '@/views/modules/charts/index/components/basic-line-block.vue';
+  import StackedLineBlock from '@/views/modules/charts/index/components/stacked-line-block.vue';
 
   useTabbableView({
-    name: 'DashboardWorkplace',
+    name: 'ChartsIndex',
   });
 </script>
 
 <script lang="ts">
   export default {
-    name: 'DashboardWorkplace',
+    name: 'ChartsIndex',
   };
 </script>

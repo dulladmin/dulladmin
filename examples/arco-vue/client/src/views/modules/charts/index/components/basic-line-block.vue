@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <a-card :title="$t('dashboard--workplace.basic-line-chart-block.title')" class="dulladmin-echarts-block">
+    <a-card :title="$t('charts--index.basic-line-block.title')" class="dulladmin-echarts-block">
       <a-spin style="display: block" :loading="loading">
         <Chart :option="store" />
       </a-spin>
@@ -13,7 +13,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
-  import { ChartModel, get } from '@/api/modules/dashboard/workplace/basic-line-chart-block';
+  import { ChartModel, get } from '@/api/modules/charts/index/basic-line-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
   import { Chart } from '@/components';
 
@@ -45,7 +45,7 @@
 
   // echarts - tabbable
   useTabbableViewBlock({
-    viewName: 'DashboardWorkplace',
+    viewName: 'ChartsIndex',
     refreshFn: onEChartsRefresh,
   });
 

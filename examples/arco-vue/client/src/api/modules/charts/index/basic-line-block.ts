@@ -7,10 +7,10 @@ import { EChartsOption } from 'echarts';
 export interface ChartModel extends EChartsOption {
 };
 
-/* GET /dashboard/workplace/basic-line-chart */
+/* GET /charts/index/basic-line */
 export interface GetResponse {
   chart: ChartModel;
 }
 export function get(id: string) {
-  return axios.get<GetResponse>(`/dashboard/workplace/basic-line-chart`);
+  return axios.get<GetResponse>(`/charts/index/basic-line`);
 }

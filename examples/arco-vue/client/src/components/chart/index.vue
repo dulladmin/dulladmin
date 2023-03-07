@@ -1,10 +1,5 @@
 <template>
-  <VCharts
-    v-if="renderChart"
-    :option="options"
-    :autoresize="autoResize"
-    :style="{ width, height }"
-  />
+  <VCharts v-if="renderChart" :option="options" :autoresize="autoResize" />
 </template>
 
 <script lang="ts" setup>
@@ -21,14 +16,6 @@
     autoResize: {
       type: Boolean,
       default: true,
-    },
-    width: {
-      type: String,
-      default: '100%',
-    },
-    height: {
-      type: String,
-      default: '100%',
     },
   });
 
