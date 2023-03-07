@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, ViewPathScope, View, Block, BlockRelationshipType } from '@dulladmin/core'
+import { Resource, ViewPathScope, View, Block, BlockType, BlockRelationshipType } from '@dulladmin/core'
 import { toCamelize, toUnderscore, toI18nMessage, toPath } from '../../../naming'
 import { isResourceAction } from '../../base'
 
@@ -14,11 +14,16 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   const viewName = toUnderscore(view.name)
   const blockName = toUnderscore(block.relName)
 
-  let resourceTitle = ''
+  let title = ''
   if (block.relType === BlockRelationshipType.Self) {
-    resourceTitle = isResourceAction(view.name) ? resourceName : viewName
+    title = isResourceAction(view.name) ? toI18nMessage(resourceName) : toI18nMessage(viewName)
   } else {
-    resourceTitle = blockName
+    title = toI18nMessage(blockName)
+  }
+  if (block.type === BlockType.EChartsBlock) {
+    title = title + ' Chart'
+  } else {
+    title = title + ' ' + toI18nMessage(block.type)
   }
 
   return {
@@ -29,7 +34,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
     authority: block.inheritedAuthority,
     title: {
       i18nKey: `${i18nKeyPrefix}.title`,
-      i18nValue: `${toI18nMessage(resourceTitle)} ${toI18nMessage(block.type)}`
+      i18nValue: title
     }
   }
 }
