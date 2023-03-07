@@ -7,6 +7,7 @@ import {
   TableBlock,
   DescriptionsBlock,
   FormBlock,
+  EChartsBlock,
   DialogBlockType,
   Dialog
 } from '@dulladmin/core'
@@ -17,6 +18,7 @@ import {
   renderData_TableBlock,
   renderData_DescriptionsBlock,
   renderData_FormBlock,
+  renderData_EChartsBlock,
   renderData_DescriptionsDialog,
   renderData_FormDialog
 } from '../../renderdata'
@@ -55,7 +57,7 @@ function genI18n_Block(resource: Resource, view: View, block: Block): Record<str
     case BlockType.FormBlock:
       return genI18n_FormBlock(resource, view, block as FormBlock)
     case BlockType.EChartsBlock:
-      return {}
+      return genI18n_EChartsBlock(resource, view, block as EChartsBlock)
   }
 }
 
@@ -98,6 +100,15 @@ function genI18n_FormBlock(resource: Resource, view: View, block: FormBlock): Re
   }
 
   return { ...blockMessages, ...genI18n_Model(_block.model) }
+}
+
+function genI18n_EChartsBlock(resource: Resource, view: View, block: EChartsBlock): Record<string, string> {
+  const _block = renderData_EChartsBlock(resource, view, block)
+  const blockMessages = {
+    [_block.title.i18nKey]: _block.title.i18nValue
+  }
+
+  return { ...blockMessages }
 }
 
 function genI18n_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): Record<string, string> {
