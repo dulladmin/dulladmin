@@ -5,10 +5,10 @@ import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
 export { isResourceAction } from '../renderdata/base'
 
-export function handlebarsFile(outfilePath: string, templatePath: string, view: Record<string, any>): GeneratedFile {
+export function handlebarsFile(outfilePath: string, templatePath: string, data: Record<string, any>): GeneratedFile {
   const infilePath = path.join(generatorsDir, templatePath)
   const infileContent = Handlebars.compile(fs.readFileSync(infilePath, 'utf-8'))
-  const outfileContent = infileContent(view)
+  const outfileContent = infileContent(data)
   return { path: outfilePath, content: outfileContent }
 }
 

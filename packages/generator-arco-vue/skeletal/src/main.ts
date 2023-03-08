@@ -12,6 +12,8 @@ import '@/api/interceptor';
 import '@arco-design/web-vue/dist/arco.css';
 import '@/assets/style/main.less';
 
+import.meta.glob('@/assets/style/modules/*.less', { eager: true });
+
 const app = createApp(App);
 
 app.use(ArcoVue, {});

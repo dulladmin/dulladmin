@@ -14,7 +14,7 @@ import type {
   Generator
 } from '@dulladmin/core'
 import { skeletalDir } from './files'
-import { genAppConfig, genAppMenu, genAPI, genI18n, genRoutes, genViews } from './codegen'
+import { genAppConfig, genAppMenu, genAPI, genI18n, genRoutes, genStyle, genViews } from './codegen'
 
 class GeneratorArcoVue implements Generator {
   clientInstall(_: ClientInstallRequest): ClientInstallResponse {
@@ -54,9 +54,10 @@ class GeneratorArcoVue implements Generator {
         const resource = parseResourceFile(resourceFileContent)
         resources.push(resource)
         files[resourceFilePath] = ([] as GeneratedFile[])
-          .concat(genAPI(resource))
           .concat(genRoutes(resource))
+          .concat(genAPI(resource))
           .concat(genViews(resource))
+          .concat(genStyle(resource))
           .concat(genI18n(resource))
       } catch (err) {
         errors[resourceFilePath] = (err as Error).message
