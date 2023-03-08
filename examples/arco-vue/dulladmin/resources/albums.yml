@@ -44,7 +44,7 @@ views:
               form:
                 items: []
 
-  ~show_photos:
+  show_photos:
     table:
       items:
         - { name: 'id'          , type: 'int64'  }

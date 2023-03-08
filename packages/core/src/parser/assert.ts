@@ -10,7 +10,14 @@ export function assertFieldNames(doc: unknown, allowedFiledNames: string[], fiel
   Object.keys(doc as object).forEach((name) => {
     if (name.startsWith('_')) return
     if (allowedFiledNames.includes(name)) return
-    if (allowedFiledNames.includes('~') && name.startsWith('~')) return
+    throw new Error(`Unknown field name \`${name}\` in \`${fieldXPath}\``)
+  })
+}
+
+export function assertFieldNamesRegexp(doc: unknown, allowedFiledNames: RegExp, fieldXPath: string): void {
+  Object.keys(doc as object).forEach((name) => {
+    if (name.startsWith('_')) return
+    if (allowedFiledNames.test(name)) return
     throw new Error(`Unknown field name \`${name}\` in \`${fieldXPath}\``)
   })
 }

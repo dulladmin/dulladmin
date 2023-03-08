@@ -17,6 +17,7 @@ import {
 } from '../../../structs'
 import {
   assertFieldNames,
+  assertFieldNamesRegexp,
   assertNotNull,
   assertIsArray,
   assertIsObject,
@@ -226,19 +227,13 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 }
 
 function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
-  const allowedFiledNames = ['new', 'show', 'edit', 'delete', '~']
-  assertFieldNames(doc, allowedFiledNames, xpath)
+  const allowedFiledNames = /^[a-zA-Z_]\w*/
+  assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const operations: TableBlockOperation[] = []
   Object.keys(doc).forEach((name) => {
     const _doc = doc[name as keyof typeof doc]!
-    if (name.startsWith('~')) {
-      const _op = parseTableBlockOperation(_doc, `${xpath}/${name}`, { name: name.slice(1) })
-      operations.push(_op)
-    } else {
-      const _op = parseTableBlockOperation(_doc, `${xpath}/${name}`, { name })
-      operations.push(_op)
-    }
+    operations.push(parseTableBlockOperation(_doc, `${xpath}/${name}`, { name }))
   })
   return operations
 }

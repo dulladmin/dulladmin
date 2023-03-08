@@ -1,5 +1,12 @@
 import { Resource, View } from '../../../structs'
-import { assertFieldNames, assertNotNull, assertIsArray, assertIsObject, assertIsString } from '../../assert'
+import {
+  assertFieldNames,
+  assertFieldNamesRegexp,
+  assertNotNull,
+  assertIsArray,
+  assertIsObject,
+  assertIsString
+} from '../../assert'
 import { YamlResourceType, YamlViewsType } from '../loader'
 import { parseView } from './view'
 
@@ -33,17 +40,13 @@ export function parseResource(doc: YamlResourceType): Resource {
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
-  const allowedFiledNames = ['index', 'new', 'show', 'edit', 'delete', '~']
-  assertFieldNames(doc, allowedFiledNames, xpath)
+  const allowedFiledNames = /^[a-zA-Z_]\w*/
+  assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const views: View[] = []
   Object.keys(doc).forEach((name) => {
     const _doc = doc[name as keyof typeof doc]!
-    if (name.startsWith('~')) {
-      views.push(parseView(_doc, xpath + `/${name}`, { name: name.slice(1) }))
-    } else {
-      views.push(parseView(_doc, xpath + `/${name}`, { name }))
-    }
+    views.push(parseView(_doc, xpath + `/${name}`, { name }))
   })
   return views
 }

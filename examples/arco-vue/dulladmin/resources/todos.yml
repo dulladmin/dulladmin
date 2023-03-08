@@ -13,18 +13,18 @@ views:
         - { name: 'userId'   , predicate: 'eq' }
         - { name: 'completed', predicate: 'eq' }
       operations:
-        ~show_title:
+        show_title:
           descriptions:
             items:
               - { name: 'title', type: 'string' }
-        ~edit_title:
+        edit_title:
           form:
             items:
               - { name: 'title', type: 'string' }
-        ~create_completed:
+        create_completed:
           form:
             items: []
-        ~delete_completed:
+        delete_completed:
           form:
             items: []
 
