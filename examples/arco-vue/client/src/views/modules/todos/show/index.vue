@@ -2,7 +2,7 @@
 
 <template>
   <div class="da-view dac-todos-show-view">
-    <a-grid :cols="24" :row-gap="16">
+    <a-grid :cols="24" :col-gap="16" :row-gap="16">
       <a-grid-item :span="24">
         <div>
           <SelfBlock />

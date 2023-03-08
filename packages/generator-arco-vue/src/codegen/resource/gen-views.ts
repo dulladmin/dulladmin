@@ -23,7 +23,8 @@ import {
   renderData_FormBlock,
   renderData_EChartsBlock,
   renderData_DescriptionsDialog,
-  renderData_FormDialog
+  renderData_FormDialog,
+  renderData_Grid
 } from '../../renderdata'
 import { isResourceAction, handlebarsFile } from '../base'
 
@@ -41,10 +42,11 @@ function genViews_View(resource: Resource, view: View): GeneratedFile[] {
 
   const _view = renderData_View(resource, view)
   const blocks = view.blocks.map((block) => renderData_Block(resource, view, block))
+  const grid = renderData_Grid(resource, view, blocks)
   const viewOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/index.vue`,
     'src/views/modules/__resource__/__view__/index.vue.hbs',
-    { ..._view, blocks }
+    { ..._view, blocks, grid }
   )
 
   const blockOutfiles = view.blocks
