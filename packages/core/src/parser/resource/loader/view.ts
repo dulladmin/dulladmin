@@ -8,6 +8,7 @@ export interface YamlViewType {
   descriptions?: YamlBlockDescriptionsType
   form?: YamlBlockFormType
   echarts?: YamlBlockEChartsType
+  grid: YamlGridType
 }
 
 export interface YamlBlockType {
@@ -68,3 +69,12 @@ export interface YamlBlockFormType {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface YamlBlockEChartsType {}
+
+export interface YamlGridType {
+  items?: YamlGridItemType[]
+}
+
+export interface YamlGridItemType {
+  name?: string
+  span?: number | Record<string, number>
+}

@@ -13,7 +13,9 @@ import {
   EChartsBlock,
   Block,
   Dialog,
-  ScalarValueType
+  ScalarValueType,
+  Grid,
+  GridItem
 } from '../../../structs'
 import {
   assertFieldNames,
@@ -34,7 +36,8 @@ import {
   YamlBlockTableSearcherType,
   YamlBlockTableOperationsType,
   YamlBlockTableOperationType,
-  YamlDialogType
+  YamlDialogType,
+  YamlGridType
 } from '../loader'
 import { parseDialog } from './dialog'
 import { parseModel } from './model'
@@ -42,7 +45,7 @@ import { parseModel } from './model'
 export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string, any>): View {
   const { name } = attrs
 
-  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form', 'echarts']
+  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form', 'echarts', 'grid']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const authority = doc.authority ?? null
@@ -81,7 +84,15 @@ export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string
     parsedBlocks.push(parseBlock(block, xpath))
   }
 
-  return new View(name, authority, parsedBlocks, null)
+  let parsedGrid: Grid | null = null
+  const grid = doc.grid ?? null
+  const gridXPath = xpath + '/grid'
+  if (grid != null) {
+    assertIsObject(grid, gridXPath)
+    parsedGrid = parseGrid(grid, gridXPath)
+  }
+
+  return new View(name, authority, parsedBlocks, null, parsedGrid)
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
@@ -308,4 +319,30 @@ function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string,
 function parseEChartsBlock(_doc: YamlBlockType, _xpath: string, attrs: Record<string, any>): EChartsBlock {
   const { relType, relName, authority } = attrs
   return new EChartsBlock(relType, relName, authority)
+}
+
+function parseGrid(doc: YamlGridType, xpath: string): Grid {
+  const allowedFiledNames = ['items']
+  assertFieldNames(doc, allowedFiledNames, xpath)
+
+  const parsedItems: GridItem[] = []
+  const items = doc.items
+  const itemsXPath = xpath + '/items'
+  assertNotNull(items, itemsXPath)
+  assertIsArray(items, itemsXPath)
+  items!.forEach((item, idx) => {
+    const _xpath = xpath + `[${idx}]`
+    const _allowedFiledNames = ['name', 'span']
+    assertFieldNames(item, _allowedFiledNames, _xpath)
+
+    const _name = item.name
+    const _nameXPath = _xpath + '/name'
+    assertNotNull(_name, _nameXPath)
+    assertIsString(_name, _nameXPath)
+
+    const _span = item.span ?? null
+    parsedItems.push(new GridItem(_name!, _span))
+  })
+
+  return new Grid(parsedItems)
 }

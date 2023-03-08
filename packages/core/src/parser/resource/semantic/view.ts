@@ -8,7 +8,9 @@ import {
   DescriptionsBlock,
   FormBlock,
   EChartsBlock,
-  Block
+  Block,
+  Grid,
+  GridItem
 } from '../../../structs'
 import { isDullAdminScalarValueType } from '../../assert'
 import { Context } from './base'
@@ -28,6 +30,8 @@ export function semanticAnalysisView(view: View, ctx: Context): void {
     ctx.block = block
     semanticAnalysisBlock(block, ctx)
   })
+
+  semanticAnalysisGrid(view.grid, ctx)
 }
 
 function semanticAnalysisBlock(block: Block, ctx: Context): void {
@@ -119,4 +123,11 @@ function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
 
 function semanticAnalysisEChartsBlock(block: EChartsBlock, ctx: Context): void {
   block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
+}
+
+function semanticAnalysisGrid(grid: Grid | null, ctx: Context): void {
+  if (grid == null) {
+    const items = ctx.view.blocks.map((block) => new GridItem(block.relName, null))
+    ctx.view.computedGrid = new Grid(items)
+  }
 }

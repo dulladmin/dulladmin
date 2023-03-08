@@ -1,4 +1,5 @@
 import Block from './view-block'
+import Grid from './grid'
 
 enum ViewPathScope {
   Collection = 'collection',
@@ -9,16 +10,26 @@ class View {
   name: string
   authority: string[] | null
   blocks: Block[]
+  grid: Grid | null
   pathScope: ViewPathScope
 
   inheritedAuthority: string[] | null
+  computedGrid: Grid | null
 
-  constructor(name: string, authority: string[] | null, blocks: Block[], pathScope: ViewPathScope | null) {
+  constructor(
+    name: string,
+    authority: string[] | null,
+    blocks: Block[],
+    pathScope: ViewPathScope | null,
+    grid: Grid | null
+  ) {
     this.name = name
     this.authority = authority
     this.blocks = blocks
+    this.grid = grid
     this.pathScope = pathScope ?? this._defaultPathScope(this.name)
     this.inheritedAuthority = null
+    this.computedGrid = null
   }
 
   toString(): string {

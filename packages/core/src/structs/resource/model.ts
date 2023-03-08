@@ -55,6 +55,10 @@ class ObjectValue {
   constructor(attributes: ObjectValueAttribute[]) {
     this.attributes = attributes
   }
+
+  toString(): string {
+    return '#<ObjectValue>'
+  }
 }
 
 class ModelAttribute {
@@ -95,6 +99,10 @@ class Model {
 
   constructor(attributes: ModelAttribute[]) {
     this.attributes = attributes
+  }
+
+  toString(): string {
+    return '#<Model>'
   }
 }
 
