@@ -35,6 +35,8 @@ export function semanticAnalysisView(view: View, ctx: Context): void {
 }
 
 function semanticAnalysisBlock(block: Block, ctx: Context): void {
+  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
+
   switch (block.type) {
     case BlockType.TableBlock:
       semanticAnalysisTableBlock(block as TableBlock, ctx)
@@ -52,7 +54,6 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
 }
 
 function semanticAnalysisTableBlock(block: TableBlock, ctx: Context): void {
-  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx, block)
   semanticAnalysisTableSorter(block.sorters, ctx)
   semanticAnalysisTableSearcher(block.searchers, ctx)
@@ -112,22 +113,27 @@ function semanticAnalysisTableOperations(operations: TableBlockOperation[], ctx:
 }
 
 function semanticAnalysisDescriptionsBlock(block: DescriptionsBlock, ctx: Context): void {
-  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx, block)
 }
 
 function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
-  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
   semanticAnalysisModel(block.model, ctx, block)
 }
 
-function semanticAnalysisEChartsBlock(block: EChartsBlock, ctx: Context): void {
-  block.inheritedAuthority = ctx.view.inheritedAuthority ?? block.authority
-}
+function semanticAnalysisEChartsBlock(_block: EChartsBlock, _ctx: Context): void {}
 
 function semanticAnalysisGrid(grid: Grid | null, ctx: Context): void {
   if (grid == null) {
     const items = ctx.view.blocks.map((block) => new GridItem(block.relName, null))
     ctx.view.computedGrid = new Grid(items)
+    return
   }
+
+  ctx.view.computedGrid = grid!
+  ctx.view.computedGrid.items.forEach((item) => {
+    const block = ctx.view.blocks.find((block) => block.relName === item.name)
+    if (block == null) {
+      throw Error(`${item.toString()}'s name must be defined in items`)
+    }
+  })
 }

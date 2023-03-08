@@ -2,8 +2,8 @@
 
 <template>
   <div class="da-view dac-administrators-show-view">
-    <a-grid :cols="24" :col-gap="16" :row-gap="16">
-      <a-grid-item :span="24">
+    <a-grid class="da-view-grid" :cols='24' :col-gap="16" :row-gap="16">
+      <a-grid-item class="da-view-grid-item dac-self-view-grid-item" :span='24'>
         <div v-permission="['admin', ]">
           <SelfBlock />
         </div>

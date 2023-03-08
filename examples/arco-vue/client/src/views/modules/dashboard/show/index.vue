@@ -2,7 +2,7 @@
 
 <template>
   <div class="da-view dac-dashboard-show-view">
-    <a-grid :cols="24" :col-gap="16" :row-gap="16">
+    <a-grid class="da-view-grid" :cols='24' :col-gap="16" :row-gap="16">
     </a-grid>
   </div>
 </template>

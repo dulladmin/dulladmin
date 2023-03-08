@@ -2,13 +2,13 @@
 
 <template>
   <div class="da-view dac-charts-index-view">
-    <a-grid :cols="24" :col-gap="16" :row-gap="16">
-      <a-grid-item :span="24">
+    <a-grid class="da-view-grid" :cols='24' :col-gap="16" :row-gap="16">
+      <a-grid-item class="da-view-grid-item dac-basic-line-view-grid-item" :span='{"xs":24,"sm":12}'>
         <div>
           <BasicLineBlock />
         </div>
       </a-grid-item>
-      <a-grid-item :span="24">
+      <a-grid-item class="da-view-grid-item dac-stacked-line-view-grid-item" :span='{"xs":24,"sm":12}'>
         <div>
           <StackedLineBlock />
         </div>

@@ -2,9 +2,9 @@
 
 <template>
   <div class="da-view {{namePath}}">
-    <a-grid :cols="{{grid.cols}}" :col-gap="16" :row-gap="16">
+    <a-grid class="da-view-grid" :cols='{{{grid.cols}}}' :col-gap="16" :row-gap="16">
     {{#each grid.items}}
-      <a-grid-item :span="{{span}}">
+      <a-grid-item class="da-view-grid-item {{namePath}}" :span='{{{span}}}'>
         <div{{#if block.authority}} v-permission="[{{#each block.authority}}'{{this}}', {{/each}}]"{{/if}}>
           <{{block.componentName}} />
         </div>

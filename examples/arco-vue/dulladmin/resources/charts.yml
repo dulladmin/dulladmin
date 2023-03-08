@@ -8,3 +8,9 @@ views:
       - relationship: 'embeds_one'
         name: 'stacked_line'
         echarts: {}
+    grid:
+      items:
+        - name: 'basic_line'
+          span: { xs: 24, sm: 12 }
+        - name: 'stacked_line'
+          span: { xs: 24, sm: 12 }
