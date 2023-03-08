@@ -34,12 +34,7 @@ class GeneratorArcoVue implements Generator {
       msg: 'ok',
       data: {
         templateDir: skeletalDir,
-        ignore: [
-          'src/assets/style/dulladmin-custom.less',
-          'src/router/app-menu/routes.ts',
-          'src/config/config.json',
-          'components.d.ts'
-        ],
+        ignore: ['src/router/app-menu/routes.ts', 'src/config/config.json', 'components.d.ts'],
         postupdateScript: 'bin/setup'
       }
     }

@@ -47,19 +47,28 @@ export const build = {
             const outfilePath = path.join(clientDir, outfile.path)
             logger.info(`      + ${outfilePath}`)
 
-            if (outfilePath.endsWith('.json')) {
-              const oldData = (await fse.pathExists(outfilePath))
-                ? JSON.parse(fs.readFileSync(outfilePath, 'utf8'))
-                : {}
-              const newData = JSON.parse(outfile.content)
-              const r: Record<string, any> = {}
-              Object.keys(newData).forEach((k) => {
-                // * use Object.keys to delete extraneous properties
-                // * use Object#hasOwnProperty to skip updating properties that exist
-                r[k] = Object.hasOwnProperty.call(oldData, k) ? oldData[k] : newData[k]
-              })
-              await fse.outputFile(outfilePath, JSON.stringify(r, null, 2) + '\n')
+            if (await fse.pathExists(outfilePath)) {
+              // skip
+              if (outfile.ignoreExisting ?? false) return
+
+              // merge OR overwrite
+              if (outfilePath.endsWith('.json')) {
+                const oldData = (await fse.pathExists(outfilePath))
+                  ? JSON.parse(fs.readFileSync(outfilePath, 'utf8'))
+                  : {}
+                const newData = JSON.parse(outfile.content)
+                const r: Record<string, any> = {}
+                Object.keys(newData).forEach((k) => {
+                  // * use Object.keys to delete extraneous properties
+                  // * use Object#hasOwnProperty to skip updating properties that exist
+                  r[k] = Object.hasOwnProperty.call(oldData, k) ? oldData[k] : newData[k]
+                })
+                await fse.outputFile(outfilePath, JSON.stringify(r, null, 2) + '\n')
+              } else {
+                await fse.outputFile(outfilePath, outfile.content)
+              }
             } else {
+              // create
               await fse.outputFile(outfilePath, outfile.content)
             }
           })() as unknown

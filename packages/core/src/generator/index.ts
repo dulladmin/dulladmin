@@ -1,6 +1,7 @@
 export interface GeneratedFile {
   path: string
   content: string
+  ignoreExisting?: boolean
 }
 
 export interface ClientInstallRequest {
