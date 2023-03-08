@@ -3,14 +3,34 @@
 <template>
   <div class="da-view dac-charts-index-view">
     <a-grid class="da-view-grid" :cols='24' :col-gap="16" :row-gap="16">
-      <a-grid-item class="da-view-grid-item dac-basic-line-view-grid-item" :span='{"xs":24,"sm":12}'>
+      <a-grid-item class="da-view-grid-item dac-basic-line-view-grid-item" :span='{"xs":24,"sm":8}'>
         <div>
           <BasicLineBlock />
         </div>
       </a-grid-item>
-      <a-grid-item class="da-view-grid-item dac-stacked-line-view-grid-item" :span='{"xs":24,"sm":12}'>
+      <a-grid-item class="da-view-grid-item dac-stacked-line-view-grid-item" :span='{"xs":24,"sm":8}'>
         <div>
           <StackedLineBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-waterfall-view-grid-item" :span='{"xs":24,"sm":8}'>
+        <div>
+          <WaterfallBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-funnel-align-view-grid-item" :span='24'>
+        <div>
+          <FunnelAlignBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-bar-chart-on-polar-view-grid-item" :span='{"xs":24,"sm":12}'>
+        <div>
+          <BarChartOnPolarBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-pie-rich-text-view-grid-item" :span='{"xs":24,"sm":12}'>
+        <div>
+          <PieRichTextBlock />
         </div>
       </a-grid-item>
     </a-grid>
@@ -21,6 +41,10 @@
   import { useTabbableView } from '@/hooks';
   import BasicLineBlock from '@/views/modules/charts/index/components/basic-line-block.vue';
   import StackedLineBlock from '@/views/modules/charts/index/components/stacked-line-block.vue';
+  import WaterfallBlock from '@/views/modules/charts/index/components/waterfall-block.vue';
+  import BarChartOnPolarBlock from '@/views/modules/charts/index/components/bar-chart-on-polar-block.vue';
+  import PieRichTextBlock from '@/views/modules/charts/index/components/pie-rich-text-block.vue';
+  import FunnelAlignBlock from '@/views/modules/charts/index/components/funnel-align-block.vue';
 
   useTabbableView({
     name: 'ChartsIndex',

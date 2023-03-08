@@ -1,5 +1,9 @@
 {
   "charts--index.title": "图表示例",
   "charts--index.basic-line-block.title": "基础折线图",
-  "charts--index.stacked-line-block.title": "折线图堆叠"
+  "charts--index.stacked-line-block.title": "折线图堆叠",
+  "charts--index.waterfall-block.title": "阶梯瀑布图",
+  "charts--index.bar-chart-on-polar-block.title": "极坐标下的柱状图",
+  "charts--index.pie-rich-text-block.title": "富文本标签",
+  "charts--index.funnel-align-block.title": "漏斗图"
 }

@@ -8,9 +8,29 @@ views:
       - relationship: 'embeds_one'
         name: 'stacked_line'
         echarts: {}
+      - relationship: 'embeds_one'
+        name: 'waterfall'
+        echarts: {}
+      - relationship: 'embeds_one'
+        name: 'bar_chart_on_polar'
+        echarts: {}
+      - relationship: 'embeds_one'
+        name: 'pie_rich_text'
+        echarts: {}
+      - relationship: 'embeds_one'
+        name: 'funnel_align'
+        echarts: {}
     grid:
       items:
         - name: 'basic_line'
-          span: { xs: 24, sm: 12 }
+          span: { xs: 24, sm: 8 }
         - name: 'stacked_line'
+          span: { xs: 24, sm: 8 }
+        - name: 'waterfall'
+          span: { xs: 24, sm: 8 }
+        - name: 'funnel_align'
+          span: 24
+        - name: 'bar_chart_on_polar'
+          span: { xs: 24, sm: 12 }
+        - name: 'pie_rich_text'
           span: { xs: 24, sm: 12 }

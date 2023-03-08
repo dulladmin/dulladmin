@@ -1,5 +1,9 @@
 {
   "charts--index.title": "Charts Index",
   "charts--index.basic-line-block.title": "Basic Line Chart",
-  "charts--index.stacked-line-block.title": "Stacked Line Chart"
+  "charts--index.stacked-line-block.title": "Stacked Line Chart",
+  "charts--index.waterfall-block.title": "Waterfall Chart",
+  "charts--index.bar-chart-on-polar-block.title": "Bar Chart on Polar Chart",
+  "charts--index.pie-rich-text-block.title": "Pie Rich Text Chart",
+  "charts--index.funnel-align-block.title": "Funnel Align Chart"
 }
