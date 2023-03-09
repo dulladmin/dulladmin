@@ -379,6 +379,7 @@
           sortDirections: ['descend', 'ascend', ],
           sorter: true,
         },
+        cellClass: 'column-id',
         hidden: false,
       },
       {
@@ -389,6 +390,7 @@
           sortDirections: ['descend', ],
           sorter: true,
         },
+        cellClass: 'column-name',
         hidden: false,
       },
       {
@@ -399,6 +401,7 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        cellClass: 'column-username',
         hidden: false,
       },
       {
@@ -409,37 +412,42 @@
           sortDirections: ['ascend', ],
           sorter: true,
         },
+        cellClass: 'column-email',
         hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.address'),
         dataIndex: 'address',
         slotName: 'address',
+        cellClass: 'column-address',
         hidden: true,
       },
       {
         title: t('users--index.self-block.model.attributes.phone'),
         dataIndex: 'phone',
         slotName: 'phone',
+        cellClass: 'column-phone',
         hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.website'),
         dataIndex: 'website',
         slotName: 'website',
+        cellClass: 'column-website',
         hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.company'),
         dataIndex: 'company',
         slotName: 'company',
+        cellClass: 'column-company',
         hidden: true,
       },
       {
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 160,
+        cellClass: 'column-operations',
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;

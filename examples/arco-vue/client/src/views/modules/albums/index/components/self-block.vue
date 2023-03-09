@@ -186,25 +186,28 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        cellClass: 'column-id',
         hidden: false,
       },
       {
         title: t('albums--index.self-block.model.attributes.userId'),
         dataIndex: 'userId',
         slotName: 'userId',
+        cellClass: 'column-userId',
         hidden: false,
       },
       {
         title: t('albums--index.self-block.model.attributes.title'),
         dataIndex: 'title',
         slotName: 'title',
+        cellClass: 'column-title',
         hidden: false,
       },
       {
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 160,
+        cellClass: 'column-operations',
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;

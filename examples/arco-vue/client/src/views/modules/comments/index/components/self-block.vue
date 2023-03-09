@@ -212,37 +212,42 @@
           sortDirections: ['ascend', 'descend', ],
           sorter: true,
         },
+        cellClass: 'column-id',
         hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.postId'),
         dataIndex: 'postId',
         slotName: 'postId',
+        cellClass: 'column-postId',
         hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
+        cellClass: 'column-name',
         hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.email'),
         dataIndex: 'email',
         slotName: 'email',
+        cellClass: 'column-email',
         hidden: false,
       },
       {
         title: t('comments--index.self-block.model.attributes.body'),
         dataIndex: 'body',
         slotName: 'body',
+        cellClass: 'column-body',
         hidden: false,
       },
       {
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 160,
+        cellClass: 'column-operations',
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;

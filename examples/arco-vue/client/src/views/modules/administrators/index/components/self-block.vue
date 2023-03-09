@@ -312,25 +312,28 @@
         title: t('administrators--index.self-block.model.attributes.id'),
         dataIndex: 'id',
         slotName: 'id',
+        cellClass: 'column-id',
         hidden: false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
+        cellClass: 'column-name',
         hidden: false,
       },
       {
         title: t('administrators--index.self-block.model.attributes.role'),
         dataIndex: 'role',
         slotName: 'role',
+        cellClass: 'column-role',
         hidden: false,
       },
       {
         title: t('table.columns.operations'),
         dataIndex: 'tableOperationsColumn',
         slotName: 'tableOperationsColumn',
-        width: 160,
+        cellClass: 'column-operations',
       },
     ] as Column[]).filter((item) => {
       return tableColumnsWithConfiguration.value[item.dataIndex as string].renderable;
