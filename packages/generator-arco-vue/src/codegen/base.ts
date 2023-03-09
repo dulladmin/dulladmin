@@ -3,7 +3,7 @@ import path from 'node:path'
 import Handlebars from 'handlebars'
 import type { GeneratedFile } from '@dulladmin/core'
 import { generatorsDir } from '../files'
-export { isResourceAction } from '../renderdata/base'
+export { isResourceAction, isSelfBlock } from '../renderdata/base'
 
 export function handlebarsFile(outfilePath: string, templatePath: string, data: Record<string, any>): GeneratedFile {
   const infilePath = path.join(generatorsDir, templatePath)

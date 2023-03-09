@@ -12,7 +12,6 @@ export interface YamlViewType {
 }
 
 export interface YamlBlockType {
-  relationship?: string
   name?: string
   authority?: string[]
   table?: YamlBlockTableType

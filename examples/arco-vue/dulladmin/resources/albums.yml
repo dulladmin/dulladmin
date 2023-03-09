@@ -15,8 +15,7 @@ views:
           items:
             - { name: 'userId', type: 'int64'  }
             - { name: 'title' , type: 'string' }
-      - relationship: 'embeds_many'
-        name: 'photos'
+      - name: 'photos'
         table:
           items:
             - { name: 'id'          , type: 'int64'  }

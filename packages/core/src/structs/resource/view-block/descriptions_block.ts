@@ -1,5 +1,5 @@
 import Model from '../model'
-import { BlockType, BlockRelationshipType } from './base'
+import { BlockType } from './base'
 
 /*
  * Render the data into a Descriptions, e.g.
@@ -53,8 +53,7 @@ class DescriptionsBlock {
   authority: string[] | null
 
   // Data Source
-  relType: BlockRelationshipType
-  relName: string
+  name: string
 
   // Data Structuring
   model: Model
@@ -62,17 +61,16 @@ class DescriptionsBlock {
   // Inherited Property
   inheritedAuthority: string[] | null
 
-  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
+  constructor(name: string, authority: string[] | null, model: Model) {
     this.type = BlockType.DescriptionsBlock
-    this.relType = relType
-    this.relName = relName
+    this.name = name
     this.authority = authority
     this.model = model
     this.inheritedAuthority = null
   }
 
   toString(): string {
-    return `#<DescriptionsBlock @name="${this.relName}">`
+    return `#<DescriptionsBlock @name="${this.name}">`
   }
 }
 

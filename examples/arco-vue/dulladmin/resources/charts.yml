@@ -2,23 +2,17 @@ name: 'charts'
 views:
   index:
     blocks:
-      - relationship: 'embeds_one'
-        name: 'basic_line'
+      - name: 'basic_line'
         echarts: {}
-      - relationship: 'embeds_one'
-        name: 'stacked_line'
+      - name: 'stacked_line'
         echarts: {}
-      - relationship: 'embeds_one'
-        name: 'waterfall'
+      - name: 'waterfall'
         echarts: {}
-      - relationship: 'embeds_one'
-        name: 'bar_chart_on_polar'
+      - name: 'bar_chart_on_polar'
         echarts: {}
-      - relationship: 'embeds_one'
-        name: 'pie_rich_text'
+      - name: 'pie_rich_text'
         echarts: {}
-      - relationship: 'embeds_one'
-        name: 'funnel_align'
+      - name: 'funnel_align'
         echarts: {}
     grid:
       items:

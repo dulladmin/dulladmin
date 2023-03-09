@@ -1,12 +1,11 @@
-import { BlockType, BlockRelationshipType } from './base'
+import { BlockType } from './base'
 
 class EChartsBlock {
   type: BlockType
   authority: string[] | null
 
   // Data Source
-  relType: BlockRelationshipType
-  relName: string
+  name: string
 
   // Data Structuring
   model: null
@@ -14,17 +13,16 @@ class EChartsBlock {
   // Inherited Property
   inheritedAuthority: string[] | null
 
-  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null) {
+  constructor(name: string, authority: string[] | null) {
     this.type = BlockType.EChartsBlock
-    this.relType = relType
-    this.relName = relName
+    this.name = name
     this.authority = authority
     this.model = null
     this.inheritedAuthority = null
   }
 
   toString(): string {
-    return `#<EChartsBlock @name="${this.relName}">`
+    return `#<EChartsBlock @name="${this.name}">`
   }
 }
 

@@ -20,7 +20,7 @@ import { semanticAnalysisModel } from './model'
 export function semanticAnalysisView(view: View, ctx: Context): void {
   view.inheritedAuthority = ctx.resource.authority ?? view.authority
 
-  const blockNames = view.blocks.map((block) => block.relName)
+  const blockNames = view.blocks.map((block) => block.name)
   const dupBlockNames = blockNames.filter((name, index) => blockNames.indexOf(name) !== index)
   if (dupBlockNames.length !== 0) {
     throw Error(`${view.toString()}'s blocks can not have duplicate name: ${JSON.stringify(dupBlockNames)}`)
@@ -124,14 +124,14 @@ function semanticAnalysisEChartsBlock(_block: EChartsBlock, _ctx: Context): void
 
 function semanticAnalysisGrid(grid: Grid | null, ctx: Context): void {
   if (grid == null) {
-    const items = ctx.view.blocks.map((block) => new GridItem(block.relName, null))
+    const items = ctx.view.blocks.map((block) => new GridItem(block.name, null))
     ctx.view.computedGrid = new Grid(items)
     return
   }
 
   ctx.view.computedGrid = grid!
   ctx.view.computedGrid.items.forEach((item) => {
-    const block = ctx.view.blocks.find((block) => block.relName === item.name)
+    const block = ctx.view.blocks.find((block) => block.name === item.name)
     if (block == null) {
       throw Error(`${item.toString()}'s name must be defined in items`)
     }

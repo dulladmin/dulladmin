@@ -6,7 +6,7 @@ import { toJsonType } from '../base'
 export function renderData_Model_Block(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block`
   return renderData_Model(block.model as Model, { xpath })
 }
@@ -19,7 +19,7 @@ export function renderData_Model_Dialog(
 ): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog`
   return renderData_Model(dialog.block.model, { xpath })

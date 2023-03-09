@@ -29,7 +29,7 @@ export function renderData_TableBlock(resource: Resource, view: View, block: Tab
 function renderData_TableBlockSearchers(resource: Resource, view: View, block: TableBlock): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.searchers`
 
   return block.searchers.map((searcher) => {
@@ -82,7 +82,7 @@ function renderData_TableBlockPagination(_resource: Resource, _view: View, block
 function renderData_TableBlockOperations(resource: Resource, view: View, block: TableBlock): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.actions`
 
   const operations: Record<string, any> = {}

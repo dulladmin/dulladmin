@@ -53,7 +53,7 @@ function genAPI_Block(resource: Resource, view: View, block: Block): GeneratedFi
 function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _block = renderData_TableBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
@@ -72,7 +72,7 @@ function genAPI_TableBlock(resource: Resource, view: View, block: TableBlock): G
 function genAPI_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _block = renderData_DescriptionsBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
@@ -87,7 +87,7 @@ function genAPI_DescriptionsBlock(resource: Resource, view: View, block: Descrip
 function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _block = renderData_FormBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
@@ -102,7 +102,7 @@ function genAPI_FormBlock(resource: Resource, view: View, block: FormBlock): Gen
 function genAPI_EChartsBlock(resource: Resource, view: View, block: EChartsBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _block = renderData_EChartsBlock(resource, view, block)
   const blockOutfile = handlebarsFile(
@@ -126,7 +126,7 @@ function genAPI_Dialog(resource: Resource, view: View, block: Block, dialog: Dia
 function genAPI_DescriptionsDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
 
   const _dialog = renderData_DescriptionsDialog(resource, view, block, dialog)
@@ -142,7 +142,7 @@ function genAPI_DescriptionsDialog(resource: Resource, view: View, block: Block,
 function genAPI_FormDialog(resource: Resource, view: View, block: Block, dialog: Dialog): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
 
   const _dialog = renderData_FormDialog(resource, view, block, dialog)

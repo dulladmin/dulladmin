@@ -1,6 +1,5 @@
 import {
   View,
-  BlockRelationshipType,
   TableBlock,
   TableBlockSorter,
   TableBlockSorterDirection,
@@ -24,7 +23,6 @@ import {
   assertIsArray,
   assertIsObject,
   assertIsString,
-  assertIsBlockRelationshipType,
   assertIsTableBlockSorterDirection,
   assertIsTableBlockSearcherPredicate,
   assertIsDullAdminScalarValueType
@@ -96,21 +94,15 @@ export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string
 }
 
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
-  if (doc.relationship == null) doc.relationship = 'self'
-  if (doc.relationship === 'self' && doc.name == null) doc.name = 'self'
+  if (doc.name == null) doc.name = 'self'
 
-  const allowedFiledNames = ['relationship', 'name', 'authority', 'table', 'descriptions', 'form', 'echarts']
+  const allowedFiledNames = ['name', 'authority', 'table', 'descriptions', 'form', 'echarts']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
-  const relType = doc.relationship as BlockRelationshipType
-  const relationshipXPath = xpath + '/relationship'
-  assertNotNull(relType, relationshipXPath)
-  assertIsBlockRelationshipType(relType, relationshipXPath)
-
-  const relName = doc.name
+  const name = doc.name
   const nameXPath = xpath + '/name'
-  assertNotNull(relName, nameXPath)
-  assertIsString(relName, nameXPath)
+  assertNotNull(name, nameXPath)
+  assertIsString(name, nameXPath)
 
   const authority = doc.authority ?? null
   const authorityXPath = xpath + '/authority'
@@ -121,7 +113,7 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
     })
   }
 
-  const attrs = { relType, relName, authority }
+  const attrs = { name, authority }
   if (doc.table != null) return parseTableBlock(doc, xpath, attrs)
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath, attrs)
   if (doc.form != null) return parseFormBlock(doc, xpath, attrs)
@@ -130,7 +122,7 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
 }
 
 function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): TableBlock {
-  const { relType, relName, authority } = attrs
+  const { name, authority } = attrs
   const table = doc.table ?? {}
 
   const allowedFiledNames = ['items', 'sorters', 'searchers', 'pagination', 'operations']
@@ -176,8 +168,7 @@ function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string
   }
 
   return new TableBlock(
-    relType,
-    relName,
+    name,
     authority,
     parsedModel,
     parsedSorters,
@@ -285,7 +276,7 @@ function parseTableBlockOperation(
 }
 
 function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): DescriptionsBlock {
-  const { relType, relName, authority } = attrs
+  const { name, authority } = attrs
   const descriptions = doc.descriptions ?? {}
 
   const allowedFiledNames = ['items']
@@ -297,11 +288,11 @@ function parseDescriptionsBlock(doc: YamlBlockType, xpath: string, attrs: Record
   assertIsArray(model, modelXPath)
   const parsedModel = parseModel(model!, modelXPath, { descriptions: true })
 
-  return new DescriptionsBlock(relType, relName, authority, parsedModel)
+  return new DescriptionsBlock(name, authority, parsedModel)
 }
 
 function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): FormBlock {
-  const { relType, relName, authority } = attrs
+  const { name, authority } = attrs
   const form = doc.form ?? {}
 
   const allowedFiledNames = ['items']
@@ -313,12 +304,12 @@ function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string,
   assertIsArray(model, modelXPath)
   const parsedModel = parseModel(model!, modelXPath, { form: true })
 
-  return new FormBlock(relType, relName, authority, parsedModel)
+  return new FormBlock(name, authority, parsedModel)
 }
 
 function parseEChartsBlock(_doc: YamlBlockType, _xpath: string, attrs: Record<string, any>): EChartsBlock {
-  const { relType, relName, authority } = attrs
-  return new EChartsBlock(relType, relName, authority)
+  const { name, authority } = attrs
+  return new EChartsBlock(name, authority)
 }
 
 function parseGrid(doc: YamlGridType, xpath: string): Grid {

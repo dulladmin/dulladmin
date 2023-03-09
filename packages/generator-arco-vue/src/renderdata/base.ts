@@ -1,7 +1,11 @@
-import { ScalarValueType, ObjectValueType } from '@dulladmin/core'
+import { Block, ScalarValueType, ObjectValueType } from '@dulladmin/core'
 
 export function isResourceAction(name: string): boolean {
   return ['index', 'new', 'show', 'edit', 'delete'].includes(name)
+}
+
+export function isSelfBlock(block: Block): boolean {
+  return block.name === 'self'
 }
 
 export function toJsonType(valueType: ScalarValueType | ObjectValueType): string {

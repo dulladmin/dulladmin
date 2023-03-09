@@ -3,7 +3,6 @@ import {
   Resource,
   View,
   BlockType,
-  BlockRelationshipType,
   Block,
   TableBlock,
   DescriptionsBlock,
@@ -26,7 +25,7 @@ import {
   renderData_FormDialog,
   renderData_Grid
 } from '../../renderdata'
-import { isResourceAction, handlebarsFile } from '../base'
+import { isResourceAction, isSelfBlock, handlebarsFile } from '../base'
 
 export function genViews(resource: Resource): GeneratedFile[] {
   return genViews_Resource(resource)
@@ -72,11 +71,11 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
 function genViews_TableBlock(resource: Resource, view: View, block: TableBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   // self Table in IndexView
   const resourceActions: Record<string, any> = {}
-  if (block.relType === BlockRelationshipType.Self && view.name === 'index') {
+  if (isSelfBlock(block) && view.name === 'index') {
     resource.views.forEach((view) => {
       if (!isResourceAction(view.name)) return
       const _view = renderData_View(resource, view)
@@ -116,7 +115,7 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
 function genViews_DescriptionsBlock(resource: Resource, view: View, block: DescriptionsBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _view = renderData_View(resource, view)
   const _block = renderData_DescriptionsBlock(resource, view, block)
@@ -132,12 +131,12 @@ function genViews_DescriptionsBlock(resource: Resource, view: View, block: Descr
 function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   // formOptions
-  const name = block.relType === BlockRelationshipType.Self ? view.name : block.relName
+  const name = isSelfBlock(block) ? view.name : block.name
   const formOptions = genView_buildFormOptions(name, block.model)
-  formOptions.allowBackOnSave = block.relType === BlockRelationshipType.Self
+  formOptions.allowBackOnSave = isSelfBlock(block)
 
   // outfile
   const _view = renderData_View(resource, view)
@@ -154,7 +153,7 @@ function genViews_FormBlock(resource: Resource, view: View, block: FormBlock): G
 function genViews_EChartsBlock(resource: Resource, view: View, block: EChartsBlock): GeneratedFile[] {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   const _view = renderData_View(resource, view)
   const _block = renderData_EChartsBlock(resource, view, block)
@@ -191,7 +190,7 @@ function genView_DescriptionsDialog(
 ): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
 
   // .
@@ -218,7 +217,7 @@ function genView_FormDialog(
 ): GeneratedFile {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
 
   // formOptions

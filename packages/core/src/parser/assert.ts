@@ -1,10 +1,4 @@
-import {
-  BlockRelationshipType,
-  ScalarValueType,
-  ObjectValueType,
-  TableBlockSorterDirection,
-  TableBlockSearcherPredicate
-} from '../structs'
+import { ScalarValueType, ObjectValueType, TableBlockSorterDirection, TableBlockSearcherPredicate } from '../structs'
 
 export function assertFieldNames(doc: unknown, allowedFiledNames: string[], fieldXPath: string): void {
   Object.keys(doc as object).forEach((name) => {
@@ -40,13 +34,6 @@ export function assertIsObject(fieldValue: unknown, fieldXPath: string): void {
 export function assertIsString(fieldValue: unknown, fieldXPath: string): void {
   if (typeof fieldValue === 'string' || fieldValue instanceof String) return
   throw new Error(`Field \`${fieldXPath}\` must be a string`)
-}
-
-const BlockRelationshipTypeValues = Object.values(BlockRelationshipType)
-const BlockRelationshipTypeToStr = JSON.stringify(BlockRelationshipTypeValues)
-export function assertIsBlockRelationshipType(fieldValue: unknown, fieldXPath: string): void {
-  if (BlockRelationshipTypeValues.includes(fieldValue as BlockRelationshipType)) return
-  throw new Error(`Field \`${fieldXPath}\` must be one of ${BlockRelationshipTypeToStr}`)
 }
 
 const ScalarValueTypeValues = Object.values(ScalarValueType)

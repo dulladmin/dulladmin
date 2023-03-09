@@ -6,11 +6,11 @@ import { renderData_BlockApiEndpoint } from '../view-block/base'
 export function renderData_Dialog(resource: Resource, view: View, block: Block, dialog: Dialog): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const dialogPath = toPath(dialog.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block.${dialogPath}-dialog`
 
-  const blockName = toUnderscore(block.relName)
+  const blockName = toUnderscore(block.name)
   const dialogName = toUnderscore(dialog.name)
 
   let url = renderData_BlockApiEndpoint(resource, view, block)

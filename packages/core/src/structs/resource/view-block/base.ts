@@ -5,10 +5,4 @@ enum BlockType {
   EChartsBlock = 'echarts'
 }
 
-enum BlockRelationshipType {
-  Self = 'self',
-  EmbedsOne = 'embeds_one',
-  EmbedsMany = 'embeds_many'
-}
-
-export { BlockType, BlockRelationshipType }
+export { BlockType }

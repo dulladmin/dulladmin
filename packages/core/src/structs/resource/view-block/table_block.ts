@@ -1,6 +1,6 @@
 import { Dialog } from '../dialog'
 import { ScalarValueType, Model } from '../model'
-import { BlockType, BlockRelationshipType } from './base'
+import { BlockType } from './base'
 
 enum TableBlockSearcherPredicate {
   Eq = 'eq',
@@ -138,8 +138,7 @@ class TableBlock {
   authority: string[] | null
 
   // Data Source
-  relType: BlockRelationshipType
-  relName: string
+  name: string
 
   // Data Structuring
   model: Model
@@ -160,8 +159,7 @@ class TableBlock {
   inheritedAuthority: string[] | null
 
   constructor(
-    relType: BlockRelationshipType,
-    relName: string,
+    name: string,
     authority: string[] | null,
     model: Model,
     sorters: TableBlockSorter[],
@@ -170,8 +168,7 @@ class TableBlock {
     operations: TableBlockOperation[]
   ) {
     this.type = BlockType.TableBlock
-    this.relType = relType
-    this.relName = relName
+    this.name = name
     this.authority = authority
     this.model = model
     this.sorters = sorters
@@ -182,7 +179,7 @@ class TableBlock {
   }
 
   toString(): string {
-    return `#<TableBlock @name="${this.relName}">`
+    return `#<TableBlock @name="${this.name}">`
   }
 }
 

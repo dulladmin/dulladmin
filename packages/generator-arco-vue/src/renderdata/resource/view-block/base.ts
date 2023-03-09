@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Resource, ViewPathScope, View, Block, BlockType, BlockRelationshipType } from '@dulladmin/core'
+import { Resource, ViewPathScope, View, Block, BlockType } from '@dulladmin/core'
 import { toCamelize, toUnderscore, toI18nMessage, toPath } from '../../../naming'
-import { isResourceAction } from '../../base'
+import { isResourceAction, isSelfBlock } from '../../base'
 
 export function renderData_Block(resource: Resource, view: View, block: Block): Record<string, any> {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
   const xpath = `${resourcePath}--${viewPath}.${blockPath}-block`
   const url = renderData_BlockApiEndpoint(resource, view, block)
 
   const resourceName = toUnderscore(resource.name)
   const viewName = toUnderscore(view.name)
-  const blockName = toUnderscore(block.relName)
+  const blockName = toUnderscore(block.name)
 
   let title = ''
-  if (block.relType === BlockRelationshipType.Self) {
+  if (isSelfBlock(block)) {
     title = isResourceAction(view.name) ? toI18nMessage(resourceName) : toI18nMessage(viewName)
   } else {
     title = toI18nMessage(blockName)
@@ -27,7 +27,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   }
 
   return {
-    __name: block.relName,
+    __name: block.name,
     componentName: `${toCamelize(blockName)}Block`,
     componentNamePath: `dac-${blockPath}-block`,
     componentImportPath: `@/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
@@ -44,7 +44,7 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
 export function renderData_BlockApiEndpoint(resource: Resource, view: View, block: Block): string {
   const resourcePath = toPath(resource.name)
   const viewPath = toPath(view.name)
-  const blockPath = toPath(block.relName)
+  const blockPath = toPath(block.name)
 
   return resource.singular || view.pathScope === ViewPathScope.Collection
     ? `/${resourcePath}/${viewPath}/${blockPath}`

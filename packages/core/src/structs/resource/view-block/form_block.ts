@@ -1,5 +1,5 @@
 import Model from '../model'
-import { BlockType, BlockRelationshipType } from './base'
+import { BlockType } from './base'
 
 /*
  * Render the data into a Form, e.g.
@@ -60,8 +60,7 @@ class FormBlock {
   authority: string[] | null
 
   // Data Source
-  relType: BlockRelationshipType
-  relName: string
+  name: string
 
   // Data Structuring
   model: Model
@@ -69,17 +68,16 @@ class FormBlock {
   // Inherited Property
   inheritedAuthority: string[] | null
 
-  constructor(relType: BlockRelationshipType, relName: string, authority: string[] | null, model: Model) {
+  constructor(name: string, authority: string[] | null, model: Model) {
     this.type = BlockType.FormBlock
-    this.relType = relType
-    this.relName = relName
+    this.name = name
     this.authority = authority
     this.model = model
     this.inheritedAuthority = null
   }
 
   toString(): string {
-    return `#<FormBlock @name="${this.relName}">`
+    return `#<FormBlock @name="${this.name}">`
   }
 }
 
