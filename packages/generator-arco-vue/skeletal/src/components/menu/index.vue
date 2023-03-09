@@ -8,6 +8,7 @@
   import { useRouter, RouteRecordRaw } from 'vue-router';
   import { useStorage } from '@vueuse/core';
   import { uniq } from 'lodash';
+  import config from '@/config';
   import { appMenu, findAppMenuItem } from '@/router/app-menu';
   import { useAppStore, useUserStore } from '@/store';
   import {
@@ -39,6 +40,9 @@
   });
   const showCollapseButton = computed(() => !appStore.isMobile);
 
+  // accordion
+  const accordion = ref<boolean>(config['app.menuAccordion'] ?? false);
+
   // openKeys
   const openKeys = useStorage<string[]>('app.menuOpenKeys', [], sessionStorage);
 
@@ -54,7 +58,7 @@
       selectedKey.value = item ? [item.name as string] : [];
       openKeys.value = uniq(
         [
-          ...openKeys.value,
+          ...(accordion.value ? [] : openKeys.value),
           ...ancestors.map((_item) => _item.name as string),
         ].filter((_item) => _item.startsWith('--'))
       );
@@ -114,6 +118,7 @@
         style="width: 100%; height: 100%;"
         show-collapse-button={showCollapseButton.value}
         mode={mode.value}
+        accordion={accordion.value}
       >
         {travel(appMenu.value)}
       </a-menu>
