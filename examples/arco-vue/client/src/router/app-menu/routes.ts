@@ -147,6 +147,16 @@ const appMenuRoutes: RouteRecordRaw[] = [
           title: 'charts--index.title',
         },
       },
+      {
+        name: 'CustomShow',
+        path: 'custom',
+        component: () => import('@/views/modules/custom/show/index.vue'),
+        meta: {
+          authority: ['*', ],
+          icon: 'icon-palette',
+          title: 'custom--show.title',
+        },
+      },
     ],
     meta: {
       icon: 'icon-mosaic',

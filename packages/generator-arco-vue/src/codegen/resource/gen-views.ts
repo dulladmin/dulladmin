@@ -180,7 +180,8 @@ function genViews_CustomBlock(resource: Resource, view: View, block: CustomBlock
   const blockOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__custom_block__.vue.hbs',
-    { ..._block, view: _view }
+    { ..._block, view: _view },
+    { ignoreExisting: true }
   )
 
   return [blockOutfile]

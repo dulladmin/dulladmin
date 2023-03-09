@@ -34,7 +34,20 @@ function genI18n_Resource(resource: Resource): GeneratedFile[] {
   const messages = resource.views
     .map((view) => genI18n_View(resource, view))
     .reduce<Record<string, string>>((a, v) => ({ ...a, ...v }), {})
-  return i18nFile(toPath(resource.name), messages)
+
+  let i18nCustomMessages = false
+  resource.views.forEach((view) => {
+    view.blocks.forEach((block) => {
+      if (block.type === BlockType.CustomBlock) {
+        i18nCustomMessages = true
+      }
+    })
+  })
+
+  return [
+    ...i18nFile(toPath(resource.name), messages),
+    ...(i18nCustomMessages ? i18nFile(toPath(resource.name) + '-dac', {}, { ignoreExisting: true }) : [])
+  ]
 }
 
 function genI18n_View(resource: Resource, view: View): Record<string, string> {

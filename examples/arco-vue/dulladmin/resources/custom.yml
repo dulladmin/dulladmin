@@ -1,0 +1,27 @@
+name: 'custom'
+singular: true
+views:
+  show:
+    blocks:
+      - name: 'info'
+        custom: {}
+      - name: 'projects'
+        custom: {}
+      - name: 'teams'
+        custom: {}
+      - name: 'activities'
+        custom: {}
+      - name: 'notifications'
+        custom: {}
+    grid:
+      items:
+        - name: 'info'
+          span: 24
+        - name: 'projects'
+          span: { xs: 24, sm: 12, md: 15 }
+        - name: 'teams'
+          span: { xs: 24, sm: 12, md: 9 }
+        - name: 'activities'
+          span: { xs: 24, sm: 12, md: 15 }
+        - name: 'notifications'
+          span: { xs: 24, sm: 12, md: 9 }

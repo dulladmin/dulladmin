@@ -3,9 +3,9 @@
 
 <template>
   <div>
-    <a-card :title="$t('{{title.i18nKey}}')" class="da-custom-block {{componentNamePath}}">
+    <a-card :title="$t('custom--show.teams-block.title')" class="da-custom-block dac-teams-block">
       <a-spin style="display: block" :loading="loading">
-        <pre>{{ store }}</pre>
+        <pre></pre>
       </a-spin>
     </a-card>
   </div>
@@ -14,7 +14,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
-  import { get } from '{{ apiImportPath }}';
+  import { get } from '@/api/modules/custom/show/teams-block';
   import { useLoading, useTabbableViewBlock } from '@/hooks';
 
   // route
@@ -46,7 +46,7 @@
 
   // tabbable
   useTabbableViewBlock({
-    viewName: '{{view.name}}',
+    viewName: 'CustomShow',
     refreshFn: onRefresh,
   });
 

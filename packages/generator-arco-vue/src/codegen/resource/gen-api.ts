@@ -127,7 +127,8 @@ function genAPI_CustomBlock(resource: Resource, view: View, block: CustomBlock):
   const blockOutfile = handlebarsFile(
     `src/api/modules/${resourcePath}/${viewPath}/${blockPath}-block.ts`,
     'src/api/modules/__resource__/__view__/__custom_block__.ts.hbs',
-    { ..._block }
+    { ..._block },
+    { ignoreExisting: true }
   )
 
   return [blockOutfile]
