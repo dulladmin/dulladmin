@@ -14,7 +14,6 @@
       {{ $t('albums--show-photos.self-block.title') }}
       -
       {{ $t('table.actions.edit') }}
-      <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">

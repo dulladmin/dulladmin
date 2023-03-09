@@ -13,7 +13,6 @@
       {{ $t('todos--index.self-block.title') }}
       -
       {{ $t('todos--index.self-block.show-title-dialog.title') }}
-      <span v-if="props.id">&nbsp;# {{ props.id }}</span>
     </template>
     <div>
       <a-spin style="display: block" :loading="loading">
