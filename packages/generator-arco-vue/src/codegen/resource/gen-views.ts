@@ -8,6 +8,7 @@ import {
   DescriptionsBlock,
   FormBlock,
   EChartsBlock,
+  CustomBlock,
   DialogBlockType,
   Dialog,
   Model
@@ -21,6 +22,7 @@ import {
   renderData_DescriptionsBlock,
   renderData_FormBlock,
   renderData_EChartsBlock,
+  renderData_CustomBlock,
   renderData_DescriptionsDialog,
   renderData_FormDialog,
   renderData_Grid
@@ -65,6 +67,8 @@ function genViews_Block(resource: Resource, view: View, block: Block): Generated
       return genViews_FormBlock(resource, view, block as FormBlock)
     case BlockType.EChartsBlock:
       return genViews_EChartsBlock(resource, view, block as EChartsBlock)
+    case BlockType.CustomBlock:
+      return genViews_CustomBlock(resource, view, block as CustomBlock)
   }
 }
 
@@ -160,6 +164,22 @@ function genViews_EChartsBlock(resource: Resource, view: View, block: EChartsBlo
   const blockOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__echarts_block__.vue.hbs',
+    { ..._block, view: _view }
+  )
+
+  return [blockOutfile]
+}
+
+function genViews_CustomBlock(resource: Resource, view: View, block: CustomBlock): GeneratedFile[] {
+  const resourcePath = toPath(resource.name)
+  const viewPath = toPath(view.name)
+  const blockPath = toPath(block.name)
+
+  const _view = renderData_View(resource, view)
+  const _block = renderData_CustomBlock(resource, view, block)
+  const blockOutfile = handlebarsFile(
+    `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
+    'src/views/modules/__resource__/__view__/components/__custom_block__.vue.hbs',
     { ..._block, view: _view }
   )
 

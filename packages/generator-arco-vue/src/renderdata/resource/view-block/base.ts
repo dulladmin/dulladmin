@@ -20,7 +20,9 @@ export function renderData_Block(resource: Resource, view: View, block: Block): 
   } else {
     title = toI18nMessage(blockName)
   }
-  if (block.type === BlockType.EChartsBlock) {
+  if (block.type === BlockType.CustomBlock) {
+    // .
+  } else if (block.type === BlockType.EChartsBlock) {
     title = title + ' Chart'
   } else {
     title = title + ' ' + toI18nMessage(block.type)

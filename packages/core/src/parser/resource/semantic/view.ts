@@ -8,6 +8,7 @@ import {
   DescriptionsBlock,
   FormBlock,
   EChartsBlock,
+  CustomBlock,
   Block,
   Grid,
   GridItem
@@ -49,6 +50,9 @@ function semanticAnalysisBlock(block: Block, ctx: Context): void {
       break
     case BlockType.EChartsBlock:
       semanticAnalysisEChartsBlock(block as EChartsBlock, ctx)
+      break
+    case BlockType.CustomBlock:
+      semanticAnalysisCustomBlock(block as CustomBlock, ctx)
       break
   }
 }
@@ -121,6 +125,8 @@ function semanticAnalysisFormBlock(block: FormBlock, ctx: Context): void {
 }
 
 function semanticAnalysisEChartsBlock(_block: EChartsBlock, _ctx: Context): void {}
+
+function semanticAnalysisCustomBlock(_block: CustomBlock, _ctx: Context): void {}
 
 function semanticAnalysisGrid(grid: Grid | null, ctx: Context): void {
   if (grid == null) {

@@ -10,6 +10,7 @@ import {
   DescriptionsBlock,
   FormBlock,
   EChartsBlock,
+  CustomBlock,
   Block,
   Dialog,
   ScalarValueType,
@@ -43,7 +44,7 @@ import { parseModel } from './model'
 export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string, any>): View {
   const { name } = attrs
 
-  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form', 'echarts', 'grid']
+  const allowedFiledNames = ['authority', 'blocks', 'table', 'descriptions', 'form', 'echarts', 'custom', 'grid']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const authority = doc.authority ?? null
@@ -81,6 +82,10 @@ export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string
     const block: YamlBlockType = { echarts: doc.echarts }
     parsedBlocks.push(parseBlock(block, xpath))
   }
+  if (doc.custom != null) {
+    const block: YamlBlockType = { custom: doc.custom }
+    parsedBlocks.push(parseBlock(block, xpath))
+  }
 
   let parsedGrid: Grid | null = null
   const grid = doc.grid ?? null
@@ -96,7 +101,7 @@ export function parseView(doc: YamlViewType, xpath: string, attrs: Record<string
 function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.name == null) doc.name = 'self'
 
-  const allowedFiledNames = ['name', 'authority', 'table', 'descriptions', 'form', 'echarts']
+  const allowedFiledNames = ['name', 'authority', 'table', 'descriptions', 'form', 'echarts', 'custom']
   assertFieldNames(doc, allowedFiledNames, xpath)
 
   const name = doc.name
@@ -118,7 +123,10 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   if (doc.descriptions != null) return parseDescriptionsBlock(doc, xpath, attrs)
   if (doc.form != null) return parseFormBlock(doc, xpath, attrs)
   if (doc.echarts != null) return parseEChartsBlock(doc, xpath, attrs)
-  throw new Error(`Block is required in \`${xpath}\`, must be one of ["table", "descriptions", "form", "echarts"]`)
+  if (doc.custom != null) return parseCustomBlock(doc, xpath, attrs)
+  throw new Error(
+    `Block is required in \`${xpath}\`, must be one of ["table", "descriptions", "form", "echarts", "custom"]`
+  )
 }
 
 function parseTableBlock(doc: YamlBlockType, xpath: string, attrs: Record<string, any>): TableBlock {
@@ -310,6 +318,11 @@ function parseFormBlock(doc: YamlBlockType, xpath: string, attrs: Record<string,
 function parseEChartsBlock(_doc: YamlBlockType, _xpath: string, attrs: Record<string, any>): EChartsBlock {
   const { name, authority } = attrs
   return new EChartsBlock(name, authority)
+}
+
+function parseCustomBlock(_doc: YamlBlockType, _xpath: string, attrs: Record<string, any>): CustomBlock {
+  const { name, authority } = attrs
+  return new CustomBlock(name, authority)
 }
 
 function parseGrid(doc: YamlGridType, xpath: string): Grid {

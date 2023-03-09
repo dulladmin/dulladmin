@@ -8,6 +8,7 @@ import {
   DescriptionsBlock,
   FormBlock,
   EChartsBlock,
+  CustomBlock,
   DialogBlockType,
   Dialog
 } from '@dulladmin/core'
@@ -19,6 +20,7 @@ import {
   renderData_DescriptionsBlock,
   renderData_FormBlock,
   renderData_EChartsBlock,
+  renderData_CustomBlock,
   renderData_DescriptionsDialog,
   renderData_FormDialog
 } from '../../renderdata'
@@ -58,6 +60,8 @@ function genI18n_Block(resource: Resource, view: View, block: Block): Record<str
       return genI18n_FormBlock(resource, view, block as FormBlock)
     case BlockType.EChartsBlock:
       return genI18n_EChartsBlock(resource, view, block as EChartsBlock)
+    case BlockType.CustomBlock:
+      return genI18n_CustomBlock(resource, view, block as CustomBlock)
   }
 }
 
@@ -104,6 +108,15 @@ function genI18n_FormBlock(resource: Resource, view: View, block: FormBlock): Re
 
 function genI18n_EChartsBlock(resource: Resource, view: View, block: EChartsBlock): Record<string, string> {
   const _block = renderData_EChartsBlock(resource, view, block)
+  const blockMessages = {
+    [_block.title.i18nKey]: _block.title.i18nValue
+  }
+
+  return { ...blockMessages }
+}
+
+function genI18n_CustomBlock(resource: Resource, view: View, block: CustomBlock): Record<string, string> {
+  const _block = renderData_CustomBlock(resource, view, block)
   const blockMessages = {
     [_block.title.i18nKey]: _block.title.i18nValue
   }
