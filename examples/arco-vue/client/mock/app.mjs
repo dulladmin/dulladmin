@@ -69,6 +69,7 @@ export async function enhance(app) {
   const todosDB = await loadDatabase('./db/todos.json');
   const administratorsDB = await loadDatabase('./db/administrators.json');
   const chartsDB = await loadDatabase('./db/charts.json');
+  const customDB = await loadDatabase('./db/custom.json');
 
   app.get('/users/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(usersDB.data);
@@ -342,5 +343,13 @@ export async function enhance(app) {
   app.get('/charts/index/:chart', async (req, res) => {
     const chart = chartsDB.data[req.params.chart];
     res.send(buildSuccessResponse({ chart }));
+  });
+
+  app.get('/custom/show/:blk', async (req, res) => {
+    res.send(
+      buildSuccessResponse({
+        [req.params.blk]: customDB.data[req.params.blk],
+      })
+    );
   });
 }

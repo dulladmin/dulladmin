@@ -1,0 +1,98 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "avatar": "https://picsum.photos/id/128/200",
+      "name": "Air Video Transmitter"
+    },
+    {
+      "id": 2,
+      "avatar": "https://picsum.photos/id/129/200",
+      "name": "Gel Tag Bracket"
+    },
+    {
+      "id": 3,
+      "avatar": "https://picsum.photos/id/130/200",
+      "name": "Power Digital Amplifier"
+    },
+    {
+      "id": 4,
+      "avatar": "https://picsum.photos/id/131/200",
+      "name": "Performance GPS Ferrule"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Tag GPS Compressor",
+      "description": "Austin party scenester",
+      "contributors": [
+        {
+          "name": "Nichelle Legros",
+          "email": "nichelle_legros@example.org",
+          "avatar": "https://picsum.photos/id/232/100"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Auto Transmitter",
+      "description": "Butcher you probably haven't heard of them tofu",
+      "contributors": [
+        {
+          "name": "Verlene Vonrueden",
+          "email": "verlene.vonrueden@example.net",
+          "avatar": "https://picsum.photos/id/233/100"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Digital Remote Controller",
+      "description": "Austin master cleanse before they sold out",
+      "contributors": [
+        {
+          "name": "Anderson",
+          "email": "anderson@example.net",
+          "avatar": "https://picsum.photos/id/234/100"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Direct Disc System",
+      "description": "trust fund readymade American Apparel",
+      "contributors": [
+        {
+          "name": "Diann Gleason",
+          "email": "diann_gleason@example.org",
+          "avatar": "https://picsum.photos/id/235/100"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Tag Direct Dummy Groove",
+      "description": "vinyl echo park gluten-free",
+      "contributors": [
+        {
+          "name": "Yolonda",
+          "email": "yolonda@example.net",
+          "avatar": "https://picsum.photos/id/236/100"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Performance HD Mount",
+      "description": "Marfa dreamcatcher photo booth",
+      "contributors": [
+        {
+          "name": "Miki Mann",
+          "email": "miki_mann@example.net",
+          "avatar": "https://picsum.photos/id/237/100"
+        }
+      ]
+    }
+  ]
+}

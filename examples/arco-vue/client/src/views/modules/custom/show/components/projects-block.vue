@@ -4,9 +4,42 @@
 <template>
   <div>
     <a-card :title="$t('custom--show.projects-block.title')" class="da-custom-block dac-projects-block">
-      <a-spin style="display: block" :loading="loading">
-        <pre></pre>
-      </a-spin>
+      <a-row :gutter="16">
+        <a-col
+          v-for="(project, index) in store.projects"
+          :key="index"
+          :xs="12"
+          :sm="12"
+          :md="12"
+          :lg="12"
+          :xl="8"
+          :xxl="8"
+        >
+        <a-card class="project-card">
+            <a-skeleton v-if="loading" :loading="loading" :animation="true">
+              <a-skeleton-line :rows="3" />
+            </a-skeleton>
+            <a-space v-else direction="vertical">
+              <a-typography-text bold>{{ project.name }}</a-typography-text>
+              <a-typography-text type="secondary">
+                {{ project.description }}
+              </a-typography-text>
+              <a-space>
+                <a-avatar-group :size="24">
+                  {{ project.contributors }}
+                  <a-avatar
+                    v-for="(contributor, idx) in project.contributors"
+                    :key="idx"
+                    :size="32"
+                  >
+                    <img alt="avatar" :src="contributor.avatar" />
+                  </a-avatar>
+                </a-avatar-group>
+              </a-space>
+            </a-space>
+          </a-card>
+        </a-col>
+      </a-row>
     </a-card>
   </div>
 </template>
@@ -23,13 +56,13 @@
 
   // store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Record<string, any>>({});
+  const store = ref<Record<string, any>>({ projects: Array(6).fill({}) });
   const fetchStore = async () => {
     setLoading(true);
     try {
       // Uncomment the following to fetch data from server
-      // const { data } = await get(id);
-      // store.value = data;
+      const { data } = await get(id);
+      store.value = data;
     } finally {
       setLoading(false);
     }
@@ -55,4 +88,8 @@
 </script>
 
 <style lang="less" scoped>
+  .project-card {
+    height: 132px;
+    margin-bottom: 20px;
+  }
 </style>

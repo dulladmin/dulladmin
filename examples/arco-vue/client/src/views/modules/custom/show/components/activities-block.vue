@@ -4,9 +4,40 @@
 <template>
   <div>
     <a-card :title="$t('custom--show.activities-block.title')" class="da-custom-block dac-activities-block">
-      <a-spin style="display: block" :loading="loading">
-        <pre></pre>
-      </a-spin>
+      <a-list :bordered="false">
+        <a-list-item
+          v-for="activity in store.activities"
+          :key="activity.id"
+          action-layout="horizontal"
+        >
+          <a-skeleton
+            v-if="loading"
+            :loading="loading"
+            :animation="true"
+            class="skeleton-item"
+          >
+            <a-row :gutter="6">
+              <a-col :span="2">
+                <a-skeleton-shape shape="circle" />
+              </a-col>
+              <a-col :span="22">
+                <a-skeleton-line :widths="['40%', '100%']" :rows="2" />
+              </a-col>
+            </a-row>
+          </a-skeleton>
+          <a-list-item-meta
+            v-else
+            :title="activity.title"
+            :description="activity.description"
+          >
+            <template #avatar>
+              <a-avatar>
+                <img :src="activity.avatar" />
+              </a-avatar>
+            </template>
+          </a-list-item-meta>
+        </a-list-item>
+      </a-list>
     </a-card>
   </div>
 </template>
@@ -23,7 +54,14 @@
 
   // store
   const { loading, setLoading } = useLoading(true);
-  const store = ref<Record<string, any>>({});
+  const store = ref<Record<string, any>>({
+    activities: new Array(7).fill(null).map((_item, index) => ({
+      id: index,
+      title: 'Hoodie locavore American Apparel etsy fap.',
+      description: "Mcsweeney's organic American Apparel mlkshk keytar readymade party.",
+      avatar: `https://picsum.photos/id/${400+index}/100`
+    }))
+  });
   const fetchStore = async () => {
     setLoading(true);
     try {

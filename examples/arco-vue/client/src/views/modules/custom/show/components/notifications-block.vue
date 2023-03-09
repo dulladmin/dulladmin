@@ -5,7 +5,11 @@
   <div>
     <a-card :title="$t('custom--show.notifications-block.title')" class="da-custom-block dac-notifications-block">
       <a-spin style="display: block" :loading="loading">
-        <pre></pre>
+        <a-result status="404">
+          <template #subtitle>
+            {{ $t('custom--show.notifications-block.nodata') }}
+          </template>
+        </a-result>
       </a-spin>
     </a-card>
   </div>
@@ -55,4 +59,7 @@
 </script>
 
 <style lang="less" scoped>
+  :deep(.arco-result) {
+    padding: 40px 32px 108px;
+  }
 </style>

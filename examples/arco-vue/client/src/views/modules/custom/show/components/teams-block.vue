@@ -5,7 +5,21 @@
   <div>
     <a-card :title="$t('custom--show.teams-block.title')" class="da-custom-block dac-teams-block">
       <a-spin style="display: block" :loading="loading">
-        <pre></pre>
+        <a-list :bordered="false">
+          <a-list-item
+            v-for="team in store.teams"
+            :key="team.id"
+            action-layout="horizontal"
+          >
+            <a-list-item-meta :title="team.name">
+              <template #avatar>
+                <a-avatar>
+                  <img :src="team.avatar" />
+                </a-avatar>
+              </template>
+            </a-list-item-meta>
+          </a-list-item>
+        </a-list>
       </a-spin>
     </a-card>
   </div>
@@ -28,8 +42,8 @@
     setLoading(true);
     try {
       // Uncomment the following to fetch data from server
-      // const { data } = await get(id);
-      // store.value = data;
+      const { data } = await get(id);
+      store.value = data;
     } finally {
       setLoading(false);
     }
