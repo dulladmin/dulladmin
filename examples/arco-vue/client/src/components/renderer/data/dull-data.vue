@@ -47,7 +47,9 @@
           color = props.data ? 'green' : 'orange';
           break;
         default:
-          colorIndex = Object.keys(props.meta.optionals).indexOf(String(props.data));
+          colorIndex = Object.keys(props.meta.optionals).indexOf(
+            String(props.data)
+          );
           color =
             colorIndex === -1 ? 'gray' : COLORS[colorIndex % COLORS.length];
           break;

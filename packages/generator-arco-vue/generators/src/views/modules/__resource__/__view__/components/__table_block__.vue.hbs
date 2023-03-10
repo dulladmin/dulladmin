@@ -331,12 +331,14 @@
     {{#if object.attributes}}
     {{name}}: {
       type: '{{type}}',
-      {{#each object.attributes}}
-      {{name}}: {
-        type: '{{type}}',
-        i18nKey: '{{i18nKey}}',
-      },
-      {{/each}}
+      attributes: {
+        {{#each object.attributes}}
+        {{name}}: {
+          type: '{{type}}',
+          i18nKey: '{{i18nKey}}',
+        },
+        {{/each}}
+      }
     },
     {{else}}
     {{name}}: {

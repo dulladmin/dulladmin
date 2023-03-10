@@ -71,12 +71,14 @@
     {{#if object.attributes}}
     {{name}}: {
       type: '{{type}}',
-      {{#each object.attributes}}
-      {{name}}: {
-        type: '{{type}}',
-        i18nKey: '{{i18nKey}}',
-      },
-      {{/each}}
+      attributes: {
+        {{#each object.attributes}}
+        {{name}}: {
+          type: '{{type}}',
+          i18nKey: '{{i18nKey}}',
+        },
+        {{/each}}
+      }
     },
     {{else}}
     {{name}}: {
@@ -100,11 +102,15 @@
   const { loading, setLoading } = useLoading(true);
   const store = ref<Model>({
   {{#each model.attributes}}
-    {{#if collection}}
+  {{#if collection}}
     {{name}}: [],
+  {{else}}
+    {{#if object}}
+    {{name}}: {},
     {{else}}
     {{name}}: undefined,
     {{/if}}
+  {{/if}}
   {{/each}}
   });
   const fetchStore = async () => {

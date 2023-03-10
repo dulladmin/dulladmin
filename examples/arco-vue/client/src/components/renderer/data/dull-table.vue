@@ -14,7 +14,7 @@
               >
                 <span class="arco-table-cell arco-table-cell-align-left">
                   <span class="arco-table-th-title">
-                    {{ item }}
+                    {{ $t(meta.attributes[item]['i18nKey']) }}
                   </span>
                 </span>
               </th>
@@ -49,7 +49,7 @@
   const meta = computed(() => props.meta);
 
   const keys = computed(() => {
-    return Object.keys(meta.value);
+    return Object.keys(meta.value.attributes);
   });
   const tableColumns = computed(() => {
     return keys.value.map((k) => k);
@@ -59,7 +59,7 @@
       return keys.value.map((k) => {
         return {
           data: item[k],
-          meta: meta.value[k],
+          meta: meta.value.attributes[k],
         };
       });
     });

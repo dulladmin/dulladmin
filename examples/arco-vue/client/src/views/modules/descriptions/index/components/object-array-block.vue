@@ -46,14 +46,20 @@
   const modelMetadata: { [key: string]: any } = {
     object_arr: {
       type: 'object',
-      id: {
-        type: 'int64',
-        i18nKey: 'descriptions--index.object-array-block.model.attributes.object_arr.id',
-      },
-      name: {
-        type: 'string',
-        i18nKey: 'descriptions--index.object-array-block.model.attributes.object_arr.name',
-      },
+      attributes: {
+        id: {
+          type: 'int64',
+          i18nKey: 'descriptions--index.object-array-block.model.attributes.object_arr.id',
+        },
+        name: {
+          type: 'string',
+          i18nKey: 'descriptions--index.object-array-block.model.attributes.object_arr.name',
+        },
+        role: {
+          type: 'string',
+          i18nKey: 'descriptions--index.object-array-block.model.attributes.object_arr.role',
+        },
+      }
     },
   };
 

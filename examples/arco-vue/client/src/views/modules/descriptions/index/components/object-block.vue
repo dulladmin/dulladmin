@@ -46,21 +46,27 @@
   const modelMetadata: { [key: string]: any } = {
     object: {
       type: 'object',
-      id: {
-        type: 'int64',
-        i18nKey: 'descriptions--index.object-block.model.attributes.object.id',
-      },
-      name: {
-        type: 'string',
-        i18nKey: 'descriptions--index.object-block.model.attributes.object.name',
-      },
+      attributes: {
+        id: {
+          type: 'int64',
+          i18nKey: 'descriptions--index.object-block.model.attributes.object.id',
+        },
+        name: {
+          type: 'string',
+          i18nKey: 'descriptions--index.object-block.model.attributes.object.name',
+        },
+        role: {
+          type: 'string',
+          i18nKey: 'descriptions--index.object-block.model.attributes.object.role',
+        },
+      }
     },
   };
 
   // descriptions - store
   const { loading, setLoading } = useLoading(true);
   const store = ref<Model>({
-    object: undefined,
+    object: {},
   });
   const fetchStore = async () => {
     setLoading(true);

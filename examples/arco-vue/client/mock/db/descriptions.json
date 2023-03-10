@@ -22,14 +22,15 @@
   "object": {
     "object": {
       "id": 0,
-      "name": "name"
+      "name": "name",
+      "role": "admin"
     }
   },
   "object-array": {
     "object_arr": [
-      { "id": 1, "name": "X" },
-      { "id": 2, "name": "Y" },
-      { "id": 3, "name": "Z" }
+      { "id": 1, "name": "X", "role": "admin" },
+      { "id": 2, "name": "Y", "role": "user" },
+      { "id": 3, "name": "Z", "role": "unknown" }
     ]
   }
 }

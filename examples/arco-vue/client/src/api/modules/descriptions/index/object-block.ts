@@ -7,6 +7,7 @@ export interface Model {
   object?: {
     id?: number;
     name?: string;
+    role?: string;
   };
 }
 

@@ -15,12 +15,12 @@
             <td
               class="arco-descriptions-item-label arco-descriptions-item-label-block"
             >
-              {{ $t(meta[key]['i18nKey']) }}
+              {{ $t(meta.attributes[key]['i18nKey']) }}
             </td>
             <td
               class="arco-descriptions-item-value arco-descriptions-item-value-block"
             >
-              <DullData :data="value" :meta="meta[key]" />
+              <DullData :data="value" :meta="meta.attributes[key]" />
             </td>
           </tr>
         </tbody>

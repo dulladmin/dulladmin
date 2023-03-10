@@ -1,6 +1,7 @@
 _object_attributes: &_object_attributes
   - { name: 'id', type: 'int64' }
   - { name: 'name', type: 'string' }
+  - { name: 'role', type: 'string', optionals: ['admin', 'user'] }
 
 name: 'descriptions'
 views:
