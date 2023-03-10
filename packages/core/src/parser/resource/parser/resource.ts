@@ -1,5 +1,6 @@
 import { Resource, View } from '../../../structs'
 import {
+  RE_IDENTIFIER,
   assertFieldNames,
   assertFieldNamesRegexp,
   assertNotNull,
@@ -42,7 +43,7 @@ export function parseResource(doc: YamlResourceType): Resource {
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
-  const allowedFiledNames = /^[a-zA-Z]\w*$/
+  const allowedFiledNames = RE_IDENTIFIER
   assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const views: View[] = []

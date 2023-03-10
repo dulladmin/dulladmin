@@ -1,5 +1,7 @@
 import { ScalarValueType, ObjectValueType, TableBlockSorterDirection, TableBlockSearcherPredicate } from '../structs'
 
+export const RE_IDENTIFIER = /^[a-zA-Z]\w*$/
+
 export function assertFieldNames(doc: unknown, allowedFiledNames: string[], fieldXPath: string): void {
   Object.keys(doc as object).forEach((name) => {
     if (name.startsWith('_')) return
@@ -37,7 +39,7 @@ export function assertIsString(fieldValue: unknown, fieldXPath: string): void {
 }
 
 export function assertIsIdentifier(fieldValue: unknown, fieldXPath: string): void {
-  if (/^[a-zA-Z]\w*$/.test(fieldValue as string)) return
+  if (RE_IDENTIFIER.test(fieldValue as string)) return
   throw new Error(
     `Field \`${fieldXPath}\` must start with a letter and succeeding characters ` +
       'must be letters, digits, or the underscore character'

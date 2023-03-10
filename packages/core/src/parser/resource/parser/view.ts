@@ -18,6 +18,7 @@ import {
   GridItem
 } from '../../../structs'
 import {
+  RE_IDENTIFIER,
   assertFieldNames,
   assertFieldNamesRegexp,
   assertNotNull,
@@ -241,7 +242,7 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 }
 
 function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
-  const allowedFiledNames = /^[a-zA-Z]\w*$/
+  const allowedFiledNames = RE_IDENTIFIER
   assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const operations: TableBlockOperation[] = []
