@@ -75,6 +75,7 @@
     // switch to tab
     const tab = appStore.tabs.find((e) => e.name === item.name);
     if (tab) {
+      appStore.setNewTabOpenParams({ toTop: true });
       router.push({ ...tab });
       return;
     }

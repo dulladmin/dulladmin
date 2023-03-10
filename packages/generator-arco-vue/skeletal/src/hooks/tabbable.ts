@@ -17,8 +17,10 @@ export function useTabbableView({ name }: { name: string }) {
   const saveScrollPosition = () => {
     scrollPosition.value = document.documentElement.scrollTop;
   };
-  const restoreScrollPosition = () => {
-    document.documentElement.scrollTop = scrollPosition.value;
+  const restoreScrollPosition = (options: Record<string, any>) => {
+    document.documentElement.scrollTop = options.toTop
+      ? 0
+      : scrollPosition.value;
   };
 
   // refreshCurrentView
@@ -30,8 +32,7 @@ export function useTabbableView({ name }: { name: string }) {
 
   // tab - activated
   onActivated(() => {
-    restoreScrollPosition();
-
+    restoreScrollPosition({ toTop: appStore.newTabOpenParams.toTop });
     if (appStore.newTabOpenParams.refresh) setRefreshCurrentView(true);
     appStore.setNewTabOpenParams({});
   });

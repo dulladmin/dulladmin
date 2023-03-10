@@ -104,13 +104,18 @@
   // tabs - open
   const router = useRouter();
   const open = () => {
+    appStore.setNewTabOpenParams({ toTop: true });
     router.push({ ...props.tab });
   };
 
   // tabs - close
+  const openAfterClose = (tab: Tab) => {
+    appStore.setNewTabOpenParams({ toTop: true });
+    router.push({ ...tab });
+  };
   const close = () => {
     const nextTab = appStore.removeCurrentTab(props.tab, props.tabIndex);
-    if (nextTab != null) router.push({ ...nextTab });
+    if (nextTab != null) openAfterClose({ ...nextTab });
   };
 
   // tabs - actionSelect
@@ -123,26 +128,26 @@
         break;
       case Action.CloseCurrent:
         nextTab = appStore.removeCurrentTab(props.tab, props.tabIndex);
-        if (nextTab != null) router.push({ ...nextTab });
+        if (nextTab != null) openAfterClose({ ...nextTab });
         break;
       case Action.CloseCurrentToLeft:
         nextTab = appStore.removeCurrentTabToTheLeft(props.tab, props.tabIndex);
-        if (nextTab != null) router.push({ ...nextTab });
+        if (nextTab != null) openAfterClose({ ...nextTab });
         break;
       case Action.CloseCurrentToRight:
         nextTab = appStore.removeCurrentTabToTheRight(
           props.tab,
           props.tabIndex
         );
-        if (nextTab != null) router.push({ ...nextTab });
+        if (nextTab != null) openAfterClose({ ...nextTab });
         break;
       case Action.CloseOthers:
         nextTab = appStore.removeOtherTabs(props.tab);
-        if (nextTab != null) router.push({ ...nextTab });
+        if (nextTab != null) openAfterClose({ ...nextTab });
         break;
       case Action.CloseAll:
         nextTab = appStore.removeAllTabs();
-        if (nextTab != null) router.push({ ...nextTab });
+        if (nextTab != null) openAfterClose({ ...nextTab });
         break;
       default:
         break;
