@@ -138,6 +138,16 @@ const appMenuRoutes: RouteRecordRaw[] = [
     path: '--examples',
     children: [
       {
+        name: 'DescriptionsIndex',
+        path: 'descriptions',
+        component: () => import('@/views/modules/descriptions/index/index.vue'),
+        meta: {
+          authority: ['*', ],
+          icon: 'icon-sort',
+          title: 'descriptions--index.title',
+        },
+      },
+      {
         name: 'ChartsIndex',
         path: 'charts',
         component: () => import('@/views/modules/charts/index/index.vue'),

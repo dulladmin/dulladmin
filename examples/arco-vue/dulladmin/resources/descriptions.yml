@@ -1,0 +1,48 @@
+_object_attributes: &_object_attributes
+  - { name: 'id', type: 'int64' }
+  - { name: 'name', type: 'string' }
+
+name: 'descriptions'
+views:
+  index:
+    blocks:
+      - name: 'scalar'
+        descriptions:
+          items:
+            - { name: 'double', type: 'double' }
+            - { name: 'int64', type: 'int64' }
+            - { name: 'boolTrue', type: 'bool' }
+            - { name: 'boolFalse', type: 'bool' }
+            - { name: 'string', type: 'string' }
+            - { name: 'datetime', type: 'datetime' }
+            - { name: 'image', type: 'image' }
+            - { name: 'bool_optionals', type: 'bool', optionals: [true] }
+            - { name: 'int64_optionals', type: 'int64', optionals: [1] }
+            - { name: 'string_optionals', type: 'string', optionals: ['str'] }
+      - name: 'scalar_array'
+        descriptions:
+          items:
+            - { name: 'double_arr', type: 'double[]' }
+            - { name: 'int64_arr', type: 'int64[]' }
+            - { name: 'string_arr', type: 'string[]' }
+            - { name: 'datetime_arr', type: 'datetime[]' }
+            - { name: 'image_arr', type: 'image[]' }
+            - { name: 'string_optionals_arr', type: 'string[]', optionals: ['str'] }
+      - name: 'object'
+        descriptions:
+          items:
+            - { name: 'object', type: 'object', attributes: *_object_attributes }
+      - name: 'object_array'
+        descriptions:
+          items:
+            - { name: 'object_arr', type: 'object[]', attributes: *_object_attributes }
+    grid:
+      items:
+        - name: 'scalar'
+          span: { xs: 24, sm: 12 }
+        - name: 'scalar_array'
+          span: { xs: 24, sm: 12 }
+        - name: 'object'
+          span: { xs: 24, sm: 12 }
+        - name: 'object_array'
+          span: { xs: 24, sm: 12 }

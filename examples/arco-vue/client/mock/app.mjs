@@ -69,6 +69,7 @@ export async function enhance(app) {
   const commentsDB = await loadDatabase('./db/comments.json');
   const todosDB = await loadDatabase('./db/todos.json');
   const administratorsDB = await loadDatabase('./db/administrators.json');
+  const descriptionsDB = await loadDatabase('./db/descriptions.json');
   const chartsDB = await loadDatabase('./db/charts.json');
   const customDB = await loadDatabase('./db/custom.json');
 
@@ -358,15 +359,20 @@ export async function enhance(app) {
     res.send(buildSuccessResponse({ form: {} }));
   });
 
+  app.get('/descriptions/index/:blkName', async (req, res) => {
+    const model = descriptionsDB.data[req.params.blkName];
+    res.send(buildSuccessResponse({ model }));
+  });
+
   app.get('/charts/index/:chart', async (req, res) => {
     const chart = chartsDB.data[req.params.chart];
     res.send(buildSuccessResponse({ chart }));
   });
 
-  app.get('/custom/show/:blk', async (req, res) => {
+  app.get('/custom/show/:blkName', async (req, res) => {
     res.send(
       buildSuccessResponse({
-        [req.params.blk]: customDB.data[req.params.blk],
+        [req.params.blkName]: customDB.data[req.params.blkName],
       })
     );
   });

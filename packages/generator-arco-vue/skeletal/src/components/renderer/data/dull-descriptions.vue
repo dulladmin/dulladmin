@@ -1,3 +1,5 @@
+<!-- DataRenderer for ObjectValue, e.g. {"id": 1}. -->
+
 <template>
   <div
     class="arco-descriptions arco-descriptions-size-small arco-descriptions-border"

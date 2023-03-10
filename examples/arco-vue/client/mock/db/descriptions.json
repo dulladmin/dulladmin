@@ -1,0 +1,35 @@
+{
+  "scalar": {
+    "double": 3.1415926,
+    "int64": 123456,
+    "boolTrue": true,
+    "boolFalse": false,
+    "string": "Quos sed soluta vero reprehenderit nesciunt enim.",
+    "datetime": "2023-03-10T06:42:16-05:00",
+    "image": "https://picsum.photos/id/160/800",
+    "bool_optionals": true,
+    "int64_optionals": 1,
+    "string_optionals": "str"
+  },
+  "scalar-array": {
+    "double_arr": [3.1415926, 1.2345],
+    "int64_arr": [123456, 987654],
+    "string_arr": ["Quos sed soluta vero reprehenderit nesciunt enim.", "oops"],
+    "datetime_arr": ["2023-03-10T06:42:16-05:00"],
+    "image_arr": ["https://picsum.photos/id/160/800"],
+    "string_optionals_arr": ["str"]
+  },
+  "object": {
+    "object": {
+      "id": 0,
+      "name": "name"
+    }
+  },
+  "object-array": {
+    "object_arr": [
+      { "id": 1, "name": "X" },
+      { "id": 2, "name": "Y" },
+      { "id": 3, "name": "Z" }
+    ]
+  }
+}

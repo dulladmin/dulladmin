@@ -1,3 +1,5 @@
+<!-- DataRenderer for Array<ObjectValue>, e.g. [{"id": 1}, {"id": 2}]. -->
+
 <template>
   <div class="arco-table arco-table-size-small arco-table-border">
     <div class="arco-table-container">

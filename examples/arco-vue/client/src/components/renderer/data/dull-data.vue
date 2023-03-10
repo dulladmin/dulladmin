@@ -1,3 +1,5 @@
+<!-- DataRenderer for ScalarValue, e.g. "str", 1, true. -->
+
 <template>
   <div>
     <renderFn />
@@ -45,7 +47,7 @@
           color = props.data ? 'green' : 'orange';
           break;
         default:
-          colorIndex = Object.keys(props.meta.optionals).indexOf(props.data);
+          colorIndex = Object.keys(props.meta.optionals).indexOf(String(props.data));
           color =
             colorIndex === -1 ? 'gray' : COLORS[colorIndex % COLORS.length];
           break;

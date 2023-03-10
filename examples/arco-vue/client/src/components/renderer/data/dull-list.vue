@@ -1,3 +1,5 @@
+<!-- DataRenderer for Array<ScalarValue>, e.g. [1,2,3]. -->
+
 <template>
   <div class="arco-list-wrapper">
     <div class="arco-list arco-list-small arco-list-bordered arco-list-split">
