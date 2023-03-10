@@ -5,7 +5,8 @@ import {
   assertNotNull,
   assertIsArray,
   assertIsObject,
-  assertIsString
+  assertIsString,
+  assertIsIdentifier
 } from '../../assert'
 import { YamlResourceType, YamlViewsType } from '../loader'
 import { parseView } from './view'
@@ -20,6 +21,7 @@ export function parseResource(doc: YamlResourceType): Resource {
   const nameXPath = '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const authority = doc.authority ?? null
   const authorityXPath = '/authority'
@@ -40,7 +42,7 @@ export function parseResource(doc: YamlResourceType): Resource {
 }
 
 function parseViews(doc: YamlViewsType, xpath: string): View[] {
-  const allowedFiledNames = /^[a-zA-Z_]\w*/
+  const allowedFiledNames = /^[a-zA-Z]\w*$/
   assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const views: View[] = []

@@ -12,6 +12,7 @@ import {
   assertNotNull,
   assertIsArray,
   assertIsString,
+  assertIsIdentifier,
   assertIsDullAdminValueType,
   assertIsDullAdminScalarValueType
 } from '../../assert'
@@ -40,6 +41,7 @@ function parseModelAttribute(
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   let type = doc.type
   let collection = false
@@ -86,6 +88,7 @@ function parseObjectAttribute(doc: YamlModelAttributeObjectAttributeType, xpath:
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   let type = doc.type
   let collection = false

@@ -24,6 +24,7 @@ import {
   assertIsArray,
   assertIsObject,
   assertIsString,
+  assertIsIdentifier,
   assertIsTableBlockSorterDirection,
   assertIsTableBlockSearcherPredicate,
   assertIsDullAdminScalarValueType
@@ -108,6 +109,7 @@ function parseBlock(doc: YamlBlockType, xpath: string): Block {
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const authority = doc.authority ?? null
   const authorityXPath = xpath + '/authority'
@@ -194,6 +196,7 @@ function parseTableBlockSorter(doc: YamlBlockTableSorterType, xpath: string): Ta
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const directions = doc.directions
   const directionsXPath = xpath + '/directions'
@@ -215,6 +218,7 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const predicate = doc.predicate as TableBlockSearcherPredicate
   const predicateXPath = xpath + '/predicate'
@@ -237,7 +241,7 @@ function parseTableBlockSearcher(doc: YamlBlockTableSearcherType, xpath: string)
 }
 
 function parseTableBlockOperations(doc: YamlBlockTableOperationsType, xpath: string): TableBlockOperation[] {
-  const allowedFiledNames = /^[a-zA-Z_]\w*/
+  const allowedFiledNames = /^[a-zA-Z]\w*$/
   assertFieldNamesRegexp(doc, allowedFiledNames, xpath)
 
   const operations: TableBlockOperation[] = []

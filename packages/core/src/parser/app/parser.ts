@@ -1,5 +1,5 @@
 import { App, AppMenu, AppSubMenu, AppMenuItem } from '../../structs'
-import { assertFieldNames, assertNotNull, assertIsArray, assertIsString } from '../assert'
+import { assertFieldNames, assertNotNull, assertIsArray, assertIsString, assertIsIdentifier } from '../assert'
 import { YamlAppType, YamlAppMenuType, YamlAppSubMenuType, YamlAppMenuItemType } from './loader'
 
 function parseApp(doc: YamlAppType): App {
@@ -34,6 +34,7 @@ function parseSubMenu(doc: YamlAppSubMenuType, xpath: string): AppSubMenu {
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const menuItems = doc.items
   const menuItemsXPath = xpath + '/items'
@@ -53,6 +54,7 @@ function parseMenuItem(doc: YamlAppMenuItemType, xpath: string): AppMenuItem {
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const viewUri = doc.view
   const viewUriXPath = xpath + '/view'

@@ -1,5 +1,5 @@
 import { Dialog, DialogDescriptionsBlock, DialogFormBlock } from '../../../structs'
-import { assertFieldNames, assertNotNull, assertIsArray, assertIsString } from '../../assert'
+import { assertFieldNames, assertNotNull, assertIsArray, assertIsString, assertIsIdentifier } from '../../assert'
 import { YamlDialogType } from '../loader'
 import { parseModel } from './model'
 
@@ -11,6 +11,7 @@ export function parseDialog(doc: YamlDialogType, xpath: string): Dialog {
   const nameXPath = xpath + '/name'
   assertNotNull(name, nameXPath)
   assertIsString(name, nameXPath)
+  assertIsIdentifier(name, nameXPath)
 
   const attrs = { name }
   if (doc.descriptions != null) return parseDescriptionsDialog(doc, xpath, attrs)

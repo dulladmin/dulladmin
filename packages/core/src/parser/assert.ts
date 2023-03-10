@@ -36,6 +36,14 @@ export function assertIsString(fieldValue: unknown, fieldXPath: string): void {
   throw new Error(`Field \`${fieldXPath}\` must be a string`)
 }
 
+export function assertIsIdentifier(fieldValue: unknown, fieldXPath: string): void {
+  if (/^[a-zA-Z]\w*$/.test(fieldValue as string)) return
+  throw new Error(
+    `Field \`${fieldXPath}\` must start with a letter and succeeding characters ` +
+      'must be letters, digits, or the underscore character'
+  )
+}
+
 const ScalarValueTypeValues = Object.values(ScalarValueType)
 const ScalarValueTypeToStr = JSON.stringify(ScalarValueTypeValues)
 export function isDullAdminScalarValueType(fieldValue: unknown): boolean {
