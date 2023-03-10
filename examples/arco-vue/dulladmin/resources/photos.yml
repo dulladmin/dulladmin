@@ -3,18 +3,18 @@ views:
   index:
     table:
       items:
-        - { name: 'id'          , type: 'int64'  }
-        - { name: 'albumId'     , type: 'int64'  }
-        - { name: 'title'       , type: 'string' }
-        - { name: 'url'         , type: 'image'  }
-        - { name: 'thumbnailUrl', type: 'image'  }
+        - { name: 'id', type: 'int64' }
+        - { name: 'albumId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'url', type: 'image' }
+        - { name: 'thumbnailUrl', type: 'image' }
       sorters:
         - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
     descriptions:
       items:
-        - { name: 'albumId'     , type: 'int64'  }
-        - { name: 'title'       , type: 'string' }
-        - { name: 'url'         , type: 'image'  }
-        - { name: 'thumbnailUrl', type: 'image'  }
+        - { name: 'albumId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'url', type: 'image' }
+        - { name: 'thumbnailUrl', type: 'image' }

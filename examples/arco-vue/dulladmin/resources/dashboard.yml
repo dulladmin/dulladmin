@@ -2,4 +2,27 @@ name: 'dashboard'
 singular: true
 views:
   show:
-    blocks: []
+    blocks:
+      - custom: {}
+      - name: 'publish'
+        echarts: {}
+      - name: 'authors'
+        table:
+          items:
+            - { name: 'id', type: 'int64', hidden: true }
+            - { name: 'rank', type: 'int64' }
+            - { name: 'name', type: 'string' }
+            - { name: 'clickNumber', type: 'int64' }
+      - name: 'period'
+        echarts: {}
+      - name: 'content_source'
+        echarts: {}
+    grid:
+      items:
+        - name: 'self'
+        - name: 'publish'
+          span: { xs: 24, sm: 12 }
+        - name: 'authors'
+          span: { xs: 24, sm: 12 }
+        - name: 'period'
+        - name: 'content_source'

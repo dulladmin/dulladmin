@@ -3,9 +3,9 @@ views:
   index:
     table:
       items:
-        - { name: 'id'    , type: 'int64'  }
-        - { name: 'userId', type: 'int64'  }
-        - { name: 'title' , type: 'string' }
+        - { name: 'id', type: 'int64' }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
       sorters:
         - { name: 'id', directions: ['ascend', 'descend'] }
 
@@ -13,24 +13,24 @@ views:
     blocks:
       - descriptions:
           items:
-            - { name: 'userId', type: 'int64'  }
-            - { name: 'title' , type: 'string' }
+            - { name: 'userId', type: 'int64' }
+            - { name: 'title', type: 'string' }
       - name: 'photos'
         table:
           items:
-            - { name: 'id'          , type: 'int64'  }
-            - { name: 'title'       , type: 'string' }
-            - { name: 'url'         , type: 'image'  }
-            - { name: 'thumbnailUrl', type: 'image'  }
+            - { name: 'id', type: 'int64' }
+            - { name: 'title', type: 'string' }
+            - { name: 'url', type: 'image' }
+            - { name: 'thumbnailUrl', type: 'image' }
           pagination:
             per: 10
           operations:
             show:
               descriptions:
                 items:
-                  - { name: 'title'       , type: 'string' }
-                  - { name: 'url'         , type: 'image'  }
-                  - { name: 'thumbnailUrl', type: 'image'  }
+                  - { name: 'title', type: 'string' }
+                  - { name: 'url', type: 'image' }
+                  - { name: 'thumbnailUrl', type: 'image' }
             new:
               form:
                 items:
@@ -46,19 +46,19 @@ views:
   show_photos:
     table:
       items:
-        - { name: 'id'          , type: 'int64'  }
-        - { name: 'title'       , type: 'string' }
-        - { name: 'url'         , type: 'image'  }
-        - { name: 'thumbnailUrl', type: 'image'  }
+        - { name: 'id', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'url', type: 'image' }
+        - { name: 'thumbnailUrl', type: 'image' }
       pagination:
         per: 10
       operations:
         show:
           descriptions:
             items:
-              - { name: 'title'       , type: 'string' }
-              - { name: 'url'         , type: 'image'  }
-              - { name: 'thumbnailUrl', type: 'image'  }
+              - { name: 'title', type: 'string' }
+              - { name: 'url', type: 'image' }
+              - { name: 'thumbnailUrl', type: 'image' }
         new:
           form:
             items:

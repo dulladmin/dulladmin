@@ -3,12 +3,42 @@
 <template>
   <div class="da-view dac-dashboard-show-view">
     <a-grid class="da-view-grid" :cols='24' :col-gap="16" :row-gap="16">
+      <a-grid-item class="da-view-grid-item dac-self-view-grid-item" :span='24'>
+        <div>
+          <SelfBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-publish-view-grid-item" :span='{"xs":24,"sm":12}'>
+        <div>
+          <PublishBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-authors-view-grid-item" :span='{"xs":24,"sm":12}'>
+        <div>
+          <AuthorsBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-period-view-grid-item" :span='24'>
+        <div>
+          <PeriodBlock />
+        </div>
+      </a-grid-item>
+      <a-grid-item class="da-view-grid-item dac-content-source-view-grid-item" :span='24'>
+        <div>
+          <ContentSourceBlock />
+        </div>
+      </a-grid-item>
     </a-grid>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { useTabbableView } from '@/hooks';
+  import SelfBlock from '@/views/modules/dashboard/show/components/self-block.vue';
+  import PublishBlock from '@/views/modules/dashboard/show/components/publish-block.vue';
+  import AuthorsBlock from '@/views/modules/dashboard/show/components/authors-block.vue';
+  import PeriodBlock from '@/views/modules/dashboard/show/components/period-block.vue';
+  import ContentSourceBlock from '@/views/modules/dashboard/show/components/content-source-block.vue';
 
   useTabbableView({
     name: 'DashboardShow',

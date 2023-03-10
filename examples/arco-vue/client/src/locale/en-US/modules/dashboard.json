@@ -1,3 +1,12 @@
 {
-  "dashboard--show.title": "Dashboard Show"
+  "dashboard--show.title": "Dashboard Show",
+  "dashboard--show.self-block.title": "Public Opinion Analysis",
+  "dashboard--show.publish-block.title": "Content Publishing Ratio",
+  "dashboard--show.authors-block.title": "Popular Author",
+  "dashboard--show.authors-block.model.attributes.id": "Id",
+  "dashboard--show.authors-block.model.attributes.rank": "Rank",
+  "dashboard--show.authors-block.model.attributes.name": "Name",
+  "dashboard--show.authors-block.model.attributes.clickNumber": "Click Number",
+  "dashboard--show.period-block.title": "Content Period Analysis",
+  "dashboard--show.content-source-block.title": "Content Publishing Source"
 }

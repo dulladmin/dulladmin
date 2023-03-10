@@ -3,17 +3,17 @@ menu:
     - name: 'dashboard'
       icon: 'icon_dashboard'
       items:
-        - { name: 'dashboard' , icon: 'icon_dashboard', view: 'dashboard#show' }
+        - { name: 'dashboard', icon: 'icon_dashboard', view: 'dashboard#show' }
     - name: 'users_management'
       icon: 'icon_user_group'
       items:
-        - { name: 'users' , icon: 'icon_user_group', view: 'users#index'  }
-        - { name: 'albums', icon: 'icon_folder'    , view: 'albums#index' }
-        - { name: 'photos', icon: 'icon_image'     , view: 'photos#index' }
+        - { name: 'users', icon: 'icon_user_group', view: 'users#index' }
+        - { name: 'albums', icon: 'icon_folder', view: 'albums#index' }
+        - { name: 'photos', icon: 'icon_image', view: 'photos#index' }
     - name: 'posts_management'
       icon: 'icon_file'
       items:
-        - { name: 'posts'   , icon: 'icon_file' , view: 'posts#index'    }
+        - { name: 'posts', icon: 'icon_file', view: 'posts#index' }
         - { name: 'comments', icon: 'icon_reply', view: 'comments#index' }
     - name: 'todos_management'
       icon: 'icon_list'
@@ -26,5 +26,5 @@ menu:
     - name: 'examples'
       icon: 'icon_mosaic'
       items:
-        - { name: 'charts' , icon: 'icon_bar_chart', view: 'charts#index' }
-        - { name: 'custom' , icon: 'icon_palette', view: 'custom#show' }
+        - { name: 'charts', icon: 'icon_bar_chart', view: 'charts#index' }
+        - { name: 'custom', icon: 'icon_palette', view: 'custom#show' }

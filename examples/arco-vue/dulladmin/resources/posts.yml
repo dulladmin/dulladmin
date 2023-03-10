@@ -3,16 +3,16 @@ views:
   index:
     table:
       items:
-        - { name: 'id'    , type: 'int64'  }
-        - { name: 'userId', type: 'int64'  }
-        - { name: 'title' , type: 'string' }
-        - { name: 'body'  , type: 'string' }
+        - { name: 'id', type: 'int64' }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'body', type: 'string' }
       sorters:
         - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
     descriptions:
       items:
-        - { name: 'userId', type: 'int64'  }
-        - { name: 'title' , type: 'string' }
-        - { name: 'body'  , type: 'string' }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'body', type: 'string' }

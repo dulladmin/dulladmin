@@ -1,44 +1,44 @@
 _items_address: &_items_address
-  - { name: 'street' , type: 'string' }
-  - { name: 'suite'  , type: 'string' }
-  - { name: 'city'   , type: 'string' }
+  - { name: 'street', type: 'string' }
+  - { name: 'suite', type: 'string' }
+  - { name: 'city', type: 'string' }
   - { name: 'zipcode', type: 'string' }
-  - { name: 'geo'    , type: 'string' }
+  - { name: 'geo', type: 'string' }
 _items_company: &_items_company
-  - { name: 'name'       , type: 'string' }
+  - { name: 'name', type: 'string' }
   - { name: 'catchPhrase', type: 'string' }
-  - { name: 'bs'         , type: 'string' }
+  - { name: 'bs', type: 'string' }
 
 name: 'users'
 views:
   index:
     table:
       items:
-        - { name: 'id'      , type: 'int64'  }
-        - { name: 'name'    , type: 'string' }
+        - { name: 'id', type: 'int64' }
+        - { name: 'name', type: 'string' }
         - { name: 'username', type: 'string' }
-        - { name: 'email'   , type: 'string' }
-        - { name: 'address' , type: 'object', attributes: *_items_address, hidden: true }
-        - { name: 'phone'   , type: 'string' }
-        - { name: 'website' , type: 'string' }
-        - { name: 'company' , type: 'object', attributes: *_items_company, hidden: true }
+        - { name: 'email', type: 'string' }
+        - { name: 'address', type: 'object', attributes: *_items_address, hidden: true }
+        - { name: 'phone', type: 'string' }
+        - { name: 'website', type: 'string' }
+        - { name: 'company', type: 'object', attributes: *_items_company, hidden: true }
       sorters:
-        - { name: 'id'      , directions: ['descend', 'ascend'] }
-        - { name: 'name'    , directions: ['descend']           }
+        - { name: 'id', directions: ['descend', 'ascend'] }
+        - { name: 'name', directions: ['descend'] }
         - { name: 'username', directions: ['ascend', 'descend'] }
-        - { name: 'email'   , directions: ['ascend']            }
+        - { name: 'email', directions: ['ascend'] }
       searchers:
-        - { name: 'id'  , predicate: 'eq'   }
+        - { name: 'id', predicate: 'eq' }
         - { name: 'name', predicate: 'cont' }
 
   show:
     descriptions:
       items:
-        - { name: 'id'      , type: 'int64'  }
-        - { name: 'name'    , type: 'string' }
+        - { name: 'id', type: 'int64' }
+        - { name: 'name', type: 'string' }
         - { name: 'username', type: 'string' }
-        - { name: 'email'   , type: 'string' }
-        - { name: 'address' , type: 'object', attributes: *_items_address }
-        - { name: 'phone'   , type: 'string' }
-        - { name: 'website' , type: 'string' }
-        - { name: 'company' , type: 'object', attributes: *_items_company }
+        - { name: 'email', type: 'string' }
+        - { name: 'address', type: 'object', attributes: *_items_address }
+        - { name: 'phone', type: 'string' }
+        - { name: 'website', type: 'string' }
+        - { name: 'company', type: 'object', attributes: *_items_company }

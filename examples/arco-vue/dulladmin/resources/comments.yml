@@ -3,18 +3,18 @@ views:
   index:
     table:
       items:
-        - { name: 'id'    , type: 'int64'  }
-        - { name: 'postId', type: 'int64'  }
-        - { name: 'name'  , type: 'string' }
-        - { name: 'email' , type: 'string' }
-        - { name: 'body'  , type: 'string' }
+        - { name: 'id', type: 'int64' }
+        - { name: 'postId', type: 'int64' }
+        - { name: 'name', type: 'string' }
+        - { name: 'email', type: 'string' }
+        - { name: 'body', type: 'string' }
       sorters:
         - { name: 'id', directions: ['ascend', 'descend'] }
 
   show:
     descriptions:
       items:
-        - { name: 'postId', type: 'int64'  }
-        - { name: 'name'  , type: 'string' }
-        - { name: 'email' , type: 'string' }
-        - { name: 'body'  , type: 'string' }
+        - { name: 'postId', type: 'int64' }
+        - { name: 'name', type: 'string' }
+        - { name: 'email', type: 'string' }
+        - { name: 'body', type: 'string' }

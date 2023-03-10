@@ -3,14 +3,14 @@ views:
   index:
     table:
       items:
-        - { name: 'id'       , type: 'int64'  }
-        - { name: 'userId'   , type: 'int64'  }
-        - { name: 'title'    , type: 'string' }
-        - { name: 'completed', type: 'bool'  , optionals: [true, false] }
+        - { name: 'id', type: 'int64' }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'completed', type: 'bool', optionals: [true, false] }
       sorters:
         - { name: 'id', directions: ['ascend', 'descend'] }
       searchers:
-        - { name: 'userId'   , predicate: 'eq' }
+        - { name: 'userId', predicate: 'eq' }
         - { name: 'completed', predicate: 'eq' }
       operations:
         show_title:
@@ -31,23 +31,23 @@ views:
   show:
     descriptions:
       items:
-        - { name: 'userId'   , type: 'int64'  }
-        - { name: 'title'    , type: 'string' }
-        - { name: 'completed', type: 'bool'  , optionals: [true, false] }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'completed', type: 'bool', optionals: [true, false] }
 
   new:
     form:
       items:
-        - { name: 'userId'   , type: 'int64'  }
-        - { name: 'title'    , type: 'string' }
-        - { name: 'completed', type: 'bool'   }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string' }
+        - { name: 'completed', type: 'bool' }
 
   edit:
     form:
       items:
-        - { name: 'userId'     , type: 'int64' }
-        - { name: 'title'      , type: 'string', hidden: true }
-        - { name: 'completed'  , type: 'bool'  }
+        - { name: 'userId', type: 'int64' }
+        - { name: 'title', type: 'string', hidden: true }
+        - { name: 'completed', type: 'bool' }
 
   delete:
     authority: ['admin']

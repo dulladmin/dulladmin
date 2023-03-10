@@ -1,3 +1,12 @@
 {
-  "dashboard--show.title": "工作台"
+  "dashboard--show.title": "工作台",
+  "dashboard--show.self-block.title": "数据分析",
+  "dashboard--show.publish-block.title": "内容发布比例",
+  "dashboard--show.authors-block.title": "热门作者榜单",
+  "dashboard--show.authors-block.model.attributes.id": "编号",
+  "dashboard--show.authors-block.model.attributes.rank": "排名",
+  "dashboard--show.authors-block.model.attributes.name": "作者",
+  "dashboard--show.authors-block.model.attributes.clickNumber": "点击数",
+  "dashboard--show.period-block.title": "内容时段分析",
+  "dashboard--show.content-source-block.title": "内容发布来源"
 }

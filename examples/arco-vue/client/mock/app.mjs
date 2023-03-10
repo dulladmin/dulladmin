@@ -61,6 +61,7 @@ function makePagination(collection, pagination) {
 }
 
 export async function enhance(app) {
+  const dashboardDB = await loadDatabase('./db/dashboard.json');
   const usersDB = await loadDatabase('./db/users.json');
   const albumsDB = await loadDatabase('./db/albums.json');
   const photosDB = await loadDatabase('./db/photos.json');
@@ -70,6 +71,23 @@ export async function enhance(app) {
   const administratorsDB = await loadDatabase('./db/administrators.json');
   const chartsDB = await loadDatabase('./db/charts.json');
   const customDB = await loadDatabase('./db/custom.json');
+
+  app.get('/dashboard/show/publish', async (_req, res) => {
+    const chart = dashboardDB.data['publish'];
+    res.send(buildSuccessResponse({ chart }));
+  });
+  app.get('/dashboard/show/authors', async (_req, res) => {
+    const collection = dashboardDB.data['authors'];
+    res.send(buildSuccessResponse({ collection }));
+  });
+  app.get('/dashboard/show/period', async (_req, res) => {
+    const chart = dashboardDB.data['period'];
+    res.send(buildSuccessResponse({ chart }));
+  });
+  app.get('/dashboard/show/content-source', async (_req, res) => {
+    const chart = dashboardDB.data['content-source'];
+    res.send(buildSuccessResponse({ chart }));
+  });
 
   app.get('/users/index/self', async (req, res) => {
     let collection = lodash.cloneDeep(usersDB.data);
