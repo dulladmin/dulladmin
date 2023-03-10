@@ -42,7 +42,7 @@
 
   const props = defineProps<{
     data: Record<string, any>[];
-    meta: Record<string, Record<string, string>>;
+    meta: Record<string, Record<string, any>>;
   }>();
 
   const data = computed(() => props.data);
