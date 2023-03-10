@@ -1,0 +1,44 @@
+_object_attributes: &_object_attributes
+  - { name: 'id', type: 'int64' }
+  - { name: 'name', type: 'string' }
+  - { name: 'role', type: 'string', optionals: ['admin', 'user'] }
+
+name: 'tables'
+views:
+  index:
+    blocks:
+      - name: 'scalar'
+        table:
+          items:
+            - { name: 'double', type: 'double' }
+            - { name: 'int64', type: 'int64' }
+            - { name: 'bool', type: 'bool' }
+            - { name: 'string', type: 'string' }
+            - { name: 'datetime', type: 'datetime' }
+            - { name: 'image', type: 'image' }
+            - { name: 'string_optionals', type: 'string', optionals: ['str'] }
+      - name: 'scalar_array'
+        table:
+          items:
+            - { name: 'double_arr', type: 'double[]' }
+            - { name: 'int64_arr', type: 'int64[]' }
+            - { name: 'string_arr', type: 'string[]' }
+            - { name: 'datetime_arr', type: 'datetime[]' }
+            - { name: 'image_arr', type: 'image[]' }
+            - { name: 'string_optionals_arr', type: 'string[]', optionals: ['str'] }
+      - name: 'object'
+        table:
+          items:
+            - { name: 'object', type: 'object', attributes: *_object_attributes }
+      - name: 'object_array'
+        table:
+          items:
+            - { name: 'object_arr', type: 'object[]', attributes: *_object_attributes }
+    grid:
+      items:
+        - name: 'scalar'
+        - name: 'scalar_array'
+        - name: 'object'
+          span: { xs: 24, sm: 12 }
+        - name: 'object_array'
+          span: { xs: 24, sm: 12 }

@@ -26,6 +26,7 @@ menu:
     - name: 'examples'
       icon: 'icon_mosaic'
       items:
+        - { name: 'tables', icon: 'icon_nav', view: 'tables#index' }
         - { name: 'descriptions', icon: 'icon_sort', view: 'descriptions#index' }
         - { name: 'charts', icon: 'icon_bar_chart', view: 'charts#index' }
         - { name: 'custom', icon: 'icon_palette', view: 'custom#show' }

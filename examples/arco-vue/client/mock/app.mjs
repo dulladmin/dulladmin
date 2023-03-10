@@ -69,6 +69,7 @@ export async function enhance(app) {
   const commentsDB = await loadDatabase('./db/comments.json');
   const todosDB = await loadDatabase('./db/todos.json');
   const administratorsDB = await loadDatabase('./db/administrators.json');
+  const tablesDB = await loadDatabase('./db/tables.json');
   const descriptionsDB = await loadDatabase('./db/descriptions.json');
   const chartsDB = await loadDatabase('./db/charts.json');
   const customDB = await loadDatabase('./db/custom.json');
@@ -357,6 +358,11 @@ export async function enhance(app) {
     const index = collection.findIndex((item) => item.id == req.params.id);
     collection.splice(index, 1);
     res.send(buildSuccessResponse({ form: {} }));
+  });
+
+  app.get('/tables/index/:blkName', async (req, res) => {
+    const collection = tablesDB.data[req.params.blkName];
+    res.send(buildSuccessResponse({ collection }));
   });
 
   app.get('/descriptions/index/:blkName', async (req, res) => {
