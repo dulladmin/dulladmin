@@ -65,6 +65,15 @@
           type: '{{type}}',
           hidden: {{hidden}},
           i18nKey: '{{i18nKey}}',
+          {{#if optionals}}
+          optionals: {
+            {{#each optionals}}
+            {{name}}: {
+              i18nKey: '{{i18nKey}}',
+            },
+            {{/each}}
+          },
+          {{/if}}
         },
         {{/each}}
       }

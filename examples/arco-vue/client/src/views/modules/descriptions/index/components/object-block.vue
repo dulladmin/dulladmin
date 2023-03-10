@@ -58,6 +58,14 @@
         role: {
           type: 'string',
           i18nKey: 'descriptions--index.object-block.model.attributes.object.role',
+          optionals: {
+            admin: {
+              i18nKey: 'descriptions--index.object-block.model.attributes.object.role.optionals.admin',
+            },
+            user: {
+              i18nKey: 'descriptions--index.object-block.model.attributes.object.role.optionals.user',
+            },
+          },
         },
       }
     },

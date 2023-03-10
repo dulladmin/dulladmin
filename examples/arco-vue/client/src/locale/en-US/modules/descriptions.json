@@ -27,9 +27,13 @@
   "descriptions--index.object-block.model.attributes.object.id": "id",
   "descriptions--index.object-block.model.attributes.object.name": "name",
   "descriptions--index.object-block.model.attributes.object.role": "Role",
+  "descriptions--index.object-block.model.attributes.object.role.optionals.admin": "Admin",
+  "descriptions--index.object-block.model.attributes.object.role.optionals.user": "User",
   "descriptions--index.object-array-block.title": "Object-Array",
   "descriptions--index.object-array-block.model.attributes.object_arr": "Array of object",
   "descriptions--index.object-array-block.model.attributes.object_arr.id": "id",
   "descriptions--index.object-array-block.model.attributes.object_arr.name": "name",
-  "descriptions--index.object-array-block.model.attributes.object_arr.role": "Role"
+  "descriptions--index.object-array-block.model.attributes.object_arr.role": "Role",
+  "descriptions--index.object-array-block.model.attributes.object_arr.role.optionals.admin": "Admin",
+  "descriptions--index.object-array-block.model.attributes.object_arr.role.optionals.user": "User"
 }

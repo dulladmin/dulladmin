@@ -51,7 +51,7 @@ function renderData_Model(model: Model, attrs: Record<string, any>): Record<stri
                     name: objAttr.name,
                     type: objAttr.type,
                     jsonType: toJsonType(objAttr.type),
-                    optionals: attr.optionals?.map((rawOpt) => {
+                    optionals: objAttr.optionals?.map((rawOpt) => {
                       const opt = String(rawOpt)
                       return {
                         name: opt,
