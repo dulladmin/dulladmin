@@ -38,6 +38,6 @@
     "release": "pnpm publish"
   },
   "dependencies": {
-    "js-yaml": "^4.0.5"
+    "js-yaml": "^4.1.0"
   }
 }
