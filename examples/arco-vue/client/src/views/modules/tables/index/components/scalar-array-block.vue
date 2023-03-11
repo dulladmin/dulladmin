@@ -304,7 +304,7 @@
   const updateStore = (data: Record<string, any>) => {
     const { model } = data;
     if (model) {
-      const foundIndex = store.value.findIndex((e) => String(e.id) === String(model.id));
+      const foundIndex = -1
       if (foundIndex !== -1) {
         store.value.splice(foundIndex, 1, model);
       }

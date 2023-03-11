@@ -101,11 +101,14 @@ function genViews_TableBlock(resource: Resource, view: View, block: TableBlock):
   })
   _customOperations.sort((a, b) => a.order - b.order)
 
+  // handlebars helper utilities
+  const hasColumnID = _block.model.attributes.findIndex((_item: Record<string, any>) => _item.name === 'id') !== -1
+
   // outfile
   const blockOutfile = handlebarsFile(
     `src/views/modules/${resourcePath}/${viewPath}/components/${blockPath}-block.vue`,
     'src/views/modules/__resource__/__view__/components/__table_block__.vue.hbs',
-    { ..._block, view: _view, resourceActions, customOperations: _customOperations }
+    { ..._block, view: _view, resourceActions, customOperations: _customOperations, hasColumnID }
   )
   const dialogOutfiles = block.operations.map((operation) => {
     const attrs: Record<string, any> = {}
