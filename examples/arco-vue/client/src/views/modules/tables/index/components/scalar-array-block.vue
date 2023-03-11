@@ -156,7 +156,7 @@
   const baseTablePagination: Pagination = {
     pageSize: 20,
     current: 1,
-    total: null,
+    total: 0,
     showTotal: true,
     hideOnSinglePage: true,
   };

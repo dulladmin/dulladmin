@@ -199,7 +199,7 @@
   const baseTablePagination: Pagination = {
     pageSize: 10,
     current: 1,
-    total: null,
+    total: 0,
     showTotal: true,
     hideOnSinglePage: true,
   };
