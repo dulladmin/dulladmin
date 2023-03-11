@@ -14,7 +14,7 @@ export interface CreateResponseUserInfo {
   role: string;
 }
 
-interface CreateResponse {
+export interface CreateResponse {
   token: string;
   info: CreateResponseUserInfo;
 }
