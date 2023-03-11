@@ -13,7 +13,6 @@ declare module '@vue/runtime-core' {
     ABreadcrumb: typeof import('@arco-design/web-vue')['Breadcrumb']
     ABreadcrumbItem: typeof import('@arco-design/web-vue')['BreadcrumbItem']
     AButton: typeof import('@arco-design/web-vue')['Button']
-    AButtonGroup: typeof import('@arco-design/web-vue')['ButtonGroup']
     AConfigProvider: typeof import('@arco-design/web-vue')['ConfigProvider']
     ADoption: typeof import('@arco-design/web-vue')['Doption']
     ADrawer: typeof import('@arco-design/web-vue')['Drawer']

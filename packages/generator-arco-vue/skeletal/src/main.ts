@@ -9,6 +9,7 @@ import directive from '@/directive';
 import renderer from '@/components/renderer';
 import App from '@/App.vue';
 import '@/api/interceptor';
+
 import '@arco-design/web-vue/dist/arco.css';
 import '@/assets/style/main.less';
 
