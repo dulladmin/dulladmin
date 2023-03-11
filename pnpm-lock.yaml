@@ -70,23 +70,23 @@ importers:
     specifiers:
       '@dulladmin/core': workspace:^
       chalk: ^5.2.0
-      cosmiconfig: ^8.0.0
+      cosmiconfig: ^8.1.0
       fs-extra: ^11.1.0
       globby: ^13.1.3
       lodash.merge: ^4.6.2
-      yargs: ^17.6.2
+      yargs: ^17.7.1
     dependencies:
       '@dulladmin/core': link:../core
       chalk: 5.2.0
-      cosmiconfig: 8.0.0
+      cosmiconfig: 8.1.0
       fs-extra: 11.1.0
       globby: 13.1.3
       lodash.merge: 4.6.2
-      yargs: 17.6.2
+      yargs: 17.7.1
 
   packages/core:
     specifiers:
-      js-yaml: ^4.0.5
+      js-yaml: ^4.1.0
     dependencies:
       js-yaml: 4.1.0
 
@@ -752,8 +752,8 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
-  /cosmiconfig/8.0.0:
-    resolution: {integrity: sha512-da1EafcpH6b/TD8vDRaWV7xFINlHlF6zKsGwS1TsuVJTZRkquaS5HTMq7uq6h31619QjbsYl21gVDOm32KM1vQ==}
+  /cosmiconfig/8.1.0:
+    resolution: {integrity: sha512-0tLZ9URlPGU7JsKq0DQOQ3FoRsYX8xDZ7xMiATQfaiGMz7EHowNkbU9u1coAOmnh9p/1ySpm0RB3JNWRXM5GCg==}
     engines: {node: '>=14'}
     dependencies:
       import-fresh: 3.3.0
@@ -2576,8 +2576,8 @@ packages:
       yargs-parser: 20.2.4
     dev: true
 
-  /yargs/17.6.2:
-    resolution: {integrity: sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==}
+  /yargs/17.7.1:
+    resolution: {integrity: sha512-cwiTb08Xuv5fqF4AovYacTFNxk62th7LKJ6BL9IGUpTJrWoU7/7WdQGTP2SjKf1dUNBGzDd28p/Yfs/GI6JrLw==}
     engines: {node: '>=12'}
     dependencies:
       cliui: 8.0.1
@@ -2597,22 +2597,22 @@ packages:
   file:packages/cli:
     resolution: {directory: packages/cli, type: directory}
     name: '@dulladmin/cli'
-    version: 0.0.1
+    version: 0.1.1
     hasBin: true
     dependencies:
       '@dulladmin/core': link:packages/core
       chalk: 5.2.0
-      cosmiconfig: 8.0.0
+      cosmiconfig: 8.1.0
       fs-extra: 11.1.0
       globby: 13.1.3
       lodash.merge: 4.6.2
-      yargs: 17.6.2
+      yargs: 17.7.1
     dev: false
 
   file:packages/generator-arco-vue:
     resolution: {directory: packages/generator-arco-vue, type: directory}
     name: '@dulladmin/generator-arco-vue'
-    version: 0.0.1
+    version: 0.1.1
     dependencies:
       '@dulladmin/core': link:packages/core
       fs-extra: 11.1.0
