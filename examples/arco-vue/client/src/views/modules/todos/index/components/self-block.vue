@@ -3,7 +3,7 @@
 <template>
   <div>
     <a-card :title="$t('todos--index.self-block.title')" class="da-table-block dac-self-block">
-      <a-row style="margin-bottom: 16px">
+      <a-row class="da-table-block-toolbar">
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
@@ -20,7 +20,7 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
+        <a-col class="da-table-block-toolbar-r" :span="12">
           <a-space>
             <a-tag
               v-for="(value, name) in tableSearchCondition"
@@ -45,7 +45,7 @@
             </div>
           </a-space>
           <a-tooltip :content="$t('table.actions.search')">
-            <div class="action-icon" @click="handleSearchModalVisible">
+            <div class="action-btn" @click="handleSearchModalVisible">
               <a-badge
                 color="arcoblue"
                 dot
@@ -57,13 +57,13 @@
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh">
+            <div class="action-btn" @click="onTableRefresh">
               <icon-refresh size="18"/>
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
-              <div class="action-icon"><icon-settings size="18" /></div>
+              <div class="action-btn"><icon-settings size="18" /></div>
               <template #content>
                 <div>
                   <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
@@ -123,56 +123,55 @@
             <a-button
               type="outline"
               status="success"
-              size="small"
+              size="mini"
               @click="goto({ name: 'TodosShow', params: { id: record.id } })"
             >
-              {{ $t('table.actions.show') }}
+              <icon-eye />
             </a-button>
             <a-button
               type="outline"
               status="warning"
-              size="small"
+              size="mini"
               @click="goto({ name: 'TodosEdit', params: { id: record.id } })"
             >
-              {{ $t('table.actions.edit') }}
+              <icon-edit />
             </a-button>
             <a-button
               v-permission="['admin', ]"
               type="outline"
               status="danger"
-              size="small"
+              size="mini"
               @click="goto({ name: 'TodosDelete', params: { id: record.id } })"
             >
-              {{ $t('table.actions.delete') }}
+              <icon-delete />
             </a-button>
-            <a-button
-              type="outline"
-              size="small"
-              @click="handleTableOperationSelfBlockShowTitleDialogVisible({ id: record.id })"
-            >
-              {{ $t('todos--index.self-block.actions.show-title') }}
-            </a-button>
-            <a-button
-              type="outline"
-              size="small"
-              @click="handleTableOperationSelfBlockEditTitleDialogVisible({ id: record.id })"
-            >
-              {{ $t('todos--index.self-block.actions.edit-title') }}
-            </a-button>
-            <a-button
-              type="outline"
-              size="small"
-              @click="handleTableOperationSelfBlockCreateCompletedDialogVisible({ id: record.id })"
-            >
-              {{ $t('todos--index.self-block.actions.create-completed') }}
-            </a-button>
-            <a-button
-              type="outline"
-              size="small"
-              @click="handleTableOperationSelfBlockDeleteCompletedDialogVisible({ id: record.id })"
-            >
-              {{ $t('todos--index.self-block.actions.delete-completed') }}
-            </a-button>
+            <a-dropdown v-if="tableOperationsColumnMoreRenderable" trigger="hover" position="br">
+              <a-button type="outline" size="mini">
+                <icon-more />
+              </a-button>
+              <template #content>
+                <a-doption
+                  @click="handleTableOperationSelfBlockShowTitleDialogVisible({ id: record.id })"
+                >
+                {{ $t('todos--index.self-block.actions.show-title') }}
+                </a-doption>
+                <a-doption
+                  @click="handleTableOperationSelfBlockEditTitleDialogVisible({ id: record.id })"
+                >
+                {{ $t('todos--index.self-block.actions.edit-title') }}
+                </a-doption>
+                <a-doption
+                  @click="handleTableOperationSelfBlockCreateCompletedDialogVisible({ id: record.id })"
+                >
+                {{ $t('todos--index.self-block.actions.create-completed') }}
+                </a-doption>
+                <a-doption
+                  @click="handleTableOperationSelfBlockDeleteCompletedDialogVisible({ id: record.id })"
+                >
+                {{ $t('todos--index.self-block.actions.delete-completed') }}
+                </a-doption>
+              </template>
+            </a-dropdown>
           </a-space>
         </template>
       </a-table>
@@ -207,11 +206,11 @@
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
       <span />
       <span />
-      <span v-permission="['admin', ]"/>
-      <span />
-      <span />
-      <span />
-      <span />
+      <span v-permission="['admin', ]" />
+      <span class="custom"/>
+      <span class="custom"/>
+      <span class="custom"/>
+      <span class="custom"/>
     </div>
 
     <!-- Table Collection/Model Operations - show_title -->
@@ -577,10 +576,14 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnMoreRenderable = ref<boolean>(true);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+    if (el.querySelectorAll('.custom').length === 0) {
+      tableOperationsColumnMoreRenderable.value = false
     }
   });
 

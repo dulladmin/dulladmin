@@ -5,13 +5,23 @@
 
 // Block - TableBlock
 .da-table-block {
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
+  &-toolbar {
+    margin-bottom: 16px;
+
+    &-r {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      .action-btn {
+        margin-left: 12px;
+        cursor: pointer;
+      }
+    }
   }
 
-  .column-operations {
-    width: 80px;
+  td.column-operations {
+    width: 0;
   }
 }
 

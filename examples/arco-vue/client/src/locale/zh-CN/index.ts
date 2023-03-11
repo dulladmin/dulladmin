@@ -38,6 +38,7 @@ export default {
   'table.actions.show': '查看',
   'table.actions.edit': '编辑',
   'table.actions.delete': '删除',
+  'table.actions.more': '更多操作',
   'table.columns.operations': '操作',
 
   // components - form

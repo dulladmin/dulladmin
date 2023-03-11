@@ -3,7 +3,7 @@
 <template>
   <div>
     <a-card :title="$t('{{title.i18nKey}}')" class="da-table-block {{componentNamePath}}">
-      <a-row style="margin-bottom: 16px">
+      <a-row class="da-table-block-toolbar">
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
@@ -39,7 +39,7 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
+        <a-col class="da-table-block-toolbar-r" :span="12">
         {{#if searchable}}
           <a-space>
             <a-tag
@@ -65,7 +65,7 @@
             </div>
           </a-space>
           <a-tooltip :content="$t('table.actions.search')">
-            <div class="action-icon" @click="handleSearchModalVisible">
+            <div class="action-btn" @click="handleSearchModalVisible">
               <a-badge
                 color="arcoblue"
                 dot
@@ -78,13 +78,13 @@
           </a-tooltip>
         {{/if}}
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh">
+            <div class="action-btn" @click="onTableRefresh">
               <icon-refresh size="18"/>
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
-              <div class="action-icon"><icon-settings size="18" /></div>
+              <div class="action-btn"><icon-settings size="18" /></div>
               <template #content>
                 <div>
                   <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
@@ -155,10 +155,10 @@
               {{/if}}
               type="outline"
               status="success"
-              size="small"
+              size="mini"
               @click="goto({ name: '{{ resourceActions.show.name }}', params: { id: record.id } })"
             >
-              \{{ $t('table.actions.show') }}
+              <icon-eye />
             </a-button>
             {{/if}}
             {{#if operations.show }}
@@ -168,10 +168,10 @@
               {{/if}}
               type="outline"
               status="success"
-              size="small"
+              size="mini"
               @click="handleTableOperation{{operations.show.dialog.componentName}}Visible({ id: record.id })"
             >
-              \{{ $t('table.actions.show') }}
+              <icon-eye />
             </a-button>
             {{/if}}
             {{#if resourceActions.edit }}
@@ -181,10 +181,10 @@
               {{/if}}
               type="outline"
               status="warning"
-              size="small"
+              size="mini"
               @click="goto({ name: '{{ resourceActions.edit.name }}', params: { id: record.id } })"
             >
-              \{{ $t('table.actions.edit') }}
+              <icon-edit />
             </a-button>
             {{/if}}
             {{#if operations.edit }}
@@ -194,10 +194,10 @@
               {{/if}}
               type="outline"
               status="warning"
-              size="small"
+              size="mini"
               @click="handleTableOperation{{operations.edit.dialog.componentName}}Visible({ id: record.id })"
             >
-              \{{ $t('table.actions.edit') }}
+              <icon-edit />
             </a-button>
             {{/if}}
             {{#if resourceActions.delete }}
@@ -207,10 +207,10 @@
               {{/if}}
               type="outline"
               status="danger"
-              size="small"
+              size="mini"
               @click="goto({ name: '{{ resourceActions.delete.name }}', params: { id: record.id } })"
             >
-              \{{ $t('table.actions.delete') }}
+              <icon-delete />
             </a-button>
             {{/if}}
             {{#if operations.delete }}
@@ -220,26 +220,33 @@
               {{/if}}
               type="outline"
               status="danger"
-              size="small"
+              size="mini"
               @click="handleTableOperation{{operations.delete.dialog.componentName}}Visible({ id: record.id })"
             >
-              \{{ $t('table.actions.delete') }}
+              <icon-delete />
             </a-button>
             {{/if}}
-          {{#each customOperations}}
-            {{#if isMemberAction}}
-            <a-button
-              {{#if authority}}
-              v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
-              {{/if}}
-              type="outline"
-              size="small"
-              @click="handleTableOperation{{dialog.componentName}}Visible({ id: record.id })"
-            >
-              \{{ $t('{{i18nKey}}') }}
-            </a-button>
-            {{/if}}
-          {{/each}}
+          {{#if customOperations}}
+            <a-dropdown v-if="tableOperationsColumnMoreRenderable" trigger="hover" position="br">
+              <a-button type="outline" size="mini">
+                <icon-more />
+              </a-button>
+              <template #content>
+              {{#each customOperations}}
+                {{#if isMemberAction}}
+                <a-doption
+                  {{#if authority}}
+                  v-permission="[{{#each authority}}'{{this}}', {{/each}}]"
+                  {{/if}}
+                  @click="handleTableOperation{{dialog.componentName}}Visible({ id: record.id })"
+                >
+                \{{ $t('{{i18nKey}}') }}
+                </a-doption>
+                {{/if}}
+              {{/each}}
+              </template>
+            </a-dropdown>
+          {{/if}}
           </a-space>
         </template>
       </a-table>
@@ -274,12 +281,12 @@
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
     {{#each resourceActions}}
       {{#if isMemberAction}}
-      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
+      <span{{#if authority}} v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}} />
       {{/if}}
     {{/each}}
     {{#each operations}}
       {{#if isMemberAction}}
-      <span {{#if authority}}v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}}/>
+      <span{{#if authority}} v-permission="[{{#each authority}}'{{this}}', {{/each}}]"{{/if}} class="custom"/>
       {{/if}}
     {{/each}}
     </div>
@@ -648,10 +655,14 @@
 {{/if}}
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnMoreRenderable = ref<boolean>(true);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+    if (el.querySelectorAll('.custom').length === 0) {
+      tableOperationsColumnMoreRenderable.value = false
     }
   });
 

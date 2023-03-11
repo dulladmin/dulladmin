@@ -95,16 +95,10 @@
       </li>
       <li>
         <a-dropdown trigger="hover" position="br">
-          <a-button-group>
-            <a-button class="user-nav-btn">
-              {{ userStore.info.name }}
-            </a-button>
-            <a-button class="user-nav-btn">
-              <template #icon>
-                <icon-down />
-              </template>
-            </a-button>
-          </a-button-group>
+          <a-button class="user-nav-btn">
+            {{ userStore.info.name }}
+            <icon-down />
+          </a-button>
           <template #content>
             <a-doption>
               <a-space @click="handleLogout">
@@ -236,8 +230,8 @@
     }
 
     .user-nav-btn {
-      &:hover {
-        background-color: var(--color-secondary);
+      .arco-icon {
+        margin-left: 8px;
       }
     }
   }

@@ -3,7 +3,7 @@
 <template>
   <div>
     <a-card :title="$t('albums--index.self-block.title')" class="da-table-block dac-self-block">
-      <a-row style="margin-bottom: 16px">
+      <a-row class="da-table-block-toolbar">
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
@@ -11,15 +11,15 @@
         </a-col>
 
         <!-- Table Search/Refresh/ColumnsSetting -->
-        <a-col style="display: flex; align-items: center; justify-content: end" :span="12">
+        <a-col class="da-table-block-toolbar-r" :span="12">
           <a-tooltip :content="$t('table.actions.refresh')">
-            <div class="action-icon" @click="onTableRefresh">
+            <div class="action-btn" @click="onTableRefresh">
               <icon-refresh size="18"/>
             </div>
           </a-tooltip>
           <a-tooltip :content="$t('table.actions.columnSetting')">
             <a-popover trigger="click" position="bl">
-              <div class="action-icon"><icon-settings size="18" /></div>
+              <div class="action-btn"><icon-settings size="18" /></div>
               <template #content>
                 <div>
                   <div v-for="(item, index) in tableColumnsWithShow" :key="item.dataIndex">
@@ -73,10 +73,10 @@
             <a-button
               type="outline"
               status="success"
-              size="small"
+              size="mini"
               @click="goto({ name: 'AlbumsShow', params: { id: record.id } })"
             >
-              {{ $t('table.actions.show') }}
+              <icon-eye />
             </a-button>
           </a-space>
         </template>
@@ -313,10 +313,14 @@
 
   // table - operations ui
   const tableOperationsColumnRenderableRef = ref();
+  const tableOperationsColumnMoreRenderable = ref<boolean>(true);
   onMounted(() => {
     const el = tableOperationsColumnRenderableRef.value as any;
     if (el.children.length === 0) {
       tableColumnsWithConfiguration.value.tableOperationsColumn.renderable = false
+    }
+    if (el.querySelectorAll('.custom').length === 0) {
+      tableOperationsColumnMoreRenderable.value = false
     }
   });
 
