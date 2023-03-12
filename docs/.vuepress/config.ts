@@ -3,7 +3,7 @@ import { defaultTheme } from 'vuepress'
 import { navbarEn, navbarZh, sidebarEn, sidebarZh } from './configs'
 
 export default defineUserConfig({
-  base: '/',
+  base: '/dulladmin/',
   locales: {
     '/': {
       lang: 'en-US',
