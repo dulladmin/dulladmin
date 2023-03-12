@@ -1,8 +1,8 @@
-/examples
-/dist
 /node_modules
-/generators
-/skeletal
+/docs/.vuepress/.cache
+/docs/.vuepress/.temp
+/examples
+/pnpm-lock.yaml
 /packages/**/dist
 /packages/**/node_modules
 /packages/generator-*/generators
