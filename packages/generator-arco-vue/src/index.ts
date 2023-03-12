@@ -65,14 +65,12 @@ class GeneratorArcoVue implements Generator {
     })
 
     const appFilePath = path.join(dulladminDir, 'app.yml')
-    if (fse.pathExistsSync(appFilePath)) {
-      try {
-        const appFileContent = fs.readFileSync(appFilePath, 'utf8')
-        const app = parseAppFile(appFileContent)
-        files[appFilePath] = ([] as GeneratedFile[]).concat(genAppConfig()).concat(genAppMenu(app.menu, resources))
-      } catch (err) {
-        errors[appFilePath] = (err as Error).message
-      }
+    try {
+      const appFileContent = fse.pathExistsSync(appFilePath) ? fs.readFileSync(appFilePath, 'utf8') : ''
+      const app = parseAppFile(appFileContent)
+      files[appFilePath] = ([] as GeneratedFile[]).concat(genAppConfig()).concat(genAppMenu(app.menu, resources))
+    } catch (err) {
+      errors[appFilePath] = (err as Error).message
     }
 
     if (Object.keys(errors).length !== 0) {

@@ -3,6 +3,8 @@ import { assertFieldNames, assertNotNull, assertIsArray, assertIsString, assertI
 import { YamlAppType, YamlAppMenuType, YamlAppSubMenuType, YamlAppMenuItemType } from './loader'
 
 function parseApp(doc: YamlAppType): App {
+  if (doc == null) doc = {}
+
   const allowedFiledNames = ['menu']
   assertFieldNames(doc, allowedFiledNames, '/')
 
