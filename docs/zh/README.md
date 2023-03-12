@@ -6,6 +6,9 @@ actions:
   - text: 快速上手
     link: /zh/guide/getting-started.html
     type: primary
+  - text: 项目简介
+    link: /zh/guide/
+    type: secondary
 features:
   - title: RESTful
     details: 使用 RESTful 设计风格，包括 API、视图等
@@ -19,5 +22,5 @@ features:
     details: 基于角色的访问控制
   - title: 国际化
     details: 内置国际化多语言解决方案
-footer: GPL-3.0-only Licensed | Copyright © 2023-present DullAdmin Team
+footer: GPL-3.0 Licensed | Copyright © 2023-present DullAdmin Team
 ---

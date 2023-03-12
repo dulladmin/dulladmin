@@ -6,6 +6,9 @@ actions:
   - text: Get Started
     link: /guide/getting-started.html
     type: primary
+  - text: Introduction
+    link: /guide/
+    type: secondary
 features:
   - title: RESTful
     details: Use RESTful design style, includes API, views, etc.
@@ -19,5 +22,5 @@ features:
     details: Role-based access control.
   - title: I18n
     details: Built-in internationalized multi-language solution.
-footer: GPL-3.0-only Licensed | Copyright © 2023-present DullAdmin Team
+footer: GPL-3.0 Licensed | Copyright © 2023-present DullAdmin Team
 ---

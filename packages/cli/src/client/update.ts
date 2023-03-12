@@ -12,14 +12,14 @@ export const clientUpdate = {
   desc: 'Update the skeletal to latest version',
   handler: async (argv: any): Promise<void> => {
     const dulladminDir = argv.config.dulladminDir
-    const clientGenerator: Generator = (await import(argv.config.clientGenerator)).default
-    const clientDir = argv.config.clientDir
-    logger.info('Updating the client at ' + chalk.green(clientDir))
-
     if (!(await fse.pathExists(dulladminDir))) {
       logger.error('The dulladminDir does not exists')
       process.exit(1)
     }
+
+    const clientGenerator: Generator = (await import(argv.config.clientGenerator)).default
+    const clientDir = argv.config.clientDir
+    logger.info('Updating the client at ' + chalk.green(clientDir))
     if (!(await fse.pathExists(path.join(clientDir, 'package.json')))) {
       logger.error('The clientDir is not valid')
       process.exit(1)
