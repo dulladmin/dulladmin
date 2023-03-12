@@ -1,6 +1,11 @@
 name: Continuous integration
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+  pull_request:
 
 jobs:
   lints:
