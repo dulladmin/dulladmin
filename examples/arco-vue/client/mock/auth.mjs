@@ -1,12 +1,14 @@
 import jwt from 'jsonwebtoken';
-import { buildSuccessResponse, buildFailureResponse } from './utils.mjs';
-
-const administrators = [
-  { name: 'admin', role: 'admin', password: '123456' },
-  { name: 'user', password: '123456' },
-];
+import {
+  loadDatabase,
+  buildSuccessResponse,
+  buildFailureResponse,
+} from './utils.mjs';
 
 export async function enhance(app) {
+  const administratorsDB = await loadDatabase('./db/administrators.json');
+  const administrators = administratorsDB.data;
+
   app.post('/auth', async (req, res) => {
     const form = req.body.form;
     const admin = administrators.find((u) => u.name === form.username);
@@ -17,7 +19,6 @@ export async function enhance(app) {
       res.send(buildFailureResponse('Invalid Username or Password'));
     }
   });
-
   app.delete('/auth', async (_req, res) => {
     res.send(buildSuccessResponse());
   });

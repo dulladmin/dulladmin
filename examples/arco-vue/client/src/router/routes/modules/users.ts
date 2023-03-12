@@ -23,6 +23,36 @@ const routes: RouteRecordRaw[] = [
       title: 'users--show.title',
     },
   },
+  {
+    name: 'UsersNew',
+    path: 'users/new',
+    component: () => import('@/views/modules/users/new/index.vue'),
+    meta: {
+      authority: ['*', ],
+      cache: false,
+      title: 'users--new.title',
+    },
+  },
+  {
+    name: 'UsersEdit',
+    path: 'users/:id/edit',
+    component: () => import('@/views/modules/users/edit/index.vue'),
+    meta: {
+      authority: ['*', ],
+      cache: false,
+      title: 'users--edit.title',
+    },
+  },
+  {
+    name: 'UsersDelete',
+    path: 'users/:id/delete',
+    component: () => import('@/views/modules/users/delete/index.vue'),
+    meta: {
+      authority: ['*', ],
+      cache: false,
+      title: 'users--delete.title',
+    },
+  },
 ];
 
 export default routes;

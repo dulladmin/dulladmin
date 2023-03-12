@@ -7,6 +7,15 @@
         <!-- Table Collection Operations -->
         <a-col :span="12">
           <a-space>
+            <a-button
+              type="primary"
+              @click="goto({ name: 'UsersNew' })"
+            >
+              <template #icon>
+                <icon-plus />
+              </template>
+              {{ $t('table.actions.new') }}
+            </a-button>
           </a-space>
         </a-col>
 
@@ -102,14 +111,14 @@
             :meta="modelMetadata[column.dataIndex]"
           />
         </template>
-        <template #email="{ record, column }">
+        <template #avatar="{ record, column }">
           <DullData
             :data="record[column.dataIndex]"
             :meta="modelMetadata[column.dataIndex]"
           />
         </template>
-        <template #address="{ record, column }">
-          <DullDescriptions
+        <template #email="{ record, column }">
+          <DullData
             :data="record[column.dataIndex]"
             :meta="modelMetadata[column.dataIndex]"
           />
@@ -126,12 +135,6 @@
             :meta="modelMetadata[column.dataIndex]"
           />
         </template>
-        <template #company="{ record, column }">
-          <DullDescriptions
-            :data="record[column.dataIndex]"
-            :meta="modelMetadata[column.dataIndex]"
-          />
-        </template>
         <!-- Table Model Operations -->
         <template #tableOperationsColumn="{ record, column }">
           <a-space>
@@ -142,6 +145,22 @@
               @click="goto({ name: 'UsersShow', params: { id: record.id } })"
             >
               <icon-eye />
+            </a-button>
+            <a-button
+              type="outline"
+              status="warning"
+              size="mini"
+              @click="goto({ name: 'UsersEdit', params: { id: record.id } })"
+            >
+              <icon-edit />
+            </a-button>
+            <a-button
+              type="outline"
+              status="danger"
+              size="mini"
+              @click="goto({ name: 'UsersDelete', params: { id: record.id } })"
+            >
+              <icon-delete />
             </a-button>
           </a-space>
         </template>
@@ -175,6 +194,8 @@
 
     <!-- Table Model Operations UI indicator -->
     <div v-show="false" ref="tableOperationsColumnRenderableRef">
+      <span />
+      <span />
       <span />
     </div>
   </div>
@@ -217,34 +238,13 @@
       type: 'string',
       i18nKey: 'users--index.self-block.model.attributes.username',
     },
+    avatar: {
+      type: 'image',
+      i18nKey: 'users--index.self-block.model.attributes.avatar',
+    },
     email: {
       type: 'string',
       i18nKey: 'users--index.self-block.model.attributes.email',
-    },
-    address: {
-      type: 'object',
-      attributes: {
-        street: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.address.street',
-        },
-        suite: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.address.suite',
-        },
-        city: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.address.city',
-        },
-        zipcode: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.address.zipcode',
-        },
-        geo: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.address.geo',
-        },
-      }
     },
     phone: {
       type: 'string',
@@ -253,23 +253,6 @@
     website: {
       type: 'string',
       i18nKey: 'users--index.self-block.model.attributes.website',
-    },
-    company: {
-      type: 'object',
-      attributes: {
-        name: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.company.name',
-        },
-        catchPhrase: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.company.catchPhrase',
-        },
-        bs: {
-          type: 'string',
-          i18nKey: 'users--index.self-block.model.attributes.company.bs',
-        },
-      }
     },
   };
 
@@ -352,19 +335,16 @@
     username: {
       renderable: true,
     },
-    email: {
+    avatar: {
       renderable: true,
     },
-    address: {
+    email: {
       renderable: true,
     },
     phone: {
       renderable: true,
     },
     website: {
-      renderable: true,
-    },
-    company: {
       renderable: true,
     },
     tableOperationsColumn: {
@@ -390,10 +370,6 @@
         title: t('users--index.self-block.model.attributes.name'),
         dataIndex: 'name',
         slotName: 'name',
-        sortable: {
-          sortDirections: ['descend', ],
-          sorter: true,
-        },
         cellClass: 'column-name',
         hidden: false,
       },
@@ -401,30 +377,22 @@
         title: t('users--index.self-block.model.attributes.username'),
         dataIndex: 'username',
         slotName: 'username',
-        sortable: {
-          sortDirections: ['ascend', 'descend', ],
-          sorter: true,
-        },
         cellClass: 'column-username',
+        hidden: false,
+      },
+      {
+        title: t('users--index.self-block.model.attributes.avatar'),
+        dataIndex: 'avatar',
+        slotName: 'avatar',
+        cellClass: 'column-avatar',
         hidden: false,
       },
       {
         title: t('users--index.self-block.model.attributes.email'),
         dataIndex: 'email',
         slotName: 'email',
-        sortable: {
-          sortDirections: ['ascend', ],
-          sorter: true,
-        },
         cellClass: 'column-email',
         hidden: false,
-      },
-      {
-        title: t('users--index.self-block.model.attributes.address'),
-        dataIndex: 'address',
-        slotName: 'address',
-        cellClass: 'column-address',
-        hidden: true,
       },
       {
         title: t('users--index.self-block.model.attributes.phone'),
@@ -439,13 +407,6 @@
         slotName: 'website',
         cellClass: 'column-website',
         hidden: false,
-      },
-      {
-        title: t('users--index.self-block.model.attributes.company'),
-        dataIndex: 'company',
-        slotName: 'company',
-        cellClass: 'column-company',
-        hidden: true,
       },
       {
         title: t('table.columns.operations'),

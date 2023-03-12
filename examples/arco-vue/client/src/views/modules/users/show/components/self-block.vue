@@ -43,23 +43,23 @@
                 </tr>
                 <tr class="arco-descriptions-row">
                   <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
+                    {{ $t('users--show.self-block.model.attributes.avatar') }}
+                  </td>
+                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
+                    <DullData
+                      :data="store.avatar"
+                      :meta="modelMetadata['avatar']"
+                    />
+                  </td>
+                </tr>
+                <tr class="arco-descriptions-row">
+                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
                     {{ $t('users--show.self-block.model.attributes.email') }}
                   </td>
                   <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
                     <DullData
                       :data="store.email"
                       :meta="modelMetadata['email']"
-                    />
-                  </td>
-                </tr>
-                <tr class="arco-descriptions-row">
-                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
-                    {{ $t('users--show.self-block.model.attributes.address') }}
-                  </td>
-                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
-                    <DullDescriptions
-                      :data="store.address"
-                      :meta="modelMetadata['address']"
                     />
                   </td>
                 </tr>
@@ -82,17 +82,6 @@
                     <DullData
                       :data="store.website"
                       :meta="modelMetadata['website']"
-                    />
-                  </td>
-                </tr>
-                <tr class="arco-descriptions-row">
-                  <td class="arco-descriptions-item-label arco-descriptions-item-label-block">
-                    {{ $t('users--show.self-block.model.attributes.company') }}
-                  </td>
-                  <td class="arco-descriptions-item-value arco-descriptions-item-value-block">
-                    <DullDescriptions
-                      :data="store.company"
-                      :meta="modelMetadata['company']"
                     />
                   </td>
                 </tr>
@@ -133,34 +122,13 @@
       type: 'string',
       i18nKey: 'users--show.self-block.model.attributes.username',
     },
+    avatar: {
+      type: 'image',
+      i18nKey: 'users--show.self-block.model.attributes.avatar',
+    },
     email: {
       type: 'string',
       i18nKey: 'users--show.self-block.model.attributes.email',
-    },
-    address: {
-      type: 'object',
-      attributes: {
-        street: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.address.street',
-        },
-        suite: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.address.suite',
-        },
-        city: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.address.city',
-        },
-        zipcode: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.address.zipcode',
-        },
-        geo: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.address.geo',
-        },
-      }
     },
     phone: {
       type: 'string',
@@ -170,23 +138,6 @@
       type: 'string',
       i18nKey: 'users--show.self-block.model.attributes.website',
     },
-    company: {
-      type: 'object',
-      attributes: {
-        name: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.company.name',
-        },
-        catchPhrase: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.company.catchPhrase',
-        },
-        bs: {
-          type: 'string',
-          i18nKey: 'users--show.self-block.model.attributes.company.bs',
-        },
-      }
-    },
   };
 
   // descriptions - store
@@ -195,11 +146,10 @@
     id: undefined,
     name: undefined,
     username: undefined,
+    avatar: undefined,
     email: undefined,
-    address: {},
     phone: undefined,
     website: undefined,
-    company: {},
   });
   const fetchStore = async () => {
     setLoading(true);
