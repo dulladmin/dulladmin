@@ -2,7 +2,13 @@
 
 ## Introduction
 
-DullAdmin is a specification for building admin panel.
+**DullAdmin** is a specification for building admin panel.
+
+Building admin panel usually involves writing a lot of redundant CRUD logic, implementing features
+like sorters, searchers can be tedious. This specification define the request interface and data
+presentation, and let the code generator handle all the rest stuff.
+
+Guide: [dulladmin.github.io/dulladmin/guide/](https://dulladmin.github.io/dulladmin/guide/)
 
 ## Features
 
