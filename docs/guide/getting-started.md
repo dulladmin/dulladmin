@@ -58,49 +58,7 @@ vim dulladmin/resources/users.yml
 ```
 
 ::: details Click to expand sample dulladmin/resources/users.yml
-
-```yml
-# resources/users.yml
-name: 'users'
-views:
-  index:
-    table:
-      items:
-        - { name: 'id', type: 'int64' }
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-      sorters:
-        - { name: 'id', directions: ['descend', 'ascend'] }
-      searchers:
-        - { name: 'id', predicate: 'eq' }
-        - { name: 'name', predicate: 'cont' }
-      pagination:
-        per: 5
-
-  show:
-    descriptions:
-      items:
-        - { name: 'id', type: 'int64' }
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  new:
-    form:
-      items:
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  edit:
-    form:
-      items:
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  delete:
-    form:
-      items: []
-```
-
+@[code](@/files/guide/getting-started-resources-users.yml)
 :::
 
 - **Step 6**: Generate client src code
@@ -110,39 +68,7 @@ yarn dulladmin build
 ```
 
 ::: details Click to expand build info
-
-```bash
-[INFO] Parsing DULLADMIN_FILES in dulladmin
-[INFO]   output to client
-[INFO]     - dulladmin/resources/users.yml
-[INFO]       + client/src/router/routes/modules/users.ts
-[INFO]       + client/src/api/modules/users/index/self-block.ts
-[INFO]       + client/src/api/modules/users/show/self-block.ts
-[INFO]       + client/src/api/modules/users/new/self-block.ts
-[INFO]       + client/src/api/modules/users/edit/self-block.ts
-[INFO]       + client/src/api/modules/users/delete/self-block.ts
-[INFO]       + client/src/views/modules/users/index/index.vue
-[INFO]       + client/src/views/modules/users/index/components/self-block.vue
-[INFO]       + client/src/views/modules/users/show/index.vue
-[INFO]       + client/src/views/modules/users/show/components/self-block.vue
-[INFO]       + client/src/views/modules/users/new/index.vue
-[INFO]       + client/src/views/modules/users/new/components/self-block.vue
-[INFO]       + client/src/views/modules/users/edit/index.vue
-[INFO]       + client/src/views/modules/users/edit/components/self-block.vue
-[INFO]       + client/src/views/modules/users/delete/index.vue
-[INFO]       + client/src/views/modules/users/delete/components/self-block.vue
-[INFO]       + client/src/assets/style/modules/users.less
-[INFO]       + client/src/locale/en-US/modules/users.json
-[INFO]       + client/src/locale/zh-CN/modules/users.json
-[INFO]     - dulladmin/app.yml
-[INFO]       + client/src/config/config.json
-[INFO]       + client/src/locale/en-US/modules/07-app-site.json
-[INFO]       + client/src/locale/zh-CN/modules/07-app-site.json
-[INFO]       + client/src/router/app-menu/routes.ts
-[INFO]       + client/src/locale/en-US/modules/13-app-menu.json
-[INFO]       + client/src/locale/zh-CN/modules/13-app-menu.json
-```
-
+@[code](@/files/guide/getting-started-build-info.sh)
 :::
 
 - **Step 7**: Preview

@@ -1,6 +1,11 @@
+import path from 'node:path'
+import url from 'node:url'
 import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from 'vuepress'
 import { navbarEn, navbarZh, sidebarEn, sidebarZh } from './configs'
+
+const __filename = url.fileURLToPath(import.meta.url) // eslint-disable-line @typescript-eslint/naming-convention
+const __dirname = path.dirname(__filename) // eslint-disable-line @typescript-eslint/naming-convention
 
 export default defineUserConfig({
   base: '/dulladmin/',
@@ -39,5 +44,12 @@ export default defineUserConfig({
         toggleSidebar: '切换侧边栏'
       }
     }
-  })
+  }),
+  markdown: {
+    importCode: {
+      handleImportPath: (str) => {
+        return str.replace(/^@/, path.resolve(__dirname, 'public'))
+      }
+    }
+  }
 })

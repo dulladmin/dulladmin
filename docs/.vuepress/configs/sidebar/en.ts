@@ -13,6 +13,7 @@ export const sidebarEn: SidebarConfig = {
       children: [
         '/guide/specification/resource.md',
         '/guide/specification/view.md',
+        '/guide/specification/block.md',
         '/guide/specification/block-table.md',
         '/guide/specification/block-descriptions.md',
         '/guide/specification/block-form.md',
@@ -28,7 +29,7 @@ export const sidebarEn: SidebarConfig = {
       children: [
         '/guide/generator-arco-vue/directory.md',
         '/guide/generator-arco-vue/config.md',
-        '/guide/generator-arco-vue/server.md'
+        '/guide/generator-arco-vue/mock.md'
       ]
     }
   ]

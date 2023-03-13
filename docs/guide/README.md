@@ -12,47 +12,7 @@ presentation, and let the code generator handle all the rest stuff. E.g.
 
 **DullAdmin Resource File:**
 
-```yml
-# resources/users.yml
-name: 'users'
-views:
-  index:
-    table:
-      items:
-        - { name: 'id', type: 'int64' }
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-      sorters:
-        - { name: 'id', directions: ['descend', 'ascend'] }
-      searchers:
-        - { name: 'id', predicate: 'eq' }
-        - { name: 'name', predicate: 'cont' }
-      pagination:
-        per: 5
-
-  show:
-    descriptions:
-      items:
-        - { name: 'id', type: 'int64' }
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  new:
-    form:
-      items:
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  edit:
-    form:
-      items:
-        - { name: 'name', type: 'string' }
-        - { name: 'avatar', type: 'image' }
-
-  delete:
-    form:
-      items: []
-```
+@[code](@/files/guide/README-resources-users.yml)
 
 **Generated WebUI:**
 

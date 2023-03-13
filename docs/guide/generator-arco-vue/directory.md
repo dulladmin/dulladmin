@@ -6,24 +6,24 @@ title: Directory Structure
 
 ## root
 
-| Name            | Purpose                                  |
-| --------------- | ---------------------------------------- |
-| bin             | wrapper scripts around executables       |
-| config          | vite config files                        |
-| dist            | build artifacts                          |
-| mock            | mock server (based on express)           |
-| public          | pure static assets (directly copied)     |
-| src             | source code                              |
-| .env            | ENV, loaded in all cases                 |
-| .env.local      | ENV, loaded in all cases, ignored by git |
-| .eslintignore   | eslint ignore rules                      |
-| .eslintrc.js    | eslint config                            |
-| .prettierignore | prettier ignore rules                    |
-| .prettierrc.js  | prettier config                          |
-| index.html      | index.html template                      |
-| package.json    | build scripts and dependencies           |
-| tsconfig.json   | tsc config                               |
-| yarn.lock       | yarn lockfile                            |
+| Name            | Purpose                                            |
+| --------------- | -------------------------------------------------- |
+| bin             | wrapper scripts around executables                 |
+| config          | vite config files                                  |
+| dist            | build artifacts                                    |
+| mock            | mock server (based on express)                     |
+| public          | pure static assets (directly copied)               |
+| src             | source code                                        |
+| .env            | ENV variables, loaded in all cases                 |
+| .env.local      | ENV variables, loaded in all cases, ignored by git |
+| .eslintignore   | eslint ignore rules                                |
+| .eslintrc.js    | eslint config                                      |
+| .prettierignore | prettier ignore rules                              |
+| .prettierrc.js  | prettier config                                    |
+| index.html      | index.html template                                |
+| package.json    | build scripts and dependencies                     |
+| tsconfig.json   | tsc config                                         |
+| yarn.lock       | yarn lockfile                                      |
 
 ## src
 
@@ -49,13 +49,15 @@ title: Directory Structure
 **resource file**
 
 ```yml
-# resources/users.yml
+# dulladmin/resources/users.yml
 name: 'users'
 views:
   index:
     table:
       items:
         - { name: 'id', type: 'int64' }
+        - { name: 'name', type: 'string' }
+        - { name: 'avatar', type: 'image' }
 ```
 
 **generated files**

@@ -10,6 +10,6 @@ title: App Config
 {
   "app.creationDate": "2023-02-26T05:56:37.164Z",
   "app.topMenu": false,
-  "app.menuAccordion": true
+  "app.menuAccordion": false
 }
 ```
