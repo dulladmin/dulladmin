@@ -156,7 +156,7 @@ It will start a mock server at [http://127.0.0.1:3000](http://127.0.0.1:3000) to
 hot-reloading development server at [http://127.0.0.1:5173](http://127.0.0.1:5173) to serve frontend.
 
 Enter username `admin` and password `123456` to log in to the system. By now, you should have a basic but functional
-admin panel. Next, learn about the basics of [DullAdmin Resource File](./configuration.md).
+admin panel. Next, learn about the basics of [DullAdmin Resource File](./resource-file.md).
 
 ::: tip
 Full example can be found in [examples/arco-vue](https://github.com/dulladmin/dulladmin/tree/main/examples/arco-vue).
