@@ -1,0 +1,1 @@
+import{_ as t,p as a,q as c,R as e,t as r}from"./framework-5866ffd3.js";const s={},o=e("h1",{id:"auth",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#auth","aria-hidden":"true"},"#"),r(" Auth")],-1),n=[o];function _(h,d){return a(),c("div",null,n)}const u=t(s,[["render",_],["__file","auth.html.vue"]]);export{u as default};

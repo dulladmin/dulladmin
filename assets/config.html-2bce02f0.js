@@ -1,0 +1,6 @@
+import{_ as n,p as s,q as a,a1 as e}from"./framework-5866ffd3.js";const o={},t=e(`<h1 id="app-config" tabindex="-1"><a class="header-anchor" href="#app-config" aria-hidden="true">#</a> App Config</h1><p><strong>src/config/config.json</strong></p><div class="language-json line-numbers-mode" data-ext="json"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;app.creationDate&quot;</span><span class="token operator">:</span> <span class="token string">&quot;2023-02-26T05:56:37.164Z&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;app.topMenu&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;app.menuAccordion&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,3),p=[t];function c(i,r){return s(),a("div",null,p)}const u=n(o,[["render",c],["__file","config.html.vue"]]);export{u as default};

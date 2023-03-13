@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-0c750afc","path":"/guide/generator-arco-vue/mock.html","title":"Mock","lang":"en-US","frontmatter":{"title":"Mock"},"headers":[],"git":{"updatedTime":1678729650000,"contributors":[{"name":"John Doe","email":"johndoe@example.com","commits":1}]},"filePathRelative":"guide/generator-arco-vue/mock.md"}');export{e as data};

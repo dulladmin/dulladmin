@@ -1,0 +1,1 @@
+import{_ as r,p as c,q as s,R as e,t}from"./framework-5866ffd3.js";const o={},a=e("h1",{id:"resource-file",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#resource-file","aria-hidden":"true"},"#"),t(" Resource File")],-1),i=[a];function n(_,l){return c(),s("div",null,i)}const f=r(o,[["render",n],["__file","resource-file.html.vue"]]);export{f as default};

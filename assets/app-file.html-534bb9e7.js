@@ -1,0 +1,1 @@
+import{_ as a,p as t,q as c,R as e,t as r}from"./framework-5866ffd3.js";const s={},o=e("h1",{id:"app-file",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#app-file","aria-hidden":"true"},"#"),r(" App File")],-1),i=[o];function n(_,l){return t(),c("div",null,i)}const d=a(s,[["render",n],["__file","app-file.html.vue"]]);export{d as default};
