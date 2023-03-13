@@ -55,9 +55,3 @@ views:
 **自动生成的管理页面：**
 
 ![generated webui](/images/guide/README-generated-webui.png)
-
-::: tip
-完整的示例可查看 [examples/arco-vue](https://github.com/dulladmin/dulladmin/tree/main/examples/arco-vue) 目录。
-:::
-
----
