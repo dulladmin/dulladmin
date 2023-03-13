@@ -57,7 +57,3 @@ views:
 **Generated WebUI:**
 
 ![generated webui](/images/guide/README-generated-webui.png)
-
-::: tip
-Full example can be found in [examples/arco-vue](https://github.com/dulladmin/dulladmin/tree/main/examples/arco-vue).
-:::

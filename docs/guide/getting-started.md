@@ -30,11 +30,98 @@ yarn init
 yarn add -D @dulladmin/cli @dulladmin/generator-arco-vue
 ```
 
-- **Step 4**: Create client src directory
+| Package                       | Purpose                                                                 |
+| ----------------------------- | ----------------------------------------------------------------------- |
+| @dulladmin/cli                | cli toolkit                                                             |
+| @dulladmin/generator-arco-vue | frontend code generator with [Arco Design Vue](https://arco.design/vue) |
+
+- **Step 4**: Create client directory
 
 ```bash
-pnpm dulladmin client:install
+yarn dulladmin client:install
 ```
 
-- **Step 5**: Create your first **DULLADMIN_FILES**
+Your project structure is probably like this:
 
+```bash
+├─ client     # clientDir, all frontend code will be generated here
+├─ dulladmin  # dulladminDir, definition files here
+│  ├─ resources
+│  └─ app.yml
+└─ package.json
+```
+
+- **Step 5**: Create your first **DullAdmin Resource File**
+
+```bash
+vim dulladmin/resources/users.yml
+```
+
+::: details Click to expand sample dulladmin/resources/users.yml
+
+```yml
+# resources/users.yml
+name: 'users'
+views:
+  index:
+    table:
+      items:
+        - { name: 'id', type: 'int64' }
+        - { name: 'name', type: 'string' }
+        - { name: 'avatar', type: 'image' }
+      sorters:
+        - { name: 'id', directions: ['descend', 'ascend'] }
+      searchers:
+        - { name: 'id', predicate: 'eq' }
+        - { name: 'name', predicate: 'cont' }
+      pagination:
+        per: 5
+
+  show:
+    descriptions:
+      items:
+        - { name: 'id', type: 'int64' }
+        - { name: 'name', type: 'string' }
+        - { name: 'avatar', type: 'image' }
+
+  new:
+    form:
+      items:
+        - { name: 'name', type: 'string' }
+        - { name: 'avatar', type: 'image' }
+
+  edit:
+    form:
+      items:
+        - { name: 'name', type: 'string' }
+        - { name: 'avatar', type: 'image' }
+
+  delete:
+    form:
+      items: []
+```
+
+:::
+
+- **Step 6**: Generate client src code
+
+```bash
+yarn dulladmin client:build
+```
+
+- **Step 7**: Preview
+
+```bash
+cd client
+yarn run-p mock:server dev
+```
+
+It will start a mock server at [http://127.0.0.1:3000](http://127.0.0.1:3000) to provide backend api service, and a
+hot-reloading development server at [http://127.0.0.1:5173](http://127.0.0.1:5173) to serve frontend.
+
+Enter username `admin` and password `123456` to log in to the system. By now, you should have a basic but functional
+admin panel. Next, learn about the basics of [DullAdmin Resource File](./configuration.md).
+
+::: tip
+Full example can be found in [examples/arco-vue](https://github.com/dulladmin/dulladmin/tree/main/examples/arco-vue).
+:::
